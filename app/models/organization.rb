@@ -147,6 +147,7 @@ class Organization < ApplicationRecord
   def remove_at_from_usernames
     self.twitter_username = twitter_username.delete("@") if twitter_username
     self.github_username = github_username.delete("@") if github_username
+    self.instagram_username = instagram_username.delete("@") if instagram_username
   end
 
   def downcase_slug

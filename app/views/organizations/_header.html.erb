@@ -56,9 +56,14 @@
                 <%= crayons_icon_tag(:twitter, title: t("views.organizations.twitter.icon")) %>
               </a>
             <% end %>
-            <% if @user.github_username.present? %>
-              <a href="https://github.com/<%= @user.github_username %>" target="_blank" rel="noopener me" class="px-1 align-middle inline-block">
-                <%= crayons_icon_tag(:github, title: t("views.organizations.github.icon")) %>
+            <% if @user.instagram_username.present? %>
+              <a href="https://instagram.com/<%= @user.instagram_username %>" target="_blank" rel="noopener me" class="px-1 align-middle inline-block">
+                <%= crayons_icon_tag(:instagram, title: t("views.organizations.instagram.icon")) %>
+              </a>
+            <% end %>
+            <% if @user.tiktok_username.present? %>
+              <a href="https://tiktok.com/<%= @user.tiktok_username %>" target="_blank" rel="noopener me" class="px-1 align-middle inline-block">
+                TikTok
               </a>
             <% end %>
             <% if @user.profile.website_url.present? %>

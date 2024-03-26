@@ -20,6 +20,8 @@ class OrganizationsController < ApplicationController
     text_color_hex
     twitter_username
     github_username
+    instagram_username
+    tiktok_username
     cta_button_text
     cta_button_url
     cta_body_markdown

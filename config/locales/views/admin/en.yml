@@ -432,6 +432,7 @@ en:
           since_html: Organization since %{time}
           email: Email
           github: GitHub
+          instagram: GitHub
           twitter: Twitter
           visit: Visit organization
           total_members: "%{count} members"

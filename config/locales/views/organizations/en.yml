@@ -8,6 +8,8 @@ en:
       follow: Follow
       github:
         icon: GitHub logo
+      instagram:
+        icon: Instagram logo
       joined:
         icon: Joined
         text_html: "Joined on\_%{date}"

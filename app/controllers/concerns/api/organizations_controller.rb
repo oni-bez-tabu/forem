@@ -3,13 +3,13 @@ module Api
     extend ActiveSupport::Concern
 
     SHOW_ATTRIBUTES_FOR_SERIALIZATION = %i[
-      id username name summary twitter_username github_username url
+      id username name summary tiktok_username twitter_username instagram_username github_username url
       location created_at profile_image tech_stack tag_line story
     ].freeze
     private_constant :SHOW_ATTRIBUTES_FOR_SERIALIZATION
 
     USERS_FOR_SERIALIZATION = %i[
-      id username name twitter_username github_username
+      id username name tiktok_username twitter_username instagram_username github_username
       profile_image website_url location summary created_at
     ].freeze
     private_constant :USERS_FOR_SERIALIZATION

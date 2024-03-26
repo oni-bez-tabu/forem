@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_06_173309) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_25_143812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "ltree"
@@ -746,6 +746,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_06_173309) do
     t.text "cta_processed_html"
     t.string "email"
     t.string "github_username"
+    t.string "instagram_username"
     t.datetime "last_article_at", precision: nil, default: "2017-01-01 05:00:00"
     t.datetime "latest_article_updated_at", precision: nil
     t.string "location"
@@ -763,6 +764,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_06_173309) do
     t.string "tag_line"
     t.string "tech_stack"
     t.string "text_color_hex"
+    t.string "tiktok_username"
     t.string "twitter_username"
     t.integer "unspent_credits_count", default: 0, null: false
     t.datetime "updated_at", precision: nil, null: false

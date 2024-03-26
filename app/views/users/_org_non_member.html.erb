@@ -52,8 +52,13 @@
     </div>
 
     <div class="crayons-field">
-      <%= f.label :github_username, "GitHub username", class: "crayons-field__label" %>
-      <%= f.text_field :github_username, class: "crayons-textfield" %>
+      <%= f.label :instagram_username, "Instagram username", class: "crayons-field__label" %>
+      <%= f.text_field :instagram_username, class: "crayons-textfield" %>
+    </div>
+
+    <div class="crayons-field">
+      <%= f.label :tiktok_username, "Tiktok username", class: "crayons-field__label" %>
+      <%= f.text_field :tiktok_username, class: "crayons-textfield" %>
     </div>
 
     <%= render partial: "shared/logo_design", locals: { f: f, account: @user } %>

@@ -13,7 +13,7 @@ module Api
       ].freeze
 
       SHOW_ATTRIBUTES_FOR_SERIALIZATION = %i[
-        id username name summary twitter_username github_username url
+        id username name summary twitter_username tiktok_username instagram_username github_username url
         location created_at profile_image slug tech_stack tag_line story
       ].freeze
 

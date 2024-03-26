@@ -59,6 +59,21 @@
               </a>
             </li>
           <% end %>
+          <% if @organization.instagram_username %>
+            <li>
+              <a href="https://instagram.com/<%= @organization.instagram_username %>" class="c-link c-link--icon-left inline-block" target="_blank">
+                <%= crayons_icon_tag(:instagram, title: t("views.admin.users.profile.instagram")) %>
+                <%= @organization.instagram_username %>
+              </a>
+            </li>
+          <% end %>
+          <% if @organization.tiktok_username %>
+            <li>
+              <a href="https://tiktok.com/<%= @organization.tiktok_username %>" class="c-link c-link--icon-left inline-block" target="_blank">
+                <%= @organization.tiktok_username %>
+              </a>
+            </li>
+          <% end %>
           <% if @organization.twitter_username %>
             <li>
               <a href="https://twitter.com/<%= @organization.twitter_username %>" class="c-link c-link--icon-left inline-block" target="_blank">

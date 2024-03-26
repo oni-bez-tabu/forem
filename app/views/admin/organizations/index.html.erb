@@ -15,7 +15,8 @@
       <th scope="col">Name</th>
       <th scope="col">ID</th>
       <th scope="col">Twitter</th>
-      <th scope="col">GitHub</th>
+      <th scope="col">Instagram</th>
+      <th scope="col">Tiktok</th>
       <th scope="col">URL</th>
     </tr>
   </thead>
@@ -29,8 +30,13 @@
         <% else %>
           <td>N/A</td>
         <% end %>
-        <% if organization.github_username %>
-          <td><%= link_to organization.github_username, "https://github.com/#{organization.github_username}" %></td>
+        <% if organization.instagram_username %>
+          <td><%= link_to organization.instagram_username, "https://instagram.com/#{organization.instagram_username}" %></td>
+        <% else %>
+          <td>N/A</td>
+        <% end %>
+        <% if organization.tiktok_username %>
+          <td><%= link_to organization.tiktok_username, "https://tiktok.com/#{organization.tiktok_username}" %></td>
         <% else %>
           <td>N/A</td>
         <% end %>
