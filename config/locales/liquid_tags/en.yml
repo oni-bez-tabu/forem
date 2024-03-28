@@ -34,6 +34,8 @@ en:
       invalid_options: Invalid Options
     instagram_tag:
       invalid_instagram_id: Invalid Instagram ID
+    tiktok_tag:
+      invalid_tiktok_id: Invalid Tiktok Link
     js_fiddle_tag:
       invalid_jsfiddle_url: Invalid JSFiddle URL
       invalid_options: Invalid Options
