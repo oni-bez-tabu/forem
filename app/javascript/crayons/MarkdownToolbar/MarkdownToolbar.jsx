@@ -17,7 +17,7 @@ const UPLOADING_IMAGE_PLACEHOLDER = '![Uploading image](...)';
 const MAX_CORE_FORMATTERS_BY_SCREEN_SIZE = {
   small: 5,
   large: 7,
-  extraLarge: 10,
+  extraLarge: 13,
 };
 
 const getNumberOfIconsToDisplayInToolbar = ({

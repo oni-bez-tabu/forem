@@ -691,30 +691,30 @@ export const markdownSyntaxFormatters = {
         linePrefix: '> ',
       }),
   },
-  code: {
-    icon: () => <Icon src={CodeIcon} />,
-    label: 'Code',
-    getFormatting: ({ selectionStart, selectionEnd, value }) =>
-      undoOrAddFormattingForInlineSyntax({
-        selectionStart,
-        selectionEnd,
-        value,
-        prefix: '`',
-        suffix: '`',
-      }),
-  },
-  codeBlock: {
-    icon: () => <Icon src={CodeBlockIcon} />,
-    label: 'Code block',
-    getFormatting: ({ selectionStart, selectionEnd, value }) =>
-      undoOrAddFormattingForMultilineSyntax({
-        selectionStart,
-        selectionEnd,
-        value,
-        blockPrefix: '```\n',
-        blockSuffix: '\n```',
-      }),
-  },
+  // code: {
+  //   icon: () => <Icon src={CodeIcon} />,
+  //   label: 'Code',
+  //   getFormatting: ({ selectionStart, selectionEnd, value }) =>
+  //     undoOrAddFormattingForInlineSyntax({
+  //       selectionStart,
+  //       selectionEnd,
+  //       value,
+  //       prefix: '`',
+  //       suffix: '`',
+  //     }),
+  // },
+  // codeBlock: {
+  //   icon: () => <Icon src={CodeBlockIcon} />,
+  //   label: 'Code block',
+  //   getFormatting: ({ selectionStart, selectionEnd, value }) =>
+  //     undoOrAddFormattingForMultilineSyntax({
+  //       selectionStart,
+  //       selectionEnd,
+  //       value,
+  //       blockPrefix: '```\n',
+  //       blockSuffix: '\n```',
+  //     }),
+  // },
   embed: {
     icon: () => <Icon src={EmbedIcon} />,
     label: 'Embed',
