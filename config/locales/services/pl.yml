@@ -1,0 +1,114 @@
+---
+pl:
+  services:
+    analytics_service:
+      no_stats: Nie możesz zobaczyć statystyk tego artykułu
+    article_with_video_creation_service:
+      unpublished_video: Nieopublikowane wideo ~ %{rand}
+    authentication:
+      authenticator:
+        not_allowed: Przepraszamy, ale domena twojego adresu e-mail nie jest dozwolona. Ten Forem może mieć ograniczone możliwości rejestracji tylko dla określonych domen e-mailowych lub zablokował ten określony domenę przed dołączeniem.
+      providers:
+        apple:
+          name: "%{first} %{last}"
+        not_available: Dostawca %{name} jest niedostępny!
+        not_enabled: Dostawca %{name} nie jest włączony!
+    badges:
+      award_beloved_comment:
+        message: "Jesteś sławny! [To jest komentarz](%{comment}), za który jesteś doceniany. 😄"
+      award_streak:
+        longest: 16 tygodni! Osiągnąłeś najdłuższy możliwy okres pisania. Kontynuuj niesamowity wkład w naszą społeczność!
+        message:
+          one: "Gratulacje z powodu osiągnięcia tego okresu! Regularne pisanie jest trudne. Następną odznaką za okres, którą możesz otrzymać, jest Odznaka %{count} Tygodnia. 😉"
+          other: "Gratulacje z powodu osiągnięcia tego okresu! Regularne pisanie jest trudne. Następną odznaką za okres, którą możesz otrzymać, jest Odznaka %{count} Tygodnia. 😉"
+      award_yearly_club:
+        message:
+          one: Szczęśliwe urodziny %{community}! Czy możesz uwierzyć, że to już %{count} rok?!
+          other: Szczęśliwe urodziny %{community}! Czy możesz uwierzyć, że to już %{count} lat?!
+      congrats: Gratulacje z powodu osiągnięcia! 🎉 I dziękuję za bycie tak istotną częścią %{community}!
+      thank_you: Dziękujemy za Twoje wkłady!
+      community_wellness:
+        first: Dziękujemy za udział w konstruktywnej rozmowie! W tym tygodniu opublikowałeś dwa lub więcej komentarzy. Tak trzymaj, aby kontynuować serię!
+        longest: 32 tygodnie! Osiągnąłeś najdłuższą możliwą serię dla odznaki Wellness Społeczności. Niesamowita praca w angażowaniu się w społeczność. Kontynuuj niesamowity wkład w naszą społeczność!
+        other: Gratulacje z powodu osiągnięcia serii %{weeks} tygodni dla Odznaki Wellness Społeczności! Kontynuuj przesyłanie konstruktywnych komentarzy, aby kontynuować serię!
+      thumbs_up: Dziękujemy za Twoje wysiłki w recenzowaniu postów i zdobycie %{count} reakcji „kciuk w górę”!
+    broadcasts:
+      welcome_notification:
+        generator:
+          welcome: 'Powitalne powiadomienie: %{key}'
+    error_messages:
+      clean:
+        parse_error: Wystąpił problem z parsowaniem metadanych YAML. Być może musisz uniknąć cudzysłowia lub dwukropka. Wyślij e-maila na adres %{email}, jeśli masz problemy.
+    html:
+      parser:
+        enter_fullscreen_mode: Wejdź w tryb pełnoekranowy
+        exit_fullscreen_mode: Wyjdź z trybu pełnoekranowego
+    markdown_processor:
+      parser:
+        invalid_markdown_detected: Wykryto nieprawidłowy Markdown!
+    moderator:
+      banish_user:
+        spam_account: konto spamerskie
+      manage_activity_and_roles:
+        need_super: Potrzebujesz super uprawnień administratora, aby wykonać tę akcję
+      merge_user:
+        duplicate: Użytkownik ma zduplikowane metody uwierzytelniania na dwóch kontach. Proszę sprawdzić podwójnie i usunąć tożsamość, której użytkownik już nie używa. Zazwyczaj jest to już usunięte konto społecznościowe lub metoda uwierzytelniania związana z użytkownikiem do usunięcia.
+        multiple: Użytkownik, który zostanie usunięty, ma już dwie lub więcej metod uwierzytelniania. Czy na pewno to jest właściwy użytkownik do usunięcia? Jeśli tak, super administrator będzie musiał to zrobić z poziomu konsoli, aby było bezpieczne.
+        same_user: Nie możesz scalic tych samych dwóch identyfikatorów użytkownika
+    notifications:
+      new_comment:
+        new: "💬 Nowy Komentarz"
+      new_mention:
+        new: "🗣️ Nowa Wzmianka"
+    payments:
+      customer:
+        usd: usd
+      errors:
+        select_payment_method: "Proszę wybrać metodę płatności"
+      process_credit_purchase:
+        charge:
+          one: Zakup %{count} kredytów.
+          other: Zakup %{count} kredytów.
+    rate_limit_checker:
+      invalid_key: 'Nieprawidłowy Klucz Cache: brak unikalnej składowej'
+      limit_reached:
+        one: Osiągnięto limit szybkości, spróbuj ponownie za %{count} sekund
+        other: Osiągnięto limit szybkości, spróbuj ponownie za %{count} sekund
+    slack:
+      messengers:
+        article_fetched_feed:
+          body: |
+            Nowy artykuł pobrany za pomocą RSS: %{title}
+            %{url}
+        article_published:
+          body: |
+            Nowy artykuł opublikowany: %{title}
+            %{url}
+        feedback:
+          anonymous_report: "*Anonimowy raport:"
+          final_message: |-
+            %{user_detail}
+            Kategoria: %{category}
+            Wewnętrzny Raport: %{reports_url}
+            *_ Zgłoszony URL: %{reported_url} _*
+            -----
+            *Wiadomość:* %{message}
+          body: |
+            *Zalogowany użytkownik:*
+            reporter: %{username} - %{url}
+            email: <mailto:%{email}|%{email}>
+        potential_spammer:
+          body: 'Potencjalny użytkownik spamujący! %{url}
+
+            '
+    spam:
+      article_handler:
+        suspended_too_many: Użytkownik zawieszony ze względu na zbyt wiele spamujących artykułów, wywołanych przez autowymiot.
+    user_subscriptions:
+      create_from_controller_params:
+        source_not_found: Nie znaleziono źródła.
+        email_mismatch: Niedopasowanie adresu e-mail subskrybenta.
+    users:
+      remove_role:
+        remove_self: Administratorzy nie mogą usuwać ról sami sobie.
+        error: Wystąpił problem z usunięciem tej roli. %{e_message}

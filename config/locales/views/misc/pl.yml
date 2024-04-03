@@ -1,0 +1,142 @@
+---
+pl:
+  views:
+    badges:
+      meta:
+        title: Odznaki
+      all:
+        one: Pokaż jedną odznakę
+        other: Pokaż wszystkie %{count} odznaki
+      heading: Odznaki
+      desc: Otrzymuj odznaki za bycie niesamowitym! Kliknij na odznakę, aby zobaczyć, jak możesz ją zdobyć.
+      icon_close: Zamknij
+      gotit: Rozumiem
+    campaign:
+      subtitle: Historie (%{count})
+      view: Zobacz wszystkie posty
+    deep_links:
+      subtitle: Otwieranie aplikacji mobilnej...
+      alert:
+        subtitle: Ups! Czy napotkałeś problem próbując otworzyć aplikację mobilną?
+        desc_html: Upewnij się, że jest zainstalowana i spróbuj ponownie. Jeśli problem będzie się powtarzał, skontaktuj się z %{email}
+        back: Zabierz mnie z powrotem
+        again: Spróbuj ponownie
+        install: Zainstaluj aplikację
+    email_subscriptions:
+      unsubscribe:
+        heading: "Zostałeś wypisany z %{type}. 😔"
+        description_html: Nie będziesz już otrzymywać takich emaili. Jeśli chcesz ponownie się zapisać lub zarządzać swoimi preferencjami emailowymi, proszę %{link}.
+        link: kliknij tutaj
+      invalid:
+        heading: Token wygasł lub jest nieprawidłowy
+        description_html: Proszę %{signin}, aby zarządzać swoimi preferencjami emailowymi.
+        signin: zaloguj się
+    hamburger:
+      icon: Menu nawigacyjne
+      icon_close: Zamknij
+      icon_left: Menu po lewej
+      icon_right: Menu po prawej
+    logo:
+      color_1:
+        label: Kolor marki 1
+        description: Używany do tła, obramowań itp.
+      color_2:
+        label: Kolor marki 2
+        description_html: Używany do tekstów (zwykle nałożony na <em>Kolor marki 1</em>).
+      preview:
+        icon: Logo aplikacji
+        text: 'Podgląd:'
+    mailers:
+      contact_mailto_html: Skontaktuj się z nami przez <a href="mailto:%{contact_email}">%{contact_email}</a>, jeśli możemy pomóc w czymś więcej.
+    onboardings:
+      meta:
+        title: Witaj w %{community}
+      heading: Jesteś teraz częścią społeczności!
+      subtitle: SUGEROWANE RZECZY, KTÓRE MOŻESZ ZROBIĆ
+      close: Zamknij wiadomość powitalną
+      settings_html: "<span class=\"emoji\">💅🏼</span>Dostosuj swój profil"
+      welcome_html: "<span class=\"emoji\">😊</span>Dołącz do wątku powitalnego"
+      write_html: "<span class=\"emoji\">✍🏾</span>Napisz swój pierwszy post w %{community}"
+    pins:
+      article: Przypięty
+      pinned: "📌 Przypięto! (przypięte posty wyświetlane są chronologicznie, maksymalnie 5)"
+      removed: "🗑 Przypięcie usunięte"
+      error: Możesz mieć tylko pięć przypięć
+    profile:
+      color:
+        label: Kolor marki
+        description: Używany do tła, obramowań itp.
+    reading_list:
+      meta:
+        title: Lista lektur
+        description: Moje zapisane posty.
+        og:
+          title: Lista lektur - %{community}
+    search:
+      heading: Wyniki wyszukiwania%{for}
+      for: " dla %{query}"
+      placeholder: Szukaj...
+      icon:
+        aria_label: Szukaj
+        title: Szukaj
+      nav:
+        posts: Posty
+        podcasts: Podcasty
+        people: Ludzie
+        comments: Komentarze
+        my_posts: Tylko moje posty
+        organizations: Organizacje
+        tags: Tagi
+      sort:
+        aria_label: Opcje sortowania wyników wyszukiwania
+        relevance: Najbardziej trafne
+        newest: Najnowsze
+        oldest: Najstarsze
+      meta:
+        title: Wyniki wyszukiwania%{for}
+        for: " dla %{query}"
+        description: "%{site} => Wyniki wyszukiwania"
+    series:
+      meta:
+        description: Zobacz %{title} na %{site}
+      heading: "Serie %{user}"
+      empty: Ten użytkownik nie ma żadnych serii
+      list:
+        heading: "Artykuły z serii %{series}"
+        back: Powrót do serii %{user}
+        empty: Ta seria nie ma żadnych artykułów
+    stats:
+      meta:
+        title: Statystyki Twojego Artykułu
+      heading_html: Statystyki dla "%{article}"
+      period:
+        aria_label: Okres analityki
+        week: Tydzień
+        month: Miesiąc
+        infinity: Nieskończoność
+      readers: Podsumowanie czytelników
+      followers: Podsumowanie nowych obserwujących
+      reactions: "Podsumowanie reakcji"
+      comments: "Podsumowanie komentarzy"
+      traffic:
+        text: "Podsumowanie źródła ruchu"
+        source: Źródło
+        views: Wyświetlenia
+      reactions_history: "Historia reakcji"
+    sticky:
+      joined: Dołączył
+      default_cta: Dowiedz się więcej
+      email: Email
+      hot: Gorące
+      location: Lokalizacja
+      more_from_html: Więcej od %{actor}
+      no_summary: Posty w tym tagu
+      trending_html: Popularne na %{app}
+    videos:
+      meta:
+        title: Filmy
+        og:
+          description: Wszystkie filmy na %{community}
+      heading: "%{community} na filmie"
+      beta_html: "<strong>Wideo jest w fazie beta:</strong> %{contact}"
+      upload: "🎥 Prześlij plik wideo 🙌"

@@ -1,0 +1,24 @@
+---
+pl:
+  validators:
+    bytesize_validator:
+      non_negative: ":maximum musi być liczbą nieujemną"
+    color_contrast_validator:
+      must_be_darker: musi być ciemniejszy dla dostępności
+    emoji_only_validator:
+      invalid_emoji: zawiera znaki inne niż emotikony lub nieprawidłowe emotikony
+    existing_published_article_id_validator:
+      default: musi być poprawnym identyfikatorem opublikowanego artykułu
+    profile_validator:
+      bio_too_long: Opis jest zbyt długi
+    cross_model_slug_validator:
+      is_taken: już zostało zajęte
+      is_invalid: jest nieprawidłowe
+      is_reserved: jest zarezerwowane
+      too_many_subdirectories: ma zbyt wiele podkatalogów
+    valid_domain_csv_validator:
+      invalid_list_format: musi być listą oddzieloną przecinkami poprawnych domen
+    iso3166_hash_validator:
+      is_blank: musi być podane
+      invalid_key: zawiera nieprawidłowy kod ISO 3166
+      invalid_value: musi mieć wartości `:with_regions` lub `:without_regions`

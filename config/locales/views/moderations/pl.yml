@@ -1,0 +1,209 @@
+---
+pl:
+  views:
+    moderations:
+      heading: Centrum Moderacji
+      actions:
+        meta:
+          title: Moderowanie %{title}
+          title2: '[Moderuj] %{title}'
+        heading: Moderuj Post
+        subtitle: Oceń jakość tego posta
+        abusive:
+          subtitle_html: Oflaguj %{user} jako Nadużywającego
+          desc_html: To jest równoznaczne z oflagowaniem <b>wszystkich</b> postów tego użytkownika i obniży ich wyniki postów.
+        adjust:
+          heading: Dostosuj tagi
+          subtitle: Dodaj lub usuń tagi
+          aria_label: Otwórz sekcję dostosowywania tagów
+          icon: Dostosuj tagi
+          add: Dodaj tag
+          add_placeholder: Dodaj tag
+          previous: Poprzednie dostosowania tagów
+          history:
+            added_by: dodane przez
+            removed_by: usunięte przez
+          reason:
+            remove_tag: Powód usunięcia tagu (opcjonalnie)
+            add_tag: Powód dodania tagu (opcjonalnie)
+          remove: Usuń tag
+          submit: Prześlij
+          cancel: Anuluj
+          maximum_tags:
+            icon: Info
+            text: Post może mieć tylko cztery tagi.
+          add_tag:
+            header: Dodaj nowy tag
+            button_text: Dodaj nowy tag
+            icon: Dodaj tag
+          cannot_remove_admin_adjusted_tag_html: Tag został dodany przez Admina. Nie możesz go teraz usunąć. Jeśli uważasz, że to błąd, skontaktuj się z nami przez <a href="mailto:%{contact_email}">%{contact_email}</a>.
+          cannot_add_admin_adjusted_tag_html: Tag został usunięty przez Admina. Nie możesz go teraz dodać. Jeśli uważasz, że to błąd, skontaktuj się z nami przez <a href="mailto:%{contact_email}">%{contact_email}</a>.
+        approve:
+          add: Oznacz jako zatwierdzone
+          remove: Usuń zatwierdzenie
+        checkmark: Zaznacz
+        close: Zamknij panel działań moderatora
+        delete:
+          subtitle: Usuń Ten Komentarz
+          button: Usuń Komentarz
+        edit:
+          post: Edytuj Post
+          article_admin: Admin:Artykuł
+          comment_admin: Admin:Komentarz
+          user_admin: Admin:Użytkownik
+          resource_admin: ResourceAdmin:Artykuł
+        errors:
+          one: '1 błąd uniemożliwił zapisanie tej blokady:'
+          other: '%{count} błędy uniemożliwiły zapisanie tej blokady:'
+        experience:
+          heading: Ustaw poziom doświadczenia
+          heading2: Poziom doświadczenia Posta
+          subtitle: Dopasuj najbardziej odpowiednią grupę odbiorców dla tego posta
+          aria_label: Otwórz sekcję poziomu doświadczenia
+          icon: Książka
+          desc_html: Kto <em>może</em> uznać ten post za najbardziej wartościowy, w oparciu o ogólny poziom doświadczenia?
+          from: '%{lvl} - '
+          level:
+            Advanced: Zaawansowany
+            Beginner: Początkujący
+            Expert: Ekspert
+            Mid-level: Średniozaawansowany
+            Novice: Nowicjusz
+        admin:
+          heading: Działania moderacyjne
+          heading2: Działania moderacyjne dla %{user}
+          subtitle: Działania moderacyjne dla %{user}
+          aria_label: Otwórz działania admina
+          icon: Korona
+        flag_user: Oflaguj %{username}
+        unflag_user: Usuń flagę %{username}
+        how: Jak to działa?
+        hidden:
+          subtitle: Ukryte Komentarze
+          by: Komentarz użytkownika %{user}
+        hint:
+          subtitle: Wszystkie negatywne reakcje są prywatne.
+          desc_html: |-
+            Użyj <b>Wysokiej Jakości</b>, aby przesunąć ten content "w górę" z dowolnego powodu (jakość, użyteczność itp.).
+            <br />
+            Użyj <b>Niskiej Jakości</b>, aby przesunąć ten content "w dół" z dowolnego powodu (jakość, użyteczność itp.).
+            <br />
+            Użyj <b>Oflagowania do Adminów</b> za naruszenia kodeksu postępowania (nękanie, bycie niegrzecznym, spam itp.).
+        other: Inne rzeczy, które możesz zrobić
+        add_reaction: Dodaj reakcję
+        score: Wynik
+        suspend:
+          suspend_title: Zawieś %{username}
+          suspend_user: Zawieś %{username}
+          suspend_modal_text: Po zawieszeniu, %{username} nie będzie mógł komentować ani publikować postów, dopóki zawieszenie nie zostanie usunięte.
+          suspend_modal_button: Prześlij i Zawieś
+          unsuspend_title: Odwiesz %{username}
+          unsuspend_user: Odwiesz %{username}
+          unsuspend_modal_text: Po odwieszeniu, %{username} będzie mógł ponownie komentować i publikować posty.
+          unsuspend_modal_button: Prześlij i Odwiesz
+        flag: Oflaguj
+        tag:
+          subtitle: Dostosowania Tagów
+          add: Dodaj
+          added_html: '<b>Aktualnie dodany tag:</b> %{tag}'
+          live_html: '<b>Aktualne tagi na żywo:</b> %{tags}'
+          reason: Powód dostosowania (Bądź super miły) - Wystarczy podać powód, powiadomienie zajmie się resztą.
+          remove: Usuń
+          removed_html: '<b>Aktualnie usunięty tag:</b> %{tag}'
+          select: Wybierz Tag
+          submit: Prześlij dostosowanie tagu
+          tag_name: Nazwa Tagu
+          undo:
+            button: '×'
+            confirm: Czy na pewno chcesz cofnąć %{type} tagu %{tag}?
+            type:
+              addition: dodanie
+              removal: usunięcie
+        thumb_down: Kciuk w dół
+        thumb_up: Kciuk w górę
+        toggle: Przełącz sekcję
+        feature: Wyróżnij Post
+        unfeature: Usuń wyróżnienie Posta
+        unpublish: Cofnij publikację Posta
+        unpublish_all:
+          title: Cofnij publikację wszystkich postów
+          button: Cofnij publikację wszystkich postów dla %{username}
+          modal_text1: Po cofnięciu publikacji, wszystkie posty użytkownika %{username} staną się ukryte i dostępne tylko dla nich.
+          modal_text2: Jeśli %{username} nie jest zawieszony, może ponownie opublikować swoje posty z pulpitu.
+          modal_button: Cofnij publikację wszystkich postów
+        unpublish_post:
+          modal_text1: Po cofnięciu publikacji, ten post stanie się niewidoczny dla publiczności i dostępny tylko dla %{username}.
+          modal_text2: Mogą ponownie opublikować post, jeśli nie są zawieszeni.
+        vomit: Ważne i otwarte flagi
+        vote_down: Niska Jakość
+        flag_to_admins: Oflaguj do Adminów
+        vote_up: Wysoka Jakość
+        featured_past_day:
+          one: '%{count} post z ostatniego dnia został wyróżniony.'
+          other: '%{count} posty z ostatniego dnia zostały wyróżnione.'
+      feed:
+        inbox_filter: Skrzynka odbiorcza
+        latest_filter: Najnowsze
+        inbox_html: <strong>Skrzynka odbiorcza</strong> to chronologiczna lista postów, które nie zostały jeszcze dokładnie przeanalizowane przez wielu moderatorów lub członków.
+        latest_html: <strong>Najnowsze</strong> pokazuje wszystkie posty w kolejności chronologicznej, niezależnie od tego, czy zostały przeanalizowane.
+      article:
+        approved: Zatwierdzone
+        author_id: ID Autora
+        comments: komentarze
+        contains_video: Zawiera wideo
+        co_author_ids: ID Współautorów
+        edit: Edytuj
+        featured: Wyróżnione
+        likes: polubienia
+        notes:
+          user_notes: notatki użytkownika
+          view_all: Zobacz wszystkie
+        pinned: Przypięte
+        pin_post: Przypnij post
+        published_at: Opublikowano
+        save: Zapisz
+        unpin_post: Odepnij post
+        unplublished: Nieopublikowane
+        user: Użytkownik
+        user_warned: Użytkownik ostrzeżony
+        view_details: Zobacz szczegóły
+      aside:
+        all: Wszystkie tagi
+        code_of_conduct: Kodeks postępowania
+        external: Link zewnętrzny
+        feedback:
+          subtitle: Masz pomysły, jak ulepszyć swoje doświadczenia z moderacją?
+          description: Proszę napisz do nas na %{email}!
+        hello: 'Cześć! 👋'
+        thanks: Dziękujemy za pomoc w utrzymaniu %{community} bezpiecznym! ❤️
+        inbox: Skrzynka odbiorcza
+        resources: Zasoby
+        tag: Przewodnik po moderacji tagów
+        terms_and_conditions: Warunki użytkowania
+        trusted: Przewodnik dla zaufanych użytkowników
+      author: Autor
+      comments:
+        view_comment: Zobacz komentarz
+        view_details: Zobacz szczegóły
+      date: Data
+      notice:
+        subtitle: '%{community} Moderatorzy'
+        desc1_html: Okresowo przyznajemy niektórym członkom %{community} zwiększone uprawnienia, aby pomóc moderować społeczność.
+        desc2_html: Sprawdź nasz %{code} i przeczytaj nasz %{trusted} oraz %{tag}.
+        desc3_html: Jeśli chciałbyś nam pomóc jako zaufany użytkownik lub moderator tagów, proszę napisz do nas na %{email} i powiedz, którą rolę chciałbyś pełnić i dlaczego. Jeśli chodzi o moderację tagów, powiedz nam, które tagi chciałbyś moderować.
+        desc4: P.S. Nie jesteś obecnie zalogowany.
+        code_of_conduct: Kodeks postępowania
+        tag: Przewodnik po moderacji tagów
+        trusted: Przewodnik dla zaufanych użytkowników
+      post: Post
+      priviliged_actions:
+        description: Wszystkie działania moderatora wpływają na wynik. Całkowity wynik jest kombinacją działań moderatora i publicznych reakcji.
+        no_flags: Artykuł nie ma flag.
+        no_quality_reactions: Artykuł nie ma reakcji wysokiej jakości od zaufanych użytkowników.
+        title: Działania moderatora
+      members:
+        all: Wszyscy
+        new: Nowi
+        established: Ustanowieni
+        filter: Filtruj według członków
+        label: 'Członkowie'

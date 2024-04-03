@@ -1,0 +1,80 @@
+---
+pl:
+  views:
+    listings:
+      meta:
+        description: "%{community} Ogłoszenie"
+      heading: Ogłoszenia
+      back: Wstecz
+      delete:
+        subtitle: Czy na pewno chcesz usunąć to ogłoszenie?
+        description:
+          text_html: Nie można cofnąć tej akcji, może chcesz po prostu %{action} zamiast tego?
+          edit: edytować
+          unpublish: cofnąć publikację
+        edit: Edytuj
+        submit: Usuń
+        unpublish: Cofnij publikację
+      edit:
+        heading: Edytuj Ogłoszenie
+        bump:
+          subtitle: Podbij swoje ogłoszenie
+          button: Podbij ogłoszenie
+          description: Możesz podbić swoje ogłoszenie za tę samą cenę co oryginalne ogłoszenie
+          last: 'Ostatnio Publikowane/Podbite: %{date}'
+        notice: Możesz edytować tytuł/treść/tagi tylko w przypadku szkiców lub w ciągu pierwszych 24 godzin od ogłoszenia lub podbicia
+        not_published:
+          text_html: To ogłoszenie nie jest %{not} opublikowane.
+          aside_html: To ogłoszenie nie jest %{not} opublikowane.
+          not: nie
+        publish: Opublikuj ogłoszenie
+        unpublish: Cofnij publikację ogłoszenia
+        update: Aktualizuj ogłoszenie
+        update_draft: Aktualizuj szkic
+      to_edit: Edytuj
+      errors:
+        one: '1 błąd uniemożliwił zapisanie tego ogłoszenia:'
+        other: "%{count} błędów uniemożliwiło zapisanie tego ogłoszenia:"
+      expired: To ogłoszenie wygasło.
+      form:
+        body_markdown:
+          description: Maksymalnie 400 znaków, maksymalnie 12 przerw wiersza, obrazy niedozwolone, *zachęca się do użycia markdown*. Proszę zawrzeć metodę kontaktu, jeśli to konieczne.
+          placeholder: "..."
+        category:
+          label: Kategoria
+          placeholder: CFP Konferencji (1 Kredyt)
+          summary: Szczegóły/zasady kategorii
+        expiry:
+          description: W przypadku wydarzeń związanych z czasem, terminów itp.
+        location:
+          description: Maksymalnie 32 znaki, tekst zwykły
+          label: Lokalizacja (Jeśli dotyczy wydarzeń itp.)
+          placeholder: Nowy Jork
+        no_credit: Potrzebujesz co najmniej jednego kredytu, aby utworzyć ogłoszenie.
+        organization:
+          description: Publikowanie w imieniu organizacji wykorzystuje kredyty organizacji.
+          none: Brak
+        publish: Opublikuj ogłoszenie
+        purchase: Zakup kredyty
+        save: Zapisz szkic
+        save_notice: Zapisanie szkicu nie wiąże się z kosztami kredytów.
+        tags:
+          placeholder: Dodaj do 8 tagów...
+        title:
+          placeholder: Maksymalnie 128 znaków, tekst zwykły
+      nav:
+        aria_label: Ogłoszenia
+        create: Utwórz
+        manage: Zarządzaj
+      new:
+        meta:
+          title: Nowe Ogłoszenie
+        heading: Utwórz Ogłoszenie Społeczności
+        buy: Kup więcej
+        disclaimer:
+          subtitle: Zastrzeżenie
+          description1: "Administratorzy %{community} mogą modyfikować tagi i kategorie, aby zapewnić dokładność. Możemy również usunąć i zwrócić niewłaściwe ogłoszenia."
+          description2: Ogłoszenia wygasają 30 dni po ich opublikowaniu lub "podbiciu".
+        organization: Kredyty organizacji
+        personal: Osobiste kredyty
+      preview_icon: Logo DEV

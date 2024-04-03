@@ -1,0 +1,20 @@
+---
+pl:
+  views:
+    feedback:
+      meta:
+        title: Opinia
+      heading: Dziękujemy za Twoje zgłoszenie.
+      home: Powrót do strony głównej
+      form:
+        rude_or_vulgar: Niegrzeczne lub wulgarne
+        harassment: Prześladowanie lub mowa nienawiści
+        spam: Spam lub problem z prawem autorskim
+        listings: Nieodpowiednia wiadomość/kategoria ogłoszeń
+        other: Inne
+        url: Zgłoszony URL
+        message:
+          subtitle: Wiadomość
+          description: Prosimy o podanie dodatkowych informacji lub kontekstu, które pomogą nam zrozumieć i rozwiązać sytuację.
+          placeholder: "..."
+        submit: Wyślij opinię

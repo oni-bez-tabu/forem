@@ -1,0 +1,113 @@
+---
+pl:
+  views:
+    articles:
+      meta:
+        description: Artykuł ze społeczności
+      actions:
+        aria_label: Akcje artykułu
+      comments:
+        aria_label: Dodaj komentarz do posta - %{title}
+        sort:
+          heading: "Sortuj dyskusję: "
+          title:
+            top: Najlepsze
+            latest: Najnowsze
+            oldest: Najstarsze
+          desc:
+            top: Najbardziej upvotowane i relewantne komentarze będą pierwsze
+            latest: Najnowsze komentarze będą pierwsze
+            oldest: Najstarsze komentarze będą pierwsze
+        sort_button:
+          aria_label: Sortuj komentarze
+        subtitle:
+          top_html: Najlepsze komentarze %{num}
+          latest_html: Najnowsze komentarze %{num}
+          oldest_html: Najstarsze komentarze %{num}
+        num: "(%{num})"
+        subscribe: Subskrybuj
+      conduct:
+        aria_label: Kontrolki zachowania
+        code: Kodeks postępowania
+        report: Zgłoś nadużycie
+      delete:
+        heading: Czy na pewno chcesz usunąć ten artykuł?
+        desc:
+          text_html: Nie możesz cofnąć tej akcji, może po prostu chcesz %{action} zamiast tego?
+          edit: edytować
+          unpublish: cofnąć publikację
+        action:
+          button: Usuń
+          cancel: Anuluj
+          edit: Edytuj
+          unpublish: Cofnij publikację
+      jump_to_comments:
+        aria_label: Przejdź do komentarzy
+        label: Przejdź do komentarzy
+      lock:
+        meta:
+          title: Potwierdź zablokowanie dyskusji
+        heading: Czy na pewno chcesz zablokować dyskusję w tym poście?
+        desc_html: Użytkownicy nie będą mogli dodawać nowych komentarzy. To <em class="fw-bold">nie</em> usunie istniejących komentarzy. Możesz odblokować dyskusję w dowolnym momencie, aby umożliwić użytkownikom ponowne komentowanie.
+        cancel: Anuluj
+        notes:
+          label: Notatki (opcjonalnie) - widoczne tylko dla Ciebie i administratorów
+          placeholder: Więcej szczegółów dlaczego zablokowałeś dyskusję.
+        reason:
+          label: Powód zablokowania dyskusji (opcjonalnie) - będzie publicznie wyświetlany
+          placeholder: Powód, dla którego zablokowałeś tę dyskusję.
+        submit: Zablokuj dyskusję
+      preview_discuss_html:
+        zero: Nowa dyskusja!
+        one: '#dyskutuj <img src="%{image}" />%{count}'
+        other: '#dyskutuj <img src="%{image}" />%{count}'
+      save:
+        title: "Zapisz post %{title} na liście do czytania"
+        aria_label: "Zapisz post %{title} na liście do czytania"
+        initial: Zapisz
+        success: Zapisano
+      scheduled:
+        subtitle: Zaplanowany post.
+        text: " Ten URL jest publiczny, ale tajny, więc udostępniaj na własne ryzyko."
+        edit: Kliknij, aby edytować
+      series:
+        subtitle: "%{slug} (%{size})"
+        size:
+          one: "%{count} część serii"
+          other: "%{count} części serii"
+        published: Opublikowano %{date}
+        inbetween:
+          num: "..."
+          text:
+            one: jeszcze jedna część...
+            other: "%{count} więcej części..."
+          title: Zobacz więcej
+      unlock:
+        meta:
+          title: Potwierdź odblokowanie dyskusji
+        heading: Czy na pewno chcesz odblokować dyskusję w tym poście?
+        desc: Użytkownicy będą mogli dodawać nowe komentarze. Możesz zablokować dyskusję w dowolnym momencie, aby zapobiec dodawaniu komentarzy przez użytkowników.
+        cancel: Anuluj
+        notes: 'Notatki z czasu, gdy ta dyskusja była zablokowana (widoczne tylko dla Ciebie i administratorów):'
+        reason: 'Powód, dla którego ta dyskusja była zablokowana (publicznie widoczny):'
+        submit: Odblokuj dyskusję
+      unpublished:
+        subtitle: Nieopublikowany post.
+        text: " Ten URL jest publiczny, ale tajny, więc udostępniaj na własne ryzyko."
+        edit: Kliknij, aby edytować
+      co_authors_html: z %{names}
+      crossposted:
+        text_html: Oryginalnie opublikowano na %{url} %{on}
+        on_html: dnia %{date}
+      edited: Zaktualizowano dnia %{date}
+      edited_html: Zaktualizowano dnia %{date}
+      for_org_html: "%{start} dla %{end}%{org}"
+      missing: Artykuł nie jest już dostępny
+      published_html: Opublikowano dnia %{date}
+      scheduled_html: Zaplanowano na %{date}
+      sign_in_for_full_latest_html: Niektóre najnowsze posty są widoczne tylko dla członków. <a href="%{link}">Zaloguj się</a>, aby zobaczyć wszystkie najnowsze.
+      read_next: Czytaj dalej
+      reading_time:
+        one: "1 min czytania"
+        other: "%{count} min czytania"
+      right_nav: Szczegóły autora

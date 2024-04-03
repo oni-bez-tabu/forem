@@ -1,0 +1,158 @@
+---
+pl:
+  views:
+    dashboard:
+      meta:
+        title: Panel kontrolny - %{site}
+      heading: Panel kontrolny
+      actions:
+        mobile:
+          posts: Posty (%{num})
+          followers: Obserwujący (%{num})
+          following_tags: Obserwowane tagi (%{num})
+          following_users: Obserwowani użytkownicy (%{num})
+          following_orgs: Obserwowane organizacje (%{num})
+          following_pods: Obserwowane podcasty (%{num})
+          hidden_tags: Ukryte tagi (%{num})
+        posts: Posty
+        series: Serie
+        followers: Obserwujący
+        following_tags: Obserwowane tagi
+        following_users: Obserwowani użytkownicy
+        following_orgs: Obserwowane organizacje
+        following_pods: Obserwowane podcasty
+        hidden_tags: Ukryte tagi
+        listings: Ogłoszenia
+        analytics: Analityka
+        for_org: Analityka dla %{org}
+        upload: Prześlij wideo
+      analytics:
+        meta:
+          title: Analityka
+        heading: Analityka dla %{name}
+        back: "Powrót do głównego panelu kontrolnego"
+        your: Twój panel kontrolny
+        org: "Panel kontrolny analityki %{org}"
+      article:
+        heading:
+          text_html: "%{archived}%{title}"
+          archived: "[Zarchiwizowane] "
+        archived: Zarchiwizowane
+        published: 'Opublikowane:'
+        published_html: 'Opublikowane: %{date}'
+        edited: 'Edytowane:'
+        edited_html: 'Edytowane: %{date}'
+        series: 'Seria:'
+        series_html: "<strong>Seria:</strong> %{series}"
+        draft: Szkic
+        scheduled: Zaplanowane
+        scheduled_at: 'Zaplanowane:'
+        language: 'Język:'
+        reactions:
+          title: Reakcje
+          icon: Reakcje
+          text_html:
+            one: "%{num} reakcja"
+            other: "%{num} reakcje"
+        comments:
+          title: Komentarze
+          icon: Komentarze
+          text_html:
+            one: "%{num} komentarz"
+            other: "%{num} komentarze"
+        views:
+          title: Wyświetlenia
+          icon: Wyświetlenia
+          lt_25: "< 25"
+          text_html:
+            one: "%{scale} wyświetlenie"
+            other: "%{scale} wyświetleń"
+          u_25: poniżej 25
+        subscriptions:
+          title: Subskrypcje
+          icon: Dane
+          number: Subskrypcje (%{num})
+        delete: Usuń
+        unpin: Odepnij
+        pin:
+          title: Przypnij do profilu
+          button: Przypnij do profilu
+          text: Przypnij
+        manage:
+          aria_label: 'Zarządzaj postem: %{title}'
+          text: Zarządzaj
+        lock: Zablokuj dyskusję
+        unlock: Odblokuj dyskusję
+        edit:
+          aria_label: 'Edytuj post: %{title}'
+          text: Edytuj
+        more:
+          title: 'Więcej opcji dla posta: %{title}'
+          icon: Więcej...
+        stats: Statystyki
+        archive: Archiwizuj post
+        unarchive: Wyjmij z archiwum
+        author: Autor
+        co_authors: Współautorzy
+        series_author_change_warning: Zmiany autora nie są dozwolone dla postów w serii.
+        icon: Szczegóły
+        author_is: 'AUTOR: '
+        save: Zapisz
+        submit: Prześlij zmianę autora
+      followers:
+        heading: Panel kontrolny » Obserwujący
+        empty: Nie masz jeszcze żadnych obserwujących...
+      following_orgs:
+        heading: Panel kontrolny » Obserwowane organizacje
+        empty: Jeszcze nie obserwujesz żadnych organizacji...
+      following_pods:
+        heading: Panel kontrolny » Obserwowane podcasty
+        empty: Jeszcze nie obserwujesz żadnych podcastów...
+      following_tags:
+        heading: Panel kontrolny » Obserwowane tagi
+        empty_html: "<span>Obserwuj tagi, aby spersonalizować swój kanał. Możesz eksplorować popularne tagi <a href=%{link}>tutaj</a></span>."
+      following_users:
+        heading: Panel kontrolny » Obserwowani użytkownicy
+        empty: Nie obserwujesz jeszcze żadnych użytkowników...
+      hidden_tags:
+        heading: Panel kontrolny » Ukryte tagi
+        empty_html: "<span>Nie masz jeszcze żadnych ukrytych tagów...</span>"
+      tags:
+        following_button: Obserwowane
+        options:
+          icon: Opcje
+          hide: Ukryj tag
+        unhide_button: Odkryj
+      listings:
+        meta:
+          title: Pulpit ogłoszeń
+      posts:
+        heading: Posty
+        archived: Pokaż zarchiwizowane
+        option:
+          creation-desc: Niedawno utworzone
+          published-desc: Niedawno opublikowane
+          views-desc: Najwięcej wyświetleń
+          reactions-desc: Najwięcej reakcji
+          comments-desc: Najwięcej komentarzy
+          aria_label: Sortuj według
+        org: "%{name} (%{num})"
+        personal: Osobiste
+        empty:
+          desc: Tutaj możesz zarządzać swoimi postami, ale jeszcze nic nie napisałeś.
+          new: Napisz swój pierwszy post teraz
+      subscriptions:
+        meta:
+          title: Subskrypcje %{title}
+        heading: Subskrypcje
+        subhead:
+          text_html: "%{for} %{source}"
+          for: dla
+        empty: Nie masz jeszcze żadnych subskrybentów dla tego %{kind}...
+      summary:
+        reactions: Łączna liczba reakcji na posty
+        views: Łączna liczba wyświetleń postów
+        comments: Łączna liczba komentarzy do postów
+        listings: Utworzone ogłoszenia
+        credits: Dostępne kredyty
+        lt_500: "< 500"

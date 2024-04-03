@@ -1,0 +1,72 @@
+---
+pl:
+  views:
+    main:
+      aria_home: "%{community} Strona główna"
+      header:
+        create_account: Załóż konto
+        login: Zaloguj się
+        nav:
+          aria_label: Menu nawigacyjne
+        moderation:
+          aria_label: Moderacja
+          icon: Moderacja
+        notifications:
+          aria_label: Powiadomienia
+          icon: Powiadomienia
+        skip: Przejdź do treści
+      modal:
+        create_account:
+          aria_label: Utwórz nowe konto
+          text: Załóż konto
+        login:
+          aria_label: Zaloguj się
+          text: Zaloguj się
+      nav:
+        admin: Admin
+        dashboard: Panel kontrolny
+        placeholder: "..."
+        list: Lista lektur
+        moderator_center: Centrum moderatora
+        other: Inne
+        settings: Ustawienia
+      nav_name:
+        About: O nas
+        Code of Conduct: Kodeks postępowania
+        Contact: Kontakt
+        FAQ: FAQ
+        Home: Strona główna
+        Listings: Ogłoszenia
+        Podcasts: Podcasty
+        Privacy Policy: Polityka prywatności
+        Reading List: Lista lektur
+        Tags: Tagi
+        Terms of use: Warunki użytkowania
+        Videos: Filmy
+      side:
+        active_discussions: "Aktywne dyskusje"
+        listings:
+          heading: Ogłoszenia
+          all: Zobacz wszystkie
+          new: Utwórz ogłoszenie
+        trend: trendy poradniki/zasoby
+        recent: ostatnio wyszukiwane
+      tags:
+        aria_label: Dostosuj priorytet tagów
+        follow: Obserwuj
+        my_tags: Moje tagi
+        popular_tags: Popularne tagi
+      footer:
+        built:
+          text_html: Zbudowane na %{forem} — %{opensource} oprogramowanie, które napędza %{dev} i inne inkluzywne społeczności.
+          forem: Forem
+          opensource: otwartym kodzie
+          dev: DEV
+        desc_html: "%{community} — %{desc}"
+        logo: Logo Forem
+        powered:
+          text_html: Stworzone z miłością i %{rails}. %{community} <span title="copyright">&copy;</span> %{copyright}.
+          rails: Ruby on Rails
+        sidebar_desc_html: "%{community}\n%{desc}"
+      create_post: Utwórz post
+      signout: Wyloguj się

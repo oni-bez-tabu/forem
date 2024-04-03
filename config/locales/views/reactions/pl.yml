@@ -1,0 +1,42 @@
+---
+pl:
+  views:
+    reactions:
+      category:
+        hands: Dłonie
+        like: Lubię to
+        readinglist: Lista lektur
+        thinking: Zastanawiam się
+        thumbsup: Kciuk w górę
+        thumbsdown: Kciuk w dół
+        unicorn: Jednorożec
+        vomit: Zgłoś
+        lightbulb: Żarówka
+        raised_hands: Podniesione dłonie
+        rocket: Rakieta
+        exploding_head: Wybuchająca głowa
+        fire: Ogień
+      drawer_button: Dodaj reakcję
+      summary:
+        count_html:
+          one: "%{count}%{start}\_reakcja%{end}"
+          other: "%{count}%{start}\_reakcje%{end}"
+        title: Reakcje
+      like:
+        title: Lubię to
+        aria_label: Lubię to
+        icon: Przycisk serca
+        text: Lubię to
+      unicorn:
+        title: Jednorożec
+        aria_label: Zareaguj jednorożcem
+      readingList:
+        title: Zapisz
+        aria_label: Dodaj do listy lektur
+        icon: Przycisk zapisu
+        text: Zapisz
+      subscribe:
+        title: Subskrybuj komentarze
+        aria_label: Subskrybuj komentarze
+        icon: Przycisk zapisu
+        text: Subskrybuj komentarze

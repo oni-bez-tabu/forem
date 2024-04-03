@@ -1,0 +1,66 @@
+---
+pl:
+  views:
+    tags:
+      meta:
+        title: Tagi
+        description: Tagi do śledzenia na %{community}
+        og:
+          description: "%{community} jest wspaniałe!"
+      heading:
+        default: Tagi
+        search_results: Wyniki wyszukiwania dla %{q}
+      search:
+        aria_labels:
+          search_input: Termin wyszukiwania tagów
+          submit: Szukaj tagów
+        placeholder: Szukaj tagu
+      edit:
+        meta:
+          title: Edytuj %{tag}
+        admin: "Admin"
+        help: "Pomoc"
+        view: "Widok"
+        form:
+          pretty_name:
+            label: Ładna nazwa
+            placeholder: To jest nazwa na górze strony widoku.
+          bg_color_hex:
+            label: Kolor tagu
+          short_summary:
+            label: Krótkie podsumowanie
+            placeholder: Krótki przegląd tego, o co chodzi w tym tagu.
+          wiki_body_markdown:
+            label: Treść wiki w formacie markdown
+            placeholder: To jest sekcja 'o'. Dodaj FAQ, dodatkowe zasoby itp.
+          rules_markdown:
+            label: Zasady w formacie markdown
+            placeholder: Opcjonalne - można użyć do wyzwań, czyli wytycznych dotyczących zgłoszeń.
+          submit: Zapisz
+      follow: Śledź
+      hide: Ukryj
+      aria_labels:
+        follow: "Śledź tag: %{tag_name}"
+        hide: "Ukryj tag: %{tag_name}"
+      following_tags: Śledzone tagi
+      hidden_tags: Ukryte tagi
+      moderator:
+        text_html: "oddzielone przecinkami, spacja jest opcjonalna. Przykład: %{code}"
+        code: 123
+        placeholder: "oddzielone przecinkami, spacja jest opcjonalna. Przykład: 1,2,3"
+      published:
+        one: 1 post
+        other: "%{count} posty"
+      sidebar:
+        about: 'o #%{tag}'
+        admin: Admin
+        edit: Edytuj
+        guidelines: wytyczne dotyczące zgłoszeń
+        moderate: Moderuj
+        mods: moderatorzy tagu
+        new: Stwórz post
+        older: 'Starsze posty o #%{tag}'
+        published:
+          one: 1 Opublikowany post
+          other: "%{count} Opublikowane posty"
+

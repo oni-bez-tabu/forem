@@ -1,0 +1,28 @@
+---
+pl:
+  views:
+    editor:
+      meta:
+        title: Edytuj Post
+      heading:
+        new: Nowy Post
+      create: Utwórz Post
+      close:
+        icon: Zamknij
+        title: Zamknij edytor
+      cover_image:
+        add: Dodaj obrazek okładkowy
+        change: Zmień
+      edit: Edytuj
+      modes: Zobacz tryby posta
+      new_title: Nowy tytuł posta tutaj...
+      preview: Podgląd
+      video:
+        progress:
+          heading: "⏳ Trwa transkodowanie wideo ⏳"
+          notice_1: Otrzymasz e-mail po zakończeniu tego procesu.
+          notice_2: To jest zwykły nieopublikowany post. Dodaj tytuł/tagi/treść/itp., a następnie oznacz jako opublikowany po zakończeniu przetwarzania wideo.
+        submit_image:
+          button: Zatwierdź zmianę
+          text: 'URL obrazu podglądu: '
+          placeholder: Nowy URL miniatury

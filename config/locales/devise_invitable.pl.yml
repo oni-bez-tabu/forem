@@ -1,0 +1,33 @@
+---
+pl:
+  devise:
+    failure:
+      invited: Masz oczekujące zaproszenie, zaakceptuj je, aby ukończyć tworzenie swojego konta.
+    invitations:
+      edit:
+        header: Ustaw swoje hasło
+        submit_button: Zacznijmy
+      invitation_removed: Twoje zaproszenie zostało usunięte.
+      invitation_token_invalid: Podany token zaproszenia nie jest prawidłowy!
+      new:
+        header: Wyślij zaproszenie
+        submit_button: Wyślij zaproszenie
+      no_invitations_remaining: Brak pozostałych zaproszeń
+      send_instructions: Email z zaproszeniem został wysłany na %{email}.
+      updated: Twoje hasło zostało ustawione pomyślnie. Jesteś teraz zalogowany.
+      updated_not_active: Twoje hasło zostało ustawione pomyślnie.
+    mailer:
+      invitation_instructions:
+        accept_instructions: Możesz zaakceptować zaproszenie klikając ten link
+        accept: Zaakceptuj Zaproszenie
+        accept_until: To zaproszenie wygaśnie po %{due_date}.
+        hello: Cześć
+        ignore: Jeśli nie chcesz zaakceptować zaproszenia, proszę zignoruj tego emaila. Twoje konto nie zostanie utworzone dopóki nie przejdziesz przez powyższy link i ustawisz swoje hasło.
+        someone_invited_you: Zostałeś zaproszony do dołączenia do społeczności %{community_name} na %{url}.
+        subject: Instrukcje zaproszenia
+  time:
+    formats:
+      devise:
+        mailer:
+          invitation_instructions:
+            accept_until_format: "%B %d, %Y %I:%M %p"

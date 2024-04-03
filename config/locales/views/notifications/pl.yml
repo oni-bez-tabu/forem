@@ -1,0 +1,95 @@
+---
+pl:
+  views:
+    notifications:
+      meta:
+        description: Skrzynka odbiorcza powiadomień dla %{community}
+        og:
+          title: Powiadomienia - %{community}
+      heading: Powiadomienia
+      article:
+        published_html: "%{user} opublikował %{title}"
+        mod_greeting: "Hej %{user} 👋"
+        welcome_html: "%{user} jest nowy w społeczności. Sprawdź ich post i zostaw miły komentarz, aby poczuli się mile widziani!"
+        mod_opt_out: Nie chcesz otrzymywać tych powiadomień?
+        change_settings: Zmień ustawienia
+      badge:
+        heading_html: Otrzymałeś odznakę %{badge}
+        awarded_html: "Otrzymujesz również %{credits} do wykorzystania na %{listings}, jeśli masz coś, co chciałbyś promować. 🎉"
+        credits:
+          one: "%{count} nowy kredyt"
+          other: "%{count} nowych kredytów"
+        listings: ogłoszenia społecznościowe
+        more: Więcej informacji o ogłoszeniach
+        profile: Odwiedź swój profil
+      broadcast:
+        visit_html: Odwiedź %{settings}, aby zarządzać swoimi powiadomieniami.
+        settings: Ustawienia
+      comment:
+        commented_html: "%{user} skomentował %{title}"
+        first_html: "%{user} napisał swój pierwszy komentarz do %{title}"
+        first_reply: "Daj im pierwszą odpowiedź! 🎉"
+        left_html: "%{user} właśnie zostawił komentarz do %{title}."
+        replied_html: "%{user} odpowiedział w wątku do %{title}"
+        mod_greeting: "Hej %{user} 👋"
+        welcome_html: "%{user} jest nowy w społeczności. Zostaw miłą odpowiedź, aby poczuli się mile widziani."
+        mod_opt_out: Nie chcesz otrzymywać tych powiadomień?
+        change_settings: Zmień ustawienia
+      error:
+        subtitle: Wystąpił błąd!
+        desc: Zostało to zalogowane i śledzimy to.
+      follow:
+        and_html: "%{first} i %{second} zaczęli Cię obserwować!"
+        and_other_html:
+          one: "%{first} i %{others} zaczęli Cię obserwować!"
+          other: "%{first} i %{others} zaczęli Cię obserwować!"
+        others:
+          one: "%{count} innych"
+          other: "%{count} innych"
+        single_html: "%{name} zaczął Cię obserwować!"
+      load: Załaduj więcej
+      mention:
+        article_html: "%{user} wspomniał o Tobie w poście%{if_org}"
+        comment_html: "%{user} wspomniał o Tobie w komentarzu"
+        article_mobile: "%{user} wspomniał o Tobie w poście %{title}"
+        comment_mobile: "%{user} wspomniał o Tobie w komentarzu do %{title}"
+        if_org_html: " pod %{org}"
+      milestone:
+        heading_html: Twój post %{title} osiągnął %{type}!
+        check: Sprawdź swój panel kontrolny
+        intro: "🎉🎉🎉🎉🎉🎉🎉🎉"
+        type:
+          View:
+            one: "%{count} wyświetleń"
+            other: "%{count} wyświetleń"
+          Reaction:
+            one: "%{count} reakcji"
+            other: "%{count} reakcji"
+      nav:
+        aria_label: Powiadomienia
+        all: Wszystkie
+        comments: Komentarze
+        posts: Posty
+      new_post:
+        if_org_html: " pod %{org}"
+        verb_html: "%{user} utworzył nowy post%{if_org}"
+      reacted:
+        and_html: "%{first} i %{last}"
+        and_other_html:
+          one: "%{first} i %{count} innych"
+          other: "%{first} i %{count} innych"
+        verb_html:
+          one: "%{start}%{actors} zareagowali na %{title} z%{end} %{reactions}"
+          other: "%{start}%{actors} zareagowali na %{title} z%{end} %{reactions}"
+        your:
+          article: Twój artykuł
+          comment: Twój komentarz
+      settings: Ustawienia
+      tag:
+        heading: "Hej 👋"
+        add_html: Moderatorzy dodali tag <strong>%{tag}</strong> do Twojego posta %{title}. Moderatorzy uznali, że ten tag najlepiej reprezentuje Twój artykuł.
+        check_html: Sprawdź %{other}, które mogą być bardziej odpowiednie
+        other: inne popularne tagi
+        reason: 'Powód działania:'
+        remove_html: Moderatorzy usunęli tag <strong>%{tag}</strong> z Twojego posta %{title}. Niektóre tagi mają specjalne wytyczne dotyczące zgłoszeń, a moderatorzy muszą dostosować tagi, aby najlepiej pasowały do społeczności.
+        support_html: "Dziękujemy za bycie częścią %{community}! %{email} 🤗"

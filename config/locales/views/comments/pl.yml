@@ -1,0 +1,157 @@
+---
+pl:
+  views:
+    comments:
+      meta:
+        title_root: Dyskusja na temat %{title}
+        description: Artykuł społeczności
+        og:
+          title: Dyskusja na temat %{title}
+          title_rel: "%{root} — %{site}"
+          title_root: "[Dyskusja] %{title} — %{site}"
+          description: "%{site} Komentarz"
+      parent:
+        subtitle_html: "%{start}Dyskusja na temat: %{end}%{title}"
+        metadata_html: "%{name}%{on}"
+        date: " dnia %{date}"
+        full: Pełna dyskusja
+        read: Przeczytaj pełny post
+        view: Zobacz post
+        view_full:
+          one: Zobacz pełną dyskusję (%{count} komentarz)
+          other: Zobacz pełną dyskusję (%{count} komentarze)
+        reply_html: "%{start}Odpowiedzi na:%{end} %{title}"
+      delete:
+        heading: Czy na pewno chcesz usunąć ten komentarz?
+        desc_html: Nie można cofnąć tej akcji, może chcesz po prostu %{action} zamiast tego?
+        action: Edytować
+        submit: Usuń
+        edit: Edytuj
+        cancel: Odrzuć
+        comment_deleted: Komentarz usunięty
+      collapse: Zwiń
+      edit: Edycja komentarza
+      edited:
+        text_html: "• Edytowano dnia %{date}"
+        short_html: "• Edytowano"
+      expand: Rozwiń
+      visible_signed_in:
+        text_html: "Niektóre komentarze mogą być widoczne tylko dla zalogowanych użytkowników. %{sign_in}, aby zobaczyć wszystkie komentarze."
+        sign_in: "Zaloguj się"
+      hidden:
+        text_html: Niektóre komentarze zostały ukryte przez autora posta - %{info}
+        info: dowiedz się więcej
+        comment_hidden: Komentarz ukryty przez autora posta
+      hider:
+        description_html: Czy na pewno chcesz ukryć ten komentarz? Zostanie on ukryty w twoim poście, ale nadal będzie widoczny za pomocą %{permalink} komentarza.
+        hide_child: Ukryj również komentarze podrzędne
+        note_html: Dla dalszych działań, możesz rozważyć zablokowanie tej osoby i/lub %{reporting}
+        permalink: permalink
+        reporting: zgłaszanie nadużyć
+        submit: Potwierdź
+      locked: Dyskusja została zablokowana. Nie można dodawać nowych komentarzy.
+      orphan:
+        deleted: "[Komentarz z usuniętego posta]"
+      re:
+        text_html: "%{re}%{title}"
+        re: 'Odp: '
+      settings:
+        meta:
+          title: Ustawienia komentarza
+        heading: Ustawienia komentarza
+        state:
+          show:
+            subtitle: Pokazuj powiadomienia wątku
+            desc: Otrzymasz wszystkie powiadomienia dla tego komentarza i wszystkich twoich komentarzy w tym łańcuchu.
+          mute:
+            subtitle: Wycisz powiadomienia wątku
+            desc: Wszystkie powiadomienia dla tego komentarza i wszystkich twoich komentarzy w wątku są obecnie wyciszone.
+        subscribe:
+          subtitle: Subskrypcja
+          desc: Nadal jesteś zapisany/a do wszystkich komentarzy w szerszym wątku, co oznacza, że nadal będziesz otrzymywać powiadomienia o odpowiedziach na ten komentarz.
+          mute: Wycisz powiadomienia
+          unmute: Wyłącz wyciszenie powiadomień
+      quality:
+        low: Komentarz oznaczony jako niskiej jakości/niekonstruktywny przez społeczność.
+        superlow: Wynik komentarza poniżej progu ukrywania, wyświetlany tylko dla administratorów
+        conduct: Zobacz Kodeks Postępowania
+        hidden:
+          icon: Info
+          text:
+            visible_in_permalink: Komentarz ukryty przez autora posta - wątek widoczny tylko w tym permalinku
+            accessible_via_permalink: Komentarz ukryty przez autora posta - wątek dostępny tylko przez permalink
+      write:
+        errors:
+          one: '1 błąd uniemożliwił zapisanie tego komentarza:'
+          other: "%{count} błędy uniemożliwiły zapisanie tego komentarza:"
+        field:
+          aria_label: Dodaj komentarz do dyskusji
+          placeholder: Dodaj do dyskusji
+          submit: Prześlij
+          templates: Szablony
+          upload: Prześlij obraz
+          use: Użyj szablonu odpowiedzi
+          guide:
+            title: Przewodnik po Markdown
+            icon: Przewodnik edytora
+        template:
+          article: Ten post zawiera szablon komentarza
+          create:
+            subtitle: Utwórz szablon
+            desc: Szablony pozwalają szybko odpowiadać na często zadawane pytania lub przechowywać fragmenty do ponownego użycia.
+          moderator: Zaufany użytkownik
+          personal: Osobisty
+        submit: Wyślij
+        preview: Podgląd
+        cancel: Odrzuć
+      menu:
+        aria_label: Przełącz menu rozwijane
+        icon: Menu rozwijane
+        copy:
+          aria_label: Skopiuj link do komentarza %{user}
+          text: Skopiuj link
+        settings:
+          aria_label: Przejdź do ustawień komentarza %{user}
+        action:
+          aria_label: "%{action} komentarz %{user}"
+          hide: Ukryj
+          unhide: Pokaż
+          hide_text: Ukryj
+          unhide_text: Pokaż
+        moderate:
+          aria_label: Moderuj komentarz %{user}
+        report:
+          aria_label: Zgłoś komentarz %{user} jako obraźliwy lub naruszający nasz kodeks postępowania i/lub warunki korzystania
+      footer:
+        heart:
+          aria_label: polub
+          title: Polub
+          icon: 'Polub komentarz: '
+          count_html: "%{num}%{likes}"
+          text: Polub
+        reply:
+          aria_label: Odpowiedz na komentarz...
+          icon: Przycisk komentarza
+          done: Odpowiedziano
+          text: Odpowiedz
+          placeholder: Odpowiedz...
+        thread:
+          icon: Wątek
+          text: Wątek
+        view:
+          icon: Przycisk wyświetlania
+          text: Wyświetl
+        subscribe:
+          icon: Przycisk subskrypcji
+          text: Subskrybuj komentarze
+      count:
+        one: "%{count} komentarz"
+        other: "%{count} komentarze"
+      empty: Nowy
+      add: "Dodaj\_Komentarz"
+      summary:
+        count_html:
+          one: "%{count}%{start}\_komentarz%{end}"
+          other: "%{count}%{start}\_komentarze%{end}"
+        title: Komentarze
+

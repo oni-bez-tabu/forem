@@ -1,0 +1,25 @@
+---
+pl:
+  views:
+    manager:
+      meta:
+        title: Zarządzaj %{title}
+      error:
+        pins: "Ups! %{error} 😬"
+      tools:
+        heading: 'Narzędzia:'
+        subtitle: 'Poziom doświadczenia posta:'
+        text_html: "Czy Twój post jest napisany bardziej dla początkujących czy zaawansowanych odbiorców? Dostosuj ten poziom jako <em>delikatny</em> wskaźnik, który pomoże pokazać post osobom, które skorzystają na nim najbardziej."
+      nav:
+        dashboard: Panel kontrolny
+        text: "👉 Zarządzaj swoim postem"
+      rating:
+        heading: Poziom doświadczenia posta
+        text: Dla kogo ten post jest najbardziej istotny?
+        lower: "👈 Początkujący"
+        higher: "Ekspert 👉"
+      tips:
+        heading: 'Porady:'
+        text_1: Napisz własnego tweeta o poście, opisując osobiście, dlaczego go napisałeś lub dlaczego ludzie mogą go uznać za użyteczny. Możemy Cię zretweetować.
+        text_2_html: 'Udostępnij w agregatorach linków, takich jak <a href="https://www.reddit.com">Reddit</a>. Staraj się wybierać najbardziej specyficzne tematycznie subreddity, takie jak <a href="https://www.reddit.com/r/javascript">/r/javascript</a> czy <a href="https://www.reddit.com/r/python">/r/python</a>, itp. <em>Ostrzeżenie: mogą czaić się złośliwcy i trolle.</em>'
+        text_3: Udostępnij swoim współpracownikom lub lokalnym społecznościom. Poproś ludzi, aby zadawali Ci pytania w komentarzach. To świetny sposób, aby wywołać dodatkową dyskusję.

@@ -1,0 +1,58 @@
+---
+pl:
+  views:
+    credits:
+      meta:
+        title: Kredyty
+      ledger:
+        class:
+          listing: Ogłoszenie
+        category: Kategoria
+        item: Przedmiot
+        cost: Koszt (kredyty)
+        date: Data
+        misc: Różne przedmioty
+      listing:
+        create: Utwórz ogłoszenie
+        dashboard: Przejdź do pulpitu ogłoszeń
+      new:
+        meta:
+          title: Zakup kredytów
+        heading: Zakup kredytów dla @%{name}
+        hook:
+          text_html: Kredyty są używane na %{listings} jak również na nadchodzące produkty i usługi.
+          listings: "%{community} ogłoszenia"
+        form:
+          amount:
+            label: Kwota zakupu
+            placeholder: Wprowadź dowolną kwotę
+          method:
+            label: Metoda płatności
+            number: "**** **** **** %{last}"
+            exp: "%{mm}/%{yy}"
+            add: Dodaj nową kartę
+          submit: Zakończ zakup
+          submitting: Wysyłanie...
+          note_org: "*Wszyscy administratorzy organizacji mają dostęp do kredytów należących do organizacji"
+        switch:
+          org: Przełącz na %{name}
+          user: Przełącz na zakup osobisty
+        status:
+          subtitle:
+            org: Ile kredytów posiada %{name}?
+            user: Ile obecnie mam kredytów?
+          desc:
+            org: "%{name} ma %{count} kredytów."
+            user: Masz %{count} kredytów.
+        how:
+          subtitle: Jak mogę zdobyć kredyty?
+          desc_html: Członkowie otrzymują <strong>5 kredytów</strong> za każdą odznakę profilu, którą zdobędą.
+      purchase: Zakup dodatkowe kredyty
+      tag: 'Tag: %{name}'
+      status:
+        user:
+          one: "Masz %{count} osobisty kredyt do wydania"
+          other: "Masz %{count} osobistych kredytów do wydania"
+        org_html:
+          one: "%{name} ma %{num} kredyt do wydania"
+          other: "%{name} ma %{num} kredytów do wydania"

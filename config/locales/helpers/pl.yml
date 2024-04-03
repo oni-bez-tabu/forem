@@ -1,0 +1,238 @@
+---
+pl:
+  helpers:
+    label:
+      listing:
+        body_markdown: Treść Markdown
+        expires_at: Niestandardowa data wygaśnięcia
+        location: Lokalizacja
+        organization_id: Dodaj post pod organizację
+        tag_list: Tagi
+        title: Tytuł
+      organization:
+        name: Nazwa
+        slug: Nazwa użytkownika
+        profile_image: Obraz profilowy
+        twitter_username: Nazwa użytkownika na Twitterze
+        github_username: Nazwa użytkownika na GitHubie
+        url: Adres URL strony internetowej
+        tag_line: Linia tagu
+        summary: Podsumowanie
+        location: Lokalizacja
+        email: Email wsparcia
+        company_size: Rozmiar organizacji
+        story: Nasza historia
+        tech_stack: Nasz stos technologiczny
+        cta_body_markdown: Treść tekstu
+        cta_button_text: Tekst linku
+        cta_button_url: Adres URL linku
+        proof: Dowód
+      podcast:
+        android_url: Adres URL dla Androida
+        description: Opis
+        feed_url: Adres URL kanału
+        image: Obraz
+        itunes_url: Adres URL iTunes
+        main_color_hex: Główny kolor w formacie szesnastkowym
+        overcast_url: Adres URL Overcast
+        pattern_image: Obraz wzoru
+        slug: Slug
+        soundcloud_url: Adres URL SoundCloud
+        title: Tytuł
+        twitter_username: Nazwa użytkownika na Twitterze
+        website_url: Adres URL strony internetowej
+      response_template:
+        title: Tytuł
+        content: Treść komentarza (Markdown)
+      user:
+        name: Imię
+        email: Email
+        username: Nazwa użytkownika
+        profile_image: Obraz profilowy
+      users_notification_setting:
+        email_newsletter: Wyślij mi cotygodniowe wiadomości e-mailowe z biuletynem
+        email_digest_periodic: Wyślij mi okresowy przegląd najlepszych postów z moich tagów
+        email_tag_mod_newsletter: Wyślij mi cotygodniowe wiadomości e-mailowe dla moderatorów tagów
+        email_community_mod_newsletter: Wyślij mi cotygodniowe wiadomości e-mailowe dla moderatorów społeczności
+        email_comment_notifications: Wyślij mi e-mail, gdy ktoś odpowie mi w wątku komentarzy
+        email_follower_notifications: Wyślij mi e-mail, gdy ktoś nowy zacznie mnie obserwować
+        email_mention_notifications: Wyślij mi e-mail, gdy ktoś mnie wspomni
+        email_badge_notifications: Wyślij mi e-mail, gdy otrzymam odznakę
+        email_unread_notifications: Wyślij mi okresowe przypomnienia, że mam nieprzeczytane powiadomienia na %{community}
+        mobile_mention_notifications: Wyślij mi powiadomienie push, gdy ktoś mnie wspomni
+        mobile_comment_notifications: Wyślij mi powiadomienie push, gdy ktoś odpowie mi w wątku komentarzy
+        welcome_notifications: Wyślij mi czasami wskazówki, jak ulepszyć swoje doświadczenie w %{community}
+        reaction_notifications: Wyślij powiadomienia, gdy ktoś zareaguje na mój treść, taką jak komentarze lub posty
+        mod_roundrobin_notifications: Wyślij mi powiadomienia o nowych aktywnościach członków
+      users_setting:
+        feed_url: Adres URL kanału RSS
+    placeholder:
+      organization:
+        name: Przykładowa Firma Sp. z o.o.
+        slug: przykladowafirma
+        url: https://twojastrona.pl
+        location: Gdańsk, Polska
+        email: kontakt@przykladowafirma.pl
+        company_size: "..."
+        story: "..."
+        tech_stack: "..."
+        cta_body_markdown: "..."
+        cta_button_text: Odwiedź stronę Przykładowej Firmy
+        cta_button_url: https://przykladowafirma.pl
+        proof: "..."
+      response_template:
+        title: "..."
+      user:
+        name: Jan Kowalski
+        email: jan.kowalski@przykladowafirma.pl
+        username: jankowalski
+        feed_url: https://twojastrona.pl/kanał
+    application_helper:
+      app_logo: Logo aplikacji
+      follow:
+        aria_label:
+          Organization: 'Obserwuj organizację: %{name}'
+          Tag: 'Obserwuj tag: %{name}'
+          User: 'Obserwuj użytkownika: %{name}'
+          default: 'Obserwuj %{type}: %{name}'
+        text:
+          Organization: Obserwuj
+          Tag: Obserwuj
+          User: Obserwuj
+          default: Obserwuj
+      required: Wymagane
+      subtitle:
+        week: Najlepsze posty w tym tygodniu
+        month: Najlepsze posty w tym miesiącu
+        year: Najlepsze posty w tym roku
+        infinity: Wszystkie posty
+        latest: Najnowsze posty
+      title_text: "%{title} - %{timeframe}"
+    articles_helper:
+      logo: Logo %{service_name}
+      most_comments: Najwięcej komentarzy
+      most_reactions: Najwięcej reakcji
+      most_views: Najwięcej wyświetleń
+      recently_created: Ostatnio utworzone
+      recently_published: Ostatnio opublikowane
+    authentication_helper:
+      any_of_those: którykolwiek z nich
+      email_password: Email i hasło
+      reminder: 'Przypominamy: użyłeś %{method} do uwierzytelnienia swojego konta, więc proszę użyj %{dem}, aby się zalogować, jeśli zostaniesz poproszony.'
+      that: że
+      invite_only: Nie możesz tego zrobić, dopóki nie wyłączysz Trybu Tylko-zaproszenia
+    comments_helper:
+      ama: ama
+      ask_me_anything: Zapytaj mnie o cokolwiek
+      author: Autor
+      nbsp_likes_html:
+        one: "&nbsp;lubi"
+        other: "&nbsp;lubią"
+    feedback_messages_helper:
+      offender:
+        body: |
+          Witaj,
+
+          Zostało nam przekazane, że naruszyłeś(aś) Kodeks Postępowania i/lub Warunki Korzystania z %{community}.
+
+          Jeśli zachowanie to będzie się powtarzać, możemy być zmuszeni zawiesić Twoje konto w %{community}.
+
+          Jeśli uważasz, że doszło do pomyłki, proszę odpowiedz na ten e-mail, a my ponownie to sprawdzimy.
+
+          Zespół %{community}
+        subject: "Naruszenie Kodeksu Postępowania w %{community}"
+      reporter:
+        body: |
+          Cześć,
+
+          Dziękujemy za zgłoszenie treści, która może naruszać Kodeks Postępowania w %{community} i/lub nasze Warunki Korzystania. Sprawdzamy Twoje zgłoszenie i podejmiemy odpowiednie działania.
+
+          Dziękujemy za pomoc w tworzeniu pozytywnego i otwartego środowiska dla wszystkich!
+          Zespół %{community}
+        subject: "Zgłoszenie w %{community}"
+      affected:
+        body: |
+          Cześć,
+
+          Zauważyliśmy niektóre komentarze (innych użytkowników) na Twoim poście, które naruszają Kodeks Postępowania w %{community} i/lub nasze Warunki Korzystania. Nie tolerujemy takiego zachowania i podejmujemy odpowiednie działania.
+
+          Dziękujemy za bycie wspaniałym i prosimy o kontakt e-mailowy w przypadku jakichkolwiek pytań! Przyjmujemy wszystkie opinie i pomysły na rozwój otwartej i inkludującej społeczności.
+
+          Zespół %{community}
+        subject: "Uprzejme ostrzeżenie od %{community}"
+    listing_helper:
+      option:
+        one: "%{cl_name} (%{count} kredyt)"
+        other: "%{cl_name} (%{count} kredyty)"
+    organization_helper:
+      option: "%{org_name} (%{unspent})"
+    rate_limit_checker_helper:
+      day:
+        one: dzień
+        other: dni
+      general: Ile %{thing} nowy członek (%{timeframe} lub mniej) może stworzyć w dowolnym okresie 5 minut?
+      published:
+        title: Ograniczenie liczby postów utworzonych
+        description: Ile postów ktoś może utworzyć w dowolnym okresie 30 sekund?
+      antispam:
+        title: Ograniczenie liczby postów utworzonych przez nowego członka
+      update:
+        title: Ograniczenie liczby aktualizacji w poście
+        description: Ile aktualizacji ktoś może dokonać w dowolnym okresie 30 sekund? Zaktualizuj dokumentację API po zmianach.
+      upload:
+        title: Ograniczenie liczby przesłanych obrazów
+        description: Ile obrazów ktoś może przesłać w dowolnym okresie 30 sekund?
+      user:
+        title: Ograniczenie liczby zmian w koncie użytkownika
+        description: Ile zmian użytkownik może wprowadzić do swojego konta w dowolnym okresie 30 sekund?
+      follow:
+        title: Ograniczenie liczby obserwujących, których ktoś może obserwować codziennie
+        description: Ile osób ktoś może obserwować w ciągu jednego dnia?
+      reaction:
+        title: Ograniczenie liczby reakcji na post lub komentarz
+        description: Ile razy ktoś może zareagować na post lub komentarz w dowolnym okresie 30 sekund?
+      feedback:
+        title: Ograniczenie liczby zgłoszeń nadużyć
+        description: Ile razy ktoś może zgłosić nadużycie w dowolnym okresie 5 minut?
+      comment:
+        title: Ograniczenie liczby utworzonych komentarzy
+        description: Ile komentarzy ktoś może utworzyć w dowolnym okresie 30 sekund?
+      comment_antispam:
+        title: Ograniczenie liczby komentarzy utworzonych przez nowego członka
+      mention:
+        title: Ograniczenie liczby wzmianek @ w poście lub komentarzu
+        description: Ile razy ktoś może wzmienić innych użytkowników w poście lub komentarzu?
+      listing:
+        title: Ograniczenie liczby utworzonych ogłoszeń
+        description: Ile ogłoszeń ktoś może utworzyć w dowolnym okresie 1 minuty?
+      organization:
+        title: Ograniczenie liczby utworzonych organizacji
+        description: Ile organizacji ktoś może utworzyć w dowolnym okresie 5 minut?
+      subscription:
+        title: Ograniczenie liczby subskrypcji do tagu liquid list
+        description: Ile razy ktoś może zasubskrybować listę mailingową w dowolnym okresie 30 sekund?
+      recipient:
+        title: Ograniczenie liczby ogólnych wiadomości e-mail, które wysyłamy
+        description: Ile e-maili możemy wysłać do kogoś w dowolnym okresie 2 minut?
+      confirmation:
+        title: Ograniczenie liczby wiadomości e-mail z potwierdzeniem, które wysyłamy
+        description: Ile razy możemy wysłać wiadomość e-mail z potwierdzeniem do kogoś w okresie 2 minut?
+      thing:
+        posts: posty
+        comments: komentarze
+    settings_helper:
+      advanced: Zaawansowane
+      beginner: Początkujący
+      expert: Ekspert
+      mid_level: Średnio-zaawansowany
+      novice: Początkujący
+    social_link_helper:
+      n_a: N/D
+    admin:
+      user_helper:
+        today: Dzisiaj, %{date}
+        yesterday: Wczoraj, %{date}
+        org_join: ", "
+        org_overflow:
+          one: "%{orgs} i %{count} inna"
+          other: "%{orgs} i %{count} inne"

@@ -1,0 +1,14 @@
+---
+pl:
+  xml:
+    opensearch:
+      short_name: "Wyszukiwanie %{community}"
+      description: Znajdź wpisy z %{community}.
+    user:
+      image: "Obraz profilu użytkownika %{user}"
+  json:
+    author: Aktywny autor %{community}
+  mailer:
+    adjust: Dostosuj swoje ustawienia e-mail
+    adjust_only_html: Nie chcesz otrzymywać takich e-maili? Dostosuj swoje ustawienia e-mail na %{path}
+    unsubscribe: Wypisz się

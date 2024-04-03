@@ -1,0 +1,80 @@
+---
+pl:
+  views:
+    auth:
+      background: tło forem
+      create:
+        aria_label: Utwórz nowe konto
+        text: Utwórz konto
+      creator:
+        text1: Zacznij swoją podróż z Forem!
+        text2: Najpierw utwórz swoje konto administratora.
+        text3: Następnie przeprowadzimy Cię przez konfigurację Forem.
+        hint:
+          aria_label: Edytuj nazwę użytkownika
+          icon: Edytuj nazwę użytkownika
+          text_html: "%{start}Twoja nazwa użytkownika będzie\_%{end}%{button}"
+        submit: Utwórz moje konto
+      already_have_an_account: Masz już konto?
+      sign_in: Zaloguj się
+      login:
+        aria_label: Zaloguj się
+        text: Zaloguj się
+        forgot: Zapomniałeś hasła?
+      provider:
+        text: "%{action} z %{provider}"
+        login: Kontynuuj
+        signup: Zarejestruj się
+        email:
+          icon: email
+          text: Zarejestruj się przez Email
+      register:
+        errors:
+          one: Ups, znaleźliśmy %{count} problem
+          other: Ups, znaleźliśmy %{count} problemów
+        allow:
+          one_html: Rejestracja ograniczona do emaili <strong>@%{domain}</strong>.
+          list: Rejestracja ograniczona do następujących emaili
+        create: Utwórz swoje konto
+        field:
+          name:
+            aria_label: Imię
+            label: Imię
+          username:
+            aria_label: Nazwa użytkownika
+            desc: Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślniki. Maksymalna długość nazwy użytkownika to 30 znaków.
+            label: Nazwa użytkownika
+          email:
+            aria_label: Email
+            label: Email
+            placeholder: jan@przyklad.com
+          password:
+            aria_label: Hasło
+            desc: Minimum 8 znaków
+            label: Hasło
+            placeholder: "••••••••"
+            hide: Ukryj hasło
+            show: Pokaż hasło
+          confirm:
+            aria_label: Potwierdzenie hasła
+            label: Potwierdzenie hasła
+          required: "* - wymagane"
+        secret:
+          label: Nowy sekret Forem
+          placeholder: Jak podano przez hosta Forem
+          hide: Ukryj nowy sekret Forem
+          show: Pokaż nowy sekret Forem
+        submit: Zarejestruj się
+      wizard:
+        meta:
+          title: Zacznijmy z Forem
+        heading: Zacznij swoją podróż z Forem
+        step_1: Utwórz konto. Będzie to pierwsze konto super administratora.
+        step_2_html: Po zarejestrowaniu się poniżej, możesz skonfigurować swoją społeczność na %{path}.
+        step_3: Jako administrator możesz zrobić wiele rzeczy, ale jest krzywa uczenia się.
+        step_4: Prosimy o kontakt z zespołem Forem, jeśli jesteś czymś niepewny!
+        step_5: "Dla Wzmocnienia Społeczności 🌱"
+      tagline: Jesteśmy miejscem, gdzie programiści dzielą się, są na bieżąco i rozwijają swoje kariery.
+      title:
+        text_html: "%{name} to społeczność wolnych dyskusji na temat edukacji seksualnej"
+        size: "%{num} "

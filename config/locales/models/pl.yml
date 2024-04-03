@@ -1,0 +1,140 @@
+---
+pl:
+  models:
+    api_secret:
+      api_limit_reached: Limit kluczy API wynoszący 10 na użytkownika został osiągnięty
+    application_record:
+      uninferrable: Nie można wywnioskować dekoratora dla %{class}.
+    article:
+      a_post_by: Post autorstwa %{user_name}
+      video_unpermitted: nie może być dodany przez członka bez uprawnień
+      video_processing: nie może być ustawiony na true, jeśli wideo jest wciąż przetwarzane
+      cannot_search_tags_for: 'Nie można wyszukiwać tagów dla: %{tag}'
+      cannot_search_tags_for_tags: 'Nie można wyszukiwać tagów dla: %{tags}'
+      unique_coauthor: identyfikatory współautorów muszą być unikalne
+      too_many_tags: przekracza maksymalną liczbę 4 tagów
+      is_too_long: jest za długi.
+      invalid_date: musi być wprowadzona w formacie DD/MM/YYYY z aktualną lub przeszłą datą
+      series_unpermitted: musi być jednym, do którego masz uprawnienia do publikacji
+      invalid_coauthor: musi być poprawnymi identyfikatorami użytkowników
+      same_author: nie może być tym samym użytkownikiem co autor
+      must_not_have_spaces: nie może zawierać spacji
+      published: Opublikowany
+      unique_url: został już zajęty. E-mail %{email} w celu uzyskania dalszych informacji.
+      future_or_current_published_at: dozwolone są tylko przyszłe lub obecne daty published_at
+      immutable_published_at: aktualizacja published_at dla artykułów, które zostały już opublikowane, jest niedozwolona
+      mention_too_many:
+        one: Nie możesz wzmiankować więcej niż %{count} użytkowników w poście!
+        other: Nie możesz wzmiankować więcej niż %{count} użytkowników w poście!
+    audience_segment:
+      type_ofs:
+        manual: Zarządzane gdzie indziej
+        trusted: Są zaufani
+        posted: Mają co najmniej jeden post
+        no_posts_yet: Jeszcze nie opublikowali postów
+        dark_theme: Włączyli motyw ciemny
+        light_theme: Włączyli motyw jasny
+        no_experience: Nie ustawili poziomu doświadczenia
+        experience1: Mają poziom doświadczenia jeden
+        experience2: Mają poziom doświadczenia dwa
+        experience3: Mają poziom doświadczenia trzy
+        experience4: Mają poziom doświadczenia cztery
+        experience5: Mają poziom doświadczenia pięć
+    billboard:
+      invalid_location: '%{location} nie jest obsługiwanym kodem ISO 3166-2 dla lokalizacji'
+    broadcast:
+      single_active: Możesz mieć tylko jedno aktywne ogłoszenie
+    comment:
+      deleted: '[usunięte]'
+      has_been_deleted: '%{type} został usunięty.'
+      hidden: '[ukryte przez autora posta]'
+      image_only: '[obraz]'
+      is_not_valid: nie jest ważny.
+      locked: dyskusja na tym poście jest zablokowana
+      published_article: nie jest opublikowanym artykułem
+      type:
+        Article: Artykuł
+        item: pozycja
+        PodcastEpisode: odcinek podcastu
+      suspended_too_many: Użytkownik zawieszony z powodu zbyt wielu spamowanych interakcji, spowodowany autowymiotem.
+      mention_too_many:
+        one: Nie możesz wzmiankować więcej niż %{count} użytkowników w komentarzu!
+        other: Nie możesz wzmiankować więcej niż %{count} użytkowników w komentarzu!
+    feedback_message:
+      reported: '(ty) wcześniej zgłosiłeś ten adres URL.'
+    github_issue:
+      issue_comment_not_found: Komentarz do problemu %{issue_id} nie został znaleziony
+      issue_not_found: Problem %{issue_id} nie został znaleziony
+    html_variant:
+      no_edits: nie można zmienić po opublikowaniu i zatwierdzeniu
+    identity:
+      no_email_msg: Nie znaleziono adresu e-mail. Aby uniknąć błędów, przełącz ponownie swoje konto %{provider}.
+    listing:
+      too_many_tags: przekracza maksymalną liczbę 8 tagów
+      too_many_linebreaks: ma zbyt wiele odstępów wiersza. Dozwolone jest maksymalnie 12.
+      image_not_allowed: nie wolno dodawać obrazów.
+      liquid_not_allowed: nie wolno dodawać tagów Liquid.
+    mention:
+      is_not_valid: nie jest ważny.
+    organization:
+      integer_only: Tylko liczby całkowite. Brak znaku.
+      reserved_word: '%<value>s to słowo zastrzeżone. Skontaktuj się z administratorami witryny, aby uzyskać pomoc w rejestracji twojej organizacji.'
+    page:
+      body_must_exist: musi istnieć, jeśli nie istnieje body_html lub body_json.
+    podcast_episode_appearance:
+      provided_role_is_not_valid: podana rola jest nieprawidłowa
+    poll_skip:
+      cannot_vote_more_than_once: nie można głosować więcej niż raz w jednym głosowaniu
+    poll_vote:
+      cannot_vote_more_than_once: nie można głosować więcej niż raz w jednym głosowaniu
+    profile_pin:
+      only_five: nie może być więcej niż pięć ogółem przypiętych postów
+      pin_unpermitted: musi mieć odpowiednie uprawnienia do przypięcia
+    rating_vote:
+      not_permitted: nie ma uprawnień do wykonania tej akcji.
+    reaction:
+      is_not_valid: nie jest ważny.
+    response_template:
+      user_nil_only: nie może mieć przypisanego identyfikatora użytkownika.
+      comment_markdown: Szablony komentarzy muszą być w formacie Markdown.
+      email_text: Szablony e-maili muszą być w formacie czystego tekstu lub HTML.
+      limit_reached: Osiągnięto limit szablonów odpowiedzi wynoszący 30 na użytkownika
+    settings:
+      campaign:
+        share_your_project: Podziel się swoim projektem
+      community:
+        message: nie może zawierać znaków "<" ani ">"
+        new_forem: Nowy Forem
+        user: użytkownik
+      general:
+        community_sponsors: Sponsorzy społeczności
+        the_community_mascot: Maskotka społeczności
+      user_experience:
+        message: 'musi być trzycyfrowym lub sześciocyfrowym kodem koloru heksadecymalnego (zaczynającym się od #)'
+    tag:
+      alias_for: alias_for musi odnosić się do istniejącego tagu
+    tag_adjustment:
+      too_many_tags: maksymalnie 4 tagi na artykuł.
+      unpermitted: nie ma uprawnień do modyfikacji tych tagów
+      not_live: wybrany do usunięcia tag nie jest aktualnie aktywnym tagiem.
+      unique: nie może być już zmodyfikowanym tagiem
+    tweet:
+      tweet_not_found: Tweet nie został znaleziony
+      authentication_error: Błąd uwierzytelniania; skontaktuj się z administratorem Forem w sprawie możliwych brakujących kluczy Twittera
+    user:
+      could_not_send: nie udało się wysłać potwierdzenia. %{e_message}
+      password_not_matched: nie zgadza się z potwierdzeniem hasła
+      has_been_banished: został wyrzucony.
+      user_could_not_be_saved: Nie udało się zapisać użytkownika. %{e_message}
+    user_block:
+      cant_be_the_same: nie może być tym samym co blocked_id
+    user_subscription:
+      non_apple: Nie można subskrybować za pomocą prywatnego przekaźnika Apple. Proszę zaktualizować adres e-mail.
+      source_not_found: Nie znaleziono źródła. Upewnij się, że twoje %{source} jest aktywne!
+      not_enabled: Subskrypcje użytkownika nie są włączone dla źródła.
+    users:
+      deleted_user:
+        name: '[Usunięty użytkownik]'
+      setting:
+        invalid_hex: nie jest prawidłowym kodem koloru heksadecymalnego
+        invalid_rss: nie jest prawidłowym kanałem RSS/Atom

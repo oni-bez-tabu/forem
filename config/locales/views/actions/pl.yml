@@ -1,0 +1,26 @@
+---
+pl:
+  views:
+    actions:
+      copy:
+        text: Skopiowano do schowka
+        button: Kopiuj link
+      more:
+        title: Więcej...
+        aria_label: Opcje udostępniania posta
+      share:
+        facebook:
+          text: Udostępnij na Facebooku
+        hackernews:
+          text: Udostępnij na Hacker News
+        linkedin:
+          text: Udostępnij na LinkedIn
+        mastodon:
+          text: Udostępnij na Mastodonie
+        reddit:
+          text: Udostępnij na Reddicie
+        twitter:
+          text: Udostępnij na Twitterze
+          query: '"%{article}" autorstwa %{author}'
+        link: Udostępnij post poprzez...
+        report: Zgłoś nadużycie

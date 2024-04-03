@@ -1,0 +1,85 @@
+---
+pl:
+  devise:
+    confirmations:
+      confirmed: Twój adres email został pomyślnie potwierdzony.
+      send_instructions: Otrzymasz email z instrukcjami, jak potwierdzić swój adres email za kilka minut.
+      send_paranoid_instructions: Jeśli twój adres email istnieje w naszej bazie danych, otrzymasz email z instrukcjami, jak potwierdzić swój adres email za kilka minut.
+    failure:
+      already_authenticated: Jesteś już zalogowany.
+      inactive: Twoje konto nie jest jeszcze aktywowane.
+      invalid: Logowanie nieudane.
+      last_attempt: Masz jeszcze jedną próbę przed zablokowaniem twojego konta.
+      locked: Logowanie nieudane.
+      not_found_in_database: Logowanie nieudane.
+      timeout: Twoja sesja wygasła. Zaloguj się ponownie, aby kontynuować.
+      unauthenticated: Musisz się zalogować lub zarejestrować, aby kontynuować.
+      unconfirmed: Musisz potwierdzić swój adres email, aby kontynuować.
+    mailer:
+      confirmation_instructions:
+        subject: Instrukcje potwierdzenia
+      email_changed:
+        subject: Email został zmieniony
+      password_change:
+        subject: Hasło zostało zmienione
+      reset_password_instructions:
+        subject: Instrukcje resetowania hasła
+      unlock_instructions:
+        subject: Instrukcje odblokowania
+    omniauth_callbacks:
+      failure: Nie udało się zalogować przez %{kind} z powodu "%{reason}".
+      success: Pomyślnie zalogowano przez konto %{kind}.
+    passwords:
+      no_token: Nie możesz uzyskać dostępu do tej strony bez kliknięcia w link z emaila resetującego hasło. Jeśli przyszedłeś z takiego emaila, upewnij się, że użyłeś pełnego URL.
+      reset_instructions_sent: Instrukcje resetowania hasła zostały wysłane.
+      reset_password:
+        email_placeholder: ty@email.com
+        forgot_password: Zapomniałeś hasła?
+        forgot_password_description: Wprowadź adres email powiązany z twoim kontem, a wyślemy link do zresetowania hasła.
+        go_back: Wróć
+        send_reset_link_button: Wyślij link resetujący
+      send_instructions: Otrzymasz email z instrukcjami, jak zresetować hasło w ciągu kilku minut.
+      send_paranoid_instructions: Jeśli twój adres email istnieje w naszej bazie danych, otrzymasz link do odzyskania hasła na swój adres email w ciągu kilku minut.
+      updated: Twoje hasło zostało pomyślnie zmienione. Jesteś teraz zalogowany.
+      updated_not_active: Twoje hasło zostało pomyślnie zmienione.
+    registrations:
+      agreement:
+        sign_in_html: Logując się, zgadzasz się z naszą <a href="%{privacy_path}">polityką prywatności</a>, <a href="%{terms_path}">warunkami użytkowania</a> oraz <a href="%{code_of_conduct_path}">kodeksem postępowania</a>.
+        sign_up_html: Rejestrując się, zgadzasz się z naszą <a href="%{privacy_path}">polityką prywatności</a>, <a href="%{terms_path}">warunkami użytkowania</a> oraz <a href="%{code_of_conduct_path}">kodeksem postępowania</a>.
+      already_have_an_account_html: Masz już konto? <a href="%{sign_up_path}">Zaloguj się</a>.
+      create_account_html: Nowy w %{community_name}? <a href="%{sign_up_path}">Utwórz konto</a>.
+      destroyed: Żegnaj! Twoje konto zostało pomyślnie usunięte. Mamy nadzieję, że zobaczymy się ponownie wkrótce.
+      errors:
+        bummer: Przykro nam...
+        mobile_app_no_new_account_html: Niestety, obecnie nie obsługujemy tworzenia nowych kont w naszej aplikacji mobilnej. Jeśli chcesz utworzyć nowe konto i dołączyć do %{community_name}, zrób to przez stronę internetową na <a href="%{path}">%{path}</a>
+      invite_only_disclaimer_html: Ponieważ jest to społeczność tylko na zaproszenie, nie możesz dołączyć bez zaproszenia. Jeśli chcesz poprosić o zaproszenie, skontaktuj się z administratorem społeczności pod %{contact_link}
+      or: LUB
+      signed_up: Witaj! Zostałeś pomyślnie zarejestrowany.
+      signed_up_but_inactive: Zostałeś pomyślnie zarejestrowany. Jednak nie możemy Cię zalogować, ponieważ twoje konto nie jest jeszcze aktywne.
+      signed_up_but_locked: Zostałeś pomyślnie zarejestrowany. Jednak nie możemy Cię zalogować, ponieważ twoje konto jest zablokowane.
+      signed_up_but_unconfirmed: Wiadomość z linkiem potwierdzającym została wysłana na Twój adres email. Proszę kliknąć w link, aby aktywować swoje konto.
+      title:
+        invite_only_commuty: '%{community_name} jest tylko na zaproszenie.'
+        join_community: 'Dołącz do %{community_name}'
+        welcome_back_community: 'Dołącz do %{community_name}'
+      update_needs_confirmation: Twoje konto zostało pomyślnie zaktualizowane, ale musimy zweryfikować Twój nowy adres email. Sprawdź swoją skrzynkę i kliknij w link potwierdzający, aby zatwierdzić nowy adres email.
+      updated: Twoje konto zostało pomyślnie zaktualizowane.
+      updated_but_not_signed_in: Twoje konto zostało pomyślnie zaktualizowane, ale ponieważ Twoje hasło zostało zmienione, musisz się ponownie zalogować.
+    sessions:
+      already_signed_out: Pomyślnie wylogowano.
+      signed_in: Zalogowano pomyślnie.
+      signed_out: Wylogowano pomyślnie.
+    unlocks:
+      send_instructions: Otrzymasz email z instrukcjami, jak odblokować swoje konto w ciągu kilku minut.
+      send_paranoid_instructions: Jeśli twoje konto istnieje, otrzymasz email z instrukcjami, jak je odblokować w ciągu kilku minut.
+      unlocked: Twoje konto zostało pomyślnie odblokowane. Zaloguj się, aby kontynuować.
+  errors:
+    messages:
+      already_confirmed: zostało już potwierdzone, proszę spróbować zalogować się
+      confirmation_period_expired: musi być potwierdzone w ciągu %{period}, proszę poprosić o nowe
+      expired: wygasło, proszę poprosić o nowe
+      not_found: nie znaleziono
+      not_locked: nie było zablokowane
+      not_saved:
+        one: '1 błąd uniemożliwił zapisanie tego %{resource}:'
+        other: '%{count} błędów uniemożliwiło zapisanie tego %{resource}:'
