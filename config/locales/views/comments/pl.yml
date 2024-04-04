@@ -145,13 +145,15 @@ pl:
           icon: Przycisk subskrypcji
           text: Subskrybuj komentarze
       count:
-        one: "%{count} komentarz"
-        other: "%{count} komentarze"
+        one: "Komentarzy (%{count})"
+        other: "Komentarzy (%{count})"
       empty: Nowy
       add: "Dodaj\_Komentarz"
       summary:
         count_html:
           one: "%{count}%{start}\_komentarz%{end}"
-          other: "%{count}%{start}\_komentarze%{end}"
+          few_html:
+            other: "%{count}%{start}\_komentarze%{end}"
+          other: "%{count}%{start}\_komentarzy%{end}"
         title: Komentarze
 

@@ -20,7 +20,9 @@ pl:
       summary:
         count_html:
           one: "%{count}%{start}\_reakcja%{end}"
-          other: "%{count}%{start}\_reakcje%{end}"
+          few_html: 
+            other: "%{count}%{start}\_reakcje%{end}"  # dla 2, 3, 4
+          other: "%{count}%{start}\_reakcji%{end}"
         title: Reakcje
       like:
         title: Lubię to

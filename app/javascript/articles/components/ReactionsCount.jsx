@@ -45,9 +45,9 @@ export const ReactionsCount = ({ article }) => {
 
   function buildCounter() {
     const reactionText = `${
-      totalReactions == 1
-        ? locale('core.reaction')
-        : `${locale('core.reaction')}s`
+      totalReactions == 0 || totalReactions >= 5
+        ? `${locale('core.reaction')}i`
+        : (totalReactions == 1 ? `${locale('core.reaction')}a` : `${locale('core.reaction')}e`)
     }`;
     return (
       <span className="aggregate_reactions_counter">

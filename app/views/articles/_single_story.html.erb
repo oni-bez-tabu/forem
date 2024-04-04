@@ -129,20 +129,34 @@
                   </span>
                 <% end %>
               </span>
-              <span class="aggregate_reactions_counter"><%= t("views.reactions.summary.count_html",
-                                                              count: story.public_reactions_count,
-                                                              start: tag("span", { class: %w[hidden s:inline] }, true),
-                                                              end: "</span>".html_safe) %></span>
+              <% if story.public_reactions_count > 1 && story.public_reactions_count < 5 %>
+                <span class="aggregate_reactions_counter"><%= t("views.reactions.summary.count_html.few_html",
+                        count: story.public_reactions_count,
+                        start: tag("span", { class: %w[hidden s:inline] }, true),
+                        end: "</span>".html_safe) %></span>
+              <% else %>
+                <span class="aggregate_reactions_counter"><%= t("views.reactions.summary.count_html",
+                        count: story.public_reactions_count,
+                        start: tag("span", { class: %w[hidden s:inline] }, true),
+                        end: "</span>".html_safe) %></span>
+              <% end %>
             </div>
           </a>
           <% end %>
           <% if story.comments_count > 0 %>
             <a href="<%= story.path %>#comments" class="crayons-btn crayons-btn--s crayons-btn--ghost crayons-btn--icon-left flex items-center" aria-label="<%= t("views.articles.comments.aria_label", title: story.title) %>">
               <%= crayons_icon_tag("small-comment", title: t("views.comments.summary.title")) %>
-              <%= t("views.comments.summary.count_html",
+               <% if story.comments_count > 1 && story.comments_count < 5 %>
+               <%= t("views.comments.summary.count_html.few_html",
                     count: story.comments_count,
                     start: tag("span", { class: %w[hidden s:inline] }, true),
                     end: "</span>".html_safe) %>
+              <% else %>
+                    <%= t("views.comments.summary.count_html",
+                    count: story.comments_count,
+                    start: tag("span", { class: %w[hidden s:inline] }, true),
+                    end: "</span>".html_safe) %>
+              <% end %>
             </a>
           <% else %>
             <a href="<%= story.path %>#comments" class="crayons-btn crayons-btn--s crayons-btn--ghost crayons-btn--icon-left flex items-center" aria-label="<%= t("views.articles.comments.aria_label", title: story.title) %>">
