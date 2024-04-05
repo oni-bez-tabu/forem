@@ -37,7 +37,7 @@ pl:
             label: Zasady w formacie markdown
             placeholder: Opcjonalne - można użyć do wyzwań, czyli wytycznych dotyczących zgłoszeń.
           submit: Zapisz
-      follow: Śledź
+      follow: Obserwuj
       hide: Ukryj
       aria_labels:
         follow: "Śledź tag: %{tag_name}"

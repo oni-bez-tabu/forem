@@ -100,8 +100,8 @@ export const Tag = ({ id, name, isFollowing, isHidden }) => {
     });
   };
 
-  const hideButtonLabel = hidden ? 'Unhide' : 'Hide';
-  const followButtonLabel = following ? 'Following' : 'Follow';
+  const hideButtonLabel = hidden ? 'Pokaż' : 'Ukryj';
+  const followButtonLabel = following ? 'Obserwujesz' : 'Obserwuj';
 
   if (!hidden) {
     followingButton = (

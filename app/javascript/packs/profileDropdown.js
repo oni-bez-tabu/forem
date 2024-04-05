@@ -39,7 +39,7 @@ function initDropdown() {
   const reportAbuseLink = profileDropdownDiv.querySelector(
     '.report-abuse-link-wrapper',
   );
-  reportAbuseLink.innerHTML = `<a href="${reportAbuseLink.dataset.path}" class="crayons-link crayons-link--block">Report Abuse</a>`;
+  reportAbuseLink.innerHTML = `<a href="${reportAbuseLink.dataset.path}" class="crayons-link crayons-link--block">Zgłoś</a>`;
 
   initButtons();
   profileDropdownDiv.dataset.dropdownInitialized = true;

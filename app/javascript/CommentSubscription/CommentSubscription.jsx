@@ -98,7 +98,7 @@ export class CommentSubscription extends Component {
               }
             }}
           >
-            {subscribed ? 'Unsubscribe' : 'Subscribe'}
+            {subscribed ? 'Subskrybujesz' : 'Subskrybuj'}
           </Button>
           {subscribed ? (
             <Button
@@ -137,9 +137,9 @@ export class CommentSubscription extends Component {
                   onClick={this.commentSubscriptionClick}
                 />
                 <label htmlFor="subscribe-all" className="crayons-field__label">
-                  All comments
+                  Wszystkie komentarze
                   <p className="crayons-field__description">
-                    You’ll receive notifications for all new comments.
+                  Otrzymasz powiadomienia o wszystkich nowych komentarzach.
                   </p>
                 </label>
               </FormField>
@@ -156,10 +156,9 @@ export class CommentSubscription extends Component {
                   htmlFor="subscribe-toplevel"
                   className="crayons-field__label"
                 >
-                  Top-level comments
+                  Komentarze na najwyższym poziomie
                   <p className="crayons-field__description">
-                    You’ll receive notifications only for all new top-level
-                    comments.
+                    Otrzymasz powiadomienia tylko o wszystkich nowych komentarzach na najwyższym poziomie.
                   </p>
                 </label>
               </FormField>
@@ -178,10 +177,9 @@ export class CommentSubscription extends Component {
                   htmlFor="subscribe-author"
                   className="crayons-field__label"
                 >
-                  Post author comments
+                  Komentarze autora posta
                   <p className="crayons-field__description">
-                    You’ll receive notifications only if post author sends a new
-                    comment.
+                    Otrzymasz powiadomienia tylko wtedy, gdy autor posta wyśle nowy komentarz.
                   </p>
                 </label>
               </FormField>
@@ -194,7 +192,7 @@ export class CommentSubscription extends Component {
                 onSubscribe(this.state.subscriptionType);
               }}
             >
-              Done
+              Gotowe
             </Button>
           </Dropdown>
         )}
