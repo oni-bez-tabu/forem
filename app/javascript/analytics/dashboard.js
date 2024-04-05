@@ -36,9 +36,9 @@ function writeCards(data, timeRangeLabel) {
   const commentCard = document.getElementById('comments-card');
   const readerCard = document.getElementById('readers-card');
 
-  readerCard.innerHTML = cardHTML(readers, `Readers ${timeRangeLabel}`);
-  commentCard.innerHTML = cardHTML(comments, `Comments ${timeRangeLabel}`);
-  reactionCard.innerHTML = cardHTML(reactions, `Reactions ${timeRangeLabel}`);
+  readerCard.innerHTML = cardHTML(readers, `Czytelników ${timeRangeLabel}`);
+  commentCard.innerHTML = cardHTML(comments, `Komentarzy ${timeRangeLabel}`);
+  reactionCard.innerHTML = cardHTML(reactions, `Reakcji ${timeRangeLabel}`);
 }
 
 function drawChart({ id, showPoints = true, title, labels, datasets }) {
@@ -130,7 +130,7 @@ function drawCharts(data, timeRangeLabel) {
     labels,
     datasets: [
       {
-        label: 'Total',
+        label: 'Wszystkie',
         data: reactions,
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
@@ -138,7 +138,7 @@ function drawCharts(data, timeRangeLabel) {
         lineTension: 0.1,
       },
       {
-        label: 'Likes',
+        label: 'Polubienia',
         data: likes,
         fill: false,
         borderColor: 'rgb(229, 100, 100)',
@@ -146,7 +146,7 @@ function drawCharts(data, timeRangeLabel) {
         lineTension: 0.1,
       },
       {
-        label: 'Unicorns',
+        label: 'Unicorn',
         data: unicorns,
         fill: false,
         borderColor: 'rgb(157, 57, 233)',
@@ -154,7 +154,7 @@ function drawCharts(data, timeRangeLabel) {
         lineTension: 0.1,
       },
       {
-        label: 'Bookmarks',
+        label: 'Zakładki',
         data: readingList,
         fill: false,
         borderColor: 'rgb(10, 133, 255)',
@@ -167,11 +167,11 @@ function drawCharts(data, timeRangeLabel) {
   drawChart({
     id: 'comments-chart',
     showPoints,
-    title: `Comments ${timeRangeLabel}`,
+    title: `Komentarze ${timeRangeLabel}`,
     labels,
     datasets: [
       {
-        label: 'Comments',
+        label: 'Komentarze',
         data: comments,
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
@@ -184,11 +184,11 @@ function drawCharts(data, timeRangeLabel) {
   drawChart({
     id: 'readers-chart',
     showPoints,
-    title: `Reads ${timeRangeLabel}`,
+    title: `Czytających ${timeRangeLabel}`,
     labels,
     datasets: [
       {
-        label: 'Reads',
+        label: 'Czytających',
         data: readers,
         fill: false,
         borderColor: 'rgb(157, 57, 233)',
@@ -268,14 +268,14 @@ function drawWeekCharts({ organizationId, articleId }) {
   resetActive(document.getElementById('week-button'));
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-  callAnalyticsAPI(oneWeekAgo, 'this Week', { organizationId, articleId });
+  callAnalyticsAPI(oneWeekAgo, 'ten tydzień', { organizationId, articleId });
 }
 
 function drawMonthCharts({ organizationId, articleId }) {
   resetActive(document.getElementById('month-button'));
   const oneMonthAgo = new Date();
   oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-  callAnalyticsAPI(oneMonthAgo, 'this Month', { organizationId, articleId });
+  callAnalyticsAPI(oneMonthAgo, 'ten miesiąc', { organizationId, articleId });
 }
 
 function drawInfinityCharts({ organizationId, articleId }) {

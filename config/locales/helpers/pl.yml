@@ -36,7 +36,7 @@ pl:
         main_color_hex: Główny kolor w formacie szesnastkowym
         overcast_url: Adres URL Overcast
         pattern_image: Obraz wzoru
-        slug: Slug
+        slug: Slug (nazwa w adresie url)
         soundcloud_url: Adres URL SoundCloud
         title: Tytuł
         twitter_username: Nazwa użytkownika na Twitterze

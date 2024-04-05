@@ -14,7 +14,7 @@ function LargeScreenTagList({ availableTags, selectedTag, onSelectTag }) {
             onClick={onSelectTag}
             href="/t"
           >
-            All tags
+            Wszystkie tagi
           </a>
         </li>
         {availableTags.map((tag) => (

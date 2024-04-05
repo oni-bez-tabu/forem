@@ -11,7 +11,7 @@ pl:
         subtitle: 'Poziom doświadczenia posta:'
         text_html: "Czy Twój post jest napisany bardziej dla początkujących czy zaawansowanych odbiorców? Dostosuj ten poziom jako <em>delikatny</em> wskaźnik, który pomoże pokazać post osobom, które skorzystają na nim najbardziej."
       nav:
-        dashboard: Panel kontrolny
+        dashboard: Twój panel
         text: "👉 Zarządzaj swoim postem"
       rating:
         heading: Poziom doświadczenia posta

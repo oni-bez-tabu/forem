@@ -3,8 +3,8 @@ pl:
   views:
     dashboard:
       meta:
-        title: Panel kontrolny - %{site}
-      heading: Panel kontrolny
+        title: Twój panel - %{site}
+      heading: Twój panel
       actions:
         mobile:
           posts: Posty (%{num})
@@ -30,9 +30,9 @@ pl:
         meta:
           title: Analityka
         heading: Analityka dla %{name}
-        back: "Powrót do głównego panelu kontrolnego"
+        back: "Powrót do głównego Twojego panelu"
         your: Twój panel kontrolny
-        org: "Panel kontrolny analityki %{org}"
+        org: "Twój panel analityki %{org}"
       article:
         heading:
           text_html: "%{archived}%{title}"
@@ -100,22 +100,22 @@ pl:
         save: Zapisz
         submit: Prześlij zmianę autora
       followers:
-        heading: Panel kontrolny » Obserwujący
+        heading: Twój panel » Obserwujący
         empty: Nie masz jeszcze żadnych obserwujących...
       following_orgs:
-        heading: Panel kontrolny » Obserwowane organizacje
+        heading: Twój panel » Obserwowane organizacje
         empty: Jeszcze nie obserwujesz żadnych organizacji...
       following_pods:
-        heading: Panel kontrolny » Obserwowane podcasty
+        heading: Twój panel » Obserwowane podcasty
         empty: Jeszcze nie obserwujesz żadnych podcastów...
       following_tags:
-        heading: Panel kontrolny » Obserwowane tagi
+        heading: Twój panel » Obserwowane tagi
         empty_html: "<span>Obserwuj tagi, aby spersonalizować swój kanał. Możesz eksplorować popularne tagi <a href=%{link}>tutaj</a></span>."
       following_users:
-        heading: Panel kontrolny » Obserwowani użytkownicy
+        heading: Twój panel » Obserwowani użytkownicy
         empty: Nie obserwujesz jeszcze żadnych użytkowników...
       hidden_tags:
-        heading: Panel kontrolny » Ukryte tagi
+        heading: Twój panel » Ukryte tagi
         empty_html: "<span>Nie masz jeszcze żadnych ukrytych tagów...</span>"
       tags:
         following_button: Obserwowane

@@ -134,7 +134,7 @@ export class ReadingList extends Component {
     });
 
     addSnackbarItem({
-      message: isStatusViewValid ? 'Archiving...' : 'Unarchiving...',
+      message: isStatusViewValid ? 'Archiwizuje...' : 'Od archiwizowuje...',
     });
   };
 
@@ -152,13 +152,13 @@ export class ReadingList extends Component {
         <section className="align-center p-9 py-10 color-base-80">
           <h2 className="fw-bold fs-l">
             {showMessage
-              ? 'Your reading list is empty'
+              ? 'Twoja lista lektur jest pusta'
               : NO_RESULTS_WITH_FILTER_MESSAGE}
           </h2>
           <p class="color-base-60 pt-2">
-            Click the{' '}
+            Naciśnij{' '}
             <span class="fw-bold">
-              bookmark reaction
+              zakładkę
               <svg
                 width="24"
                 height="24"
@@ -170,7 +170,7 @@ export class ReadingList extends Component {
                 <path d="M5 2h14a1 1 0 011 1v19.143a.5.5 0 01-.766.424L12 18.03l-7.234 4.536A.5.5 0 014 22.143V3a1 1 0 011-1zm13 2H6v15.432l6-3.761 6 3.761V4z" />
               </svg>
             </span>
-            when viewing a post to add it to your reading list.
+            i dodaj post do listy lektur.
           </p>
         </section>
       );
@@ -179,7 +179,7 @@ export class ReadingList extends Component {
     return (
       <h2 className="align-center p-9 py-10 color-base-80 fw-bold fs-l">
         {showMessage
-          ? 'Your Archive is empty...'
+          ? 'Twoje archiwum jest puste...'
           : NO_RESULTS_WITH_FILTER_MESSAGE}
       </h2>
     );
@@ -196,7 +196,7 @@ export class ReadingList extends Component {
     } = this.state;
 
     const isStatusViewValid = this.statusViewValid();
-    const archiveButtonLabel = isStatusViewValid ? 'Archive' : 'Unarchive';
+    const archiveButtonLabel = isStatusViewValid ? 'Archiwizuj' : 'Cofnij';
 
     return (
       <main
@@ -206,7 +206,7 @@ export class ReadingList extends Component {
         <header className="crayons-page-header block s:flex">
           <div className="flex justify-between items-center flex-1 mb-2 s:mb-0">
             <h1 class="crayons-title flex-1">
-              {isStatusViewValid ? 'Reading list' : 'Archive'}
+              {isStatusViewValid ? 'Lista lektur' : 'Archiwum'}
               {` (${itemsTotal})`}
             </h1>
             <Link
@@ -220,7 +220,7 @@ export class ReadingList extends Component {
               block
               data-no-instant
             >
-              {isStatusViewValid ? 'View archive' : 'View reading list'}
+              {isStatusViewValid ? 'Pokaż archiwum' : 'Pokaż listę lektur'}
             </Link>
           </div>
           <fieldset className="m:flex justify-end s:pl-2 w-100 s:w-auto">
@@ -229,7 +229,7 @@ export class ReadingList extends Component {
               aria-label="Filter reading list by text"
               onKeyUp={this.onSearchBoxType}
               type="text"
-              placeholder="Search..."
+              placeholder="Szukaj..."
               className="crayons-textfield mb-2 s:mb-0"
             />
             <MediaQuery
