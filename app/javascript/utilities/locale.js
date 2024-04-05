@@ -7,7 +7,7 @@ if (translationsDiv) {
   const translations = JSON.parse(translationsDiv.dataset.translations);
   i18n.store(translations);
 }
-i18n.defaultLocale = 'en';
+i18n.defaultLocale = 'pl';
 const { locale: userLocale } = document.body.dataset;
 if (userLocale) {
   i18n.locale = userLocale;

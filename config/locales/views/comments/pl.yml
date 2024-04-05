@@ -148,7 +148,7 @@ pl:
         one: "Komentarzy (%{count})"
         other: "Komentarzy (%{count})"
       empty: Nowy
-      add: "Dodaj\_Komentarz"
+      add: "dodaj\_komentarz"
       summary:
         count_html:
           one: "%{count}%{start}\_komentarz%{end}"

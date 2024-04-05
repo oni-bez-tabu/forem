@@ -149,7 +149,7 @@ function buildArticleHTML(article, currentUserId = null) {
           '<span class="hidden s:inline">&nbsp;komentarze</span></a>';
       }  else {
         commentsDisplay +=
-          '<span class="hidden s:inline">Dodaj&nbsp;komentarz</span></a>';
+          '<span class="hidden s:inline">dodaj&nbsp;komentarz</span></a>';
       }
     }
 

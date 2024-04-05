@@ -33,7 +33,7 @@ const PICKER_PHRASES = {
 };
 
 const MONTH_NAMES = [...Array(12).keys()].map((key) =>
-  new Date(0, key).toLocaleString('en', { month: 'long' }),
+  new Date(0, key).toLocaleString('pl', { month: 'long' }),
 );
 
 const isDateOutsideOfRange = ({ date, minDate, maxDate }) =>

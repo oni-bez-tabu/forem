@@ -1,25 +1,24 @@
 ---
 pl:
   contact_prompts:
-    if_any_questions_html: <a href="/contact">Skontaktuj się z nami</a>, jeśli masz jakiekolwiek pytania.
-    if_continued_trouble_html: <a href="/contact">Skontaktuj się z nami</a>, jeśli nadal masz problemy.
-    if_we_can_help_html: <a href="/contact">Skontaktuj się z nami</a>, jeśli możemy w czymś pomóc.
+    if_any_questions_html: <a href="/contact">Skontaktuj się z nami</a> jeśli masz jakiekolwiek pytania.
+    if_continued_trouble_html: <a href="/contact">Skontaktuj się z nami</a> jeśli nadal masz problemy.
+    if_we_can_help_html: <a href="/contact">Skontaktuj się z nami</a> jeśli możemy w czymś pomóc.
   core:
-    add_comment: Dodaj komentarz
+    add_comment: dodaj komentarz
     beta: beta
-    comment: Komentarz
+    comment: komentarz
     copy_link: Kopiuj link
     edit_profile: Edytuj profil
     follow: Obserwuj
     follow_back: Obserwuj z powrotem
-    following: Obserwujący
-    like: Lubię
+    following: Obserwuje
+    like: Lubię to
     loading: ładowanie...
-    one_reaction: Reakcja
-    reaction: Reakcj
+    reaction: reakcj
     report_abuse: Zgłoś nadużycie
     search: Szukaj
-    success_settings: Ustawienia zaktualizowane pomyślnie.
+    success_settings: Pomyślnie zaktualizowano ustawienia.
     counted_organization:
       one: "%{count} organizacja"
       other: "%{count} organizacje"
@@ -30,23 +29,38 @@ pl:
     following_everyone: "Obserwujesz %{details} (wszystkich)"
     you_are_following: "Obserwujesz"
     and: "i"
+  date:
+    abbr_month_names:
+    -
+    - sty.
+    - lut.
+    - mar.
+    - kwi.
+    - maj.
+    - cze.
+    - lip.
+    - sie.
+    - wrz.
+    - paź.
+    - lis.
+    - gru. 
   datetime:
-    distance_in_words_ago:
+    distance_in_words_ago: # https://github.com/openstreetmap/openstreetmap-website/issues/2255
       about_x_hours:
-        one: około 1 godziny temu
+        one: około 1 godzinę temu
         other: około %{count} godzin temu
       about_x_months:
-        one: około 1 miesiąca temu
+        one: około 1 miesiąc temu
         other: około %{count} miesięcy temu
       about_x_years:
-        one: około 1 roku temu
+        one: około 1 rok temu
         other: około %{count} lat temu
       almost_x_years:
         one: prawie 1 rok temu
         other: prawie %{count} lat temu
       half_a_minute: pół minuty temu
       less_than_x_seconds:
-        one: mniej niż 1 sekunda temu
+        one: mniej niż 1 sekundę temu
         other: mniej niż %{count} sekund temu
       less_than_x_minutes:
         one: mniej niż minutę temu
@@ -55,10 +69,10 @@ pl:
         one: ponad 1 rok temu
         other: ponad %{count} lat temu
       x_seconds:
-        one: 1 sekunda temu
+        one: 1 sekundę temu
         other: "%{count} sekund temu"
       x_minutes:
-        one: 1 minuta temu
+        one: 1 minutę temu
         other: "%{count} minut temu"
       x_days:
         one: 1 dzień temu
@@ -71,20 +85,20 @@ pl:
         other: "%{count} lat temu"
     expired_ago:
       about_x_hours:
-        one: Wygasło około 1 godziny temu
+        one: Wygasło około 1 godzinę temu
         other: Wygasło około %{count} godzin temu
       about_x_months:
-        one: Wygasło około 1 miesiąca temu
+        one: Wygasło około 1 miesiąc temu
         other: Wygasło około %{count} miesięcy temu
       about_x_years:
-        one: Wygasło około 1 roku temu
+        one: Wygasło około 1 rok temu
         other: Wygasło około %{count} lat temu
       almost_x_years:
         one: Wygasło prawie 1 rok temu
         other: Wygasło prawie %{count} lat temu
       half_a_minute: Wygasło pół minuty temu
       less_than_x_seconds:
-        one: Wygasło mniej niż 1 sekunda temu
+        one: Wygasło mniej niż 1 sekundę temu
         other: Wygasło mniej niż %{count} sekund temu
       less_than_x_minutes:
         one: Wygasło mniej niż minutę temu
@@ -93,10 +107,10 @@ pl:
         one: Wygasło ponad 1 rok temu
         other: Wygasło ponad %{count} lat temu
       x_seconds:
-        one: Wygasło 1 sekunda temu
+        one: Wygasło 1 sekundę temu
         other: Wygasło %{count} sekund temu
       x_minutes:
-        one: Wygasło 1 minuta temu
+        one: Wygasło 1 minutę temu
         other: Wygasło %{count} minut temu
       x_days:
         one: Wygasło 1 dzień temu
@@ -150,59 +164,60 @@ pl:
     menu:
       aria_label: Przełącz menu rozwijane
       icon: Menu rozwijane
+      close: Zamknij
       manage_preferences: Zarządzaj preferencjami
       what_is_a_billboard: Co to jest billboard?
       report_billboard: Zgłoś billboard
   errors:
-    messages:
-      accepted: musi być zaakceptowane
-      bad_protocol: musi zaczynać się od %{protocols}
-      bad_uri: jest nieprawidłowym adresem URL
-      blank: nie może być puste
-      confirmation: nie zgadza się z %{attribute}
-      contains_prohibited_characters: zawiera niedozwolone znaki nie-alfanumeryczne lub unicode
-      empty: nie może być puste
-      equal_to: musi być równe %{count}
-      even: musi być parzyste
-      exclusion: jest zarezerwowane
-      general: 'Błąd: %{errors}'
-      greater_than: musi być większe niż %{count}
-      greater_than_or_equal_to: musi być większe lub równe %{count}
-      inclusion: nie jest zawarte w liście
-      invalid: jest nieprawidłowe
-      less_than: musi być mniejsze niż %{count}
-      less_than_or_equal_to: musi być mniejsze lub równe %{count}
-      model_invalid: 'Walidacja nie powiodła się: %{errors}'
-      not_a_number: nie jest liczbą
-      not_an_integer: musi być liczbą całkowitą
-      odd: musi być nieparzyste
-      other_than: musi być inne niż %{count}
-      present: musi być puste
-      required: musi istnieć
-      taken: zostało już zajęte
-      too_long:
-        one: jest za długie (maksimum to 1 znak)
-        other: jest za długie (maksimum to %{count} znaków)
-      too_short:
-        one: jest za krótkie (minimum to 1 znak)
-        other: jest za krótkie (minimum to %{count} znaków)
-      try_again_email: 'Wystąpił błąd. Spróbuj ponownie lub wyślij e-mail na: %{email}'
-      wrong_length:
-        one: ma niewłaściwą długość (powinno być 1 znak)
-        other: ma niewłaściwą długość (powinno być %{count} znaków)
+      messages:
+        accepted: musi być zaakceptowane
+        bad_protocol: musi zaczynać się od %{protocols}
+        bad_uri: jest nieprawidłowym adresem URL
+        blank: nie może być puste
+        confirmation: nie pasuje do %{attribute}
+        contains_prohibited_characters: zawiera znaki niedozwolone lub niedozwolone znaki unicode
+        empty: nie może być puste
+        equal_to: musi być równe %{count}
+        even: musi być parzyste
+        exclusion: jest zarezerwowane
+        general: 'Błąd: %{errors}'
+        greater_than: musi być większe niż %{count}
+        greater_than_or_equal_to: musi być większe lub równe %{count}
+        inclusion: nie jest zawarte w liście
+        invalid: jest nieprawidłowe
+        less_than: musi być mniejsze niż %{count}
+        less_than_or_equal_to: musi być mniejsze lub równe %{count}
+        model_invalid: 'Walidacja nie powiodła się: %{errors}'
+        not_a_number: nie jest liczbą
+        not_an_integer: musi być liczbą całkowitą
+        odd: musi być nieparzyste
+        other_than: musi być inne niż %{count}
+        present: musi być puste
+        required: musi istnieć
+        taken: jest już zajęte
+        too_long:
+          one: jest za długie (maksimum to 1 znak)
+          other: jest za długie (maksimum to %{count} znaków)
+        too_short:
+          one: jest za krótkie (minimum to 1 znak)
+          other: jest za krótkie (minimum to %{count} znaków)
+        try_again_email: 'Wystąpił błąd. Spróbuj ponownie lub wyślij e-mail na adres: %{email}'
+        wrong_length:
+          one: ma niewłaściwą długość (powinno być 1 znak)
+          other: ma niewłaściwą długość (powinno być %{count} znaków)
   time:
-    formats:
-      admin_user: "%Y-%m-%d, %H:%M"
-      comment: "%B %d, %Y"
-      email_verified: "%b %e '%y, %H:%M"
-      github: "%b %d, %Y"
-      json: "%b %e, %Y"
-      medium: "%b %-d, %Y"
-      members: "%d %b"
-      members_with_year: "%d %b, %Y"
-      reddit: "%b %e '%y"
-      short: "%b %-e"
-      short_with_yy: "%b %-d '%y"
-      short_with_year: "%b %-e, %Y"
-      stackexchange: "%b %e '%y"
-      
+      formats:
+        admin_user: "%Y-%m-%d, %H:%M"
+        comment: "%B %d, %Y"
+        email_verified: "%b %e '%y, %H:%M"
+        github: "%b %d, %Y"
+        json: "%b %e, %Y"
+        medium: "%-d %b, %Y"
+        members: "%d %b"
+        members_with_year: "%d %b, %Y"
+        reddit: "%b %e '%y"
+        short: "%-e %b"
+        short_with_yy: "%b %-d '%y"
+        short_with_year: "%b %-e, %Y"
+        stackexchange: "%e %b '%y"
+        long: "%b %e %y, %H:%M"

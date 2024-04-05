@@ -1,277 +1,98 @@
 ---
 pl:
   views:
-    settings:
+    users:
       meta:
-        title: Ustawienia
-      account:
-        connect: Połącz konto %{provider}
-        emails: Emaile konta
-        primary: Główny email
-        provider_email: "Email od %{provider}"
-        provider_profile: "Ustawienia profilu %{provider}"
-        delete:
-          heading: Usuń konto
-          desc1: 'Usunięcie konta spowoduje:'
-          desc1a: |
-            Usunięcie twojego profilu wraz z powiązanymi metodami uwierzytelniania.
-
-            Nie obejmuje to uprawnień do aplikacji. Musisz usunąć je samodzielnie:
-          desc1b: Usunięcie wszystkich twoich treści, takich jak artykuły, komentarze czy lista do przeczytania.
-          desc1c: Pozwoli na ponowne użycie twojej nazwy użytkownika przez kogokolwiek.
-          desc2_html: Proszę, %{provide} aby całkowicie usunąć swoje konto.
-          provide: podaj email
-          submit: Usuń konto
-        export:
-          heading: Eksportuj treść
-          desc: Możesz poprosić o eksport wszystkich swoich treści. Obecnie obsługujemy tylko eksport twoich postów i komentarzy, jeśli takowe posiadasz. Zostaną one wysłane na twój email.
-          label: Poproś o eksport swoich treści
-          requested: Ostatnio poprosiłeś o eksport swoich treści. Sprawdź swój email.
-          submit: Wyślij prośbę o dane
-        remove:
-          heading: Usuń powiązania OAuth
-          desc1: Możesz usunąć jedną z twoich metod uwierzytelniania. Nadal będziemy potrzebować jednej do uwierzytelniania ciebie.
-          desc2: 'Usunięcie powiązania OAuth spowoduje:'
-          desc2a: usunięcie twojej możliwości logowania się za pomocą tego konta
-          desc2b: usunięcie powiązanego URL z twojego profilu
-          desc3: |
-            Zauważ, że nie cofa to dostępu do naszej aplikacji OAuth;
-            musisz to zrobić samodzielnie w swoich ustawieniach dla konkretnego dostawcy:
-          confirm: Czy na pewno chcesz usunąć swoje konto %{provider}?
-          submit: Usuń %{provider}
-          unable_to_remove: Nie możesz usunąć jednej z twoich metod uwierzytelniania, ponieważ potrzebujesz pozostałej metody do uwierzytelniania ciebie. Proszę dodaj inną metodę uwierzytelniania powyżej przed kontynuacją.
-      billing:
-        heading: Fakturowanie
-        add: Dodaj kartę kredytową
-        another: "+ Dodaj kolejną kartę kredytową"
-        cards: Twoje karty kredytowe
-        exp: Wygasa %{month} / %{year}
-        label: Dodaj kartę
-        number: "%{brand} kończąca się na %{last}"
-        make: Ustaw jako główną
-        primary: główna
-        remove: Usuń kartę
-      characters: "Dostępne znaki użyte: "
-      complete:
-        heading: Potwierdź swój email, aby ukończyć swój profil.
-        desc: Skoro już jesteś przy tym, wypełnij wszystko.
-        github: Połącz również swoje konto github, aby ukończyć swoją tożsamość.
-        twitter: Połącz również swoje konto twitter, aby ukończyć swoją tożsamość.
-      custom:
-        adjacent: Zezwól na bliskie zewnętrzne sponsorowanie (Podczas publikacji)
-        announce: Ogłoszenia
-        announce_desc: Ogłoszenia informują cię o ważnych informacjach dotyczących całego serwisu, takich jak aktualizacje i wydarzenia.
-        announce_field: Wyświetlaj ogłoszenia (Podczas przeglądania)
-        appearance: Wygląd
-        basic: Podstawowy markdown
-        content: Treść
-        editor: Wersja edytora
-        fixed: Przytwierdzone do okna
-        font: Podstawowa czcionka do czytania
-        level: Jaki jest twój przybliżony poziom doświadczenia (1-5)?
-        level_desc: To nie będzie wyświetlane na twoim profilu ani nigdzie publicznie. Pomaga delikatnie określić, jakie treści ci pokazujemy, wraz z tagami, które obserwujesz itp.
-        navbar: Pasek nawigacyjny serwisu
-        rich: Bogaty + markdown
-        save: Zapisz
-        sponsor: Sponsorzy
-        sponsor_desc_html: Masz możliwość wyłączenia billboardów od zewnętrznych sponsorów. Nasi wspaniali partnerzy pomagają utrzymać platformę, a my staramy się, aby ich obecność była konstruktywna i wartościowa dla społeczności, ale możesz skorzystać z tego ustawienia, jeśli chcesz. Więcej szczegółów w naszym <a href="/billboards">FAQ o billboardach</a>.
-        sponsor_field: Wyświetlaj zewnętrznych sponsorów (Podczas przeglądania)
-        static: Statyczny na górze strony
-        theme: Motyw strony
-        writing: Pisanie
-      danger: Strefa zagrożenia
-      destroy:
-        heading: Zniszcz swoje konto
-        desc: 'Usunięcie konta spowoduje:'
-        desc_1_html: usunięcie twojego profilu wraz z powiązaniami z Twitterem i/lub GitHubem. Nie obejmuje to uprawnień do aplikacji. Musisz usunąć je samodzielnie na %{twitter} i %{github}.
-        desc_2: usunięcie wszystkich twoich treści, takich jak artykuły, komentarze, czy lista do przeczytania.
-        desc_3: pozwoli na ponowne użycie twojej nazwy użytkownika przez kogokolwiek.
-        click: kliknij tutaj
-        confirm_html: 'Dla potwierdzenia, wpisz słowa: <code>%{word}</code>'
-        ghost_html: Jeśli chcesz zachować swoje treści pod kontem %{ghost}, proszę %{click}
-        github: Ustawienia profilu GitHub
-        submit: Usuń konto
-        to_delete: 'Aby usunąć swoje konto:'
-        twitter: Ustawienia profilu Twitter
-        type: Wpisz swoją nazwę użytkownika
-        username: nazwa użytkownika
-        word: usuń moje konto
-      email: Weryfikacja email.
-      errors:
-        org:
-          one: '1 błąd uniemożliwił zapisanie profilu twojej organizacji:'
-          other: "%{count} błędów uniemożliwiło zapisanie profilu twojej organizacji:"
-        profile:
-          one: '1 błąd uniemożliwił zapisanie twojego profilu:'
-          other: "%{count} błędów uniemożliwiło zapisanie twojego profilu:"
-      extensions:
-        api:
-          heading: "Klucze API %{community}"
-          desc_html: Możesz generować osobiste klucze API do uwierzytelniania z API %{community}. API jest nadal w fazie beta. %{doc} zawiera więcej informacji.
-          active:
-            heading: Aktywne klucze API (nigdy ich nie udostępniaj!)
-            created: 'Utworzono: %{time}'
-          doc: dokumentacja
-          gen:
-            heading: Wygeneruj nowy klucz
-            label: Opis
-            text: Do czego jest ten klucz API?
-            placeholder: Nazwa mojego projektu
-            submit: Wygeneruj klucz API
-          revoke: Unieważnij
+        og:
+          title: "%{user} — Profil w %{community}"
+      comments_locked_cta:
+        title: Chcesz skontaktować się z %{user}?
+        description: Załóż konto, aby skontaktować się z %{user}. Jeśli już masz konto, możesz zalogować się poniżej, aby kontynuować.
+        create_account: Załóż konto
+        already_have_an_account: Masz już konto?
+        sign_in: Zaloguj się
+      comments:
+        all:
+          one: Wszystkie %{count} komentarze
+          other: Wszystkie %{count} komentarze
+        last:
+          one: Ostatnie %{count} komentarze
+          other: Ostatnie %{count} komentarze
+        recent: Najnowsze komentarze
+        view: Zobacz całą aktywność
+        view_all:
+          one: Zobacz wszystkie %{count} komentarze
+          other: Zobacz wszystkie %{count} komentarze
+        view_last:
+          one: Zobacz ostatni komentarz
+          other: Zobacz ostatnie %{count} komentarze
+      github:
+        heading: Repozytoria na GitHubie
+        fork: Fork
+        stars:
+          one: 1 gwiazdka
+          other: "%{count} gwiazdki"
+      pin_icon: Przypnij
+      pinned: Przypięte
+      profile_fields:
+        bio:
+          label: Bio
+          placeholder: Krótkie bio...
+        display_email_on_profile: Wyświetlaj email na profilu
+        location:
+          label: Lokalizacja
+          placeholder: Halifax, Nowa Szkocja
+        website:
+          label: Adres URL strony internetowej
+          placeholder: https://twojastrona.com
+        education: Edukacja
+        currently learning: Aktualnie uczę się
+        currently hacking on: Aktualnie pracuję nad
+        available for: Dostępny dla
+        skills/languages: Umiejętności/Języki
+        work: Praca
+      side:
         comment:
-          heading: Szablony komentarzy
-          desc_html: Twórz i zapisuj <strong>szablony komentarzy</strong>, które możesz ponownie używać.
-          add: Dodaj nowy szablon komentarza
-          confirm: 'Czy na pewno chcesz usunąć: %{template}?'
-          create: Utwórz nowy szablon odpowiedzi
-          cue: Zapadająca w pamięć wskazówka dla szablonu
-          edit: Edytuj
-          edit_template: Edytuj szablon komentarza
-          remove: Usuń
-          save: Zapisz szablon
-          saved: Zapisane szablony
-          trusted: Szablony zaufanych użytkowników
-        github:
-          heading: GitHub
-          desc1: Przypnij swoje repozytoria GitHub do swojego profilu.
-          desc2: Repozytoria znikną z twojego profilu, jeśli usuniesz powiązanie OAuth z GitHubem.
-        rss:
-          heading: Publikowanie na %{community} z RSS
-          desc1_html: Posty pojawią się w twoim %{dashboard} <strong>jako szkice</strong>, a potem możesz je stamtąd opublikować.
-          desc2: Formatowanie zazwyczaj będzie wyglądać dobrze, ale możesz musieć dokonać ręcznych poprawek. W przypadku Medium, możesz musieć ręcznie poprawić osadzenia.
-          desc3_html: Aby dowiedzieć się więcej o tym, jak szkice są tworzone z twojego kanału, przeczytaj ten %{guide}.
-          desc4: Twój kanał będzie pobierany za każdym razem, gdy wyślesz ten formularz, a aktualizacje będą automatycznie pobierane okresowo później.
-          desc5_html: 'Na informację: Adresy URL kanałów RSS Medium to <em>https://medium.com/feed/@twoja_nazwa_użytkownika</em>'
-          desc6: Przesyłając URL kanału RSS, zgadzasz się, że jesteś właścicielem i/lub masz pozwolenie na syndykację powiązanej treści.
-          dashboard: panel
-          fetch: Pobierz kanał teraz
-          guide: przewodnik
-          last_html: 'Ostatnio pobrano: %{time}'
-          mark_canonical_html: Zaznacz źródło RSS jako domyślny URL kanoniczny <p class='crayons-field__description'>Jeśli zaznaczysz to pole, post automatycznie oznaczy źródło kanału jako URL kanoniczny.</p>
-          referential_html: Zamień linki samodzielne na linki specyficzne dla %{community} <p class='crayons-field__description'>Jeśli zaznaczysz to pole, post automatycznie zmieni wszystkie URL-e zawarte w poście na odnośniki do wersji tego artykułu na %{community}, jeśli jest dostępny. Jest to przede wszystkim przeznaczone dla osób przenoszących cały swój blog na %{community}.</p>
-          save: Zapisz ustawienia kanału
-          submit: Wyślij ustawienia kanału
-        web_monetization:
-          header: Monetyzacja sieci
-          receive_payments: 'Otrzymuj mikropłatności za czas spędzony na czytaniu twoich postów bezpośrednio. '
-          learn_more: Dowiedz się więcej
-          payment_pointer: Wskaźnik płatności
-          save_settings: Zapisz ustawienia monetyzacji sieci
-      finalize_html: Poprosiłeś o zmianę na %{email}. Sprawdź swoją skrzynkę odbiorczą w poszukiwaniu linku weryfikacyjnego, aby sfinalizować zmianę.
-      for_html: Ustawienia dla %{name}
-      group:
-        user: Użytkownik
-        Basic: Podstawowe
-        Branding: Branding
-        Coding: Kodowanie
-        Work: Praca
-      new_org: Utwórz lub dołącz do organizacji
-      notifications:
-        email: Powiadomienia email
-        general: Ogólne powiadomienia
-        general_desc_html: Powiadomienia, które pojawiają się tylko na stronie %{page}.
-        mobile: Powiadomienia mobilne
-        moderator: Powiadomienia moderatora
-        page: strona powiadomień
-        save: Zapisz
-      org:
-        admin:
-          admin: Admin
-          copy:
-            button:
-              aria_label: Skopiuj sekretny kod organizacji do schowka
-            icon: Skopiuj do schowka
-            input:
-              aria_label: Sekret organizacji (do regularnej rotacji)
-            text: Skopiowano do schowka!
-          cta: Pole call-to-action
-          cta_desc: Dostosowywalny tekst, który pojawia się po prawej stronie każdego postu dla twojej organizacji.
-          delete:
-            heading: Usuń organizację
-            confirm: 'Czy na pewno chcesz usunąć swoją organizację: %{name}?'
-            desc_html: |-
-              Możesz usunąć swoją organizację, jeśli:
-              <ul>
-                <li>jesteś jedynym członkiem organizacji</li>
-                <li>jesteś administratorem organizacji</li>
-                <li>organizacja nie ma żadnych postów</li>
-                <li>i organizacja nie ma żadnych kredytów</li>
-              </ul>
-            submit: Usuń "%{name}"
-            questions_html: Pytania? Napisz do nas na %{email} po pomoc.
-            unmet: Twoja organizacja obecnie nie spełnia powyższych wymagań. Najpierw usuń wszystkich innych członków i posty organizacji.
-          details: Szczegóły organizacji
-          form:
-            slug: 'URL twojej organizacji to: %{slug}'
-            tag_line: Limit 60 znaków
-            summary: Limit 250 znaków
-            location: Limit 64 znaków
-            email: Limit 64 znaków
-            company_size: Wprowadź liczbę
-            story: Limit 640 znaków
-            tech_stack: Limit 640 znaków
-            cta_body_markdown: 'Ograniczony markdown: _kursywa_ i **pogrubienie** są w porządku. Linki, nagłówki itp. nie będą wyświetlane. Limit 256 znaków.'
-            cta_button_text: Limit 20 znaków
-            submit: Zapisz
-          gen:
-            confirm: Czy na pewno chcesz wygenerować nowy sekret? Wszystkie dotychczasowe sekrety będą nieważne.
-            text: Powinieneś to regularnie obracać!
-            submit: Wygeneruj nowy sekret
-          grow: Rozwijaj zespół
-          invite: 'Zaproś członków zespołu, wysyłając im sekret i następujące instrukcje:'
-          inst1_html: Zarejestruj się na %{url}
-          inst2_html: Przejdź do %{url}
-          inst3_html: Wklej poniższy kod sekretny i kliknij <b>Dołącz do organizacji</b>
-          make:
-            confirm: Czy na pewno chcesz nadać %{user} status administratora?
-            title: Uczyń administratorem
-            text: Uczyń administratorem
-          members: Członkowie organizacji
-          remove:
-            confirm: Czy na pewno chcesz usunąć %{user} z organizacji?
-            title: Usuń z organizacji
-            text: Usuń z organizacji
-          revoke:
-            confirm: Czy na pewno chcesz odebrać %{user} status administratora?
-            title: Odbierz status administratora
-            text: Odbierz status administratora
-          secret_code: 'Twój sekretny kod to:'
-          you: Ty
-        create:
-          heading: Utwórz organizację
-          notice: Musisz mieć pozwolenie swojej organizacji, aby przesłać ten formularz. Nieuczciwość może skutkować stałą blokadą.
-          proof: To jest tylko krótki tekst wskazujący lub link, który pokazuje, że jesteś wyraźnie powiązany z tą organizacją.
-          required: Pola oznaczone gwiazdką są wymagane
-          slug: URL twojej organizacji będzie %{url}/{username}
-          submit: Utwórz organizację
-        join:
-          heading: Dołącz do organizacji
-          desc: Dostarczone przez admina organizacji
-          label: Sekretny kod
-          placeholder: "..."
-          submit: Dołącz do organizacji
-        leave:
-          confirm: Czy na pewno chcesz opuścić tę organizację?
-          submit: Opuść organizację
-        divider: LUB
-      password:
-        heading: Ustaw nowe hasło
-        desc_html: |-
-          Jeśli twoje konto zostało utworzone za pomocą uwierzytelniania kontem społecznościowym, możesz wolać dodać logowanie przez email. Jeśli zarejestrowałeś się za pomocą konta w mediach społecznościowych, <a href="%{path}">
-          zresetuj hasło</a> dla swojego głównego adresu email (%{email}), aby to umożliwić. Pamiętaj, że logowanie przez email jest dodatkiem do logowania społecznościowego, a nie jego zastępstwem, więc twoje uwierzytelnione konto społecznościowe nadal będzie powiązane z twoim kontem.
-        current: Aktualne hasło
-        confirm: Potwierdź nowe hasło
-        new: Hasło
-        submit: Ustaw nowe hasło
-      previous: Istnieje już konto autoryzowane tym kontem społecznościowym.
-      tab:
-        Profile: Profil
-        Customization: Personalizacja
-        Notifications: Powiadomienia
-        Account: Konto
-        Billing: Fakturowanie
-        Organization: Organizacja
-        Extensions: Rozszerzenia
-      save_profile: Zapisz informacje profilu
-
+          icon: Komentarz
+          text:
+            one: 1 napisany komentarz
+            other: "%{count} napisane komentarze"
+        org: Organizacje
+        post:
+          icon: Post
+          text:
+            one: 1 opublikowany post
+            other: "%{count} opublikowane posty"
+        tag:
+          icon: Tag
+          text:
+            one: 1 obserwowany tag
+            other: "%{count} obserwowane tagi"
+      signout:
+        meta:
+          title: Potwierdź wylogowanie - %{community}
+        heading: Czy na pewno chcesz się wylogować?
+        'yes': Tak, wyloguj się
+      block: Zablokuj @%{user}
+      details: "Szczegóły profilu %{user}"
+      dropdown: Akcje użytkownika
+      email_icon: Adres email
+      empty: 404 bio nie znaleziono
+      flag: Oflaguj @%{user}
+      follow: Obserwuj
+      joined:
+        icon: Dołączył
+        text_html: "Dołączył\_%{date}"
+      location_icon: Lokalizacja
+      logo: "Zdjęcie profilowe %{user}"
+      more: Więcej informacji o @%{user}
+      send_pm:
+        code: kodeks postępowania
+        notice_html: Wszystkie prywatne interakcje <b>muszą</b> przestrzegać %{code}.
+        placeholder: Wpisz tutaj swoją wiadomość...
+        submit: Wyślij
+      spam: Oznacz @%{user} jako spam
+      social: "Strona %{service}"
+      unflag: Cofnij flagę @%{user}
+      unspam: Ustaw @%{user} w dobrej kondycji
+      website: Osobista strona internetowa
