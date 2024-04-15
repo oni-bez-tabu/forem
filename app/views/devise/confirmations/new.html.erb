@@ -1,4 +1,4 @@
-<% title "Confirm your email" %>
+<% title "Potwierdź adres e-mail" %>
 <% proper_email = params[:email] || (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
 <main id="main-content" class="flex flex-1 justify-center flex-col crayons-layout">
   <style>
@@ -9,31 +9,31 @@
   <div class="flex flex-1 flex-col items-center justify-center relative z-elevate align-center">
     <%= render "devise/shared/error_messages", resource: resource %>
     <%= inline_svg_tag("mail.svg", aria: true, title: "Email", class: "mb-6") %>
-    <h1 class="fs-2xl m:fs-3xl lh-tight fw-bold mb-4">Great! Now confirm your email address.</h1>
+    <h1 class="fs-2xl m:fs-3xl lh-tight fw-bold mb-4">Świetnie! Teraz potwierdź swój adres e-mail.</h1>
     <% if proper_email.present? %>
       <p class="fs-l m:fs-xl color-base-70 m:max-w-50">
-        We've sent an email to <span class="fw-bold"><%= proper_email %></span>.
-        Click the button inside to confirm your email.</p>
+       Wysłaliśmy e-mail do <span class="fw-bold"><%= proper_email %></span>.
+        Kliknij link w otrzymanym e-mailu, aby potwierdzić swój adres e-mail.</p>
       </p>
     <% end %>
   </div>
   <div class="bg-base-10 p-4 mx-auto my-4 radius-default z-elevate">
-    <button class="color-accent-brand text-underline cursor-pointer js-confirmation-button border-none p-0" role="button">Click here</button> if you didn't get the email...
+    <button class="color-accent-brand text-underline cursor-pointer js-confirmation-button border-none p-0" role="button">Wyślij ponownie</button> jeżeli jeszcze nie masz e-maila......
   </div>
 
   <%= inline_svg_tag("forem-background.svg", aria: true, title: "forem background", class: "forem-background absolute bottom-0 right-0 hidden m:block") %>
 
   <div id="confirm-email-modal" class="hidden">
-    <div>Re-enter the email address below to resend the confirmation link</div>
+    <div>Wprowadź ponownie adres e-mail poniżej, aby ponownie wysłać link potwierdzający</div>
     <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }, data: { testid: "resend-confirmation-form" }) do |f| %>
       <div class="crayons-field mt-5 mb-3">
-        <%= f.email_field :email, placeholder: "user@example.com", autocomplete: "email", aria: { label: "Confirmation email address" }, class: "crayons-textfield", required: true, value: proper_email %>
+        <%= f.email_field :email, placeholder: "twoj@email.pl", autocomplete: "email", aria: { label: "Potwierdź swój adres e-mail" }, class: "crayons-textfield", required: true, value: proper_email %>
       </div>
 
       <div class="flex">
-        <%= f.submit "Resend", role: "button", class: "crayons-btn mr-1" %>
+        <%= f.submit "Wyślij", role: "button", class: "crayons-btn mr-1" %>
         <button class="crayons-btn color-base-70 crayons-btn--ghost js-dismiss-button" role="button">
-          Dismiss
+          Zamknij
         </button>
       </div>
     <% end %>

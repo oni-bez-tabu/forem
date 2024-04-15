@@ -198,16 +198,14 @@ export class ProfileForm extends Component {
           <div className="onboarding-content about">
             <header className="onboarding-content-header">
               <h1 id="title" className="title">
-                Build your profile
+                Zbuduj swój profil
               </h1>
               <h2
                 id="subtitle"
                 data-testid="onboarding-profile-subtitle"
                 className="subtitle"
               >
-                Tell us a little bit about yourself — this is how others will
-                see you on {communityConfig.communityName}. You’ll always be
-                able to edit this later in your Settings.
+                Opowiedz nam trochę o sobie — tak będą Ciebie widzieć inni na {communityConfig.communityName}. Zawsze będziesz mógł/mogła to później edytować w swoich Ustawieniach
               </h2>
             </header>
             <div className="onboarding-profile-sub-section mt-8">
@@ -222,11 +220,11 @@ export class ProfileForm extends Component {
               <TextInput
                 field={{
                   attribute_name: 'username',
-                  label: 'Username',
+                  label: 'Nazwa użytkownika',
                   default_value: username,
                   required: true,
                   maxLength: 20,
-                  placeholder_text: 'johndoe',
+                  placeholder_text: 'jony',
                   description: '',
                   input_type: 'text',
                 }}
@@ -238,7 +236,7 @@ export class ProfileForm extends Component {
                 field={{
                   attribute_name: 'summary',
                   label: 'Bio',
-                  placeholder_text: 'Tell us a little about yourself',
+                  placeholder_text: 'Powiedz nam coś o sobie',
                   required: false,
                   maxLength: SUMMARY_MAXLENGTH,
                   description: '',
@@ -251,7 +249,8 @@ export class ProfileForm extends Component {
                 class="crayons-field__description align-right"
               >
                 <span class="screen-reader-only" aria-live="polite">
-                  Remaining characters: {SUMMARY_MAXLENGTH - summaryCharacters}
+                Została liczba znaków: {SUMMARY_MAXLENGTH - summaryCharacters}
+ {SUMMARY_MAXLENGTH - summaryCharacters}
                 </span>
                 <span id="summary-characters">
                   {summaryCharacters}/{SUMMARY_MAXLENGTH}

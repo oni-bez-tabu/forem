@@ -2,6 +2,8 @@
 pl:
   views:
     pagination:
+      next: "Następna"
+      last: "Ostatnia"
       aria_next: "Następna strona"
       aria_previous: "Poprzednia strona"
   helpers:

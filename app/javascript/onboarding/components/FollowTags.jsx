@@ -134,9 +134,13 @@ export class FollowTags extends Component {
     const { selectedTags } = this.state;
     let followingStatus;
     if (selectedTags.length === 1) {
-      followingStatus = `${selectedTags.length} tag selected`;
+      followingStatus = `${selectedTags.length} wybrany`;
     } else {
-      followingStatus = `${selectedTags.length} tags selected`;
+      if (selectedTags.length >= 2 && selectedTags.length <= 4) {
+        followingStatus = `${selectedTags.length} wybrane`;
+      } else {
+        followingStatus = `${selectedTags.length} wybranych`;
+      }
     }
 
     return <p className="color-base-60 fs-base">{followingStatus}</p>;
@@ -161,10 +165,10 @@ export class FollowTags extends Component {
           <div className="onboarding-content onboarding-content__tags toggle-bottom ">
             <header className="onboarding-content-header">
               <h1 id="title" className="title">
-                What are you interested in?
+                Co Cię interesuje?
               </h1>
               <h2 id="subtitle" className="subtitle">
-                Follow tags to customize your feed
+                Obserwuj tagi, które wyświetlą się na Twojej tablicy
               </h2>
               {this.renderFollowCount()}
             </header>
@@ -243,11 +247,10 @@ export class FollowTags extends Component {
               </form>
               <div class="flex flex-col items-start">
                 <p class="crayons-subtitle-3 fw-medium">
-                  Get a Periodic Digest of Top Posts
+                  Otrzymuj okresowe podsumowanie najlepszych postów
                 </p>
                 <p class="fs-s fw-normal lh-base color-secondary">
-                  We'll email you with a curated selection of top posts based on
-                  the tags you follow.
+                Wyślemy do Ciebie e-mail z wyborem najlepszych postów na podstawie tagów, które obserwujesz.
                 </p>
               </div>
             </div>

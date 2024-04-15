@@ -162,12 +162,12 @@ export class FollowUsers extends Component {
 
     if (selectedFollows.length !== follows.length) {
       if (follows.length === 1) {
-        followText = `Select ${follows.length}`;
+        followText = `Wybrano ${follows.length}`;
       } else {
-        followText = `Select all ${follows.length}`;
+        followText = `Obserwuj polecane - ${follows.length}`;
       }
     } else {
-      followText = 'Deselect all';
+      followText = 'Od obserwuj wszystkie';
     }
 
     return (
@@ -200,10 +200,10 @@ export class FollowUsers extends Component {
           <div className="onboarding-content toggle-bottom">
             <header className="onboarding-content-header">
               <h1 id="title" className="title">
-                Suggested follows
+                Polecane profile
               </h1>
               <h2 id="subtitle" className="subtitle">
-                Kickstart your community
+                Zbuduj swoją społeczność
               </h2>
               <div className="onboarding-selection-status">
                 {this.renderFollowCount()}
@@ -257,7 +257,7 @@ export class FollowUsers extends Component {
                         onClick={() => this.handleClick(follow)}
                         data-testid="onboarding-user-following-status"
                       />
-                      {selected ? 'Following' : 'Follow'}
+                      {selected ? 'Obserwujesz' : 'Obserwuj'}
                     </label>
                   </div>
                 );

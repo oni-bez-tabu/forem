@@ -9,7 +9,7 @@ const StandardImageUpload = ({ handleImageUpload, isUploadingImage }) =>
   isUploadingImage ? null : (
     <Fragment>
       <label className="cursor-pointer crayons-btn crayons-btn--secondary">
-        Edit profile image
+        Zdjęcie profilowe
         <input
           data-testid="profile-image-input"
           id="profile-image-input"

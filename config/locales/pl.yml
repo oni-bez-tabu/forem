@@ -23,10 +23,10 @@ pl:
       one: "%{count} organizacja"
       other: "%{count} organizacje"
     counted_user:
-      one: "%{count} osoba"
-      other: "%{count} osób"
+      one: "%{count} profil"
+      other: "%{count} profili"
     not_following: "Nie obserwujesz nikogo"
-    following_everyone: "Obserwujesz %{details} (wszystkich)"
+    following_everyone: "Obserwujesz %{details}"
     you_are_following: "Obserwujesz"
     and: "i"
   date:

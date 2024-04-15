@@ -19,8 +19,8 @@
     </form>
   <% else %>
     <%# feature flag is "on" but feature is not configured or only partly configured %>
-    <h1>Almost there!</h1>
-    <p>Review your email preferences before we continue.</p>
+    <h1>Prawie koniec!</h1>
+    <p>Przejrzyj preferencje dotyczące e-maili, zanim będziemy kontynuować.</p>
 
     <form>
       <fieldset>
@@ -30,7 +30,7 @@
           </div>
           <div class="ml-2">
             <label for="email_newsletter" class="font-medium text-gray-900 dark:text-gray-300">
-              <p class="mt-1 pb-4">I want to receive weekly newsletter emails</p>
+              <p class="mt-1 pb-4">Chcę otrzymywać cotygodniowe e-maile z biuletynami.</p>
             </label>
           </div>
         </div>
@@ -41,21 +41,21 @@
   <%# feature flag is "off", original behavior %>
   <header class="onboarding-content-header">
     <h1 id="title" class="title">
-      Almost there!
+      Prawie koniec!
     </h1>
     <h2 id="subtitle" class="subtitle">
-      Review your email preferences before we continue.
-    </h2>
+      Chcę otrzymywać cotygodniowe e-maile z biuletynami.    
+      </h2>
   </header>
   <form>
     <fieldset>
-      <legend>Email preferences</legend>
+      <legend>Preferencji e-maili</legend>
       <ul>
         <li class="checkbox-item">
-          <label for="email_newsletter"><input type="checkbox" id="email_newsletter" name="email_newsletter" <%= "checked".html_safe if default_email_optin_allowed? %>>I want to receive weekly newsletter emails.</label>
+          <label for="email_newsletter"><input type="checkbox" id="email_newsletter" name="email_newsletter" <%= "checked".html_safe if default_email_optin_allowed? %>>Chcę otrzymywać cotygodniowe e-maile z biuletynami.</label>
         </li>
         <li class="checkbox-item">
-          <label for="email_digest_periodic"><input type="checkbox" id="email_digest_periodic" name="email_digest_periodic" <%= "checked".html_safe if default_email_optin_allowed? %>>I want to receive a periodic digest of top posts from my tags.</label>
+          <label for="email_digest_periodic"><input type="checkbox" id="email_digest_periodic" name="email_digest_periodic" <%= "checked".html_safe if default_email_optin_allowed? %>>Chcę otrzymywać okresowe podsumowanie najlepszych postów z moich tagów.</label>
         </li>
       </ul>
     </fieldset>

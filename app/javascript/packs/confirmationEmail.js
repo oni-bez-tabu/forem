@@ -1,6 +1,6 @@
 function showConfirmationEmailModal() {
   window.Forem.showModal({
-    title: "Didn't get the email?",
+    title: "Nie dotarł e-mail?",
     contentSelector: '#confirm-email-modal',
     overlay: true,
     onOpen: attachHandlers,

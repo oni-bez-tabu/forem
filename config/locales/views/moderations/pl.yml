@@ -150,6 +150,7 @@ pl:
         approved: Zatwierdzone
         author_id: ID Autora
         comments: komentarze
+        email_digest_eligible: Digest Eligible
         contains_video: Zawiera wideo
         co_author_ids: ID Współautorów
         edit: Edytuj
