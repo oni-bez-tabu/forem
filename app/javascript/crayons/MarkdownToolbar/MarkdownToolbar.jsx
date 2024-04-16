@@ -411,7 +411,7 @@ export const MarkdownToolbar = ({
             setStoredCursorPosition({ selectionStart, selectionEnd });
           },
           tooltip: smallScreen ? null : (
-            <span aria-hidden="true">Upload image</span>
+            <span aria-hidden="true">Wgraj zdjęcie</span>
           ),
           key: 'image-btn',
           className: 'toolbar-btn formatter-btn mr-1',

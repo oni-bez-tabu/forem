@@ -17,7 +17,7 @@ const KEYS = {
 };
 
 const ALLOWED_CHARS_REGEX = /([a-zA-Z0-9])/;
-const PLACEHOLDER_SELECTIONS_MADE = 'Add another...';
+const PLACEHOLDER_SELECTIONS_MADE = 'Dodaj kolejne...';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -650,7 +650,7 @@ export const MultiSelectAutocomplete = ({
         </div>
         {showMaxSelectionsReached ? (
           <span className="p-3">
-            {`Only ${maxSelections} ${maxSelections == 1 ? 'selection' : 'selections'} allowed`}
+            {`Tylko ${maxSelections} ${maxSelections == 1 ? 'tag' : 'tagi'} możesz dodać`}
           </span>
         ) : null}
         {suggestions.length > 0 && allowSelections ? (

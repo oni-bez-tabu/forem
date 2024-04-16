@@ -346,7 +346,7 @@ export class ArticleForm extends Component {
     e.preventDefault();
     // eslint-disable-next-line no-alert
     const revert = window.confirm(
-      'Are you sure you want to revert to the previous save?',
+      'Czy na pewno chcesz przywrócić poprzednią wersję zapisu?',
     );
     if (!revert && navigator.userAgent !== 'DEV-Native-ios') return;
 
@@ -514,19 +514,18 @@ export class ArticleForm extends Component {
         {this.state.isModalOpen && (
           <Modal
             size="s"
-            title="You have unsaved changes"
+            title="Masz niezapisane zmiany"
             onClose={() => this.showModal(false)}
           >
             <p>
-              You've made changes to your post. Do you want to navigate to leave
-              this page?
+              Wprowadziłeś zmiany w swoim poście. Czy chcesz opuścić tę stronę?
             </p>
             <div className="pt-4">
               <Button className="mr-2" variant="danger" url="/" tagName="a">
-                Yes, leave the page
+                Tak, opuść
               </Button>
               <Button variant="secondary" onClick={() => this.showModal(false)}>
-                No, keep editing
+                Nie, edytuje dalej
               </Button>
             </div>
           </Modal>

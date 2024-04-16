@@ -47,7 +47,7 @@ export const Options = ({
     });
     existingSeries = (
       <div className="crayons-field__description">
-        Existing series:
+        Istniejące serie:
         {` `}
         <select
           value=""
@@ -58,7 +58,7 @@ export const Options = ({
           aria-label="Select one of the existing series"
         >
           <option value="" disabled>
-            Select...
+            Wybierz...
           </option>
           {seriesNames}
         </select>
@@ -75,7 +75,7 @@ export const Options = ({
             variant="primary"
             onClick={onSaveDraft}
           >
-            Convert to a Draft
+            Przekształć w wersję roboczą.
           </Button>
         </div>
       );
@@ -83,10 +83,10 @@ export const Options = ({
       publishedField = (
         <div data-testid="options__danger-zone" className="crayons-field mb-6">
           <div className="crayons-field__label color-accent-danger">
-            Danger Zone
+            Strefa niebezpieczeństwa
           </div>
           <Button variant="primary" destructive onClick={onSaveDraft}>
-            Unpublish post
+            Cofnij publikacje postu
           </Button>
         </div>
       );
@@ -138,8 +138,8 @@ export const Options = ({
       <Button
         id="post-options-btn"
         icon={CogIcon}
-        title="Post options"
-        aria-label="Post options"
+        title="Opcje postu"
+        aria-label="Opcje postu"
         disabled={previewLoading}
       />
 
@@ -149,17 +149,17 @@ export const Options = ({
         dropdownContentCloseButtonId="post-options-done-btn"
         className="reverse left-2 s:left-0 right-2 s:left-auto p-4"
       >
-        <h3 className="mb-6">Post options</h3>
+        <h3 className="mb-6">Opcje postu</h3>
         <div className="crayons-field mb-6">
           <label htmlFor="canonicalUrl" className="crayons-field__label">
             Canonical URL
           </label>
           <p className="crayons-field__description">
-            Change meta tag
+            Zmień meta tag na:
             {` `}
             <code>canonical_url</code>
             {` `}
-            if this post was first published elsewhere (like your own blog).
+            jeśli ten post był pierwotnie opublikowany gdzie indziej (na przykład na własnym blogu).
           </p>
           <input
             type="text"
@@ -175,11 +175,11 @@ export const Options = ({
         {publishedAtField}
         <div className="crayons-field mb-6">
           <label htmlFor="series" className="crayons-field__label">
-            Series
+            Seria
           </label>
           <p className="crayons-field__description">
-            Will this post be part of a series? Give the series a unique name.
-            (Series visible once it has multiple posts)
+            Czy ten post będzie częścią serii? Nadaj serii unikalną nazwę.
+            (Serie będą widoczne, gdy będą zawierać wiele postów)
           </p>
           <input
             type="text"
@@ -199,7 +199,7 @@ export const Options = ({
           data-content="exit"
           variant="secondary"
         >
-          Done
+          Zapisz
         </Button>
       </Dropdown>
     </div>

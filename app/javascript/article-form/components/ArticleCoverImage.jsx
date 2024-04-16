@@ -49,8 +49,8 @@ const StandardImageUpload = ({
           data-max-file-size-mb="25"
         />
         <span data-testid="tooltip" className="crayons-tooltip__content" style={{minWidth:'190px'}}>
-         {coverImageCrop === 'crop' ? `Use a ratio of 1000:${coverImageHeight} ` : 'Minimum 1000px wide '}
-         for best results. 
+         {coverImageCrop === 'crop' ? `Użyj ratio zdjęcia 1000:${coverImageHeight} ` : 'Minimum 1000px szerokość'}
+         dla najlepszego rezultatu. 
         </span>
       </label>
     </Fragment>
@@ -149,7 +149,7 @@ export const ArticleCoverImage = ({ onMainImageUrlChange, mainImage, coverImageH
 
     if (event.dataTransfer.files.length > 1) {
       addSnackbarItem({
-        message: 'Only one image can be dropped at a time.',
+        message: 'Można przeciągnąć tylko jedno zdjęcie na raz.',
         addCloseButton: true,
       });
       return;
@@ -158,7 +158,7 @@ export const ArticleCoverImage = ({ onMainImageUrlChange, mainImage, coverImageH
     handleMainImageUpload(event);
   };
 
-  const uploadLabel = mainImage ? 'Change' : 'Add a cover image';
+  const uploadLabel = mainImage ? 'Zmień' : 'Dodaj okładkę';
 
   // When the component is rendered in an environment that supports a native
   // image picker for image upload we want to add the aria-label attr and the
@@ -193,7 +193,7 @@ export const ArticleCoverImage = ({ onMainImageUrlChange, mainImage, coverImageH
         <div className="flex items-center">
           {uploadingImage && (
             <span class="lh-base pl-1 border-0 py-2 inline-block">
-              <Spinner /> Uploading...
+              <Spinner /> Wgrywam...
             </span>
           )}
 
@@ -216,7 +216,7 @@ export const ArticleCoverImage = ({ onMainImageUrlChange, mainImage, coverImageH
 
             {mainImage && !uploadingImage && (
               <Button variant="ghost-danger" onClick={triggerMainImageRemoval}>
-                Remove
+                Usuń
               </Button>
             )}
           </Fragment>

@@ -33,8 +33,8 @@ export const EditorActions = ({
           disabled
         >
           {published && isVersion2
-            ? 'Publishing...'
-            : `Saving ${isVersion2 ? 'draft' : ''}...`}
+            ? 'Publikuje...'
+            : `Zapisuje ${isVersion2 ? 'draft' : ''}...`}
         </Button>
       </div>
     );
@@ -49,15 +49,15 @@ export const EditorActions = ({
 
   let saveButtonText;
   if (isVersion1) {
-    saveButtonText = 'Save changes';
+    saveButtonText = 'Zapisz zmiany';
   } else if (schedule) {
-    saveButtonText = 'Schedule';
+    saveButtonText = 'Zaplanuj';
   } else if (wasScheduled || !published) {
     // if the article was saved as scheduled, and the user clears publishedAt in the post options, the save button text is changed to "Publish"
     // to make it clear that the article is going to be published right away
-    saveButtonText = 'Publish';
+    saveButtonText = 'Publikuj';
   } else {
-    saveButtonText = 'Save changes';
+    saveButtonText = 'Zapisz zmiany';
   }
 
   return (
@@ -83,7 +83,7 @@ export const EditorActions = ({
           disabled={previewLoading}
           onFocus={(event) => switchHelpContext(event, 'editor-actions')}
         >
-          Save <span className="hidden s:inline">draft</span>
+          Zapisz <span className="hidden s:inline">draft</span>
         </Button>
       )}
 
@@ -105,7 +105,7 @@ export const EditorActions = ({
           disabled={previewLoading}
           onFocus={(event) => switchHelpContext(event, 'editor-actions')}
         >
-          Revert <span className="hidden s:inline">new changes</span>
+          Cofnij <span className="hidden s:inline">nowe zmiany</span>
         </Button>
       )}
     </div>

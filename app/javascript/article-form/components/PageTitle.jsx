@@ -11,7 +11,7 @@ export const PageTitle = ({
   return (
     <div className="crayons-field__label flex items-center flex-1">
       <span className="hidden s:inline-block mr-2 whitespace-nowrap">
-        {previewLoading ? 'Loading preview' : 'Create Post'}
+        {previewLoading ? 'Ładuję podgląd' : 'Utwórz post'}
       </span>
       {organizations && organizations.length > 0 && (
         <div>

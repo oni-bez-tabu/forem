@@ -20,7 +20,7 @@ export const Tabs = ({ onPreview, previewShowing }) => {
             type="button"
             aria-current={previewShowing ? null : 'page'}
           >
-            Edit
+            Edytuj
           </button>
         </li>
         <li>
@@ -35,7 +35,7 @@ export const Tabs = ({ onPreview, previewShowing }) => {
             type="button"
             aria-current={previewShowing ? 'page' : null}
           >
-            Preview
+            Podgląd
           </button>
         </li>
       </ul>
