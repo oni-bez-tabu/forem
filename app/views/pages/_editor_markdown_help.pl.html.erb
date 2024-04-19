@@ -1,0 +1,57 @@
+<div id="editor-markdown-help">
+  <div class="text-styles">
+    <p>Poniżej znajdują się przykłady często stosowanej składni Markdown. Jeśli chcesz zagłębić się bardziej, zajrzyj na
+      <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet" target="_blank" rel="noopener">tę ściągawkę.</a>
+    </p>
+
+    <h3>Pogrubienie i kursywa</h3>
+    <p><em>Kursywa</em>: <code>*gwiazdki* or _podkreślenia_</code></p>
+    <p><strong>Pogrubienie</strong>: <code>**podwójne gwiazdki** or __podwójne podkreślenia__</code></p>
+
+    <h3>Linki</h3>
+    <p><a href="<%= app_url %>">Jestem linkiem wewnętrznym</a>: <code>[Jestem linkiem wewnętrznym](put-link-here)</code></p>
+    <p><a name="zakotwiczone">Linki zakotwiczone</a> (Na przykład dla spisu treści)</p>
+    <pre>
+      ## Spis treści
+        * [Rozdział 1](#chapter-1)
+        * [Rozdział 2](#chapter-2)
+
+      ### Rozdział 1 <%= "<a name=\"chapter-1\"></a>" %>
+    </pre>
+
+    <h3>Obrazy w tekście</h3>
+    <p>
+      Przy dodawaniu GIF-ów do postów i komentarzy, pamiętaj, że istnieje limit 200 megapikseli na klatkę/stronę.
+      <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--OsLaFSo9--/c_fill,f_auto,fl_progressive,h_220,q_auto,w_220/https://thepracticaldev.s3.amazonaws.com/uploads/user/profile_image/31047/af153cd6-9994-4a68-83f4-8ddf3e13f0bf.jpg" alt="przykładowy obrazek, z Sloan" loading="lazy" />
+    </p>
+    <pre>![Opis obrazka](put-link-to-image-here)</pre>
+    <figcaption> Nawet możesz dodać podpis za pomocą tagu HTML <code>figcaption</code>!</figcaption>
+
+    <h3>Nagłówki</h3>
+    <p>Dodaj nagłówek do swojego posta za pomocą tej składni:</p>
+    <pre># Jeden '#' dla nagłówka h1<br>## Dwa '#'s dla nagłówka h2<br>...<br>###### Sześć '#'s dla nagłówka h6</pre>
+    <h1>Jeden '#' dla nagłówka h1</h1>
+    <h2>Dwa '#'s dla nagłówka h2</h2>
+    <h3>Trzy '#'s dla nagłówka h3</h3>
+    <h4>Cztery '#'s dla nagłówka h4</h4>
+    <h5>Pięć '#'s dla nagłówka h5</h5>
+    <h6>Sześć '#'s dla nagłówka h6</h6>
+
+    <h3>Notatki autora/Komentarze</h3>
+    <p>Dodaj ukryte notatki/komentarze do swojego artykułu za pomocą tej składni:</p>
+    <pre>&lt;!-- To nie pojawi się w treści! --&gt;</pre>
+
+    <h3>Powszechne błędy</h3>
+    <p>
+      Listy są pisane tak samo jak w dowolnym innym edytorze Markdown.
+      Jeśli dodajesz obrazek między numerowaną listą, upewnij się jednak, że obrazek jest wciśnięty,
+      w przeciwnym razie numeracja listy zostanie zresetowana.
+      Oto przykład, co zrobić:
+      <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--HjVUshkb--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/8l29vxiir8k5d097o9o8.png"
+        alt="przykładowy obrazek przedstawiający pisanie list z obrazkami w Markdown" loading="lazy" />
+    </p>
+    <p>
+      Oto <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet" target="_blank" rel="noopener">ponownie ściągawka Markdown</a> dla odniesienia.
+    </p>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<style>
+  .permalink-heading svg {
+    fill: currentColor;
+    visibility: hidden;
+  }
+
+  .permalink-heading a:focus svg,
+  .permalink-heading:hover svg {
+    visibility: visible;
+  }
+
+</style>
+<h1 id="things-to-know" class="permalink-heading"><strong>Musisz wiedzieć</strong><a href="#things-to-know" aria-label="permalink for Things to know"><%= crayons_icon_tag("small-link", aria_hidden: true) %></a></h1>
+<ul>
+  <li>Ten edytor to edytor markdown, który używa <a href="https://jekyllrb.com/docs/frontmatter">Jekyll front matter</a>.</li>
+  <li>Stworzyliśmy kilka fajnych niestandardowych tagów! Spróbuj osadzić Tweet lub post Instagram w swoim poście. Użyj adresu URL w ten sposób: <code>{% embed https://... %}</code>.</li>
+  <li>Linki do nieopublikowanych postów można udostępnić do recenzji/feedbacku.</li>
+  <li>Kiedy jesteś gotowy do publikacji, ustaw zmienną published na <strong>true.</strong></li>
+  <li>Linki do nieopublikowanych postów (szkice lub zaplanowane posty) można udostępnić do recenzji/feedbacku. Te posty mają informację, która mówi "Ten URL jest publiczny, ale tajny, więc udostępniaj według własnego uznania." Nie są widoczne w kanałach ani na twoim profilu do momentu publikacji.</li>
+</ul>
+
+<p><em><b>Mamy dwie wersje edytora</b>. Jeśli wolisz edytować tytuł i tagi itp. jako oddzielne pola, przełącz na opcję "bogaty + markdown" w <a href="<%= user_settings_path(:customization) %>">Ustawienia → Dostosowanie</a>. W przeciwnym razie, kontynuuj:</em></p>
+
+<h2 id="front-matter" class="permalink-heading"><u><strong>Nagłówki</strong></u><a href="#front-matter" aria-label="permalink dla Front matter"><%= crayons_icon_tag("small-link", aria_hidden: true) %></a></h2>
+<p>Zmienne niestandardowe ustawione dla każdego posta, znajdują się między liniami potrójnego myślnika w twoim edytorze. Oto lista możliwości:</p>
+<ul>
+  <li><strong>title:</strong> tytuł twojego artykułu</li>
+  <li><strong>published:</strong> boolean, który określa, czy twój artykuł jest opublikowany.</li> 
+  <li><strong>tags:</strong> maksymalnie cztery tagi, muszą być oddzielone przecinkami</li>
+  <li><strong>canonical_url:</strong> link do kanonicznej wersji treści</li>
+  <li><strong>cover_image:</strong> obrazek okładki dla posta, akceptuje URL. <br>Najlepszy rozmiar to 1000 x 420.</li>
+  <li><strong>series:</strong> nazwa serii postów.</li>
+</ul>

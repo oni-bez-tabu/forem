@@ -1,0 +1,25 @@
+<% @user_approved_liquid_tags = Users::ApprovedLiquidTags.call(@user) %>
+
+<h4>Wykonaj krok(CTA)</h4>
+<p><pre>{% cta link %} opis {% endcta %}</pre></p>
+<p>Dostarcz <em>link</em>, do którego użytkownik zostanie przekierowany. <em>Opis</em> będzie zawierał etykietę/opis dla wywołania akcji.</p>
+
+<h4>Szczegóły</h4>
+<p>Możesz osadzić element HTML <code>details</code>, używając details, spoiler lub collapsible. <em>Summary</em> będzie tytułem, który wyświetla się na dropdownie. <em>Zawartość</em> będzie tekstem ukrytym za dropdownem. Jest to świetne rozwiązanie, gdy chcesz ukryć tekst (np. odpowiedzi na pytania) za akcją/intencją użytkownika (np. kliknięciem).</p>
+<pre>
+  <code>{% details summary %} content {% enddetails %}</code>
+  <code>{% spoiler summary %} content {% endspoiler %}</code>
+  <code>{% collapsible summary %} content {% endcollapsible %}</code>
+</pre>
+
+<% if @user_approved_liquid_tags.include? UserSubscriptionTag %>
+  <h4><%= community_name %> Subskrypcje Użytkowników</h4>
+  <p class="fs-s fw-bold">Ten osadzony może być tworzony tylko w postach przez Administratorów.</p>
+  <p>Możesz dodać tekst wywołujący akcję, który będzie wyświetlał się nad przyciskiem subskrypcji:</p>
+  <code>{% user_subscription Jeśli chcesz otrzymywać przyszłe aktualizacje, zasubskrybuj poniżej! %}</code>
+  <p class="fs-s">
+    Jeśli czytelnik jest wylogowany, przycisk spowoduje, że zostanie poproszony
+    o zalogowanie się przed subskrypcją. Jeśli czytelnik jest zalogowany, przycisk
+    spowoduje, że zostanie poproszony o subskrypcję.
+  </p>
+<% end %>

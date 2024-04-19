@@ -1,0 +1,26 @@
+<div id="editor-frontmatter-help">
+  <div class="text-styles">
+    <div class="crayons-notice crayons-notice--info" aria-live="polite">
+      <p><strong>Mamy dwie wersje edytora</strong>. Jeśli wolisz edytować tytuł i tagi itp. jako oddzielne pola, przełącz na opcję "bogaty + markdown" w <a href="<%= user_settings_path(tab: :customization) %>">Ustawienia » Dostosowanie</a>. W przeciwnym razie, kontynuuj...</p>
+    </div>
+
+    <ul>
+      <li>Ten edytor to edytor markdown, który używa <a href="https://jekyllrb.com/docs/frontmatter">Jekyll front matter</a>.</li>
+      <li>Stworzyliśmy kilka fajnych niestandardowych tagów! Spróbuj osadzić Tweet lub post Instagram w swoim poście.</li>
+      <li>Linki do nieopublikowanych postów można udostępnić do recenzji/feedbacku.</li>
+      <li>Kiedy jesteś gotowy do publikacji, ustaw zmienną published na <strong>true.</strong></li>
+    </ul>
+
+    <h3>Front Matter</h3>
+    <p>Zmienne niestandardowe ustawione dla każdego posta, znajdują się między liniami potrójnego myślnika w twoim edytorze. Oto lista możliwości:</p>
+    <ul>
+      <li><strong>title:</strong> tytuł twojego artykułu</li>
+      <li><strong>published:</strong> boolean, który określa, czy twój artykuł jest opublikowany</li>
+      <li><strong>description:</strong> obszar opisu w kartach Twittera i kartach open graph</li>
+      <li><strong>tags:</strong> maksymalnie cztery tagi, muszą być oddzielone przecinkami</li>
+      <li><strong>canonical_url:</strong> link do kanonicznej wersji treści</li>
+      <li><strong>cover_image:</strong> obrazek okładki dla posta, akceptuje URL. <br>Najlepszy rozmiar to 1000 x 420.</li>
+      <li><strong>series:</strong> nazwa serii postów.</li>
+    </ul>
+  </div>
+</div>

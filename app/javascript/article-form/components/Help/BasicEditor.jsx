@@ -6,13 +6,13 @@ export const BasicEditor = ({ openModal }) => (
     data-testid="basic-editor-help"
     className="crayons-card crayons-card--secondary p-4 mb-6"
   >
-    You are currently using the basic markdown editor that uses{' '}
+    Aktualnie korzystasz z podstawowego edytora markdown, który używa{' '}
     <a href="#frontmatter" onClick={() => openModal('frontmatterShowing')}>
       Jekyll front matter
     </a>
-    . You can also use the <em>rich+markdown</em> editor you can find in{' '}
+    . Możesz również skorzystać z edytora <em>bogaty+markdown</em>, który znajdziesz w{' '}
     <a href="/settings/customization">
-      UX settings
+      Ustawieniach
       <svg
         width="24"
         height="24"
