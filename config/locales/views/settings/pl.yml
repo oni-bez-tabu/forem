@@ -138,13 +138,13 @@ pl:
           desc2: Repozytoria znikną z Twojego profilu, jeśli usuniesz skojarzenie OAuth z GitHubem.
         rss:
           heading: Publikacja na %{community} z RSS
-          desc1_html: Posty trafią na Twoje %{dashboard} <strong>jako szkice</strong>, a następnie będziesz mógł je opublikować stamtąd.
+          desc1_html: Posty trafią na Twój %{dashboard} <strong>jako szkice</strong>, a następnie będziesz mógł/a je opublikować stamtąd.
           desc2: Formatowanie zazwyczaj będzie wyglądać dobrze, ale możesz musieć dokonać ręcznych poprawek. W przypadku Medium możesz musieć ręcznie naprawić osadzenia.
           desc3_html: Aby dowiedzieć się więcej o tym, jak tworzone są szkice z Twojego kanału, przeczytaj ten %{guide}.
           desc4: Twój kanał będzie pobierany za każdym razem, gdy wyślesz ten formularz, a aktualizacje będą automatycznie pobierane okresowo po nim.
           desc5_html: 'FYI: Adresy URL kanałów RSS Medium to <em>https://medium.com/feed/@twoja_nazwa_użytkownika</em>'
           desc6: Przesyłając swój adres URL kanału RSS, zgadzasz się, że posiadasz i/lub masz zgodę na udostępnianie powiązanych treści.
-          dashboard: tablica rozdzielcza
+          dashboard: panel kontrolny
           fetch: Pobierz kanał teraz
           guide: przewodnik
           last_html: 'Ostatnio pobrane: %{time}'

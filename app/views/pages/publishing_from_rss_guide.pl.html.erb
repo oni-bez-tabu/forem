@@ -1,46 +1,46 @@
-<% title "Editor Guide - Publikacja z  RSS or Atom" %>
+<% title "Przewodnik Edytora - Publikacja z RSS lub Atom" %>
 
 <%= content_for :page_meta do %>
   <link rel="canonical" href="<%= app_url(publishing_from_rss_guide_path) %>" />
-  <meta name="description" content="<%= community_name %> | Publikacja z from RSS or Atom guidelines">
+  <meta name="description" content="<%= community_name %> | Wytyczne dotyczące publikacji z RSS lub Atom">
   <%= meta_keywords_default %>
 <% end %>
 
 <main class="container article" id="main-content">
   <div class="title help-guide-title">
-    <h1>Publikacja z  RSS or Atom</h1>
+    <h1>Publikacja z RSS lub Atom</h1>
   </div>
 
   <div class="body">
     <h2>Front Matter</h2>
 
-    <p>Our feed reader converts some elements from the RSS or Atom feeds to tags for the editor's front matter:</p>
+    <p>Nasz czytnik kanałów konwertuje niektóre elementy z kanałów RSS lub Atom na tagi dla metadanych edytora:</p>
     <ul>
       <li>
-        <code>&lt;title&gt;</code>: <strong>title</strong>, the title of the post
+        <code>&lt;title&gt;</code>: <strong>title</strong>, tytuł posta
       </li>
 
       <li>
-        <code>&lt;category&gt;</code>: <strong>tags</strong>, only the first four <code>&lt;category&gt;</code> elements
-        can be used in a post on <%= community_name %> per each item in the feed.
+        <code>&lt;category&gt;</code>: <strong>tags</strong>, tylko pierwsze cztery elementy <code>&lt;category&gt;</code>
+        mogą być używane w poście na <%= community_name %> dla każdego elementu w kanale.
       </li>
 
       <li>
-        <code>&lt;link&gt;</code>: <strong>canonical_url</strong>, only used if the "Mark the RSS source as canonical URL by default"
-        option is enabled in the <%= link_to "RSS Settings", user_settings_path(:extensions) %>.
+        <code>&lt;link&gt;</code>: <strong>canonical_url</strong>, używany tylko jeśli opcja "Oznacz źródło RSS jako domyślny adres URL kanoniczny"
+        jest włączona w <%= link_to "Ustawienia RSS", user_settings_path(:extensions) %>.
       </li>
     </ul>
 
-    <h2>Post Content</h2>
+    <h2>Zawartość Posta</h2>
 
     <p>
-      The post content is prioritized in this order: <code>&lt;content&gt;</code>, <code>&lt;summary&gt;</code>, or
+      Zawartość posta jest priorytetowo ustalana w tej kolejności: <code>&lt;content&gt;</code>, <code>&lt;summary&gt;</code>, lub
       <code>&lt;description&gt;</code>.
     </p>
 
-    <p>The HTML will be converted to Markdown as the body of the <%= community_name %> post.</p>
+    <p>HTML zostanie skonwertowane na Markdown jako treść posta <%= community_name %> .</p>
 
-    <p>If you're using Medium RSS feed all its tweet links, YouTube, and Gist iframes will be converted to Liquid tags.</p>
+    <p>Jeśli korzystasz z kanału Medium RSS, wszystkie jego linki tweetów, iframy YouTube i Gisty zostaną skonwertowane na tagi Liquid.</p>
     <div class="blank-space"></div>
   </div>
 </main>
