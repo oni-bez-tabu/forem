@@ -5,14 +5,14 @@
         <!-- Header -->
         <tr>
           <td align="center" bgcolor="#FFFFFF" style="padding: 25px 2px 35px;">
-            <h1 style="margin: 0; font-size: 24px; color: #333;"> <%= community_name %> Digest </h1>
+            <h1 style="margin: 0; font-size: 24px; color: #333;"> <%= community_name %></h1>
           </td>
         </tr>
 
         <!-- Subheader -->
         <tr>
           <td bgcolor="#F8F8F8" style="padding: 8px; text-align: center; color: #3a3c3d; font-size: 16px;border-radius: 12px;">
-            Recent community posts just for you
+            Ostatnie posty społeczności, specjalnie dla Ciebie
           </td>
         </tr>
 
@@ -44,17 +44,18 @@
 
         <!-- Footer -->
         <tr>
-          <td bgcolor="#FFFFFF" style="padding: 15px 0; font-size: 16px;">
-            <h2>How to make your Digest better</h2>
-            <% if @user.setting.experience_level.nil? %>
-              <p style="margin: 22px 0; font-size: 16px;">
-                Visit <b><a href="<%= app_url(user_settings_path(:customization)) %>" style="color: #0a0a0a; text-decoration: underline;">your settings</a></b> to enter your experience level to get more relevant posts for you.
-              </p>
-            <% end %>
-            <p style="margin: 22px 0 10px; font-size: 16px;">
-              Visit the <b><a href="<%= app_url(tags_path) %>" style="color: #0a0a0a; text-decoration: underline;">tags page</a></b> to choose which types of content will be featured.
-            </p>
-          </td>
+  <td bgcolor="#FFFFFF" style="padding: 15px 0; font-size: 16px;">
+  <h2>Jak zmienić swoje preferencje?</h2>
+  <% if @user.setting.experience_level.nil? %>
+    <p style="margin: 22px 0; font-size: 16px;">
+      Odwiedź <b><a href="<%= app_url(user_settings_path(:customization)) %>" style="color: #0a0a0a; text-decoration: underline;">swoje ustawienia</a></b>, aby wprowadzić odpowiedni poziom treści i otrzymywać je bardziej odpowiednie dla Ciebie.
+    </p>
+  <% end %>
+  <p style="margin: 22px 0 10px; font-size: 16px;">
+    Odwiedź stronę z <b><a href="<%= app_url(tags_path) %>" style="color: #0a0a0a; text-decoration: underline;">tagami</a></b>, aby wybrać, jakie rodzaje treści będą wyświetlane.
+  </p>
+</td>
+
         </tr>
 
         <tr>

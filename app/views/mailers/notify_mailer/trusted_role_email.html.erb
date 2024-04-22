@@ -1,28 +1,28 @@
 <p>
-  Hey <%= @user.name %>!
+  Cześć <%= @user.name %>!
 </p>
 <p>
-  Good news! You’ve been granted Trusted Member permissions on <%= community_name %>!
+  Dobre wieści! Otrzymałeś uprawnienia zaufanego członka na <%= community_name %>!
 </p>
 <p>
-  <b>From now on, a shield icon will be visible on post pages. Simply click on it to take <em>private</em> actions on community content.</b>
+  <b>Od teraz ikona tarczy będzie widoczna na stronach postów. Wystarczy na nią kliknąć, aby podjąć <em>prywatne</em> działania na treści społeczności.</b>
 </p>
 <p>
-  Here's an overview of your new abilities:
+  Oto przegląd Twoich nowych możliwości:
   <ul>
-    <li>Rank content (👎👍) with emoji reactions</li>
-    <li>Rate the experience level of posts</li>
-    <li>Use the Flag to Admins icon 🧐 to report problematic content</li>
+    <li>Oceniaj treści (👎👍) za pomocą reakcji emoji</li>
+    <li>Oceń poziom doświadczenia postów</li>
+    <li>Użyj ikony Zgłoś do Administratorów 🧐, aby zgłosić problematyczną treść</li>
   </ul>
 </p>
 <% if Page.find_by(slug: "trusted-member") %>
   <p>
-    <mark>Visit the <b><a href="<%= app_url("trusted-member") %>">Trusted Member Guide</a></b> for full details on your new role and instructions on how to get started.</mark>.
+    <mark>Odwiedź <b><a href="<%= app_url("trusted-member") %>">Przewodnik dla Zaufanych Członków</a></b>, aby uzyskać pełne informacje o Twojej nowej roli i instrukcje, jak zacząć.</mark>.
   </p>
 <% end %>
 <p>
-  Thank you for being an awesome member of our community. Let’s work together to create a welcoming and constructive space!
+  Dziękujemy, że jesteś niesamowitym członkiem naszej społeczności. Pracujmy razem, aby stworzyć przyjazną i konstruktywną przestrzeń!
 </p>
 <p>
-  <%= community_name %> Team
+  Zespół <%= community_name %>
 </p>

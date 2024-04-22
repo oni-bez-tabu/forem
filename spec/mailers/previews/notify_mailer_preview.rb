@@ -46,30 +46,28 @@ class NotifyMailerPreview < ActionMailer::Preview
   end
 
   def feedback_message_resolution_email
-    # change email_body text when you need to see a different version
+    # zmień tekst email_body, gdy chcesz zobaczyć inną wersję
     @user = User.first
     email_body = <<~HEREDOC
-      Hi [*USERNAME*],
+      Cześć,
 
-      We wanted to say thank you for flagging a [comment/post] that was in violation of the dev.to
-      code of conduct and terms of service. Your action has helped us continue our work of
-      fostering an open and welcoming community.
+      Chcieliśmy podziękować za zgłoszenie [komentarza/posta], który naruszał regulamin i warunki korzystania z serwisu.
+      Twoje działanie pomogło nam kontynuować naszą pracę nad tworzeniem otwartej i przyjaznej społeczności.
 
-      We've also removed the offending posts and reached out to the offender(s).
+      Usunęliśmy również obraźliwe posty i skontaktowaliśmy się z ich autorami.
 
-      Thanks again for being a great part of the community.
-
-      PBJ
+      Jeszcze raz dziękujemy za bycie wspaniałą częścią społeczności.
     HEREDOC
     params = {
       email_to: @user.email,
-      email_subject: "Courtesy notice from #{Settings::Community.community_name}",
+      email_subject: "Powiadomienie od #{Settings::Community.community_name}",
       email_body: email_body,
       email_type: "Reporter",
       feedback_message_id: rand(100)
     }
     NotifyMailer.with(params).feedback_message_resolution_email
   end
+
 
   def new_message_email
     NotifyMailer.with(message: Message.last).new_message_email

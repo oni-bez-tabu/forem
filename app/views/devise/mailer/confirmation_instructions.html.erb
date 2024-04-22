@@ -1,9 +1,11 @@
 <% if @user.creator? %>
   <%= render partial: "creator_confirmation_instructions", locals: { url: confirmation_url(@resource, confirmation_token: @token) } %>
 <% else %>
-  <p>Welcome <%= @name %>!</p>
+  <p>Hej <%= @name %>!</p>
 
-  <p>You can confirm your account email through the link below:</p>
+  <p>Dziękuje za rejestrację, teraz możesz potwierdzić swój adres e-mail poprzez kliknięcie poniższego linku:</p>
 
-  <p><%= link_to "Confirm my account", confirmation_url(@resource, confirmation_token: @token) %></p>
+  <p><%= link_to "Potwierdź mój adres e-mail", confirmation_url(@resource, confirmation_token: @token) %></p>
+
+  <p>Jeśli to nie Ty dokonujesz rejestracji na nietbu.pl, nie ma się czym martwić – możesz go bezpiecznie zignorować.</p>
 <% end %>

@@ -1,32 +1,32 @@
-<p>Hey <%= @user.name %>!</p>
+<p>Cześć <%= @user.name %>!</p>
 
-<p>Thanks for volunteering to be a <%= community_name %> tag moderator. We’ve added you as a moderator for <%= link_to "##{@tag}", tag_url(@tag) %>. Note that your profile picture is now visible on this page.</p>
+<p>Dziękujemy za zgłoszenie się na ochotnika do bycia moderatorem tagów na <%= community_name %>. Dodaliśmy Cię jako moderatora dla <%= link_to "##{@tag}", tag_url(@tag) %>. Zauważ, że Twoje zdjęcie profilowe jest teraz widoczne na tej stronie.</p>
 
-<p>With great power comes great... you know the saying. As a tag moderator, you are able to:</p>
+<p>Z wielką mocą wiąże się wielka... znasz to powiedzenie. Jako moderator tagów, możesz:</p>
 
 <ul>
-  <li>Remove #<%= @tag %> if it’s been added to an irrelevant post. Only remove tags when they do not fit well for the subject matter of the post. Do add more relevant tags if it will elevate the visibility of the post or make it discoverable to other audiences.</li>
-  <li>Add #<%= @tag %> to posts if applicable. This helps the best content become more easily discoverable!</li>
-  <li>Update the #<%= @tag %> tag landing page, including submission guidelines and design visible in the sidebar.</li>
-  <li>Use the 🧐 on any posts that you think are breaking our Code of Conduct. Using this emoji on articles or comments will send them  to our team for review. There's no penalty for being wrong there; that's why we have a review step!</li>
-  <li>Check to make sure that the experience level of the post is set and give it a rating if this field is not set.</li>
-  <li>And lastly please use, 👍 and 👎 on the posts you enjoy and think are relevant; and on those posts that are not appropriate or lacking in quality. This helps the best content become more easily discoverable!</li>
+  <li>Usunąć #<%= @tag %>, jeśli został dodany do nieodpowiedniego posta. Usuwaj tagi tylko wtedy, gdy nie pasują dobrze do tematu posta. Dodawaj bardziej odpowiednie tagi, jeśli podniesie to widoczność posta lub uczyni go odkrywalnym dla innych odbiorców.</li>
+  <li>Dodać #<%= @tag %> do postów, jeśli to możliwe. To pomaga najlepszej treści stać się łatwiej odkrywalnej!</li>
+  <li>Zaktualizować stronę docelową tagu #<%= @tag %>, w tym wytyczne dotyczące przesyłania i projekt widoczny na pasku bocznym.</li>
+  <li>Użyj 🧐 na każdym poście, który Twoim zdaniem łamie nasz Kodeks Postępowania. Użycie tej emotki na artykułach lub komentarzach wyśle je do naszego zespołu do przeglądu. Nie ma kary za bycie tam w błędzie; dlatego mamy etap przeglądu!</li>
+  <li>Sprawdź, czy poziom doświadczenia posta jest ustawiony i ocenić go, jeśli to pole nie jest ustawione.</li>
+  <li>I na koniec, proszę używać 👍 i 👎 na postach, które Ci się podobają i które uważasz za istotne; oraz na tych postach, które nie są odpowiednie lub brakuje im jakości. To pomaga najlepszej treści stać się łatwiej odkrywalnej!</li>
 </ul>
 
-<p>For details on all available features and how to access them, visit our tag moderation page and <%= link_to "Community Moderation", community_moderation_path %> pages.</p>
+<p>Aby uzyskać szczegółowe informacje o wszystkich dostępnych funkcjach i sposobie ich dostępu, odwiedź naszą stronę moderacji tagów i <%= link_to "Moderacja społeczności", community_moderation_path %> strony.</p>
 
-<p>Tag moderation is something we're continuously iterating on, so you can expect adjustments and expanding features over time as we receive feedback.</p>
+<p>Moderacja tagów to coś, nad czym ciągle pracujemy, więc możesz spodziewać się dostosowań i rozszerzania funkcji z czasem, gdy otrzymamy informacje zwrotne.</p>
 
-<p>Of course, if you have any questions, please hit “reply” to this email.</p>
+<p>Oczywiście, jeśli masz jakiekolwiek pytania, prosimy o odpowiedź na ten e-mail.</p>
 
-<p>Thanks so much for volunteering your time to benefit <%= community_name %>. Your participation will assist us in better organizing the site via tags, and help us to foster a warm, welcoming, inclusive, spam-free-as-can-be platform.</p>
+<p>Bardzo dziękujemy za poświęcenie swojego czasu na korzyść <%= community_name %>. Twoje uczestnictwo pomoże nam lepiej zorganizować stronę za pomocą tagów i pomoże nam stworzyć ciepłą, przyjazną, inkluzjonistyczną, jak najbardziej wolną od spamu platformę.</p>
 
 <% if ForemInstance.dev_to? || ForemInstance.local? %>
-<p>Please join the optional DEV Mod Discord channel, if you’re so inclined, via this <a href="https://discord.gg/f5ARW5gxES">invitation link</a>. Once inside, visit the <a href="https://discord.com/channels/738011915866865775/902997503568400395">#mod-verification</a> channel and drop a link to your DEV profile so we can verify your privileges and  invite you to the correct channels. Hope to see ya there!</p>
+<p>Prosimy o dołączenie do opcjonalnego kanału DEV Mod Discord, jeśli masz na to ochotę, za pomocą tego <a href="https://discord.gg/f5ARW5gxES">linku do zaproszenia</a>. Po wejściu, odwiedź kanał <a href="https://discord.com/channels/738011915866865775/902997503568400395">#mod-verification</a> i podaj link do swojego profilu DEV, abyśmy mogli zweryfikować Twoje uprawnienia i zaprosić Cię do odpowiednich kanałów. Mamy nadzieję, że tam Cię zobaczymy!</p>
 <% end %>
 
 <p>
-  Happy Modding!
+  Szczęśliwej moderacji!
   <br>
-  - <%= community_name %> Team
+  - Zespół <%= community_name %>
 </p>

@@ -1,9 +1,9 @@
-Hey <%= @user.username %>!
+Cześć <%= @user.username %>!
 
-We're sending this email to verify that you've got access to this email address.
+Wysyłamy ten email, aby zweryfikować, że masz dostęp do tego adresu email.
 
-If you have no idea why you're getting this email, please ignore it!
+Jeśli nie masz pojęcia, dlaczego otrzymujesz ten email, zignoruj go!
 
-Otherwise, visit the following URL to verify that you still have access to this email address:
+W przeciwnym razie, odwiedź następujący URL, aby zweryfikować, że nadal masz dostęp do tego adresu email:
 
 <%= app_url(verify_email_authorizations_path(confirmation_token: @confirmation_token, username: @user.username)) %>

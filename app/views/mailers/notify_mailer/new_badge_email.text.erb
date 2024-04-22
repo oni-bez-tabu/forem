@@ -1,4 +1,4 @@
-Congratulations, <%= @user.name %>! You got the <%= @badge.title %> badge! Be sure to check out your profile.
+Gratulacje, <%= @user.name %>! Otrzymałeś odznakę <%= @badge.title %>! Koniecznie sprawdź swój profil.
 
 <%= @badge.description if @badge_achievement.include_default_description %>
 
@@ -7,9 +7,9 @@ Congratulations, <%= @user.name %>! You got the <%= @badge.title %> badge! Be su
 <%= user_url(@user) %>
 
 <% if @badge.credits_awarded > 0 && Listing.feature_enabled? %>
-  You also get <%= @badge.credits_awarded %> new credits to use for community listings if you have anything you'd like to promote: <%= listings_url %>
+  Otrzymujesz również <%= @badge.credits_awarded %> nowych kredytów do wykorzystania na listach społeczności, jeśli masz coś, co chciałbyś promować: <%= listings_url %>
 
-  To manage your credits visit: <%= credits_url %>
+  Aby zarządzać swoimi kredytami, odwiedź: <%= credits_url %>
 
-  For more information about listings, visit: <%= app_url(about_listings_url) %>
+  Aby uzyskać więcej informacji o listach, odwiedź: <%= app_url(about_listings_url) %>
 <% end %>

@@ -1,5 +1,5 @@
-<%= @comment.user.name %> replied to your <%= @comment.parent_type %>:
+<%= @comment.user.name %> odpowiedział na Twój <%= @comment.parent_type %>:
 
 <%= ActionController::Base.helpers.strip_tags(@comment.processed_html.html_safe) %>
 
-View now: <%= comment_url(@comment) %>
+Zobacz teraz: <%= comment_url(@comment) %>

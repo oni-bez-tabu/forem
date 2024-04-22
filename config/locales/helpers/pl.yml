@@ -118,7 +118,7 @@ pl:
     authentication_helper:
       any_of_those: którykolwiek z nich
       email_password: Email i hasło
-      reminder: 'Przypominamy: użyłeś %{method} do uwierzytelnienia swojego konta, więc proszę użyj %{dem}, aby się zalogować, jeśli zostaniesz poproszony.'
+      reminder: '%{method} zostało użyte do utworzenia konta, więc proszę użyj ich ponownie, jeśli zostaniesz poproszony/a o zalogowanie.'
       that: że
       invite_only: Nie możesz tego zrobić, dopóki nie wyłączysz Trybu Tylko-zaproszenia
     comments_helper:
