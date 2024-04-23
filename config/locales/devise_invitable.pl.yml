@@ -19,7 +19,7 @@ pl:
     mailer:
       invitation_instructions:
         accept_instructions: Możesz zaakceptować zaproszenie klikając ten link
-        accept: Zaakceptuj Zaproszenie
+        accept: Zaakceptuj zaproszenie
         accept_until: To zaproszenie wygaśnie po %{due_date}.
         hello: Cześć
         ignore: Jeśli nie chcesz zaakceptować zaproszenia, proszę zignoruj tego emaila. Twoje konto nie zostanie utworzone dopóki nie przejdziesz przez powyższy link i ustawisz swoje hasło.

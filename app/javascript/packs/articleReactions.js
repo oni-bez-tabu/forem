@@ -157,9 +157,9 @@ const reactToArticle = (articleId, reaction) => {
       document.getElementById(`reaction-butt-${reaction}`).disabled = false;
       showModalAfterError({
         response,
-        element: 'reaction',
-        action_ing: 'updating',
-        action_past: 'updated',
+        element: 'reakcja',
+        action_ing: 'wysyłanie',
+        action_past: 'wysłana',
       });
       return undefined;
     })

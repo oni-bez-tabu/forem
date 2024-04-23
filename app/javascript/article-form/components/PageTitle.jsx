@@ -22,7 +22,7 @@ export const PageTitle = ({
             organizations={organizations}
             organizationId={organizationId}
             onToggle={onToggle}
-            emptyLabel="Personal"
+            emptyLabel="Personalny"
           />
         </div>
       )}

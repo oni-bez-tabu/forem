@@ -11,7 +11,7 @@ export function updateSubscribeButtonText(
     window_size = window.innerWidth;
   }
 
-  let noun = 'comments';
+  let noun = 'komentarze';
   const { subscription_id, subscription_config, comment_id } = button.dataset;
 
   let subscriptionIsActive = subscription_id != '';
@@ -20,12 +20,12 @@ export function updateSubscribeButtonText(
   }
 
   const pressed = subscriptionIsActive;
-  const verb = subscriptionIsActive ? 'Subscribed' : 'Subscribe';
+  const verb = subscriptionIsActive ? 'Subskrybujesz' : 'Subkskrybuj';
 
   // comment_id should only be present if there's a subscription, so a button
   // that initially renders as 'Subscribed-to-thread' can be a toggle until refreshed
   if (comment_id && comment_id != '') {
-    noun = 'thread';
+    noun = 'wątek';
   }
 
   // Find the <span> element within the button
@@ -41,7 +41,7 @@ export function updateSubscribeButtonText(
       mobileLabel = `Author ${noun}`;
       break;
     default:
-      label = `${verb} to ${noun}`;
+      label = `${verb} ${noun}`;
       mobileLabel = `${noun}`.charAt(0).toUpperCase() + noun.slice(1);
   }
 

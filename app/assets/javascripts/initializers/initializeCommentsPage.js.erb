@@ -149,9 +149,9 @@ function initializeCommentsPage() {
             } else {
               showModalAfterError({
                 response,
-                element: 'reaction',
-                action_ing: 'making',
-                action_past: 'made',
+                element: 'reakcja',
+                action_ing: 'wysyłanie',
+                action_past: 'wysłana',
               });
             }
           });
@@ -306,9 +306,9 @@ function handleCommentSubmit(event) {
         form.classList.remove('submitting');
         showModalAfterError({
           response,
-          element: 'comment',
-          action_ing: 'posting',
-          action_past: 'posted',
+          element: 'komentarz',
+          action_ing: 'publikowanie',
+          action_past: 'opublikowany',
         });
         return false;
       }

@@ -65,9 +65,9 @@ function handleFollowingButtonClick(tagContainer) {
       } else {
         showModalAfterError({
           response,
-          element: 'follow action',
-          action_ing: 'updating',
-          action_past: 'updated',
+          element: 'obserwowanie',
+          action_ing: 'dodawane',
+          action_past: 'dodane',
         });
       }
     })
@@ -100,9 +100,9 @@ function handleHideButtonClick(tagContainer) {
       } else {
         showModalAfterError({
           response,
-          element: 'hide action',
-          action_ing: 'updating',
-          action_past: 'updated',
+          element: 'ukryj akcje',
+          action_ing: 'ukrywane',
+          action_past: 'ukryte',
         });
       }
     })
@@ -129,9 +129,9 @@ function handleUnhideButtonClick(tagContainer) {
       } else {
         showModalAfterError({
           response,
-          element: 'unhide action',
-          action_ing: 'updating',
-          action_past: 'updated',
+          element: 'odkrywanie',
+          action_ing: 'zmieniane',
+          action_past: 'zmienione',
         });
       }
     })

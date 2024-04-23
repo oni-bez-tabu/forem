@@ -87,9 +87,9 @@ function initReactions() {
               } else {
                 showModalAfterError({
                   response,
-                  element: 'reaction',
-                  action_ing: 'updating',
-                  action_past: 'updated',
+                  element: 'reakcja',
+                  action_ing: 'wysyłanie',
+                  action_past: 'wysłana',
                 });
               }
             });

@@ -240,10 +240,10 @@ function handleFollowButtonClick({ target }) {
         if (response.status !== 200) {
           showModalAfterError({
             response,
-            element: 'user',
-            action_ing: 'following',
-            action_past: 'followed',
-            timeframe: 'for a day',
+            element: 'użytkownik',
+            action_ing: 'obserwowanie',
+            action_past: 'zaobserwowany',
+            timeframe: 'przez dzień',
           });
         }
       });

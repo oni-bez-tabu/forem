@@ -185,7 +185,7 @@ export const ListingDashboard = () => {
           setStateOnKeyPress(event, () => setSelectedListings('user'))
         }
       >
-        Personal
+        Personalny
       </span>
       {orgButtons}
       <div className="dashboard-listings-header-wrapper">

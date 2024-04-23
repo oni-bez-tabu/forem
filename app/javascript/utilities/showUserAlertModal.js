@@ -44,7 +44,7 @@ function showRateLimitModal({
   element,
   action_ing,
   action_past,
-  timeframe = 'a moment',
+  timeframe = 'chwilę',
 }) {
   const rateLimitText = buildRateLimitText({
     element,
@@ -54,11 +54,11 @@ function showRateLimitModal({
   });
   const rateLimitLink = '/faq';
   showUserAlertModal(
-    `Wait ${timeframe}...`,
+    `Czekaj ${timeframe}...`,
     rateLimitText,
-    'Got it',
+    'Mam to',
     rateLimitLink,
-    'Why do I have to wait?',
+    'Dlaczego muszę czekać?',
   );
 }
 
@@ -80,7 +80,7 @@ export function showModalAfterError({
   element,
   action_ing,
   action_past,
-  timeframe = 'a moment',
+  timeframe = 'chwilę',
 }) {
   response
     .json()
@@ -94,17 +94,17 @@ export function showModalAfterError({
         });
       } else {
         showUserAlertModal(
-          `Error ${action_ing} ${element}`,
-          `Your ${element} could not be ${action_past} due to an error: ${errorResponse.error}`,
-          'OK',
+          `Błąd - ${element}`,
+          `${element} nie może być ${action_past} z powodu błędu: ${errorResponse.error}`,
+          'Rozumiem',
         );
       }
     })
     .catch(() => {
       showUserAlertModal(
-        `Error ${action_ing} ${element}`,
-        `Your ${element} could not be ${action_past} due to a server error`,
-        'OK',
+        `Błąd - ${element}`,
+        `${element} nie może być ${action_past} z powodu błędu serwera`,
+        'Rozumiem',
       );
     });
 }
@@ -128,7 +128,7 @@ export function buildRateLimitText({
   action_past,
   timeframe,
 }) {
-  return `Since you recently ${action_past} a ${element}, you’ll need to wait ${timeframe} before ${action_ing} another ${element}.`;
+  return `Musisz poczekać ${timeframe}, zanim wykonasz kolejne akcje.`;
 }
 
 /**
