@@ -88,7 +88,7 @@ const form = document.getElementsByClassName('button_to')[0];
 if (form) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (confirm('Are you SURE you want to delete this comment?')) {
+    if (confirm('Czy na PEWNO chcesz usunąć ten komentarz?')) {
       form.submit();
     }
   });

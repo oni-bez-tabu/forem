@@ -19,7 +19,7 @@ function addRelevantButtonsToArticle(user) {
 
     if (parseInt(articleContainer.dataset.authorId, 10) === user.id) {
       actions.push(
-        `<a class="crayons-btn crayons-btn--s crayons-btn--ghost px-2" href="${articleContainer.dataset.path}/edit" rel="nofollow">Edit</a>`,
+        `<a class="crayons-btn crayons-btn--s crayons-btn--ghost px-2" href="${articleContainer.dataset.path}/edit" rel="nofollow">Edytuj</a>`,
       );
 
       let clickToEditButton = document.getElementById('author-click-to-edit');
@@ -29,12 +29,12 @@ function addRelevantButtonsToArticle(user) {
 
       if (published === true && !scheduled) {
         actions.push(
-          `<a class="crayons-btn crayons-btn--s crayons-btn--ghost px-2" id ="article-action-space-manage" href="${articleContainer.dataset.path}/manage" rel="nofollow">Manage</a>`,
+          `<a class="crayons-btn crayons-btn--s crayons-btn--ghost px-2" id ="article-action-space-manage" href="${articleContainer.dataset.path}/manage" rel="nofollow">Zarządzaj</a>`,
         );
       }
 
       actions.push(
-        `<a class="crayons-btn crayons-btn--s crayons-btn--ghost px-2" href="${articleContainer.dataset.path}/stats" rel="nofollow">Stats</a>`,
+        `<a class="crayons-btn crayons-btn--s crayons-btn--ghost px-2" href="${articleContainer.dataset.path}/stats" rel="nofollow">Statystyki</a>`,
       );
     }
 

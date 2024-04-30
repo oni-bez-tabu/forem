@@ -11,8 +11,8 @@ function addFlagUserBehavior(flagButton) {
   function flag() {
     const confirmFlag = window.confirm(
       isUserFlagged
-        ? 'Are you sure you want to unflag this person? This will make all of their posts visible again.'
-        : 'Are you sure you want to flag this person? This will make all of their posts less visible.',
+      ? 'Czy na pewno chcesz cofnąć oznaczenie tej osoby? Spowoduje to ponowne wyświetlenie wszystkich ich postów.'
+      : 'Czy na pewno chcesz oznaczyć tę osobę? Spowoduje to zmniejszenie widoczności wszystkich ich postów.'      
     );
 
     if (confirmFlag) {

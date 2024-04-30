@@ -11,9 +11,9 @@ pl:
     copy_link: Kopiuj link
     edit_profile: Edytuj profil
     follow: Obserwuj
-    follow_back: Obserwuj z powrotem
-    following: Obserwuje
-    like: Lubię to
+    follow_back: Obserwuj również
+    following: Obserwujesz
+    like: Lubi to
     loading: ładowanie...
     reaction: reakcj
     report_abuse: Zgłoś nadużycie

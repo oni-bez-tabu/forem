@@ -29,7 +29,7 @@ export const ClipboardButton = ({
       icon={CopyIcon}
       title="Copy"
     >
-      {showCopyMessage ? 'Copied!' : 'Copy...'}
+      {showCopyMessage ? 'Skopiowane!' : 'Kopiuj...'}
     </Button>
   </div>
 );

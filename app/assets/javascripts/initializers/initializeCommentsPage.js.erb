@@ -50,7 +50,7 @@ function initializeCommentsPage() {
                     if (publicReactionCounts[i].count > 0 && reactionsLabelWrapper) {
 
                       if (publicReactionCounts[i].count > 1) {
-                        reactionsLabelWrapper.innerHTML = `&nbsp;${I18n.t('core.like').toLowerCase()}s`;
+                        reactionsLabelWrapper.innerHTML = `&nbsp;${I18n.t('core.like').toLowerCase()}`;
                       } else {
                         reactionsLabelWrapper.innerHTML = `&nbsp;${I18n.t('core.like').toLowerCase()}`;
                       }
@@ -76,8 +76,8 @@ function initializeCommentsPage() {
                     var userActionsEl = allNodes[i].querySelector('.current-user-actions');
                     var buttEl = document.getElementById('button-for-comment-' + allNodes[i].dataset.commentId);
                     if (userActionsEl && buttEl) {
-                      userActionsEl.innerHTML = `<li><a href="${ path }/edit" class="crayons-link crayons-link--block" aria-label="Edit this comment">Edit</a></li>
-                                                <li><a data-no-instant href="${ path }/delete_confirm" class="edit-butt crayons-link crayons-link--block" aria-label="Delete this comment">Delete</a></li>`
+                      userActionsEl.innerHTML = `<li><a href="${ path }/edit" class="crayons-link crayons-link--block" aria-label="Edit this comment">Edytuj</a></li>
+                                                <li><a data-no-instant href="${ path }/delete_confirm" class="edit-butt crayons-link crayons-link--block" aria-label="Delete this comment">Usuń</a></li>`
                       userActionsEl.classList.remove('hidden');
                     }
                   }
@@ -118,9 +118,9 @@ function initializeCommentsPage() {
               reactionCount.innerHTML = parseInt(reactionCount.innerHTML) + 1;
               reactionCount.classList.remove("hidden");
               if(parseInt(reactionCount.innerHTML) == 1) {
-                reactionLabel.innerHTML = "&nbsp;like"
+                reactionLabel.innerHTML = "&nbsp;lubi to"
               } else if(parseInt(reactionCount.innerHTML) > 1) {
-                reactionLabel.innerHTML = "&nbsp;likes"
+                reactionLabel.innerHTML = "&nbsp;lubi to"
               }
             }
           } else {

@@ -65,7 +65,7 @@ const NativeIosV1ImageUpload = ({ uploadingImage }) => (
         icon={ImageIcon}
         onClick={initNativeImagePicker}
       >
-        Upload image
+        Dodaj zdjęcie
       </Button>
     )}
   </Fragment>
@@ -212,7 +212,7 @@ const V1EditorImageUpload = ({
     <div className="flex items-center">
       {uploadingImage && (
         <span class="lh-base pl-3 border-0 py-2 inline-block">
-          <Spinner /> Uploading...
+          <Spinner /> Wgrywanie...
         </span>
       )}
 
@@ -224,8 +224,7 @@ const V1EditorImageUpload = ({
       ) : uploadingImage ? null : (
         <Fragment>
           <label className="cursor-pointer c-btn">
-            <Icon src={ImageIcon} className="c-btn__icon crayons-icon" /> Upload
-            image
+            <Icon src={ImageIcon} className="c-btn__icon crayons-icon" /> Dodaj zdjęcie
             <input
               type="file"
               id="image-upload-field"

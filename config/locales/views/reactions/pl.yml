@@ -4,7 +4,7 @@ pl:
     reactions:
       category:
         hands: Dłonie
-        like: Lubię to
+        like: Lubi to
         readinglist: Lista lektur
         thinking: Zastanawiam się
         thumbsup: Kciuk w górę
@@ -25,10 +25,10 @@ pl:
           other: "%{count}%{start}\_reakcji%{end}"
         title: Reakcje
       like:
-        title: Lubię to
-        aria_label: Lubię to
+        title: Lubi to
+        aria_label: Lubi to
         icon: Przycisk serca
-        text: Lubię to
+        text: Lubi to
       unicorn:
         title: Jednorożec
         aria_label: Zareaguj jednorożcem

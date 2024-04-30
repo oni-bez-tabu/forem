@@ -98,10 +98,10 @@ export const Options = ({
     publishedAtField = (
       <div className="crayons-field mb-6">
         <label htmlFor="publishedAtDate" className="crayons-field__label">
-          Schedule Publication
+          Zaplanuj publikację
         </label>
         <input
-          aria-label="Schedule publication date"
+          aria-label="SZaplanuj publikację data"
           type="date"
           min={currentDate}
           value={publishedAtDate} // ""
@@ -112,7 +112,7 @@ export const Options = ({
           placeholder="..."
         />
         <input
-          aria-label="Schedule publication time"
+          aria-label="Zaplanuj publikację czas"
           type="time"
           value={publishedAtTime} // "18:00"
           className="crayons-textfield"

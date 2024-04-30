@@ -62,7 +62,7 @@ pl:
         mobile_mention_notifications: Wyślij mi powiadomienie push, gdy ktoś mnie wspomni
         mobile_comment_notifications: Wyślij mi powiadomienie push, gdy ktoś odpowie mi w wątku komentarzy
         welcome_notifications: Wyślij mi czasami wskazówki, jak ulepszyć swoje doświadczenie w %{community}
-        reaction_notifications: Wyślij powiadomienia, gdy ktoś zareaguje na mój treść, taką jak komentarze lub posty
+        reaction_notifications: Wyślij powiadomienia, gdy ktoś zareaguje na móją treść, taką jak komentarze lub posty
         mod_roundrobin_notifications: Wyślij mi powiadomienia o nowych aktywnościach członków
       users_setting:
         feed_url: Adres URL kanału RSS

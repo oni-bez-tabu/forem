@@ -46,12 +46,12 @@ function handleCommentPreview(event) {
   if (editor.value !== '') {
     if (form.classList.contains('preview-open')) {
       form.classList.toggle('preview-open');
-      trigger.innerHTML = 'Preview';
+      trigger.innerHTML = 'Podgląd';
     } else {
       getAndShowPreview(preview, editor);
       const editorHeight = editor.offsetHeight + 43; // not ideal but prevents jumping screen
       preview.style.minHeight = `${editorHeight}px`;
-      trigger.innerHTML = 'Continue editing';
+      trigger.innerHTML = 'Kontynuuj edycję';
       form.classList.toggle('preview-open');
     }
   }

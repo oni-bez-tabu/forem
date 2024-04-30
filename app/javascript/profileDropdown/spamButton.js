@@ -11,9 +11,10 @@ function addSpamButton(spamButton) {
   function toggleSpam() {
     const confirm = window.confirm(
       isUserSpam
-        ? 'Are you sure you want to remove the spam role from this user? This will make all of their posts and comments visible again, and regain their access to new posts'
-        : 'Are you sure you want to add the spam role to this user? This will hide all of their posts and comments and restrict their access to create new posts and comments',
+        ? 'Czy na pewno chcesz usunąć użytkownikowi rolę spamu? Spowoduje to ponowne wyświetlenie wszystkich ich postów i komentarzy oraz przywrócenie dostępu do tworzenia nowych postów'
+        : 'Czy na pewno chcesz dodać użytkownikowi rolę spamu? Spowoduje to ukrycie wszystkich ich postów i komentarzy oraz ograniczenie dostępu do tworzenia nowych postów i komentarzy',
     );
+
 
     if (confirm) {
       request(`/users/${profileUserId}/spam`, {

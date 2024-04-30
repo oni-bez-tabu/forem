@@ -100,13 +100,13 @@ function submitAsModerator(responseTemplateId, parentId) {
 }
 
 const confirmMsg = `
-Are you sure you want to submit this comment?
+Czy na pewno chcesz przesłać ten komentarz?
 
-It will be sent immediately and users will be notified.
+Zostanie on wysłany natychmiast, a użytkownicy zostaną powiadomieni.
 
-Make sure this is the appropriate comment for the situation.
+Upewnij się, że jest to odpowiedni komentarz dla sytuacji.
 
-This action is not reversible.`;
+Ta czynność nie może być cofnięta.`;
 
 function addClickListeners(form, onTemplateSelected) {
   const responsesContainer = form.getElementsByClassName(
@@ -129,7 +129,7 @@ function addClickListeners(form, onTemplateSelected) {
       const textAreaReplaceable =
         textArea.value === null ||
         textArea.value === '' ||
-        confirm('Are you sure you want to replace your current comment draft?');
+        confirm('Czy na pewno chcesz zastąpić aktualny szkic komentarza?');
 
       if (textAreaReplaceable) {
         textArea.value = content;
