@@ -17,7 +17,7 @@ class ArticleWithVideoCreationService
         article.video = @article_params[:video]
         article.video_state = "PROGRESSING"
 
-        video_code = article.video.split("forem-video-input-nt/")[1]
+        video_code = article.video.split("nietabu-video-in/")[1]
         article.video_code = video_code
         article.video_source_url = "#{VIDEO_SERVICE_URL}/#{video_code}/#{video_code}.m3u8"
 
