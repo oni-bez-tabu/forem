@@ -38,24 +38,24 @@ export const UserMetadata = memo(
             )}
             {work && (
               <li>
-                <div className="key">Work</div>
+                <div className="key">Praca</div>
                 <div className="value">{work}</div>
               </li>
             )}
             {location && (
               <li>
-                <div class="key">Location</div>
+                <div class="key">Lokalizacja</div>
                 <div class="value">{location}</div>
               </li>
             )}
             {education && (
               <li>
-                <div class="key">Education</div>
+                <div class="key">Edukacja</div>
                 <div class="value">{education}</div>
               </li>
             )}
             <li>
-              <div class="key">Joined</div>
+              <div class="key">Dołączył</div>
               <div class="value">
                 <time datetime={created_at} class="date">
                   {joinedOnDateString}
