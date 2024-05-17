@@ -1,50 +1,51 @@
-<p>Wszyscy uczestnicy <%= community_name %> are expected to abide by our Code of Conduct, both online and during in-person events that are hosted and/or associated with <%= community_name %>.</p>
-<h2>Our Pledge</h2>
-<p>In the interest of fostering an open and welcoming environment, we as moderators of
-<% if creator_settings_form? %>
-  <%= community_name %> pledge to make participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
-<% else %>
-  <a href="<%= app_url %>"><%= community_name %></a> pledge to make participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
-<% end %>
-</p>
-<h2>Our Standards</h2>
-<p>Examples of behavior that contributes to creating a positive environment include:</p>
-<ul>
-  <li>Using welcoming and inclusive language</li>
-  <li>Being respectful of differing viewpoints and experiences</li>
-  <li>Referring to people by their preferred pronouns and using gender-neutral pronouns when uncertain</li>
-  <li>Gracefully accepting constructive criticism</li>
-  <li>Focusing on what is best for the community</li>
-  <li>Showing empathy towards other community members</li>
-</ul>
-<p>Examples of unacceptable behavior by participants include:</p>
-<ul>
-  <li>The use of sexualized language or imagery and unwelcome sexual attention or advances</li>
-  <li>Trolling, insulting/derogatory comments, and personal or political attacks</li>
-  <li>Public or private harassment</li>
-  <li>Publishing others' private information, such as a physical or electronic address, without explicit permission</li>
-  <li>Other conduct which could reasonably be considered inappropriate in a professional setting</li>
-  <li>Dismissing or attacking inclusion-oriented requests</li>
-</ul>
-<p>We pledge to prioritize marginalized people’s safety over privileged people’s comfort. We will not act on complaints regarding:</p>
-<ul>
-  <li>‘Reverse’ -isms, including ‘reverse racism,’ ‘reverse sexism,’ and ‘cisphobia’</li>
-  <li>Reasonable communication of boundaries, such as 'leave me alone,' 'go away,' or 'I’m not discussing this with you.'</li>
-  <li>Someone’s refusal to explain or debate social justice concepts</li>
-  <li>Criticisms of racist, sexist, cissexist, or otherwise oppressive behavior or assumptions</li>
-</ul>
-<h2>Enforcement</h2>
-<p>Violations of the Code of Conduct may be reported by contacting the team via the
-<% if creator_settings_form? %>
-  abuse report form or by sending an email to <%= contact_link %>. All reports will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. Further details of specific enforcement policies may be posted separately.
-<% else %>
-  <a href="<%= app_url("/report-abuse") %>">abuse report form</a> or by sending an email to <%= contact_link %>. All reports will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. Further details of specific enforcement policies may be posted separately.
-<% end %>
-</p>
-<p>Moderators have the right and responsibility to remove comments or other contributions that are not aligned to this Code of Conduct, or to suspend temporarily or permanently any members for other behaviors that they deem inappropriate, threatening, offensive, or harmful.</p>
-<h2>Attribution</h2>
-<p>This Code of Conduct is adapted from:</p>
-<ul>
+
+    <h3>Zaprzysiężenie Uczestnika</h3>
+    <p>Będąc uczestnikiem społeczności nietabu.pl, niezależnie w jakim celu i charakterze akceptujesz i zobowiązujesz się do przestrzegania naszego Kodeksu Postępowania, Regulaminu i Polityki Prywatności.</p>
+    
+    <h3>Zaprzysiężenie Zespołu</h3>
+    <p>Jako Zespół nietabu.pl zobowiązujemy się do tworzenia otwartego i przyjaznego środowiska dla wszystkich niezależnie od wieku, tożsamości płciowej, wyglądu, rasy, religii czy tożsamości i orientacji seksualnej. Najwyższym priorytetem dla nas jest dbanie o to, aby nietabu.pl było miejscem wolnym od mowy nienawiści.</p>
+    
+    <p>Zapraszamy Cię do naszej społeczności. Rozgość się i bądź:</p>
+    <ul>
+        <li><strong>Otwarty:</strong> szanuj poglądy innych i ich punkty widzenia, niezależnie czy idziecie w tym samym kierunku.</li>
+        <li><strong>Empatyczny:</strong> okazuj empatię dla doświadczenia i osobowości innych.</li>
+        <li><strong>Kulturalny:</strong> używaj przyjaznego języka, odnosząc się do innych z użyciem odpowiednich zaimków lub neutralnych, w przypadku niepewności.</li>
+        <li><strong>Tolerancyjny:</strong> traktuj wszystkich z szacunkiem, niezależnie od wieku, rasy, tożsamości płciowej, seksualnej czy wyglądu.</li>
+        <li><strong>Honorowy:</strong> przyjmuj krytykę kulturalnie o ile jest ona konstruktywna. Pamiętaj, że nie musisz się z nią zgadzać.</li>
+    </ul>
+    
+    <p>Pamiętaj też o:</p>
+    <ul>
+        <li>Cytowaniu źródeł, które są wykorzystywane w tworzeniu treści (więcej na temat unikania plagiatu: Jak uniknąć plagiatu?)</li>
+        <li>Przestrzeganiu wytycznych AI oraz informowaniu, w przypadku korzystania z pomocy AI.</li>
+    </ul>
+    
+    <p>Jako moderatorzy, możemy Cię wyprosić za:</p>
+    <ul>
+        <li>Mowę nienawiści lub komunikaty mające znamiona: rasizmu, homofobii, transfobii, ableizmu, seksizmu lub jeśli są w inny sposób uprzedzone/dyskryminujące.</li>
+        <li>Ataki osobiste/polityczne/poglądowe lub trollowanie i obraźliwe/uwłaczające komentarze.</li>
+        <li>Nękanie.</li>
+        <li>Publikowanie informacji prywatnych o innych osobach jak np. adres zamieszkania, elektroniczny, dane wrażliwe bez wyraźnej ich zgody.</li>
+        <li>Plagiatowanie treści lub przywłaszczanie innych wartości.</li>
+        <li>Spamowanie treściami reklamowymi lub podobnymi.</li>
+        <li>Inne zachowania, które można uznać za niewłaściwe w środowisku edukacji seksualnej.</li>
+    </ul>
+    
+    <p>Ze wszelkich zachowań mających znamiona mowy nienawiści, będą wyciągane konsekwencje. Bezpieczeństwo i komfort naszej społeczności jest najwyższą wartością, dlatego przedkładamy je ponad komfort osób naruszających Kodeks.</p>
+    
+    <p>Nie rozpatrujemy skarg dotyczących:</p>
+    <ul>
+        <li>Kulturalnego komunikowania granic np. „Zostaw mnie w spokoju”, „Nie chcę o tym rozmawiać”, „Nie zgadzam się z Twoim zdaniem/poglądem/opinią”.</li>
+        <li>Odmowy wyjaśnienia czyjegoś poglądu.</li>
+        <li>Krytyki zachowań naruszających Kodeks.</li>
+    </ul>
+    
+    <p>Naruszenia kodeksu można zgłaszać, kontaktując przez <a href="<%= app_url("/report-abuse") %>">formularz zgłoszenia</a> lub wysyłając e-mail na adres <a href="mailto:hej@nietabu.pl">hej@nietabu.pl</a>. Wszystkie zgłoszenia zostaną niezwłocznie rozpatrzone przez moderatorów, a konsekwencje nadużyć wyciągnięte.</p>
+    
+    <p>Moderatorzy mają prawo oraz obowiązek do usuwania komentarzy, wpisów oraz innych materiałów jeśli naruszają one Kodeks. W przypadku uznania, że działania danego Użytkownika naruszają bezpieczeństwo i znacznie pogarszają komfort członków społeczności, Moderatorzy mają możliwość zawieszenia lub stałego usunięcia konta, bez możliwości odwołania.</p>
+
+  <p>Adaptacja:</p>
+  <ul>
   <li><a href="http://contributor-covenant.org/version/1/4">Contributor Covenant, version 1.4</a></li>
   <li><a href="http://www.writespeakcode.com/code-of-conduct.html">Write/Speak/Code</a></li>
   <li><a href="https://geekfeminism.org/about/code-of-conduct">Geek Feminism</a></li>
