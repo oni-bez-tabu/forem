@@ -100,13 +100,22 @@
       <% end %>
     <% end %>
 
+    <div class="crayons-field mt-3">
+      <div>
+        <input class="crayons-checkbox" type="checkbox" required="required" value="1" name="term_condition" id="term_condition">
+        <label class="crayons-field__label fw-normal" for="term_condition">
+          <%= t("devise.registrations.agreement.sign_up_html", privacy_path: privacy_path, terms_path: terms_path, code_of_conduct_path: code_of_conduct_path) %>
+        </label>
+      </div>
+    </div>
+
     <% if ReCaptcha::CheckRegistrationEnabled.call %>
       <div class="recaptcha-tag-container mt-2">
         <%= recaptcha_tags site_key: Settings::Authentication.recaptcha_site_key %>
       </div>
     <% end %>
 
-    <div class="actions pt-3">
+    <div class="actions mt-7">
       <%= f.submit t("views.auth.register.submit"), class: "crayons-btn" %>
     </div>
   <% end %>
