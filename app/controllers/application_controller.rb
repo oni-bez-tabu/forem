@@ -41,7 +41,8 @@ class ApplicationController < ActionController::Base
                           omniauth_callbacks
                           passwords
                           registrations
-                          service_worker].freeze
+                          service_worker
+                          video_states].freeze
   private_constant :PUBLIC_CONTROLLERS
 
   CONTENT_CHANGE_PATHS = [

@@ -1,5 +1,5 @@
 class VideoStatesController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token, only: :create
   # Not authorized using pundit because user this is not accessed via user session
   # This is purely for responding to AWS video state changes.
 
