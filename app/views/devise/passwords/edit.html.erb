@@ -6,7 +6,7 @@
     <%= f.hidden_field :reset_password_token %>
 
     <div class="crayons-field">
-      <%= f.label :password, class: "crayons-field__label" %>
+      <%= f.label :password, "Hasło", class: "crayons-field__label" %>
       <% if @minimum_password_length %>
         <em>(<%= @minimum_password_length %> characters minimum)</em><br />
       <% end %>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="crayons-field">
-      <%= f.label :password_confirmation, class: "crayons-field__label" %>
+      <%= f.label :password_confirmation, "Potwierdź hasło", class: "crayons-field__label" %>
       <%= f.password_field :password_confirmation, autocomplete: "off", class: "crayons-textfield" %>
     </div>
 

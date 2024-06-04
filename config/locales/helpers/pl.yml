@@ -22,7 +22,7 @@ pl:
         email: Email wsparcia
         company_size: Rozmiar organizacji
         story: Nasza historia
-        tech_stack: Nasz stos technologiczny
+        tech_stack: Nasza specjalizacja
         cta_body_markdown: Treść tekstu
         cta_button_text: Tekst linku
         cta_button_url: Adres URL linku
