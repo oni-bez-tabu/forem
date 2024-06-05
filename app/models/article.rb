@@ -862,7 +862,7 @@ class Article < ApplicationRecord
                         I18n.t("models.article.video_processing"))
     end
 
-    return unless video.present? && user.created_at > 2.weeks.ago
+    return unless video.present? && user.created_at > 1.weeks.ago
 
     errors.add(:video, I18n.t("models.article.video_unpermitted"))
   end
