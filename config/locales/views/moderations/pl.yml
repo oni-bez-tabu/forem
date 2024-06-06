@@ -56,19 +56,19 @@ pl:
           one: '1 błąd uniemożliwił zapisanie tej blokady:'
           other: '%{count} błędy uniemożliwiły zapisanie tej blokady:'
         experience:
-          heading: Ustaw poziom doświadczenia
-          heading2: Poziom doświadczenia Posta
+          heading: Ustaw charakter postu.
+          heading2: Poziom charakteru posta
           subtitle: Dopasuj najbardziej odpowiednią grupę odbiorców dla tego posta
           aria_label: Otwórz sekcję poziomu doświadczenia
           icon: Książka
-          desc_html: Kto <em>może</em> uznać ten post za najbardziej wartościowy, w oparciu o ogólny poziom doświadczenia?
+          desc_html: Kto <em>może</em> uznać ten post za najbardziej wartościowy, w oparciu o ogólny charakter postu?
           from: '%{lvl} - '
           level:
-            Advanced: Zaawansowany
-            Beginner: Początkujący
-            Expert: Ekspert
-            Mid-level: Średniozaawansowany
-            Novice: Nowicjusz
+            Advanced: Intensywny
+            Beginner: Umiarkowany
+            Expert: Hardcore
+            Mid-level: Średni
+            Novice: Łagodny
         admin:
           heading: Działania moderacyjne
           heading2: Działania moderacyjne dla %{user}

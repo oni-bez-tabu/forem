@@ -64,11 +64,11 @@ pl:
         announce_field: Wyświetlaj ogłoszenia (Przy przeglądaniu)
         appearance: Wygląd
         basic: Podstawowy markdown
-        content: Zawartość
+        content: Skala intensywności
         editor: Wersja edytora
         fixed: Ustalone do okna
         font: Podstawowa czcionka czytania
-        level: Jaki jest Twój przybliżony poziom doświadczenia (1-5)?
+        level: Jaki charakter postów chcesz widzieć - "Skala intensywności"(1-5)?
         level_desc: To nie będzie wyświetlane na Twoim profilu ani nigdzie publicznie. Pomaga to delikatnie określić, jaką zawartość pokazujemy, wraz z obserwowanymi tagami itp.
         navbar: Pasek nawigacyjny witryny
         rich: Bogaty + markdown

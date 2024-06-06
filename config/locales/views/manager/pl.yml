@@ -14,10 +14,10 @@ pl:
         dashboard: Twój panel
         text: "👉 Zarządzaj swoim postem"
       rating:
-        heading: Poziom doświadczenia posta
-        text: Dla kogo ten post jest najbardziej istotny?
-        lower: "👈 Początkujący"
-        higher: "Ekspert 👉"
+        heading: Jaki charakter ma ten post - "Skala intensywności"(1-5)?
+        text: Charakter postu?
+        lower: "👈 Łagodny "
+        higher: "Hardcore 👉"
       tips:
         heading: 'Porady:'
         text_1: Napisz własnego tweeta o poście, opisując osobiście, dlaczego go napisałeś lub dlaczego ludzie mogą go uznać za użyteczny. Możemy Cię zretweetować.
