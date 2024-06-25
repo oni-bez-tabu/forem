@@ -28,7 +28,7 @@ const getImageTextString = (contentLine) => {
  */
 export const noDefaultAltTextRule = {
   names: ['no-default-alt-text'],
-  description: 'Images should not have the default alt text',
+  description: 'Obrazy nie powinny mieć domyślnego tekstu alternatywnego.',
   tags: ['images'],
   function: (params, onError) => {
     params.tokens
@@ -42,9 +42,7 @@ export const noDefaultAltTextRule = {
             onError({
               lineNumber: contentChild.lineNumber,
               detail: '/p/editor_guide#alt-text-for-images',
-              context: `Consider replacing the 'Image description' in square brackets at ${getImageTextString(
-                contentChild.line,
-              )} with a description of the image`,
+              context: `Rozważ zastąpienie 'Opis obrazu' w nawiasach kwadratowych w ${getImageTextString(contentChild.line)} opisem obrazu`,
             });
           }
         });
@@ -57,7 +55,7 @@ export const noDefaultAltTextRule = {
  */
 export const noEmptyAltTextRule = {
   names: ['no-empty-alt-text'],
-  description: 'Images should not have empty alt text',
+  description: 'Obrazy nie powinny mieć pustego tekstu alternatywnego.',
   tags: ['images'],
   function: (params, onError) => {
     params.tokens
@@ -71,9 +69,7 @@ export const noEmptyAltTextRule = {
             onError({
               lineNumber: inlineToken.lineNumber,
               detail: '/p/editor_guide#alt-text-for-images',
-              context: `Consider adding an image description in the square brackets at ${getImageTextString(
-                contentChild.line,
-              )}`,
+              context: `Rozważ dodanie opisu obrazu w nawiasach kwadratowych w ${getImageTextString(contentChild.line)}`,
             });
           }
         });
@@ -86,7 +82,7 @@ export const noEmptyAltTextRule = {
  */
 export const noLevelOneHeadingsRule = {
   names: ['no-level-one-heading'],
-  description: 'Heading level one should not be used in posts',
+  description: 'Nagłówek poziomu pierwszego nie powinien być używany w postach.​',
   tags: ['headings'],
   function: (params, onError) => {
     const levelOneHeadings = [];
@@ -102,7 +98,7 @@ export const noLevelOneHeadingsRule = {
     levelOneHeadings.forEach((heading) => {
       onError({
         lineNumber: heading.lineNumber,
-        context: `Consider changing "${heading.line}" to a level two heading by using "##"`,
+        context: `Rozważ zmianę "${heading.line}" na nagłówek poziomu drugiego, używając "##"`,
         detail: '/p/editor_guide#accessible-headings',
       });
     });
@@ -114,7 +110,7 @@ export const noLevelOneHeadingsRule = {
  */
 export const headingIncrement = {
   names: ['custom-heading-increment'],
-  description: 'Heading levels should only increment by one level at a time',
+  description: 'Nagłówki powinny zwiększać się tylko o jeden poziom na raz.',
   tags: ['headings', 'headers'],
   function: (params, onError) => {
     let prevLevel = 0;
@@ -136,7 +132,7 @@ export const headingIncrement = {
           onError({
             detail: '/p/editor_guide#accessible-headings',
             lineNumber: heading.lineNumber,
-            context: `Consider changing the heading "${heading.line}" to a level ${suggestedHeadingLevel} heading by using "${suggestedHeadingStart}"`,
+            context: `Rozważ zmianę nagłówka "${heading.line}" na nagłówek poziomu ${suggestedHeadingLevel}, używając "${suggestedHeadingStart}"`,
           });
         }
       }

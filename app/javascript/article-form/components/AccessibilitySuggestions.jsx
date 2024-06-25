@@ -70,7 +70,7 @@ export const AccessibilitySuggestions = ({ markdownLintErrors }) => {
       aria-live="polite"
     >
       <h2 className="fs-l mb-2 fw-bold">
-        Improve the accessibility of your post
+        Popraw dostępność Twojego postu
       </h2>
       <ul>
         {extractRelevantErrors(markdownLintErrors).map((lintError, index) => {
@@ -87,7 +87,7 @@ export const AccessibilitySuggestions = ({ markdownLintErrors }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Learn more <ExternalUrlSVG />
+                  Czytaj więcej <ExternalUrlSVG />
                 </a>
               </span>
             </li>
