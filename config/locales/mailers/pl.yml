@@ -2,7 +2,7 @@
 pl:
   mailers:
     digest_mailer:
-      from: Digest
+      from: nie przegap
       more_top_posts: więcej najważniejszych postów z %{community}
       more_top_posts_based: więcej najważniejszych postów z %{community} na podstawie Twoich zainteresowań
       more_top_posts_from: więcej najważniejszych postów z społeczności
