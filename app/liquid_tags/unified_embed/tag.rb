@@ -66,9 +66,12 @@ module UnifiedEmbed
       when Net::HTTPSuccess
         input
       when Net::HTTPRedirection
-        raise StandardError, I18n.t("liquid_tags.unified_embed.tag.too_many_redirects") if retries.zero?
-
-        validate_link(input: response["location"], retries: retries - 1)
+        if uri.host == "www.instagram.com" || uri.host == "instagram.com"
+          input
+        else
+          raise StandardError, I18n.t("liquid_tags.unified_embed.tag.too_many_redirects") if retries.zero?
+          validate_link(input: response["location"], retries: retries - 1)
+        end
       when Net::HTTPMethodNotAllowed
         raise StandardError, I18n.t("liquid_tags.unified_embed.tag.invalid_url") if retries.zero?
 
