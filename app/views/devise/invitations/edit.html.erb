@@ -1,13 +1,13 @@
 <% title "Dokończ rejestrację" %>
 <div class="crayons-layout crayons-layout--limited-l mb-10" style="max-width:640px">
   <div class="crayons-notice mt-4" aria-live="polite">
-    <h1>Hej! miło Cię widzieć na <%= community_name %></h1>
+    <h1>Hej! miło będzie Cię widzieć na <%= community_name %></h1>
     <% if Settings::Community.tagline.present? %>
-      <h3><%= Settings::Community.tagline %></h3>
+      <h3>To miejsce dla społeczności bez tabu.</h3>
     <% end %>
   </div>
   <div class="mt-3 crayons-card p-7 align-left">
-    <h2>Dokończ rejestrację, aby dołączyć do społeczności.</h2>
+    <h3>Dokończ rejestrację, aby dołączyć.</h3>
 
     <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
@@ -29,15 +29,6 @@
           <%= f.password_field :password_confirmation, class: "crayons-textfield" %>
         </div>
       <% end %>
-
-      <div class="crayons-field mt-3">
-        <div>
-          <input class="crayons-checkbox" type="checkbox" required="required" value="1" name="term_condition" id="term_condition">
-          <label class="crayons-field__label fw-normal" for="term_condition">
-            <%= t("devise.registrations.agreement.sign_up_html", privacy_path: privacy_path, terms_path: terms_path, code_of_conduct_path: code_of_conduct_path) %>
-          </label>
-        </div>
-      </div>
 
       <div class="mt-6">
         <%= f.submit t("devise.invitations.edit.submit_button"), class: "crayons-btn" %>
