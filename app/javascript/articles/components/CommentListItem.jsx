@@ -32,7 +32,7 @@ function contentAwareComments(comment) {
       text = text + node.outerHTML;
       nodesSelected++;
     } else if (node.outerHTML && nodesSelected < 3) {
-      text = `${text} <div class="crayons-comment__readmore">See more</div>`;
+      text = `${text} <div class="crayons-comment__readmore">Czytaj dalej</div>`;
       nodesSelected++;
     }
   });
