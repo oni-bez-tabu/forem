@@ -105,4 +105,21 @@
     <% end %>
   <% end %>
 </div>
+<div class="js-dashboard-story single-article">
+  <h2>Ustawienia dotyczące wieku odbiorców</h2>
+  <p>Określ minimalny wiek odbiorców tego artykułu, który platforma będzie wymagać:</p>
+  <%= form_for(article, method: :patch, remote: true, authenticity_token: true) do |f| %>
+    <%= f.hidden_field :age_min, value: (article.age_min == 18 ? 0 : 18) %>
+    <%= hidden_field_tag :destination, "#{article.path}/manage" %>  
+    <button type="submit" class="crayons-btn crayons-btn--<%= (article.age_min == 18 ? 'info' : 'warning') %>">
+      <% if article.age_min == 18 %> 
+        Wiek nie wymagany
+      <% else %>
+        Wiek +18
+      <% end %>
+    </button>
+  <% end %>
+</div>
+
+
 <%= javascript_include_tag "dashboardDropdowns", defer: true %>

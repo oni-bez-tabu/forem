@@ -198,6 +198,8 @@ class ArticlePolicy < ApplicationPolicy
 
   alias admin_featured_toggle? revoke_publication?
 
+  alias admin_age_min? revoke_publication?
+
   alias toggle_featured_status? revoke_publication?
 
   alias can_adjust_any_tag? revoke_publication?

@@ -91,6 +91,7 @@
         data-pinned-article-id="<%= @pinned_article_id %>"
         data-published="<%= @article.published? %>"
         data-scheduled="<%= @article.scheduled? %>"
+        data-age-min="<%= @article.age_min %>"
         <%= @article.language? ? "lang=#{@article.language}" : " " %>
         <%= @article.pinned? ? "data-pinned" : " " %>>
         <header class="crayons-article__header" id="main-title">
@@ -241,7 +242,7 @@
 <% end %>
 
 <div class="fullscreen-code js-fullscreen-code"></div>
-<%= javascript_include_tag "followButtons", "billboard", "localizeArticleDates", "articleReactions", defer: true %>
+<%= javascript_include_tag "followButtons", "billboard", "localizeArticleDates", "articleReactions", "ageMin", defer: true %>
 
 <script>
   <%# we consider these scripts safe for embedding as they come from our code %>

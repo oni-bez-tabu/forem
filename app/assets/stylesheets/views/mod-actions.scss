@@ -630,6 +630,22 @@
         }
       }
     }
+
+    .set-age-min-option {
+      button {
+        background: inherit;
+        border: none;
+        border-radius: 8px;
+        padding: var(--su-2) 0.125rem;
+        font-size: var(--fs-base);
+        line-height: var(--lh-base);
+      }
+
+      button.selected {
+        background: rgba(var(--accent-brand-lighter-rgb), 0.2);
+        font-weight: var(--fw-heavy);
+      }
+    }
   }
 
   h2 {

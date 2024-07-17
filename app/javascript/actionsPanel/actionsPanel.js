@@ -175,6 +175,36 @@ export async function updateExperienceLevel(
   }
 }
 
+const adminAgeMin = async (id, age) => {
+  try {
+    const response = await request(`/articles/${id}/admin_age_min`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        id,
+        age
+      }),
+      credentials: 'same-origin',
+    });
+
+    const outcome = await response.json();
+
+    /* eslint-disable no-restricted-globals */
+    if (outcome.message == 'success') {
+      window.top.location.assign(`${window.location.origin}${outcome.path}`);
+    } else {
+      top.addSnackbarItem({
+        message: `Error: ${outcome.message}`,
+        addCloseButton: true,
+      });
+    }
+  } catch (error) {
+    top.addSnackbarItem({
+      message: `Error: ${error}`,
+      addCloseButton: true,
+    });
+  }
+};
+
 const adminFeatureArticle = async (id, featured) => {
   try {
     const response = await request(`/articles/${id}/admin_featured_toggle`, {
@@ -507,6 +537,18 @@ export function addModActionsListeners() {
       adminFeatureArticle(id, featured);
     });
   }
+  
+
+  Array.from(document.getElementsByClassName('age-min-button')).forEach(
+    (btn) => {
+      btn.addEventListener('click', () => {
+        adminAgeMin(
+          btn.dataset.articleId,
+          btn.value,
+        );
+      });
+    },
+  );
 
   document
     .getElementById('toggle-flag-user-modal')

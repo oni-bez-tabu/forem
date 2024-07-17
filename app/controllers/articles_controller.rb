@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
 
   # NOTE: It seems quite odd to not authenticate the user for the :new action.
   before_action :authenticate_user!, except: %i[feed new]
-  before_action :set_article, only: %i[edit manage update destroy stats admin_unpublish admin_featured_toggle]
+  before_action :set_article, only: %i[edit manage update destroy stats admin_unpublish admin_featured_toggle admin_age_min]
   # NOTE: Consider pushing this check into the associated Policy.  We could choose to raise a
   #       different error which we could then rescue as part of our exception handling.
   before_action :check_suspended, only: %i[new create update]
@@ -160,7 +160,7 @@ class ArticlesController < ApplicationController
     @user = @article.user || current_user
 
     updated = Articles::Updater.call(@user, @article, article_params_json)
-
+    
     respond_to do |format|
       format.html do
         # TODO: JSON should probably not be returned in the format.html section
@@ -234,6 +234,18 @@ class ArticlesController < ApplicationController
     authorize @article
 
     @article.featured = params.dig(:article, :featured).to_i == 1
+
+    if @article.save
+      render json: { message: "success", path: @article.current_state_path }, status: :ok
+    else
+      render json: { message: @article.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
+  def admin_age_min
+    authorize @article
+    
+    @article.age_min = params.dig(:age)
 
     if @article.save
       render json: { message: "success", path: @article.current_state_path }, status: :ok
@@ -315,7 +327,7 @@ class ArticlesController < ApplicationController
                        %i[
                          title body_markdown main_image published description video_thumbnail_url
                          tag_list canonical_url series collection_id archived published_at timezone
-                         published_at_date published_at_time
+                         published_at_date published_at_time age_min
                        ]
                      end
 
