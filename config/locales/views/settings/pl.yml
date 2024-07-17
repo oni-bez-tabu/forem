@@ -185,7 +185,7 @@ pl:
             input:
               aria_label: Sekret organizacji (do regularnej rotacji)
             text: Skopiowano do schowka!
-          cta: Pudełko z wezwaniem do działania
+          cta: Zachęcenie do kontaktu
           cta_desc: Dostosowywalny tekst, który pojawia się po prawej stronie każdego posta Twojej organizacji.
           delete:
             heading: Usuń organizację
