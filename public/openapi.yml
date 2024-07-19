@@ -1,11 +1,11 @@
 openapi: 3.0.1
 # We start by defining the specification version, the title, description, and version number. When a query is run in ChatGPT, it will look at the description that is defined in the info section to determine if the plugin is relevant for the user query.
 info:
-  title: DEV Community
+  title: Nie!tabu
   description: Recommends resources like articles or users to a user using ChatGP.
   version: 'v1'
 servers:
-  - url: https://dev.to
+  - url: https://nietabu.pl
 paths:
   /api/articles/search:
     get:

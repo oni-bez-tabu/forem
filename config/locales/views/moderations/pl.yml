@@ -182,6 +182,7 @@ pl:
         tag: Przewodnik po moderacji tagów
         terms_and_conditions: Warunki użytkowania
         trusted: Przewodnik dla zaufanych użytkowników
+        moderating_tags: Moderowane tagi
       author: Autor
       comments:
         view_comment: Zobacz komentarz
