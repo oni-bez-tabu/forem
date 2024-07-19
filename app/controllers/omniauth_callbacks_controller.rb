@@ -1,6 +1,8 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Devise::Controllers::Rememberable
 
+  skip_before_action :verify_authenticity_token, only: Authentication::Providers.available
+
   # Rails actionpack only allows POST requests that come with an ORIGIN header
   # that matches `request.base_url`, it raises CSRF exception otherwise.
   # There is no way to allow specific ORIGIN values in order to securely bypass
