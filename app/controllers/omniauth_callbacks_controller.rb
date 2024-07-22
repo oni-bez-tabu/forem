@@ -1,8 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Devise::Controllers::Rememberable
 
-  skip_before_action :verify_authenticity_token, only: Authentication::Providers.available
-
   # Rails actionpack only allows POST requests that come with an ORIGIN header
   # that matches `request.base_url`, it raises CSRF exception otherwise.
   # There is no way to allow specific ORIGIN values in order to securely bypass
@@ -93,8 +91,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   rescue StandardError => e
     Honeybadger.notify(e)
 
-    flash[:alert] = I18n.t("omniauth_callbacks_controller.log_in_error", e: e)
-    redirect_to new_user_registration_url
+    flash[:error] = I18n.t("omniauth_callbacks_controller.log_in_error", e: e)
+    redirect_to '/settings'
   end
 
   def user_persisted_and_valid?
