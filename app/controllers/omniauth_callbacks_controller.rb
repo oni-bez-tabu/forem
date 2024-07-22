@@ -64,7 +64,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # see <https://github.com/heartcombo/devise/wiki/Omniauthable,-sign-out-action-and-rememberable>
       remember_me(@user)
 
-      sign_in_and_redirect(@user, event: :authentication)
+      redirect_to '/settings?a=5'
     elsif user_persisted_and_valid?
       redirect_to confirm_email_path(email: @user.email)
     else
