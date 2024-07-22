@@ -82,17 +82,17 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
                           })
       Honeybadger.notify("Omniauth log in error")
 
-      flash[:alert] = user_errors
-      redirect_to new_user_registration_url
+      flash[:error] = user_errors
+      redirect_to '/settings?a=2'
     end
   rescue ::Authentication::Errors::PreviouslySuspended, ::Authentication::Errors::SpammyEmailDomain => e
-    flash[:global_notice] = e.message
-    redirect_to root_path
+    flash[:error] = e.message
+    redirect_to '/settings?a=1'
   rescue StandardError => e
     Honeybadger.notify(e)
 
     flash[:error] = I18n.t("omniauth_callbacks_controller.log_in_error", e: e)
-    redirect_to '/settings'
+    redirect_to '/settings?a=0'
   end
 
   def user_persisted_and_valid?
