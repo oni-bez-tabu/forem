@@ -1,7 +1,7 @@
 /* global ahoy */
 function showLoginModal(trackingData) {
   window.Forem.showModal({
-    title: 'Log in to continue',
+    title: 'Wejdź do społeczności nie!tabu',
     contentSelector: '#global-signup-modal',
     overlay: true,
     onOpen: () => {
