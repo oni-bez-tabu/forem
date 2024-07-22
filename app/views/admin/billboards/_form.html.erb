@@ -28,6 +28,11 @@
     </div>
 
     <div class="crayons-field">
+      <%= label_tag :body_markdown, "Dismissal sku:", class: "crayons-field__label" %>
+      <%= text_field_tag :dismissal_sku, @billboard.dismissal_sku, size: "100x5", class: "crayons-textfield" %>
+    </div>
+
+    <div class="crayons-field">
       <%= label_tag :render_mode, "Render Mode:", class: "crayons-field__label" %>
       <%= select_tag :render_mode, options_for_select([["Forem Markdown", "forem_markdown"], ["Raw", "raw"]], selected: @billboard.render_mode), class: "crayons-select" %>
     </div>
