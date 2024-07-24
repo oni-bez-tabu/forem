@@ -116,11 +116,11 @@ en:
       recently_created: Recently Created
       recently_published: Recently Published
     authentication_helper:
-      any_of_those: any of those
-      email_password: Email & Password
-      reminder: 'Reminder: you used %{method} to authenticate your account, so please use %{dem} to sign in if prompted.'
-      that: that
-      invite_only: You cannot do this until you disable Invite Only Mode
+      any_of_those: którykolwiek z tych
+      email_password: E-mail i hasło
+      reminder: 'Przypomnienie: użyłeś %{method} do uwierzytelnienia swojego konta, więc użyj %{dem}, aby się zalogować, jeśli zostaniesz o to poproszony.'
+      that: to
+      invite_only: Nie możesz tego zrobić, dopóki nie wyłączysz trybu tylko na zaproszenie
     comments_helper:
       ama: ama
       ask_me_anything: Ask Me Anything

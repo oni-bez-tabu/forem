@@ -9,6 +9,6 @@ en:
   json:
     author: Active %{community} author
   mailer:
-    adjust: Adjust your email settings
+    adjust: Dostosuj ustawienia poczty e-mail
     adjust_only_html: Don't want to get emails like this? Adjust your email settings at %{path}
-    unsubscribe: Unsubscribe
+    unsubscribe: Zrezygnuj z subskrypcji
