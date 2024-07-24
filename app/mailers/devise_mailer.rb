@@ -22,7 +22,7 @@ class DeviseMailer < Devise::Mailer
 
   def confirmation_instructions(record, token, opts = {})
     @name = record.name
-    opts[:subject] = "#{@name}, confirm your #{Settings::Community.community_name} account"
+    opts[:subject] = "#{@name}, potwierdź swoje konto na #{Settings::Community.community_name}"
     super
   end
 end
