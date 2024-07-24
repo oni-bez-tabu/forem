@@ -64,7 +64,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # see <https://github.com/heartcombo/devise/wiki/Omniauthable,-sign-out-action-and-rememberable>
       remember_me(@user)
 
-      redirect_to '/settings?a=5'
+      sign_in_and_redirect(@user, event: :authentication)
     elsif user_persisted_and_valid?
       redirect_to confirm_email_path(email: @user.email)
     else
@@ -82,17 +82,17 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
                           })
       Honeybadger.notify("Omniauth log in error")
 
-      flash[:error] = user_errors
-      redirect_to '/settings?a=2'
+      flash[:alert] = user_errors
+      redirect_to new_user_registration_url
     end
   rescue ::Authentication::Errors::PreviouslySuspended, ::Authentication::Errors::SpammyEmailDomain => e
-    flash[:error] = e.message
-    redirect_to '/settings?a=1'
+    flash[:global_notice] = e.message
+    redirect_to root_path
   rescue StandardError => e
     Honeybadger.notify(e)
 
-    flash[:error] = I18n.t("omniauth_callbacks_controller.log_in_error", e: e)
-    redirect_to '/settings?a=0'
+    flash[:alert] = I18n.t("omniauth_callbacks_controller.log_in_error", e: e)
+    redirect_to new_user_registration_url
   end
 
   def user_persisted_and_valid?
