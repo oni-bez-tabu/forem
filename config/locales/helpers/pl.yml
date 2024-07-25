@@ -45,7 +45,7 @@ pl:
         title: Tytuł
         content: Treść komentarza (Markdown)
       user:
-        name: Imię
+        name: Nazwa
         email: Email
         username: Nazwa użytkownika
         profile_image: Obraz profilowy

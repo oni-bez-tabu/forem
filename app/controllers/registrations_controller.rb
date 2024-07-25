@@ -72,9 +72,9 @@ class RegistrationsController < Devise::RegistrationsController
     resource.registered_at = Time.current
     resource.build_setting(editor_version: "v2")
     resource.profile_image = Images::ProfileImageGenerator.call if resource.profile_image.blank?
-    if Settings::General.waiting_on_first_user
-      resource.password_confirmation = resource.password
-    end
+    # if Settings::General.waiting_on_first_user
+    resource.password_confirmation = resource.password
+    # end
     check_allowed_email(resource) if resource.email.present?
     resource.save if resource.email.present?
   end

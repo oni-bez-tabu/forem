@@ -45,7 +45,7 @@ pl:
     registrations:
       agreement:
         sign_in_html: ""
-        sign_up_html: Rejestrując się, zgadzasz się z naszą <a href="%{privacy_path}">polityką prywatności</a>, <a href="%{terms_path}">warunkami użytkowania</a> oraz <a href="%{code_of_conduct_path}">kodeksem postępowania</a>.
+        sign_up_html: Rejestrując się, zgadzasz się z naszą <a href="%{privacy_path}">polityką prywatności</a>, <a href="%{terms_path}">regulaminem</a> oraz <a href="%{code_of_conduct_path}">kodeksem postępowania</a>.
       already_have_an_account_html: Masz już konto? <a href="%{sign_up_path}">Zaloguj się</a>.
       create_account_html: Nowy w %{community_name}? <a href="%{sign_up_path}">Utwórz konto</a>.
       destroyed: Żegnaj! Twoje konto zostało pomyślnie usunięte. Mamy nadzieję, że zobaczymy się ponownie wkrótce.

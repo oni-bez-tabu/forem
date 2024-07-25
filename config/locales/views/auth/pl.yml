@@ -1,5 +1,13 @@
 ---
 pl:
+  activerecord:
+    attributes:
+      user:
+        password: Hasło
+        password_confirmation: "Powtórz hasło"
+        name: Nazwa
+        username: Nazwa użytkownika
+        
   views:
     auth:
       background: tło forem
@@ -7,8 +15,8 @@ pl:
         aria_label: Utwórz nowe konto
         text: Utwórz konto
       creator:
-        text1: Zacznij swoją podróż z Forem!
-        text2: Najpierw utwórz swoje konto administratora.
+        text1: Dołącz do nie!tabu.
+        text2: Jedynej takiej społeczności na świecie.
         text3: Następnie przeprowadzimy Cię przez konfigurację Forem.
         hint:
           aria_label: Edytuj nazwę użytkownika
@@ -31,15 +39,15 @@ pl:
       register:
         errors:
           one: Ups, znaleźliśmy %{count} problem
-          other: Ups, znaleźliśmy %{count} problemów
+          other: Ups, znaleźliśmy %{count} problemy
         allow:
           one_html: Rejestracja ograniczona do emaili <strong>@%{domain}</strong>.
           list: Rejestracja ograniczona do następujących emaili
-        create: Utwórz swoje konto
+        create: Utwórz konto w nie!tabu, w jedynej takiej społeczności!
         field:
           name:
-            aria_label: Imię
-            label: Imię
+            aria_label: Nazwa
+            label: Nazwa
           username:
             aria_label: Nazwa użytkownika
             desc: Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślniki. Maksymalna długość nazwy użytkownika to 30 znaków.
@@ -47,7 +55,7 @@ pl:
           email:
             aria_label: Email
             label: Email
-            placeholder: jan@przyklad.com
+            placeholder: twoj-email@domena.pl
           password:
             aria_label: Hasło
             desc: Minimum 8 znaków
