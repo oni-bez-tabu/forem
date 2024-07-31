@@ -9,11 +9,12 @@
   <div class="flex flex-1 flex-col items-center justify-center relative z-elevate align-center">
     <%= render "devise/shared/error_messages", resource: resource %>
     <%= inline_svg_tag("mail.svg", aria: true, title: "Email", class: "mb-6") %>
-    <h1 class="fs-2xl m:fs-3xl lh-tight fw-bold mb-4">Sprawdź swoją skrzynkę e-mail i kliknij link potwierdzający lub wyślij go ponownie klikając poniżej.</h1>
+    <h1 class="fs-2xl m:fs-3xl lh-tight fw-bold mb-4">Sprawdź swoją skrzynkę e-mail i kliknij link potwierdzający.</h1>
     <% if proper_email.present? %>
       <p class="fs-l m:fs-xl color-base-70 m:max-w-50">
        Wysłaliśmy e-mail do <span class="fw-bold"><%= proper_email %></span>.
-        Kliknij link w otrzymanym e-mailu, aby potwierdzić swój adres e-mail.</p>
+        Kliknij link w otrzymanym e-mailu, aby potwierdzić swój adres e-mail.<br/>
+        Jeśli e-mail nie dotarł, wyślij ponownie 👇
       </p>
     <% end %>
   </div>
