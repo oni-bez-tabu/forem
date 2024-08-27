@@ -8,7 +8,7 @@ class VideoPolicy < ApplicationPolicy
   #       what that means.  [@jeremyf] envisions that we could use an admin setting to allow the
   #       administrators to set the number of days to consider a "new user".
   def create?
-    return false unless Settings::General.enable_video_upload
+    # return false unless Settings::General.enable_video_upload
 
     require_user_in_good_standing!
     return false unless user.created_at
@@ -17,7 +17,7 @@ class VideoPolicy < ApplicationPolicy
     return user_any_admin? if ArticlePolicy.limit_post_creation_to_admins?
     return true if user_trusted?
 
-    user.created_at.before?(1.weeks.ago)
+    user.created_at.before?(1.hour.ago)
   end
 
   alias new? create?
