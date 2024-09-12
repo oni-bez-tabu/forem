@@ -271,17 +271,19 @@ class ApplicationController < ActionController::Base
   end
 
   def client_geolocation
-    if session_current_user_id
-      request.headers["X-Client-Geo"]
-    else
-      request.headers["X-Cacheable-Client-Geo"]
-    end
+    # if session_current_user_id
+    #   request.headers["X-Client-Geo"]
+    # else
+    #   request.headers["X-Cacheable-Client-Geo"]
+    # end
+
+    return "PL"
   end
   helper_method :client_geolocation
 
   def default_email_optin_allowed?
     return false if Settings::General.geos_with_allowed_default_email_opt_in.blank?
-
+    
     Settings::General.geos_with_allowed_default_email_opt_in.any? do |geo|
       client_geolocation.to_s.starts_with?(geo)
     end
