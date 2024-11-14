@@ -110,6 +110,9 @@ function setCurrentUserToNavBar(user) {
       .getElementsByClassName('js-header-menu-admin-link')[0]
       .classList.remove('hidden');
   }
+
+  const educoinPoints = document.getElementById('nav-coins-count');
+  educoinPoints.textContent = user.credits_count;
 }
 
 function initializeBaseUserData() {

@@ -30,6 +30,8 @@ pl:
         moderator_center: Centrum moderatora
         other: Inne
         settings: Ustawienia
+        coins_count: "Na Twoim koncie jest:"
+        coins_name: "educoinów"
       nav_name:
         About: O nas
         Code of Conduct: Kodeks postępowania
