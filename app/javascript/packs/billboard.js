@@ -6,6 +6,14 @@ import {
 } from './billboardAfterRenderActions';
 
 export async function getBillboard() {
+  const cookieConsent = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('cookieyes-consent='));
+    
+  if (!cookieConsent || cookieConsent.includes('action:,')) {
+    return;
+  }
+
   const placeholderElements = document.getElementsByClassName(
     'js-billboard-container',
   );

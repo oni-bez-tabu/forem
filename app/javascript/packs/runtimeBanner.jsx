@@ -3,6 +3,10 @@ import { RuntimeBanner } from '../runtimeBanner';
 import { waitOnBaseData } from '../utilities/waitOnBaseData';
 
 function loadElement() {
+  if (window.location.pathname !== '/') {
+    return false;
+  }
+
   const container = document.getElementById('runtime-banner-container');
   if (container) {
     render(<RuntimeBanner />, container);

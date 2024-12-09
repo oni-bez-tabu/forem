@@ -24,6 +24,9 @@ module PushNotifications
       # every 5 seconds we only execute this once every 30s (no duplicate/unnecessary processing).
       # If no PNs are scheduled to be sent for a 6h span then 0 jobs are executed.
       PushNotifications::DeliverWorker.perform_in(30.seconds) if relation.any?
+ 
+      url = @payload&.dig(:url)
+      PushNotifications::OneSignalWorker.perform_async(@user_ids, @title, @body, url) if @user_ids.any?
     end
   end
 end

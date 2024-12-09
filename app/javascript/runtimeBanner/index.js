@@ -1,1 +1,2 @@
-export * from './RuntimeBanner';
+export * from './RuntimeBannerPWA';
+

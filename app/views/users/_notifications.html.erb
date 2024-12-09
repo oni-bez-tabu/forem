@@ -47,6 +47,23 @@
     </div>
   </div>
 
+<div class="crayons-card crayons-card--content-rows">
+    <header>
+      <h2 class="crayons-subtitle-1 flex items-center">
+        <%= t("views.settings.notifications.mobile") %>
+      </h2>
+      <div class='onesignal-customlink-container'></div>
+    </header>
+    <div class="crayons-field crayons-field--checkbox">
+      <%= f.check_box :mobile_comment_notifications, class: "crayons-checkbox" %>
+      <%= f.label :mobile_comment_notifications, t("helpers.label.users_notification_setting.mobile_comment_notifications"), class: "crayons-field__label" %>
+    </div>
+    <div class="crayons-field crayons-field--checkbox">
+      <%= f.check_box :mobile_mention_notifications, class: "crayons-checkbox" %>
+      <%= f.label :mobile_mention_notifications, t("helpers.label.users_notification_setting.mobile_mention_notifications"), class: "crayons-field__label" %>
+    </div>
+  </div>
+
   <div class="crayons-card crayons-card--content-rows">
     <header>
       <h2 class="crayons-subtitle-1">

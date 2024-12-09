@@ -8,6 +8,7 @@
 
       if (bodyClass.includes('dark-theme')) {
         document.getElementById('body-styles').innerHTML = '<style><%= Rails.application.assets["themes/dark.css"].to_s.squish.html_safe %></style>';
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', "#171717FF");
       }
 
       if (bodyClass.includes('open-dyslexic-article-body')) { // Preloading custom font for anticipated use
