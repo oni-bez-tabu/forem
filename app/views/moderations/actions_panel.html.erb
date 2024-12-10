@@ -95,6 +95,43 @@
 
     <%# Checking if the user should see the "Adjust tags" dropdown %>
     <% if policy(@moderatable).allow_tag_adjustment? %>
+      <button aria-haspopup="true" aria-expanded="false" aria-controls="set-age-min-options" class="other-things-btn set-age-min" type="button" data-other-things-type="set-age-min" aria-label="Ustaw minimalny wiek odbiorcy">
+        <div class="label-wrapper">
+          <div class="icon circle centered-icon">
+            <%= crayons_icon_tag("cake", title: t("views.moderations.actions.experience.icon")) %>
+          </div>
+          <header>
+            <h2>Minimalny wiek</h2>
+            <h3>Ustaw minimalny wiek odbiorcy postu</h3>
+          </header>
+        </div>
+        <div class="toggle-chevron-container">
+          <%= crayons_icon_tag("arrow-down-fill", title: t("views.moderations.actions.toggle")) %>
+        </div>
+      </button>
+      <div id="set-age-min-options" class="set-age-min-option dropdown-options hidden">
+        <button
+            class="age-min-button <%= " selected" if @moderatable.age_min == 18 %>"
+            value="18"
+            data-article-id="<%= @moderatable.id %>"
+          >
+            +18
+        </button>
+        <button
+            class="age-min-button <%= " selected" if @moderatable.age_min == 15 %>"
+            value="15"
+            data-article-id="<%= @moderatable.id %>"
+          >
+            +15
+        </button>
+        <button
+            class="age-min-button <%= " selected" if @moderatable.age_min == 0 %>"
+            value="0"
+            data-article-id="<%= @moderatable.id %>"
+          >
+            brak
+        </button>
+      </div>
       <button id="adjust-tags-button" aria-haspopup="true" aria-expanded="false" aria-controls="adjust-tags-options" class="other-things-btn adjust-tags" type="button" data-other-things-type="adjust-tags" aria-label="<%= t("views.moderations.actions.adjust.aria_label") %>">
         <div class="label-wrapper">
           <div class="icon circle centered-icon">
@@ -300,37 +337,6 @@
           <%= t("views.moderations.actions.how") %>
         </span>
       </a>
-    </div>
-
-    <button aria-haspopup="true" aria-expanded="false" aria-controls="set-age-min-options" class="other-things-btn set-age-min" type="button" data-other-things-type="set-age-min" aria-label="Ustaw minimalny wiek odbiorcy">
-      <div class="label-wrapper">
-        <div class="icon circle centered-icon">
-          <%= crayons_icon_tag("cake", title: t("views.moderations.actions.experience.icon")) %>
-        </div>
-        <header>
-          <h2>Minimalny wiek</h2>
-          <h3>Ustaw minimalny wiek odbiorcy postu</h3>
-        </header>
-      </div>
-      <div class="toggle-chevron-container">
-        <%= crayons_icon_tag("arrow-down-fill", title: t("views.moderations.actions.toggle")) %>
-      </div>
-    </button>
-    <div id="set-age-min-options" class="set-age-min-option dropdown-options hidden">
-      <button
-          class="age-min-button <%= " selected" if @moderatable.age_min == 18 %>"
-          value="18"
-          data-article-id="<%= @moderatable.id %>"
-        >
-          18
-      </button>
-      <button
-          class="age-min-button <%= " selected" if @moderatable.age_min == 0 %>"
-          value="0"
-          data-article-id="<%= @moderatable.id %>"
-        >
-          brak
-      </button>
     </div>
 
     <button
