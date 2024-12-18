@@ -66,7 +66,7 @@ export const RuntimeBanner = () => {
   const bannerText = currentOS() === 'Android'
     ? {
         title: "Dodaj nie!tabu do swoich aplikacji",
-        description: "Bądź jeszcze bliej Twojej społeczności!"
+        description: "Bądź jeszcze bliżej Twojej społeczności!"
       }
     : {
         title: "Dodaj nie!tabu do swoich aplikacji",
