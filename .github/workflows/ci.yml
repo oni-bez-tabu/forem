@@ -40,7 +40,7 @@ jobs:
         with:
           path: |
             public/assets
-          key: ${{ runner.os }}-compiled-assets-v3-${{ hashFiles( 'app/assets/(fonts|images|javascripts|stylesheets)/**', 'app/javascript/**', '**/package.json', '**/yarn.lock') }}
+          key: ${{ runner.os }}-compiled-assets-v3-${{ hashFiles( 'app/assets/**', 'app/javascript/**', '**/package.json', '**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-compiled-assets-v3-
       - uses: actions/setup-node@v4
         with:
@@ -110,7 +110,7 @@ jobs:
           fail-on-cache-miss: true
           path: |
             public/assets
-          key: ${{ runner.os }}-compiled-assets-v3-${{ hashFiles('app/assets/(fonts|images|javascripts|stylesheets)/**', 'app/javascript/**', '**/package.json', '**/yarn.lock') }}
+          key: ${{ runner.os }}-compiled-assets-v3-${{ hashFiles('app/assets/**', 'app/javascript/**', '**/package.json', '**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-compiled-assets-v3-
       - uses: actions/setup-node@v4
         with:
@@ -120,6 +120,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+      - run: cp .env_sample .env
       - run: bundle exec rails db:test:prepare
       - name: RSpec
         run: bin/knapsack_pro_rspec
@@ -263,7 +264,7 @@ jobs:
           fail-on-cache-miss: true
           path: |
             public/assets
-          key: ${{ runner.os }}-compiled-assets-v3-${{ hashFiles('app/assets/(fonts|images|javascripts|stylesheets)/**', 'app/javascript/**', '**/package.json', '**/yarn.lock') }}
+          key: ${{ runner.os }}-compiled-assets-v3-${{ hashFiles('app/assets/**', 'app/javascript/**', '**/package.json', '**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-compiled-assets-v3-
       - uses: actions/setup-node@v4
         with:
@@ -274,6 +275,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+      - run: cp .env_sample .env
       - run: bundle exec rails db:test:prepare
       - run: yarn cypress install
       - name: cypress

@@ -1,4 +1,3 @@
----
 pl:
   views:
     podcasts:
@@ -9,14 +8,14 @@ pl:
           title: Podcasty na %{community}
       browse: Przeglądaj
       heading: Podcasty
-      close: "×"
+      close: ×
       form:
         heading: Zasugeruj Podcast
         errors:
-          one: '1 błąd podczas tworzenia podcastu:'
+          one: "1 błąd podczas tworzenia podcastu:"
           other: "%{count} błędy podczas tworzenia podcastu:"
         owner: Jestem właścicielem tego podcastu
-        return: "< powrót do podcastów"
+        return: < powrót do podcastów
         suggest: Zasugeruj
       list: podcasty
       listen: Kliknij tutaj, aby pobrać/słuchać

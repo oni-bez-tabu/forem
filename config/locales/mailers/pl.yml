@@ -1,4 +1,3 @@
----
 pl:
   mailers:
     digest_mailer:
@@ -24,10 +23,13 @@ pl:
       feedback: Dziękujemy za zgłoszenie na %{community}
       export: Eksport Twojej treści jest gotowy
       unread_notifications:
-        one: "🔥 Masz %{count} nieprzeczytane powiadomienie na %{community}"
-        other: "🔥 Masz %{count} nieprzeczytane powiadomienia na %{community}"
+        one: 🔥 Masz %{count} nieprzeczytane powiadomienie na %{community}
+        other: 🔥 Masz %{count} nieprzeczytane powiadomienia na %{community}
       new_badge: Właśnie dostałeś odznakę
       video_upload: Twoje przesyłanie filmu jest zakończone
+      base_subscriber: Gratulacje! Jesteś teraz subskrybentem nie!tabu++
     verification_mailer:
-      from: "Weryfikacja e-maila %{community} <%{email}>"
+      from: Weryfikacja e-maila %{community} <%{email}>
       verify_ownership: Zweryfikuj własność Twojego konta na %{community}
+    custom_mailer:
+      from: Newsletter

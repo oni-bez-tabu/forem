@@ -1,4 +1,3 @@
----
 pl:
   services:
     analytics_service:
@@ -15,12 +14,12 @@ pl:
         not_enabled: Dostawca %{name} nie jest włączony!
     badges:
       award_beloved_comment:
-        message: "Jesteś sławny! [To jest komentarz](%{comment}), za który jesteś doceniany. 😄"
+        message: Jesteś sławny! [To jest komentarz](%{comment}), za który jesteś doceniany. 😄
       award_streak:
         longest: 16 tygodni! Osiągnąłeś najdłuższy możliwy okres pisania. Kontynuuj niesamowity wkład w naszą społeczność!
         message:
-          one: "Gratulacje z powodu osiągnięcia tego okresu! Regularne pisanie jest trudne. Następną odznaką za okres, którą możesz otrzymać, jest Odznaka %{count} Tygodnia. 😉"
-          other: "Gratulacje z powodu osiągnięcia tego okresu! Regularne pisanie jest trudne. Następną odznaką za okres, którą możesz otrzymać, jest Odznaka %{count} Tygodnia. 😉"
+          one: Gratulacje z powodu osiągnięcia tego okresu! Regularne pisanie jest trudne. Następną odznaką za okres, którą możesz otrzymać, jest Odznaka %{count} Tygodnia. 😉
+          other: Gratulacje z powodu osiągnięcia tego okresu! Regularne pisanie jest trudne. Następną odznaką za okres, którą możesz otrzymać, jest Odznaka %{count} Tygodnia. 😉
       award_yearly_club:
         message:
           one: Szczęśliwe urodziny %{community}! Czy możesz uwierzyć, że to już %{count} rok?!
@@ -35,7 +34,7 @@ pl:
     broadcasts:
       welcome_notification:
         generator:
-          welcome: 'Powitalne powiadomienie: %{key}'
+          welcome: "Powitalne powiadomienie: %{key}"
     error_messages:
       clean:
         parse_error: Wystąpił problem z parsowaniem metadanych YAML. Być może musisz uniknąć cudzysłowia lub dwukropka. Wyślij e-maila na adres %{email}, jeśli masz problemy.
@@ -57,20 +56,20 @@ pl:
         same_user: Nie możesz scalic tych samych dwóch identyfikatorów użytkownika
     notifications:
       new_comment:
-        new: "💬 Nowy Komentarz"
+        new: 💬 Nowy Komentarz
       new_mention:
-        new: "🗣️ Nowa Wzmianka"
+        new: 🗣️ Nowa Wzmianka
     payments:
       customer:
         usd: usd
       errors:
-        select_payment_method: "Proszę wybrać metodę płatności"
+        select_payment_method: Proszę wybrać metodę płatności
       process_credit_purchase:
         charge:
           one: Zakup %{count} kredytów.
           other: Zakup %{count} kredytów.
     rate_limit_checker:
-      invalid_key: 'Nieprawidłowy Klucz Cache: brak unikalnej składowej'
+      invalid_key: "Nieprawidłowy Klucz Cache: brak unikalnej składowej"
       limit_reached:
         one: Osiągnięto limit szybkości, spróbuj ponownie za %{count} sekund
         other: Osiągnięto limit szybkości, spróbuj ponownie za %{count} sekund
@@ -98,9 +97,8 @@ pl:
             reporter: %{username} - %{url}
             email: <mailto:%{email}|%{email}>
         potential_spammer:
-          body: 'Potencjalny użytkownik spamujący! %{url}
-
-            '
+          body: |
+            Potencjalny użytkownik spamujący! %{url}
     spam:
       article_handler:
         suspended_too_many: Użytkownik zawieszony ze względu na zbyt wiele spamujących artykułów, wywołanych przez autowymiot.

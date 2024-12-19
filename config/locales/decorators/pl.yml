@@ -1,5 +1,4 @@
----
 pl:
   decorators:
     article_decorator:
-      tagged_with: "Otagowane jako %{cached_tag_list}."
+      tagged_with: Otagowane jako %{cached_tag_list}.

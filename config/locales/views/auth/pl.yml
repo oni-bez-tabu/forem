@@ -1,13 +1,11 @@
----
 pl:
   activerecord:
     attributes:
       user:
         password: Hasło
-        password_confirmation: "Powtórz hasło"
+        password_confirmation: Powtórz hasło
         name: Nazwa
         username: Nazwa użytkownika
-        
   views:
     auth:
       background: tło forem
@@ -60,7 +58,7 @@ pl:
             aria_label: Hasło
             desc: Minimum 8 znaków
             label: Hasło
-            placeholder: "••••••••"
+            placeholder: ••••••••
             hide: Ukryj hasło
             show: Pokaż hasło
           confirm:
@@ -81,8 +79,8 @@ pl:
         step_2_html: Po zarejestrowaniu się poniżej, możesz skonfigurować swoją społeczność na %{path}.
         step_3: Jako administrator możesz zrobić wiele rzeczy, ale jest krzywa uczenia się.
         step_4: Prosimy o kontakt z zespołem Forem, jeśli jesteś czymś niepewny!
-        step_5: "Dla Wzmocnienia Społeczności 🌱"
-      tagline: ---.
+        step_5: Dla Wzmocnienia Społeczności 🌱
+      tagline: "---."
       title:
         text_html: "%{name} to platforma edukacji i komunikacji seksualnej"
         size: "%{num} "

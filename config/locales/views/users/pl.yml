@@ -1,4 +1,3 @@
----
 pl:
   views:
     users:
@@ -72,9 +71,9 @@ pl:
         meta:
           title: Potwierdź wylogowanie - %{community}
         heading: Czy na pewno chcesz się wylogować?
-        'yes': Tak, wyloguj się
+        "yes": Tak, wyloguj się
       block: Zablokuj @%{user}
-      details: "Szczegóły profilu %{user}"
+      details: Szczegóły profilu %{user}
       dropdown: Akcje użytkownika
       email_icon: Adres email
       empty: 404 bio nie znaleziono
@@ -84,7 +83,7 @@ pl:
         icon: Dołączył
         text_html: "Dołączył\_%{date}"
       location_icon: Lokalizacja
-      logo: "Zdjęcie profilowe %{user}"
+      logo: Zdjęcie profilowe %{user}
       more: Więcej informacji o @%{user}
       send_pm:
         code: kodeks postępowania
@@ -92,7 +91,7 @@ pl:
         placeholder: Wpisz tutaj swoją wiadomość...
         submit: Wyślij
       spam: Oznacz @%{user} jako spam
-      social: "Strona %{service}"
+      social: Strona %{service}
       unflag: Cofnij flagę @%{user}
       unspam: Ustaw @%{user} w dobrej kondycji
       website: Osobista strona internetowa

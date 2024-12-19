@@ -1,4 +1,3 @@
----
 pl:
   devise:
     confirmations:
@@ -15,6 +14,7 @@ pl:
       timeout: Twoja sesja wygasła. Zaloguj się ponownie, aby kontynuować.
       unauthenticated: Musisz się zalogować lub zarejestrować, aby kontynuować.
       unconfirmed: Musisz potwierdzić swój adres email, aby kontynuować.
+      magic_link_invalid: Nieprawidłowy lub wygasły link logowania.
     mailer:
       confirmation_instructions:
         subject: Instrukcje potwierdzenia
@@ -26,6 +26,8 @@ pl:
         subject: Instrukcje resetowania hasła
       unlock_instructions:
         subject: Instrukcje odblokowania
+      magic_link:
+        subject: Oto Twój magiczny link logowania ✨
     omniauth_callbacks:
       failure: Nie udało się zalogować przez %{kind} z powodu "%{reason}".
       success: Pomyślnie zalogowano przez konto %{kind}.
@@ -59,9 +61,9 @@ pl:
       signed_up_but_locked: Zostałeś pomyślnie zarejestrowany. Jednak nie możemy Cię zalogować, ponieważ twoje konto jest zablokowane.
       signed_up_but_unconfirmed: Wiadomość z linkiem potwierdzającym została wysłana na Twój adres email. Proszę kliknąć w link, aby aktywować swoje konto.
       title:
-        invite_only_commuty: '%{community_name} jest tylko na zaproszenie.'
-        join_community: 'Dołącz do %{community_name}'
-        welcome_back_community: 'Dołącz do %{community_name}'
+        invite_only_commuty: "%{community_name} jest tylko na zaproszenie."
+        join_community: Dołącz do %{community_name}
+        welcome_back_community: Dołącz do %{community_name}
       update_needs_confirmation: Twoje konto zostało pomyślnie zaktualizowane, ale musimy zweryfikować Twój nowy adres email. Sprawdź swoją skrzynkę i kliknij w link potwierdzający, aby zatwierdzić nowy adres email.
       updated: Twoje konto zostało pomyślnie zaktualizowane.
       updated_but_not_signed_in: Twoje konto zostało pomyślnie zaktualizowane, ale ponieważ Twoje hasło zostało zmienione, musisz się ponownie zalogować.
@@ -73,6 +75,10 @@ pl:
       send_instructions: Otrzymasz email z instrukcjami, jak odblokować swoje konto w ciągu kilku minut.
       send_paranoid_instructions: Jeśli twoje konto istnieje, otrzymasz email z instrukcjami, jak je odblokować w ciągu kilku minut.
       unlocked: Twoje konto zostało pomyślnie odblokowane. Zaloguj się, aby kontynuować.
+    passwordless:
+      not_found_in_database: Nie znaleziono użytkownika o podanym adresie email
+      magic_link_sent: Link logowania został wysłany na Twój adres email. Kliknij w link, aby zalogować się na swoje konto.
+      magic_link_sent_paranoid: Jeśli Twoje konto istnieje, otrzymasz email z linkiem logowania. Kliknij w link, aby zalogować się na swoje konto.
   errors:
     messages:
       already_confirmed: zostało już potwierdzone, proszę spróbować zalogować się
@@ -81,5 +87,5 @@ pl:
       not_found: nie znaleziono
       not_locked: nie było zablokowane
       not_saved:
-        one: '1 błąd uniemożliwił zapisanie tego %{resource}:'
-        other: '%{count} błędów uniemożliwiło zapisanie tego %{resource}:'
+        one: "1 błąd uniemożliwił zapisanie tego %{resource}:"
+        other: "%{count} błędów uniemożliwiło zapisanie tego %{resource}:"

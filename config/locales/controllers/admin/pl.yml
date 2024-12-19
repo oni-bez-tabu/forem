@@ -1,4 +1,3 @@
----
 pl:
   admin:
     articles_controller:
@@ -24,9 +23,9 @@ pl:
       role_blank: Proszę wybrać rolę do dodania.
       success_message: Role są dodawane. Zadanie zostanie ukończone wkrótce.
     consumer_apps_controller:
-      created: '%{app} została utworzona!'
-      deleted: '%{app} została usunięta!'
-      updated: '%{app} została zaktualizowana!'
+      created: "%{app} została utworzona!"
+      deleted: "%{app} została usunięta!"
+      updated: "%{app} została zaktualizowana!"
       wrong: Coś poszło nie tak podczas usuwania %{app}.
     billboards_controller:
       created: Billboard został utworzony!
@@ -38,13 +37,13 @@ pl:
     extensions_controller:
       update_success: Rozszerzenia zostały zaktualizowane.
     html_variants_controller:
-      fork: '%{name} FORK-%{rand}'
+      fork: "%{name} FORK-%{rand}"
       created: Wariant HTML został utworzony!
       deleted: Wariant HTML został usunięty!
       updated: Wariant HTML został zaktualizowany!
       wrong: Coś poszło nie tak podczas usuwania Wariantu HTML.
     invitations_controller:
-      duplicate: 'Zaproszenie nie zostało wysłane. Istnieje już zarejestrowany użytkownik o adresie e-mail: %{email}'
+      duplicate: "Zaproszenie nie zostało wysłane. Istnieje już zarejestrowany użytkownik o adresie e-mail: %{email}"
       create_success: Zaproszenie zostało wysłane na adres e-mail użytkownika.
       destroy_success: Zaproszenie anulowane dla %{email}.
       resend_success: Zaproszenie zostało ponownie wysłane na %{email}.
@@ -57,21 +56,21 @@ pl:
       destroyed: "'%{title}' zostało pomyślnie zniszczone"
       no_credit: Brak wystarczającej liczby dostępnych kredytów
     mods_controller:
-      trusted: '%{username} ma teraz rolę Zaufany!'
+      trusted: "%{username} ma teraz rolę Zaufany!"
     navigation_links_controller:
       deleted: Link nawigacyjny %{link} usunięty
-      created: 'Pomyślnie utworzono link nawigacyjny: %{link}'
-      updated: 'Pomyślnie zaktualizowano link nawigacyjny: %{link}'
+      created: "Pomyślnie utworzono link nawigacyjny: %{link}"
+      updated: "Pomyślnie zaktualizowano link nawigacyjny: %{link}"
     organization_memberships_controller:
-      not_exist: 'Organizacja #%{org_id} nie istnieje.'
+      not_exist: "Organizacja #%{org_id} nie istnieje."
       wrong: Coś poszło nie tak podczas usuwania użytkownika z %{org}
       added: Użytkownik został pomyślnie dodany do %{org}
       removed: Użytkownik został pomyślnie usunięty z %{org}
       updated: Użytkownik został pomyślnie zaktualizowany do %{type}
     organizations_controller:
       credit_updated: Pomyślnie zaktualizowano kredyty
-      deletion_scheduled: 'Usunięcie organizacji "%{organization_name}" jest zaplanowane.'
-      error: 'Twoja organizacja, %{organization_name}, nie mogła zostać usunięta: %{error}.'
+      deletion_scheduled: Usunięcie organizacji "%{organization_name}" jest zaplanowane.
+      error: "Twoja organizacja, %{organization_name}, nie mogła zostać usunięta: %{error}."
     pages_controller:
       updated: Strona została pomyślnie zaktualizowana.
       created: Strona została pomyślnie utworzona.
@@ -93,46 +92,46 @@ pl:
     profile_field_groups_controller:
       deleted: Grupa %{group} usunięta
       updated: Grupa %{group} zaktualizowana
-      created: 'Pomyślnie utworzono grupę: %{group}'
+      created: "Pomyślnie utworzono grupę: %{group}"
     profile_fields_controller:
       created: Pole profilu %{field} utworzone
       deleted: Pole profilu %{field} usunięte
       updated: Pole profilu %{field} zaktualizowane
     response_templates_controller:
-      saved: 'Szablon odpowiedzi: "%{title}" został pomyślnie zapisany.'
+      saved: "Szablon odpowiedzi: \"%{title}\" został pomyślnie zapisany."
       updated: Szablon odpowiedzi "%{title}" został zaktualizowany.
       deleted: Szablon odpowiedzi "%{title}" został usunięty.
     secrets_controller:
       not_in_vault: Brak w skarbcu
       updated: Klucz %{key} został pomyślnie zaktualizowany w Vault.
-      value: '%{first8}******'
+      value: "%{first8}******"
     settings_controller:
       confirmation: Moja nazwa użytkownika to @%{username} i ta akcja jest w 100% bezpieczna i odpowiednia.
     spaces_controller:
       update_success: Przestrzeń została zaktualizowana.
     tags:
       moderators_controller:
-        not_found: 'Użytkownik ID #%{user_id} nie został znaleziony'
-        not_found_or: 'Użytkownik ID #%{user_id} nie został znaleziony, lub ich konto ma błędy: %{errors}'
-        removed: '@%{username} - ID #%{user_id} został usunięty jako moderator tagu.'
-        added: '%{username} został dodany jako moderator tagu!'
+        not_found: "Użytkownik ID #%{user_id} nie został znaleziony"
+        not_found_or: "Użytkownik ID #%{user_id} nie został znaleziony, lub ich konto ma błędy: %{errors}"
+        removed: "@%{username} - ID #%{user_id} został usunięty jako moderator tagu."
+        added: "%{username} został dodany jako moderator tagu!"
     tags_controller:
-      created: '%{tag_name} został utworzony!'
-      updated: '%{tag_name} tag pomyślnie zaktualizowany!'
-      update_fail: 'Aktualizacja tagu nie powiodła się: %{errors}'
+      created: "%{tag_name} został utworzony!"
+      updated: "%{tag_name} tag pomyślnie zaktualizowany!"
+      update_fail: "Aktualizacja tagu nie powiodła się: %{errors}"
     tools_controller:
-      article_busted: 'Artykuł #%{article} został pomyślnie zablokowany'
-      user_busted: 'Użytkownik #%{user} został pomyślnie zablokowany'
-      link_busted: '%{link} został pomyślnie zablokowany'
+      article_busted: "Artykuł #%{article} został pomyślnie zablokowany"
+      user_busted: "Użytkownik #%{user} został pomyślnie zablokowany"
+      link_busted: "%{link} został pomyślnie zablokowany"
     users_controller:
       exported: Dane wyeksportowane do %{receiver}. Zadanie zostanie ukończone wkrótce.
       email_fail: Wysłanie e-maila nie powiodło się!
       email_sent: E-mail został wysłany!
       verify_sent: E-mail weryfikacyjny wysłany!
-      full_delete_html: '@%{user} (e-mail: %{email}, ID użytkownika: %{id}) został całkowicie usunięty. Jeśli jest to usunięcie zgodne z RODO, usuń go z Mailchimp i Google Analytics i potwierdź na %{the_page}.'
+      full_delete_html: "@%{user} (e-mail: %{email}, ID użytkownika: %{id}) został całkowicie usunięty. Jeśli jest to usunięcie zgodne z RODO, usuń go z Mailchimp i Google Analytics i potwierdź na %{the_page}."
       no_email: brak e-maila
       parameter_missing: Zarówno temat, jak i treść są wymagane!
-      role_removed: 'Rola: %{role} została pomyślnie usunięta z użytkownika!'
+      role_removed: "Rola: %{role} została pomyślnie usunięta z użytkownika!"
       identity_removed: Identyfikator %{provider} został pomyślnie usunięty i zarchiwizowany.
       the_page: strona
       banished: Ten użytkownik jest wydalany w tle. Zadanie zostanie ukończone wkrótce.
@@ -142,6 +141,9 @@ pl:
       updated_json: Sukces! %{username} został zaktualizowany.
       credits_added: Kredyty zostały dodane!
       credits_removed: Kredyty zostały usunięte.
+      confirm_sent: E-mail potwierdzający został wysłany!
+      manual_verification_sent: E-mail został zweryfikowany ręcznie!
+      tag_not_found: Tag "%{tag_name}" nie został znaleziony
     welcome_controller:
       thread_content: |
         ---
@@ -156,3 +158,10 @@ pl:
         ![WITAMY W INTERNETE](https://slack-imgs.com/?c=1&url=http%3A%2F%2Fmedia0.giphy.com%2Fmedia%2FzhbrTTpmSCYog%2Fgiphy-downsized.gif)
 
         Zostaw komentarz poniżej, aby przedstawić się społeczności!✌️
+    emails_controller:
+      created: E-mail został utworzony!
+      drafted: E-mail został zapisany jako szkic!
+      activated: E-mail został aktywowany!
+      deleted: E-mail został usunięty!
+      updated: E-mail został zaktualizowany!
+      wrong: Coś poszło nie tak podczas usuwania e-maila.

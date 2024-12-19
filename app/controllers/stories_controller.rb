@@ -111,20 +111,16 @@ class StoriesController < ApplicationController
     @organization = Organization.find_by(slug: params[:username])
     @page = Page.find_by(slug: params[:username], is_top_level_path: true)
     if @podcast
-      Honeycomb.add_field("stories_route", "podcast")
       handle_podcast_index
     elsif @organization
-      Honeycomb.add_field("stories_route", "org")
       handle_organization_index
     elsif @page
       if FeatureFlag.accessible?(@page.feature_flag_name, current_user)
-        Honeycomb.add_field("stories_route", "page")
         handle_page_display
       else
         not_found
       end
     else
-      Honeycomb.add_field("stories_route", "user")
       handle_user_index
     end
   end
@@ -180,6 +176,9 @@ class StoriesController < ApplicationController
       .order(published_at: :desc).page(@page).per(8))
     @organization_article_index = true
     @organization_users = @organization.users.order(badge_achievements_count: :desc)
+    if !user_signed_in? && @organization_users.sum(:score).negative? && @stories.sum(&:score) <= 0
+      not_found
+    end
     set_organization_json_ld
     set_surrogate_key_header "articles-org-#{@organization.id}"
     render template: "organizations/show"
@@ -207,17 +206,8 @@ class StoriesController < ApplicationController
 
     assign_user_github_repositories
 
-    # @badges_limit is here and is set to 6 because it determines how many badges we will display
-    # on Profile sidebar widget. If user has more badges, we hide them and let them be revealed
-    # by clicking "See more" button (because we want to save space etc..). But why 6 exactly?
-    # To make that widget look good:
-    #   - On desktop it will have 3 rows, each row with 2 badges.
-    #   - On mobile it will have 2 rows, each row with 3 badges.
-    # So it's always 6. If we make it higher or lower number, we would have to sacrifice UI:
-    #   - Let's say it's `4`. On mobile it would display two rows: 1st with 3 badges and
-    # 2nd with 1 badge (!) <-- and that would look off.
-    @badges_limit = 6
-    @profile = @user.profile.decorate
+    @grouped_badges = @user.badge_achievements.order(id: :desc).includes(:badge).group_by(&:badge_id)
+    @profile = @user&.profile&.decorate || Profile.create(user: @user)&.decorate
     @is_user_flagged = Reaction.where(user_id: session_current_user_id, reactable: @user).any?
 
     set_surrogate_key_header "articles-user-#{@user.id}"
@@ -300,7 +290,7 @@ class StoriesController < ApplicationController
     end
 
     @comments_to_show_count = @article.cached_tag_list_array.include?("discuss") ? 50 : 30
-    @comments_to_show_count = 15 unless user_signed_in?
+    @comments_to_show_count = 10 unless user_signed_in?
     set_article_json_ld
     assign_co_authors
     @comment = Comment.new(body_markdown: @article&.comment_template)
@@ -328,10 +318,10 @@ class StoriesController < ApplicationController
   end
 
   def assign_user_stories
-    @pinned_stories = Article.published.where(id: @user.profile_pins.select(:pinnable_id))
+    @pinned_stories = Article.published.full_posts.where(id: @user.profile_pins.select(:pinnable_id))
       .limited_column_select
       .order(published_at: :desc).decorate
-    @stories = ArticleDecorator.decorate_collection(@user.articles.published
+    @stories = ArticleDecorator.decorate_collection(@user.articles.published.full_posts
       .includes(:distinct_reaction_categories)
       .limited_column_select
       .where.not(id: @pinned_stories.map(&:id))
@@ -445,7 +435,7 @@ class StoriesController < ApplicationController
     [
       @user.twitter_username.present? ? "https://twitter.com/#{@user.twitter_username}" : nil,
       @user.github_username.present? ? "https://github.com/#{@user.github_username}" : nil,
-      @user.profile.website_url,
+      @user&.profile&.website_url,
     ].compact_blank
   end
 

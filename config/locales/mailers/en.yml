@@ -12,10 +12,13 @@ en:
       other_community_posts: inne posty z %{community}, które mogą Ci się spodobać
       other_top_posts: inne najlepsze posty z %{community}
       other_trending_posts: inne trendujące posty z %{community}
+    custom_mailer:
+      from: Newsletter    
     notify_mailer:
       account_deleted: "%{community} - Potwierdzenie usunięcia konta"
       deletion_requested: "%{community} - Żądanie usunięcia konta"
       trusted: Gratulacje! Jesteś teraz „zaufanym” użytkownikiem na %{community}!
+      base_subscriber: Gratulacje! Jesteś teraz subskrybentem nie!tabu++
       moderator: "Gratulacje! Jesteś teraz moderatorem dla #%{tag_name}"
       new_follower: właśnie zaczął Cię obserwować na %{community}
       new_mention: "%{name} właśnie wspomniał/a o Tobie"

@@ -84,7 +84,7 @@ Object {
             </a>
           </div>
           <div
-            class="crayons-story__body"
+            class="crayons-story__body crayons-story__body-"
           >
             <div
               class="crayons-story__top"
@@ -125,6 +125,8 @@ Object {
                         id="story-author-preview-trigger-62407"
                       >
                         Stella Macejkovic
+                         
+                        
                       </button>
                       <div
                         class="profile-preview-card__content crayons-dropdown p-4 pt-0 branded-7"
@@ -197,7 +199,7 @@ Object {
               class="crayons-story__indention"
             >
               <h3
-                class="crayons-story__title"
+                class="crayons-story__title crayons-story__title-"
               >
                 <a
                   href="/some-post/path"
@@ -353,7 +355,7 @@ Object {
           </a>
         </div>
         <div
-          class="crayons-story__body"
+          class="crayons-story__body crayons-story__body-"
         >
           <div
             class="crayons-story__top"
@@ -394,6 +396,8 @@ Object {
                       id="story-author-preview-trigger-62407"
                     >
                       Stella Macejkovic
+                       
+                      
                     </button>
                     <div
                       class="profile-preview-card__content crayons-dropdown p-4 pt-0 branded-7"
@@ -466,7 +470,7 @@ Object {
             class="crayons-story__indention"
           >
             <h3
-              class="crayons-story__title"
+              class="crayons-story__title crayons-story__title-"
             >
               <a
                 href="/some-post/path"

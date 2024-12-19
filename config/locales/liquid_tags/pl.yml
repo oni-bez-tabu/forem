@@ -1,23 +1,22 @@
----
 pl:
   liquid_tags:
     asciinema_tag:
-      invalid_asciinema_id: 'Nieprawidłowe ID Asciinema: %{id}'
+      invalid_asciinema_id: "Nieprawidłowe ID Asciinema: %{id}"
     blogcast_tag:
       invalid_blogcast_id: Nieprawidłowe ID Blogcast
     codepen_tag:
       invalid_codepen_url: Nieprawidłowy URL CodePen
       invalid_options: Nieprawidłowe opcje
     codesandbox_tag:
-      invalid_id: 'Błąd CodeSandbox: Nieprawidłowe ID'
+      invalid_id: "Błąd CodeSandbox: Nieprawidłowe ID"
     comment_tag:
       invalid_comment: Nieprawidłowe ID komentarza lub URL
     dotnet_fiddle_tag:
       invalid_dotnetfiddle_url: Nieprawidłowy URL DotnetFiddle
     gist_tag:
       invalid_filename: Nieprawidłowa nazwa pliku
-      invalid_format: 'Nieprawidłowy link Gist: %{link} Linki muszą mieć następujący format: https://gist.github.com/nazwa_użytkownika/id_gista'
-      invalid_gist_link: 'Nieprawidłowy link Gist: Musisz podać link Gist'
+      invalid_format: "Nieprawidłowy link Gist: %{link} Linki muszą mieć następujący format: https://gist.github.com/nazwa_użytkownika/id_gista"
+      invalid_gist_link: "Nieprawidłowy link Gist: Musisz podać link Gist"
     git_pitch_tag:
       invalid_gitpitch_url: Nieprawidłowy URL GitPitch
     github_tag:
@@ -27,7 +26,7 @@ pl:
         invalid_github_issue_pull: Nieprawidłowe zlecenie GitHub, żądanie przeciągnięcia lub link do komentarza
         posted_on: opublikowano na
       github_readme_tag:
-        invalid_options: 'Tag GitHub: nieprawidłowe opcje: %{invalid} | obsługiwane opcje: %{valid}'
+        invalid_options: "Tag GitHub: nieprawidłowe opcje: %{invalid} | obsługiwane opcje: %{valid}"
         invalid_github_repository: Nieprawidłowa ścieżka repozytorium GitHub lub URL
     glitch_tag:
       invalid_glitch_id: Nieprawidłowe ID Glitch
@@ -65,7 +64,7 @@ pl:
     podcast_tag:
       invalid_podcast_link: Nieprawidłowy link podcastu
     reddit_tag:
-      invalid_reddit_link: 'Nieprawidłowy link Reddit: %{url}'
+      invalid_reddit_link: "Nieprawidłowy link Reddit: %{url}"
     replit_tag:
       invalid_replit_id: Nieprawidłowy URL Replit lub @user/slug
     runkit_tag:
@@ -85,8 +84,8 @@ pl:
       missing_argument: Stackery - Brakujące argumenty właściciela i/lub nazwy repozytorium
     stackexchange_tag:
       post_not_found: "Nie można znaleźć wpisu o tym ID: {% %{tag} %{input} %}"
-      invalid_id: 'Nieprawidłowe ID Stack Exchange: {% %{tag} %{input} %}'
-      invalid_site: 'Nieprawidłowa witryna Stack Exchange: {% %{tag} %{input} %}'
+      invalid_id: "Nieprawidłowe ID Stack Exchange: {% %{tag} %{input} %}"
+      invalid_site: "Nieprawidłowa witryna Stack Exchange: {% %{tag} %{input} %}"
     tag_tag:
       invalid_tag_name: nieprawidłowa nazwa tagu
     tweet_tag:
@@ -111,3 +110,5 @@ pl:
       invalid_wikipedia_url: Nieprawidłowy URL Wikipedii
     youtube_tag:
       invalid_youtube_id: Nieprawidłowe ID lub URL YouTube
+    tiktok_tag:
+      invalid_tiktok_id: Nieprawidłowe Tiktok link

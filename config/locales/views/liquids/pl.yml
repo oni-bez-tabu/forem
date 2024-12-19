@@ -1,4 +1,3 @@
----
 pl:
   views:
     liquids:
@@ -9,14 +8,14 @@ pl:
       poll:
         show_results: Pokaż tylko wyniki
       reddit:
-        author: 'Autor: %{author}'
+        author: "Autor: %{author}"
         see: Zobacz pełny post
       stackexchange:
         answer:
           text_html: "%{answer} w odpowiedzi na: %{title}"
           answer: odpowiedź
-        answers: 'Odpowiedzi: %{count}'
-        comments: 'Komentarze: %{count}'
+        answers: "Odpowiedzi: %{count}"
+        comments: "Komentarze: %{count}"
         open:
           answer: Otwórz pełną odpowiedź
           article: Otwórz pełny artykuł
@@ -28,16 +27,16 @@ pl:
           subtitle: Potwierdź subskrypcję
           button_text: Potwierdź subskrypcję
           cancel_text: Anuluj
-          text_html: "Udostępnisz swój adres email, nazwę użytkownika, imię i adres URL profilu %{community} użytkownikowi %{username}. Po zrobieniu tego, nie można cofnąć tej akcji."
-        logged_out: "Musisz najpierw zalogować się do %{community}."
+          text_html: Udostępnisz swój adres email, nazwę użytkownika, imię i adres URL profilu %{community} użytkownikowi %{username}. Po zrobieniu tego, nie można cofnąć tej akcji.
+        logged_out: Musisz najpierw zalogować się do %{community}.
         sign_in: Zaloguj się
         subscribe:
           apple:
             button: Subskrybuj
-            desc_html: "Hej! Wygląda na to, że podczas tworzenia konta w %{community} zarejestrowałeś się za pomocą Apple, używając prywatnego adresu email przekierowania. Jeśli chcesz subskrybować, proszę najpierw %{update} na inny adres email."
+            desc_html: Hej! Wygląda na to, że podczas tworzenia konta w %{community} zarejestrowałeś się za pomocą Apple, używając prywatnego adresu email przekierowania. Jeśli chcesz subskrybować, proszę najpierw %{update} na inny adres email.
             update: zaktualizuj swój adres email w Ustawieniach
           button: Subskrybuj
-          desc_html: "Subskrybujesz za pomocą adresu email powiązanego z Twoim kontem %{community}. Aby użyć innego adresu email, możesz %{update}."
+          desc_html: Subskrybujesz za pomocą adresu email powiązanego z Twoim kontem %{community}. Aby użyć innego adresu email, możesz %{update}.
           update: zaktualizuj swój adres email w Ustawieniach
       wikipedia:
         logo: Logo Wikipedii

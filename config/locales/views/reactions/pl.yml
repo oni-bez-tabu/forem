@@ -1,4 +1,3 @@
----
 pl:
   views:
     reactions:
@@ -20,8 +19,8 @@ pl:
       summary:
         count_html:
           one: "%{count}%{start}\_reakcja%{end}"
-          few_html: 
-            other: "%{count}%{start}\_reakcje%{end}"  # dla 2, 3, 4
+          few_html:
+            other: "%{count}%{start}\_reakcje%{end}"
           other: "%{count}%{start}\_reakcji%{end}"
         title: Reakcje
       like:

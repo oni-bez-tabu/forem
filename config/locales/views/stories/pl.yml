@@ -1,11 +1,10 @@
----
 pl:
   views:
     stories:
       meta:
         description_tagged: "%{tag} treści na %{name}"
         page: " Strona %{page}"
-        rss: "Kanał RSS %{name}"
+        rss: Kanał RSS %{name}
       heading: Posty
       discuss: "#dyskutuj"
       follow: Śledź
@@ -21,5 +20,8 @@ pl:
         year: Rok
         infinity: Nieskończoność
         latest: Najnowsze
-        signin_html: "👋 <a href=\"%{path}\">Zaloguj się</a>, aby mieć możliwość sortowania postów według <strong>istotności</strong>, <strong>najnowszych</strong> lub <strong>najlepszych</strong>."
+        signin_html: 👋 <a href="%{path}">Zaloguj się</a>, aby mieć możliwość sortowania postów według <strong>istotności</strong>, <strong>najnowszych</strong> lub <strong>najlepszych</strong>.
         top: Najlepsze
+      status_placeholder: Co słychać?
+      submit: Opublikuj
+      status_hint_html: <strong>Szybkie posty (beta)</strong> pojawiają się w aktualnościach, ale nie w powiadomieniach ani na Twoim profilu — <a href='/new'>Otwórz pełny edytor</a>

@@ -15,8 +15,11 @@ class DashboardsController < ApplicationController
   before_action :set_no_cache_header
   before_action :authenticate_user!
 
+  layout false, only: :sidebar
+
   LIMIT_PER_PAGE_DEFAULT = 80
   LIMIT_PER_PAGE_MAX = 1000
+  ARTICLES_PER_PAGE = 25
 
   def show
     fetch_and_authorize_user
@@ -39,6 +42,7 @@ class DashboardsController < ApplicationController
 
       # if the target is a user, we need to eager load the organization
       @articles = target.articles.includes(:organization)
+      @articles = params[:state] == "status" ? @articles.statuses : @articles.full_posts
     end
 
     @reactions_count = @articles.sum(&:public_reactions_count)
@@ -46,8 +50,14 @@ class DashboardsController < ApplicationController
     @page_views_count = @articles.sum(&:page_views_count)
 
     @articles = @articles.includes(:collection).sorting(params[:sort]).decorate
-    @articles = Kaminari.paginate_array(@articles).page(params[:page]).per(50)
+    @articles = Kaminari.paginate_array(@articles).page(params[:page]).per(ARTICLES_PER_PAGE)
     @collections_count = target.collections.non_empty.count
+  end
+
+  def sidebar
+    @user = current_user
+    @organizations = @user.admin_organizations
+    @action = params[:state]
   end
 
   def following_tags

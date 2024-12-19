@@ -1,31 +1,30 @@
----
 pl:
   create_mascot:
     name: Maskotka
     error: Maskotka już ustawiona
   broadcast:
     welcome:
-      ask_question: "Sloan tutaj! 👋 Zauważyłem, że jeszcze nie <a href='https://dev.to/t/explainlikeimfive'>zadałeś pytania</a>. Zadanie pytania jest łatwe; po prostu kliknij 'Utwórz post' w pasku bocznym strony tagu, aby rozpocząć!"
-      customize_experience: "Sloan tutaj! 👋 Czy wiedziałeś, że możesz dostosować swoje doświadczenie na DEV? Spróbuj zmienić <a href='settings/customization'>czcionkę i motyw</a> i znajdź najlepszy styl dla siebie!"
-      customize_feed: "Cześć, to znowu ja! 👋 Teraz, gdy jesteś częścią społeczności DEV, skupmy się na personalizowaniu twojej zawartości. Możesz zacząć od <a href='/tags'>śledzenia kilku tagów</a>, aby dostosować swoje kanały! 🎉"
-      discuss_and_ask: "Sloan tutaj! 👋 Zauważyłem, że jeszcze nie <a href='https://dev.to/t/explainlikeimfive'>zadałeś pytania</a> ani <a href='https://dev.to/t/discuss'>rozpocząłeś dyskusji</a>. Zrobienie jednego i drugiego jest proste; po prostu kliknij 'Utwórz post' w pasku bocznym strony tagu, aby rozpocząć!"
-      download_app: "Sloan tutaj, z ostatnim wskazówką! 👋 Czy już pobrałeś aplikację mobilną DEV? Rozważ <a href='https://dev.to/downloads'>pobranie</a>, aby mieć dostęp do wszystkich ulubionych treści na DEV w podróży!"
-      set_up_profile: "Witaj na DEV! 👋 Jestem Sloan, maskotką społeczności i jestem tutaj, aby pomóc ci się rozpocząć. Zacznijmy od <a href='/settings'>ustawienia swojego profilu</a>!"
-      start_discussion: "Sloan tutaj! 👋 Zauważyłem, że jeszcze nie <a href='https://dev.to/t/discuss'>rozpocząłeś dyskusji</a>. Rozpoczęcie dyskusji jest łatwe; po prostu kliknij 'Utwórz post' w pasku bocznym strony tagu, aby rozpocząć!"
-      welcome_thread: "Sloan tutaj znowu! 👋 DEV to przyjazna społeczność. Może chcesz się przedstawić, zostawiając komentarz w <a href='/welcome'>wątku powitalnym</a>!"
+      ask_question: Sloan tutaj! 👋 Zauważyłem, że jeszcze nie <a href='https://dev.to/t/explainlikeimfive'>zadałeś pytania</a>. Zadanie pytania jest łatwe; po prostu kliknij 'Utwórz post' w pasku bocznym strony tagu, aby rozpocząć!
+      customize_experience: Sloan tutaj! 👋 Czy wiedziałeś, że możesz dostosować swoje doświadczenie na DEV? Spróbuj zmienić <a href='settings/customization'>czcionkę i motyw</a> i znajdź najlepszy styl dla siebie!
+      customize_feed: Cześć, to znowu ja! 👋 Teraz, gdy jesteś częścią społeczności DEV, skupmy się na personalizowaniu twojej zawartości. Możesz zacząć od <a href='/tags'>śledzenia kilku tagów</a>, aby dostosować swoje kanały! 🎉
+      discuss_and_ask: Sloan tutaj! 👋 Zauważyłem, że jeszcze nie <a href='https://dev.to/t/explainlikeimfive'>zadałeś pytania</a> ani <a href='https://dev.to/t/discuss'>rozpocząłeś dyskusji</a>. Zrobienie jednego i drugiego jest proste; po prostu kliknij 'Utwórz post' w pasku bocznym strony tagu, aby rozpocząć!
+      download_app: Sloan tutaj, z ostatnim wskazówką! 👋 Czy już pobrałeś aplikację mobilną DEV? Rozważ <a href='https://dev.to/downloads'>pobranie</a>, aby mieć dostęp do wszystkich ulubionych treści na DEV w podróży!
+      set_up_profile: Witaj na DEV! 👋 Jestem Sloan, maskotką społeczności i jestem tutaj, aby pomóc ci się rozpocząć. Zacznijmy od <a href='/settings'>ustawienia swojego profilu</a>!
+      start_discussion: Sloan tutaj! 👋 Zauważyłem, że jeszcze nie <a href='https://dev.to/t/discuss'>rozpocząłeś dyskusji</a>. Rozpoczęcie dyskusji jest łatwe; po prostu kliknij 'Utwórz post' w pasku bocznym strony tagu, aby rozpocząć!
+      welcome_thread: Sloan tutaj znowu! 👋 DEV to przyjazna społeczność. Może chcesz się przedstawić, zostawiając komentarz w <a href='/welcome'>wątku powitalnym</a>!
     connect:
-      apple: "Jesteś na fali! 🎉 Masz konto Apple? Rozważ <a href='/settings'>połączenie go</a>."
-      facebook: "Jesteś na fali! 🎉 Masz konto Facebook? Rozważ <a href='/settings'>połączenie go</a>."
-      forem: "Jesteś na fali! 🎉 Masz konto Forem? Rozważ <a href='/settings'>połączenie go</a>."
-      github: "Jesteś na fali! 🎉 Masz konto GitHub? Rozważ <a href='/settings'>połączenie go</a>, aby przypiąć dowolne repozytoria do swojego profilu."
-      google: "Jesteś na fali! 🎉 Masz konto Google? Rozważ <a href='/settings'>połączenie go</a>."
-      twitter: "Jesteś na fali! 🎉 Masz konto Twitter? Rozważ <a href='/settings'>połączenie go</a>, abyśmy mogli oznaczać cię, jeśli udostępnimy twój post za pośrednictwem naszego konta Twitter <a href='https://twitter.com/thePracticalDev'>@thePracticalDev</a>."
+      apple: Jesteś na fali! 🎉 Masz konto Apple? Rozważ <a href='/settings'>połączenie go</a>.
+      facebook: Jesteś na fali! 🎉 Masz konto Facebook? Rozważ <a href='/settings'>połączenie go</a>.
+      forem: Jesteś na fali! 🎉 Masz konto Forem? Rozważ <a href='/settings'>połączenie go</a>.
+      github: Jesteś na fali! 🎉 Masz konto GitHub? Rozważ <a href='/settings'>połączenie go</a>, aby przypiąć dowolne repozytoria do swojego profilu.
+      google: Jesteś na fali! 🎉 Masz konto Google? Rozważ <a href='/settings'>połączenie go</a>.
+      twitter: Jesteś na fali! 🎉 Masz konto Twitter? Rozważ <a href='/settings'>połączenie go</a>, abyśmy mogli oznaczać cię, jeśli udostępnimy twój post za pośrednictwem naszego konta Twitter <a href='https://twitter.com/thePracticalDev'>@thePracticalDev</a>.
   errors:
     authentication:
       errors:
         suspended: Wygląda na to, że twoje poprzednie konto %{community_name} zostało zawieszone. W związku z tym podjęliśmy środki ostrożności, aby uniemożliwić ci utworzenie nowego konta w %{community_name} i jego społeczności. Jeśli uważasz, że wystąpił błąd, wyślij do nas e-mail na adres %{community_email}, a ponownie to przemyślimy.
     fastly_config:
-      must_be_array: 'configs: musi być tablicą ciągów'
+      must_be_array: "configs: musi być tablicą ciągów"
       invalid_config: Nieprawidłowa konfiguracja Fastly - %{invalid_config}. Tylko %{valid_configs_join} są prawidłowe.
   policies:
     application_policy:

@@ -1,4 +1,3 @@
----
 pl:
   views:
     listings:
@@ -21,7 +20,7 @@ pl:
           subtitle: Podbij swoje ogłoszenie
           button: Podbij ogłoszenie
           description: Możesz podbić swoje ogłoszenie za tę samą cenę co oryginalne ogłoszenie
-          last: 'Ostatnio Publikowane/Podbite: %{date}'
+          last: "Ostatnio Publikowane/Podbite: %{date}"
         notice: Możesz edytować tytuł/treść/tagi tylko w przypadku szkiców lub w ciągu pierwszych 24 godzin od ogłoszenia lub podbicia
         not_published:
           text_html: To ogłoszenie nie jest %{not} opublikowane.
@@ -33,13 +32,13 @@ pl:
         update_draft: Aktualizuj szkic
       to_edit: Edytuj
       errors:
-        one: '1 błąd uniemożliwił zapisanie tego ogłoszenia:'
+        one: "1 błąd uniemożliwił zapisanie tego ogłoszenia:"
         other: "%{count} błędów uniemożliwiło zapisanie tego ogłoszenia:"
       expired: To ogłoszenie wygasło.
       form:
         body_markdown:
           description: Maksymalnie 400 znaków, maksymalnie 12 przerw wiersza, obrazy niedozwolone, *zachęca się do użycia markdown*. Proszę zawrzeć metodę kontaktu, jeśli to konieczne.
-          placeholder: "..."
+          placeholder: ...
         category:
           label: Kategoria
           placeholder: CFP Konferencji (1 Kredyt)
@@ -73,7 +72,7 @@ pl:
         buy: Kup więcej
         disclaimer:
           subtitle: Zastrzeżenie
-          description1: "Administratorzy %{community} mogą modyfikować tagi i kategorie, aby zapewnić dokładność. Możemy również usunąć i zwrócić niewłaściwe ogłoszenia."
+          description1: Administratorzy %{community} mogą modyfikować tagi i kategorie, aby zapewnić dokładność. Możemy również usunąć i zwrócić niewłaściwe ogłoszenia.
           description2: Ogłoszenia wygasają 30 dni po ich opublikowaniu lub "podbiciu".
         organization: Kredyty organizacji
         personal: Osobiste kredyty

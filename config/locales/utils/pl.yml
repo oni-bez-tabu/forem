@@ -1,11 +1,10 @@
----
 pl:
   xml:
     opensearch:
-      short_name: "Wyszukiwanie %{community}"
+      short_name: Wyszukiwanie %{community}
       description: Znajdź wpisy z %{community}.
     user:
-      image: "Obraz profilu użytkownika %{user}"
+      image: Obraz profilu użytkownika %{user}
   json:
     author: Aktywny autor %{community}
   mailer:

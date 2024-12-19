@@ -1,4 +1,3 @@
----
 pl:
   views:
     admin:
@@ -205,7 +204,7 @@ pl:
           text1_html: Once unpublished, all posts by %{username} will become hidden and only accessible to themselves.
           text2_html: If %{username} is not suspended, they can still re-publish their posts from their dashboard.
           note: "Note:"
-          note_placeholder: "Note text"
+          note_placeholder: Note text
           submit: Unpublish all posts
         emails:
           confirm: Resend confirmation
@@ -228,6 +227,7 @@ pl:
           verify: Verify email address
           verified_html: Last verified on %{time}
           reverify: Reverify
+          manually_verify: Manually verify email
         flags:
           empty1: No flags received against %{user} yet.
           empty2: Any flags received against %{user} will be found here.
@@ -354,6 +354,7 @@ pl:
             remove_social: Remove social accounts
             banish: Banish user
             delete: Delete user
+            update_email: Update User Email
         reports:
           subtitle: Reports submitted by %{user} (%{num})
           for_html: For %{url}
@@ -393,6 +394,8 @@ pl:
           reports: Reports
           flags: Flags
           unpublish_logs: Unpublish All History
+          articles: Articles
+          comments: Comments
         status_title: Current status
         status_reader: "Current status:"
         more_orgs:
@@ -426,10 +429,29 @@ pl:
           Good Standing: Good Standing
           Good standing: Good standing
           Trusted: Trusted
+          Base Subscriber: Base Subscriber
         identities:
           facebook: Facebook
           github: GitHub
           twitter: Twitter
+        update_email:
+          heading: Update User Email
+          desc_html: User's current email is %{email}.
+          new_email: New email
+          submit: Update email
+          success: Email updated successfully.
+          error: Failed to update email.
+        max_score:
+          change: Change maximum score
+          change_note: Reason for change
+          desc_html: This changes the maximum score a user can achieve. 0 means unlimited. The user's current maximum score is <strong>%{max_score}</strong>.
+          heading: Change maximum score
+          max_score: New maximum score
+          submit: Change maximum score
+          success: Successfully changed user's maximum score to %{max_score}.
+          error: Failed to change user's maximum score (select between 0 and 100)
+        max_score_title: Maximum score
+        max_score_reader: "Maximum score:"
       organizations:
         profile:
           id: ID %{organizationid}
