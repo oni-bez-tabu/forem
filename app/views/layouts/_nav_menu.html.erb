@@ -30,6 +30,13 @@
     <%= application_policy_content_tag("li", record: Article, query: :create?) do %>
       <a href="<%= new_path %>" class="c-link c-link--block"><%= t("views.main.create_post") %></a>
     <% end %>
+    <% if policy(:video).new? %>
+    <li>
+      <a class="c-link c-link--block" href="<%= new_video_path %>" data-no-instant>
+        <%= t("views.dashboard.actions.upload") %>
+      </a>
+    </li>
+    <% end %>
     <li>
       <a href="<%= readinglist_path %>" class="c-link c-link--block"><%= t("views.main.nav.list") %></a>
     </li>

@@ -170,7 +170,7 @@ pl:
         email: Powiadomienia e-mail
         general: Ogólne powiadomienia
         general_desc_html: Powiadomienia, które pojawiają się tylko na %{page}.
-        mobile: Powiadomienia mobilne
+        mobile: Powiadomienia push (web i mobile)
         moderator: Powiadomienia moderatora
         page: strona powiadomień
         save: Zapisz

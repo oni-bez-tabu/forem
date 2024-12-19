@@ -18,15 +18,13 @@
       <meta name="head-cached-at" content="<%= Time.current.to_i %>">
       <meta name="environment" content="<%= Rails.env %>">
       <%= render "layouts/styles", qualifier: "main" %>
-      <%= javascript_include_tag "base", "application", "baseInitializers", "baseTracking", defer: true %>
-
+      <%= javascript_include_tag "base", "application", "baseInitializers", "baseTracking", "cookieyes", "onesignal", defer: true %>
       <%# This Rails.env.test? introduces some test-specific behavior, but that is much easier to verify without the specific loading code. We should ensure search still works as expected manually as well. %>
       <% if controller_name == "articles_search" || Rails.env.test? %>
         <%= javascript_include_tag "Search", defer: true %>
       <% else %>
         <meta name="search-script" content="<%= asset_path 'Search.js' %>">
       <% end %>
-      <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/625ea5250beb58b05ccbab15/script.js"></script>
       <% if Settings::UserExperience.show_mobile_app_banner %>
         <%= javascript_include_tag "runtimeBanner", defer: true %>
       <% end %>
@@ -42,10 +40,10 @@
       <link rel="apple-touch-icon" sizes="167x167" href="<%= optimized_image_url(Settings::General.logo_png, width: 167, fetch_format: "png") %>">
       <link href="<%= optimized_image_url(Settings::General.logo_png, width: 192, fetch_format: "png") %>" rel="icon" sizes="192x192" />
       <link href="<%= optimized_image_url(Settings::General.logo_png, width: 128, fetch_format: "png") %>" rel="icon" sizes="128x128" />
-      <meta name="apple-mobile-web-app-title" content="<%= Settings::General.app_domain %>">
-      <meta name="application-name" content="<%= Settings::General.app_domain %>">
-      <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-      <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+      <link rel="manifest" href="<%= URL.url("manifest.json") %>" />
+      <meta name="apple-mobile-web-app-title" content="<%= community_name %>">
+      <meta name="application-name" content="<%= community_name %>">
+      <meta name="theme-color" content="#ffffff">
       <link rel="search" href="<%= URL.url("open-search.xml") %>" type="application/opensearchdescription+xml" title="<%= community_name %>" />
 
       <meta property="forem:name" content="<%= community_name %>" />
@@ -63,6 +61,8 @@
         data-subscription-icon="<%= asset_path("subscription-icon.png") %>"
         data-locale="<%= j(I18n.locale) %>"
         data-honeybadger-key="<%= j(ApplicationConfig["HONEYBADGER_JS_API_KEY"]) %>"
+        data-onesignal-app-id="<%= j(ApplicationConfig["ONESIGNAL_APP_ID"]) %>"
+        data-cookieyes-api-key="<%= j(ApplicationConfig["COOKIEYES_API_KEY"]) %>"
         data-deployed-at="<%= j(ForemInstance.deployed_at) %>"
         data-latest-commit-id="<%= j(ForemInstance.latest_commit_id) %>"
         data-ga-tracking="<%= j(Settings::General.ga_tracking_id) %>"

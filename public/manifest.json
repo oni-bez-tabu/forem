@@ -1,0 +1,47 @@
+{
+  "short_name": "nie!tabu",
+  "name": "nie!tabu - platforma edukacji i komunikacji seksualnej",
+  "icons": [
+    {
+      "src": "https://nietabu.pl/assets/favicon-66a57be231faa3aeefdec3b8b04a7b69a6df40f269d9884b4ed496999eab4f3c.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "https://nietabu.pl/cdn-cgi/image/width=180,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fnietabu.pl%2Fassets%2Ficon-969f2b24f5cb398673f5ddfbdd586c66471cd75f9ec1132d42080039a72166fe.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "https://nietabu.pl/cdn-cgi/image/width=152,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fnietabu.pl%2Fassets%2Ficon-969f2b24f5cb398673f5ddfbdd586c66471cd75f9ec1132d42080039a72166fe.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "https://nietabu.pl/cdn-cgi/image/width=167,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fnietabu.pl%2Fassets%2Ficon-969f2b24f5cb398673f5ddfbdd586c66471cd75f9ec1132d42080039a72166fe.png",
+      "sizes": "167x167",
+      "type": "image/png"
+    },
+    {
+      "src": "https://nietabu.pl/cdn-cgi/image/width=192,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fnietabu.pl%2Fassets%2Ficon-969f2b24f5cb398673f5ddfbdd586c66471cd75f9ec1132d42080039a72166fe.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://nietabu.pl/cdn-cgi/image/width=128,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fnietabu.pl%2Fassets%2Ficon-969f2b24f5cb398673f5ddfbdd586c66471cd75f9ec1132d42080039a72166fe.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "https://nietabu.pl/cdn-cgi/image/width=512,height=512,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fnietabu.pl%2Fassets%2Ficon-969f2b24f5cb398673f5ddfbdd586c66471cd75f9ec1132d42080039a72166fe.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "lang": "pl"
+}

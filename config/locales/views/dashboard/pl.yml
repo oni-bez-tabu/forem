@@ -24,7 +24,7 @@ pl:
         listings: Ogłoszenia
         analytics: Analityka
         for_org: Analityka dla %{org}
-        upload: Prześlij wideo
+        upload: Utwórz post z wideo
       analytics:
         meta:
           title: Analityka

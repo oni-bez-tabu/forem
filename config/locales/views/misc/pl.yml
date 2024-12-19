@@ -139,5 +139,5 @@ pl:
         og:
           description: Wszystkie filmy na %{community}
       heading: "%{community} na filmie"
-      beta_html: <strong>Wideo jest w fazie beta:</strong> %{contact}
-      upload: 🎥 Prześlij plik wideo 🙌
+      beta_html: Wideo po ukończonym przesyłaniu będzie dostępne w <strong><a href="/dashboard">Twoim panelu</a></strong> w formie draftu.<br/><strong>Nie zamykaj tej strony podczas wgrywania pliku wideo</strong>.
+      upload: "🎥 Prześlij plik wideo 🙌"
