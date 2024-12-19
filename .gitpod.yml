@@ -17,9 +17,6 @@ tasks:
       exit
   - name: Forem Server
     before: |
-      git fetch origin
-      git checkout integration-branch || echo "Branch not found, staying on default branch"
-      git pull
       cp .env_sample .env
       echo "APP_DOMAIN=\"$(gp url 3000 | cut -f 3 -d /)\"" >> .env
       echo 'APP_PROTOCOL="https://"' >> .env
@@ -34,7 +31,7 @@ github:
     # enable for the master/default branch (defaults to true)
     master: true
     # enable for all branches in this repo (defaults to false)
-    branches: false
+    branches: true
     # enable for pull requests coming from this repo (defaults to true)
     pullRequests: true
     # enable for pull requests coming from forks (defaults to false)
