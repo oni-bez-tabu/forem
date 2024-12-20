@@ -5,12 +5,12 @@
     <div class="flex gap-1">
       <li>
         <a data-feed-nav="discover" href="/discover" class="crayons-navigation__item p-1 px-4 <%= "crayons-navigation__item--current" if params[:feed_type] == "discover" %>">
-          Discover
+          Dla Ciebie
         </a>
       </li>
       <li>
         <a data-feed-nav="following" href="/following" class="crayons-navigation__item p-1 px-4 <%= "crayons-navigation__item--current" if params[:feed_type] == "following" %>">
-          Following
+          Obserwowane
         </a>
       </li>
     </div>
@@ -25,7 +25,7 @@
       <ul id="feed-dropdown-menu" class="crayons-dropdown feed-dropdown right-0">
         <li data-feed-submenu-item="following" class="<%= params[:feed_type] == "following" ? "showing" : "hidden" %> ">
           <a data-text="<%= t("views.stories.sort.latest") %>" href="/following" class="p-2 crayons-navigation__item <%= "crayons-navigation__item--current" if params[:timeframe].blank? %>">
-            Relevant
+            Istotne
           </a>
         </li>
         <li data-feed-submenu-item="following" class="<%= params[:feed_type] == "following" ? "showing" : "hidden" %> ">
@@ -37,28 +37,28 @@
 
         <li data-feed-submenu-item="discover" class="<%= params[:feed_type] == "discover" ? "showing" : "hidden" %> ">
           <a data-text="<%= t("views.stories.sort.week") %>" href="/discover" class="p-2 crayons-navigation__item <%= "crayons-navigation__item--current" if params[:timeframe].blank? %>">
-            Relevant
+            Istotne
           </a>
         </li>
         <hr data-feed-submenu-item="discover" class="<%= params[:feed_type] == "discover" ? "showing" : "hidden" %> ">
         <li data-feed-submenu-item="discover" class="<%= params[:feed_type] == "discover" ? "showing" : "hidden" %> ">
           <a data-text="<%= t("views.stories.sort.week") %>" href="/top/week" class="p-2 crayons-navigation__item <%= "crayons-navigation__item--current" if timeframe_check("week") %>"<%= timeframe_check("week") ? ' aria-current="page"'.html_safe : "" %>>
-            Top this <%= t("views.stories.sort.week") %>
+            Najlepsze <%= t("views.stories.sort.week") %>
           </a>
         </li>
         <li data-feed-submenu-item="discover" class="<%= params[:feed_type] == "discover" ? "showing" : "hidden" %> ">
           <a data-text="<%= t("views.stories.sort.month") %>" href="/top/month" class="p-2 crayons-navigation__item <%= "crayons-navigation__item--current" if timeframe_check("month") %>"<%= timeframe_check("month") ? ' aria-current="page"'.html_safe : "" %>>
-            Top this <%= t("views.stories.sort.month") %>
+            Najlepsze <%= t("views.stories.sort.month") %>
           </a>
         </li>
         <li data-feed-submenu-item="discover" class="<%= params[:feed_type] == "discover" ? "showing" : "hidden" %> ">
           <a data-text="<%= t("views.stories.sort.year") %>" href="/top/year" class="p-2 crayons-navigation__item <%= "crayons-navigation__item--current" if timeframe_check("year") %>"<%= timeframe_check("year") ? ' aria-current="page"'.html_safe : "" %>>
-            Top this <%= t("views.stories.sort.year") %>
+            Najlepsze <%= t("views.stories.sort.year") %>
           </a>
         </li>
         <li data-feed-submenu-item="discover" class="<%= params[:feed_type] == "discover" ? "showing" : "hidden" %> ">
           <a data-text="<%= t("views.stories.sort.infinity") %>" href="/top/infinity" class="p-2 crayons-navigation__item <%= "crayons-navigation__item--current" if timeframe_check("infinity") %>"<%= timeframe_check("infinity") ? ' aria-current="page"'.html_safe : "" %>>
-          Top this <%= t("views.stories.sort.infinity") %>
+           Najlepsze <%= t("views.stories.sort.infinity") %>
           </a>
         </li>
         <hr data-feed-submenu-item="discover" class="<%= params[:feed_type] == "discover" ? "showing" : "hidden" %> ">
