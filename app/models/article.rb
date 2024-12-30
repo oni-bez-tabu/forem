@@ -123,7 +123,7 @@ class Article < ApplicationRecord
   enum type_of: {
     full_post: 0,
     status: 1,
-}
+}, _prefix: true
 
   has_one :discussion_lock, dependent: :delete
 

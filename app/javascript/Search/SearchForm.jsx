@@ -169,7 +169,7 @@ export const SearchForm = forwardRef(
               className="crayons-header--search-input crayons-textfield"
               type="text"
               name="q"
-              placeholder={articleContainer?.dataset?.articleId ? 'Find related posts...' : `${locale('core.search')}...`}
+              placeholder={articleContainer?.dataset?.articleId ? 'Znajdź powiązane posty...' : `${locale('core.search')}...`}
               autoComplete="off"
               aria-label="Search term"
               value={inputValue}
@@ -208,7 +208,7 @@ export const SearchForm = forwardRef(
                   ))}
                   <div class="crayons-header--search-typeahead-footer">
                     <span>
-                      { inputValue.length > 0 ? 'Submit search for advanced filtering.' : 'Displaying Algolia Recommendations — Start typing to search' }
+                      { inputValue.length > 0 ? 'Wyślij wyszukiwanie, aby zastosować zaawansowane filtry.' : 'Wyświetlanie rekomendacji Algolii — Zacznij pisać, aby wyszukać' }
                     </span>
                     <a
                       href="https://www.algolia.com/developers/?utm_source=devto&utm_medium=referral"

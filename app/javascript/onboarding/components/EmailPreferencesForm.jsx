@@ -10,7 +10,7 @@ export class EmailPreferencesForm extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
-      content: '<p>Loading...</p>',
+      content: '<p>Ładowanie...</p>',
       askingToReconsiderEmail: false,
     };
   }
@@ -87,18 +87,18 @@ export class EmailPreferencesForm extends Component {
       <div style='position:absolute;left:0;right:0;top:0;bottom:0;background:black;opacity:0.8;z-index:99;' />
         <div className='crayons-card onboarding-inner-popover'>
           <p style='padding: 3vh 0 1.5vh;color:var(--base-60);'>
-            👋 One last check
+            👋 Ostatnie sprawdzenie
           </p>
           <h2 className="crayons-heading crayons-heading--bold">
-            We Recommend Subscribing to Emails
+            Zalecamy subskrypcję newslettera
           </h2>
           <p style='padding: 4vh 0 1.5vh;color:var(--base-60);max-width:660px;margin:auto;line-height:135%;'>
-            Newsletters are a part of keeping up with the pulse of the overall DEV ecosystem.
-            <span style='display:inline-block'>It's easy to unsubscribe later if it's not for you.</span>
+            Newslettery są częścią bycia na bieżąco z całą społecznością nie!tabu.
+            <span style='display:inline-block'>Możesz łatwo zrezygnować z subskrypcji później, jeśli nie będzie Ci odpowiadać.</span>
           </p>
           <div className="align-center" style="padding: 5vh 0;">
-            <button className="inline-block m-4 c-btn c-btn--ghost" style="opacity:0.8;" onClick={this.finishWithoutEmail}>No thank you</button>
-            <button className="inline-block m-4 c-btn c-btn--primary" onClick={this.finishWithEmail}>Count me in</button>
+            <button className="inline-block m-4 c-btn c-btn--ghost" style="opacity:0.8;" onClick={this.finishWithoutEmail}>Nie, dziękuję</button>
+            <button className="inline-block m-4 c-btn c-btn--primary" onClick={this.finishWithEmail}>Zgadzam się</button>
           </div>
         </div>
       </div>);
