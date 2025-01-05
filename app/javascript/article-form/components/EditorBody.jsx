@@ -56,7 +56,7 @@ export const EditorBody = ({
       <AutocompleteTriggerTextArea
         triggerCharacter="@"
         maxSuggestions={6}
-        searchInstructionsMessage="Type to search for a user"
+        searchInstructionsMessage="Wyszukaj użytkownika"
         ref={textAreaRef}
         fetchSuggestions={(username) =>
           fetchSearch('usernames', { username }).then(({ result }) =>

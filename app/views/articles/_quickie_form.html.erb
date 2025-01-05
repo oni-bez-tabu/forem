@@ -3,7 +3,7 @@
 <input type="hidden" name="authenticity_token" value="NOTHING" autocomplete="off">
 <div class="<%= "crayons-card p-2" unless expanded %>">
   <textarea class="crayons-textfield element-focused"
-    placeholder="<%= expanded ? "Anything to add?" : t("views.stories.status_placeholder") %>" aria-label="<%= t("views.stories.status_placeholder") %>" maxlength="256" rows="1" name="article[title]" id="article_title" style="height: 40px;"></textarea>
+    placeholder="<%= expanded ? "Dodaj coś od siebie" : t("views.stories.status_placeholder") %>" aria-label="<%= t("views.stories.status_placeholder") %>" maxlength="256" rows="1" name="article[title]" id="article_title" style="height: 40px;"></textarea>
   <input value="status" autocomplete="off" type="hidden" name="article[type_of]" id="article_type_of">
   <input value="1" autocomplete="off" type="hidden" name="article[published]" id="article_published">
   <% if @article && @article.published == true && @user && !Rails.env.test? %>

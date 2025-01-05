@@ -212,7 +212,7 @@ function search(query, filters, sortBy, sortDirection) {
         .classList.add('search-results-loaded');
       if (content.result.length === 0) {
         document.getElementById('substories').innerHTML =
-          '<div class="p-9 align-center crayons-card">No results match that query</div>';
+          '<div class="p-9 align-center crayons-card">Brak wyników wyszukiwania</div>';
       }
     });
 }
@@ -248,7 +248,7 @@ function algoliaSearch(searchParams) {
         .classList.add('search-results-loaded');
       if (hits.length === 0) {
         document.getElementById('substories').innerHTML =
-          '<div class="p-9 align-center crayons-card">No results match that query</div>';
+          '<div class="p-9 align-center crayons-card">Brak wyników wyszukiwania</div>';
       }
     })
   .catch(err => {

@@ -81,7 +81,7 @@ Default.args = {
   id: 'storybook-autocomplete',
   triggerCharacter: '@',
   autoResize: false,
-  searchInstructionsMessage: 'Type to search for a user',
+  searchInstructionsMessage: 'Wyszukaj użytkownika',
   maxSuggestions: 5,
   replaceElement: undefined,
   fetchSuggestions: fakeFetch,
