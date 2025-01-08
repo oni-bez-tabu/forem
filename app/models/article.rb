@@ -789,9 +789,9 @@ class Article < ApplicationRecord
                    128 # Default length if type_of is nil or another value
                  end
     if title.blank?
-      errors.add(:title, "can't be blank")
+      errors.add(:title, "nie może być pusty")
     elsif title.to_s.length > max_length
-      errors.add(:title, "is too long (maximum is #{max_length} characters for #{type_of})")
+      errors.add(:title, "jest za długi (maksymalna długość to #{max_length} znaków dla #{type_of})")
     end
   end
 
@@ -806,7 +806,7 @@ class Article < ApplicationRecord
 
     # For now, there is no body allowed for status types
     if type_of == "status" && body_url.blank? && (body_markdown.present? || main_image.present? || collection_id.present?)
-      errors.add(:body_markdown, "is not allowed for status types")
+      errors.add(:body_markdown, "musi być puste dla szybkich postów")
     end
   end
 
@@ -816,7 +816,7 @@ class Article < ApplicationRecord
     return unless new_record?
 
     if Article.where(user_id: user_id, title: title).where("created_at > ?", 5.minutes.ago).exists?
-      errors.add(:title, "has already been used in the last five minutes")
+      errors.add(:title, "został już użyty w ciągu ostatnich pięciu minut")
     end
   end
 
