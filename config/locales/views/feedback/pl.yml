@@ -1,4 +1,3 @@
----
 pl:
   views:
     feedback:
@@ -16,5 +15,5 @@ pl:
         message:
           subtitle: Wiadomość
           description: Prosimy o podanie dodatkowych informacji lub kontekstu, które pomogą nam zrozumieć i rozwiązać sytuację.
-          placeholder: "..."
+          placeholder: ...
         submit: Wyślij opinię

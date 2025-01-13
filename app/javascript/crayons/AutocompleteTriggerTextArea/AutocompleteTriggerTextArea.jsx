@@ -13,7 +13,7 @@ import {
 
 // Used to ensure dropdown appears just below search text
 const DROPDOWN_VERTICAL_OFFSET = '1.5rem';
-const EMPTY_STATE_MESSAGE = 'No results found';
+const EMPTY_STATE_MESSAGE = 'Nie znaleziono';
 const MINIMUM_SEARCH_CHARS = 2;
 
 const KEYS = {

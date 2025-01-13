@@ -1,4 +1,3 @@
----
 pl:
   views:
     dashboard:
@@ -30,24 +29,24 @@ pl:
         meta:
           title: Analityka
         heading: Analityka dla %{name}
-        back: "Powrót do głównego Twojego panelu"
+        back: Powrót do głównego Twojego panelu
         your: Twój panel kontrolny
-        org: "Twój panel analityki %{org}"
+        org: Twój panel analityki %{org}
       article:
         heading:
           text_html: "%{archived}%{title}"
           archived: "[Zarchiwizowane] "
         archived: Zarchiwizowane
-        published: 'Opublikowane:'
-        published_html: 'Opublikowane: %{date}'
-        edited: 'Edytowane:'
-        edited_html: 'Edytowane: %{date}'
-        series: 'Seria:'
-        series_html: "<strong>Seria:</strong> %{series}"
+        published: "Opublikowane:"
+        published_html: "Opublikowane: %{date}"
+        edited: "Edytowane:"
+        edited_html: "Edytowane: %{date}"
+        series: "Seria:"
+        series_html: <strong>Seria:</strong> %{series}
         draft: Szkic
         scheduled: Zaplanowane
-        scheduled_at: 'Zaplanowane:'
-        language: 'Język:'
+        scheduled_at: "Zaplanowane:"
+        language: "Język:"
         reactions:
           title: Reakcje
           icon: Reakcje
@@ -63,7 +62,7 @@ pl:
         views:
           title: Wyświetlenia
           icon: Wyświetlenia
-          lt_25: "< 25"
+          lt_25: < 25
           text_html:
             one: "%{scale} wyświetlenie"
             other: "%{scale} wyświetleń"
@@ -79,15 +78,15 @@ pl:
           button: Przypnij do profilu
           text: Przypnij
         manage:
-          aria_label: 'Zarządzaj postem: %{title}'
+          aria_label: "Zarządzaj postem: %{title}"
           text: Zarządzaj
         lock: Zablokuj dyskusję
         unlock: Odblokuj dyskusję
         edit:
-          aria_label: 'Edytuj post: %{title}'
+          aria_label: "Edytuj post: %{title}"
           text: Edytuj
         more:
-          title: 'Więcej opcji dla posta: %{title}'
+          title: "Więcej opcji dla posta: %{title}"
           icon: Więcej...
         stats: Statystyki
         archive: Archiwizuj post
@@ -96,7 +95,7 @@ pl:
         co_authors: Współautorzy
         series_author_change_warning: Zmiany autora nie są dozwolone dla postów w serii.
         icon: Szczegóły
-        author_is: 'AUTOR: '
+        author_is: "AUTOR: "
         save: Zapisz
         submit: Prześlij zmianę autora
       followers:
@@ -110,13 +109,13 @@ pl:
         empty: Jeszcze nie obserwujesz żadnych podcastów...
       following_tags:
         heading: Twój panel » Obserwowane tagi
-        empty_html: "<span>Obserwuj tagi, aby spersonalizować swój kanał. Możesz eksplorować popularne tagi <a href=%{link}>tutaj</a></span>."
+        empty_html: <span>Obserwuj tagi, aby spersonalizować swój kanał. Możesz eksplorować popularne tagi <a href=%{link}>tutaj</a></span>.
       following_users:
         heading: Twój panel » Obserwowani użytkownicy
         empty: Nie obserwujesz jeszcze żadnych użytkowników...
       hidden_tags:
         heading: Twój panel » Ukryte tagi
-        empty_html: "<span>Nie masz jeszcze żadnych ukrytych tagów...</span>"
+        empty_html: <span>Nie masz jeszcze żadnych ukrytych tagów...</span>
       tags:
         following_button: Obserwowane
         options:
@@ -141,6 +140,8 @@ pl:
         empty:
           desc: Tutaj możesz zarządzać swoimi postami, ale jeszcze nic nie napisałeś.
           new: Napisz swój pierwszy post teraz
+        statuses: Pokaż krótkie posty
+        full: Pokaż pełne posty
       subscriptions:
         meta:
           title: Subskrypcje %{title}
@@ -155,4 +156,4 @@ pl:
         comments: Łączna liczba komentarzy do postów
         listings: Utworzone ogłoszenia
         credits: Dostępne kredyty
-        lt_500: "< 500"
+        lt_500: < 500

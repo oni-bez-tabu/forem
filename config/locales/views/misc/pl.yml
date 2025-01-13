@@ -1,4 +1,3 @@
----
 pl:
   views:
     badges:
@@ -11,6 +10,7 @@ pl:
       desc: Otrzymuj odznaki za bycie niesamowitym! Kliknij na odznakę, aby zobaczyć, jak możesz ją zdobyć.
       icon_close: Zamknij
       gotit: Rozumiem
+      indicator: "%{user} zdobył(a) tę odznakę %{number} razy."
     campaign:
       subtitle: Historie (%{count})
       view: Zobacz wszystkie posty
@@ -24,7 +24,7 @@ pl:
         install: Zainstaluj aplikację
     email_subscriptions:
       unsubscribe:
-        heading: "Zostałeś wypisany z %{type}. 😔"
+        heading: Zostałeś wypisany z %{type}. 😔
         description_html: Nie będziesz już otrzymywać takich emaili. Jeśli chcesz ponownie się zapisać lub zarządzać swoimi preferencjami emailowymi, proszę %{link}.
         link: kliknij tutaj
       invalid:
@@ -45,7 +45,7 @@ pl:
         description_html: Używany do tekstów (zwykle nałożony na <em>Kolor marki 1</em>).
       preview:
         icon: Logo aplikacji
-        text: 'Podgląd:'
+        text: "Podgląd:"
     mailers:
       contact_mailto_html: Skontaktuj się z nami przez <a href="mailto:%{contact_email}">%{contact_email}</a>, jeśli możemy pomóc w czymś więcej.
     onboardings:
@@ -54,13 +54,14 @@ pl:
       heading: Jesteś teraz częścią społeczności!
       subtitle: SUGEROWANE RZECZY, KTÓRE MOŻESZ ZROBIĆ
       close: Zamknij wiadomość powitalną
-      settings_html: "<span class=\"emoji\">💅🏼</span>Dostosuj swój profil"
-      welcome_html: "<span class=\"emoji\">😊</span>Dołącz do wątku powitalnego"
-      write_html: "<span class=\"emoji\">✍🏾</span>Napisz swój pierwszy post w %{community}"
+      settings_html: <span class="emoji">💅🏼</span>Dostosuj swój profil
+      welcome_html: <span class="emoji">😊</span>Dołącz do wątku powitalnego
+      write_html: <span class="emoji">✍🏾</span>Napisz swój pierwszy post w %{community}
+      join_subscription_html: <span class="emoji">🚀</span>Join DEV++
     pins:
       article: Przypięty
-      pinned: "📌 Przypięto! (przypięte posty wyświetlane są chronologicznie, maksymalnie 5)"
-      removed: "🗑 Przypięcie usunięte"
+      pinned: 📌 Przypięto! (przypięte posty wyświetlane są chronologicznie, maksymalnie 5)
+      removed: 🗑 Przypięcie usunięte
       error: Możesz mieć tylko pięć przypięć
     profile:
       color:
@@ -99,10 +100,10 @@ pl:
     series:
       meta:
         description: Zobacz %{title} na %{site}
-      heading: "Serie %{user}"
+      heading: Serie %{user}
       empty: Ten użytkownik nie ma żadnych serii
       list:
-        heading: "Artykuły z serii %{series}"
+        heading: Artykuły z serii %{series}
         back: Powrót do serii %{user}
         empty: Ta seria nie ma żadnych artykułów
     stats:
@@ -116,13 +117,13 @@ pl:
         infinity: Nieskończoność
       readers: Podsumowanie czytelników
       followers: Podsumowanie nowych obserwujących
-      reactions: "Podsumowanie reakcji"
-      comments: "Podsumowanie komentarzy"
+      reactions: Podsumowanie reakcji
+      comments: Podsumowanie komentarzy
       traffic:
-        text: "Podsumowanie źródła ruchu"
+        text: Podsumowanie źródła ruchu
         source: Źródło
         views: Wyświetlenia
-      reactions_history: "Historia reakcji"
+      reactions_history: Historia reakcji
     sticky:
       joined: Dołączył
       default_cta: Dowiedz się więcej

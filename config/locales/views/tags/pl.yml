@@ -1,4 +1,3 @@
----
 pl:
   views:
     tags:
@@ -18,9 +17,9 @@ pl:
       edit:
         meta:
           title: Edytuj %{tag}
-        admin: "Admin"
-        help: "Pomoc"
-        view: "Widok"
+        admin: Admin
+        help: Pomoc
+        view: Widok
         form:
           pretty_name:
             label: Ładna nazwa
@@ -52,15 +51,14 @@ pl:
         one: 1 post
         other: "%{count} posty"
       sidebar:
-        about: 'o #%{tag}'
+        about: "o #%{tag}"
         admin: Admin
         edit: Edytuj
         guidelines: wytyczne dotyczące zgłoszeń
         moderate: Moderuj
         mods: moderatorzy tagu
         new: Stwórz post
-        older: 'Starsze posty o #%{tag}'
+        older: "Starsze posty o #%{tag}"
         published:
           one: 1 Opublikowany post
           other: "%{count} Opublikowane posty"
-

@@ -1,4 +1,3 @@
----
 pl:
   views:
     organizations:
@@ -15,7 +14,7 @@ pl:
         text_html: "Dołączył\_%{date}"
       location:
         icon: Lokalizacja
-      logo: "Zdjęcie profilowe %{org}"
+      logo: Zdjęcie profilowe %{org}
       size: Pracownicy
       sponsor:
         text: "%{level} Sponsor Społeczności ❤️"
@@ -30,10 +29,10 @@ pl:
       story: Nasza historia
       side:
         post:
-            icon: Post
-            text:
-              one: 1 opublikowany post
-              other: "%{count} opublikowanych postów"
+          icon: Post
+          text:
+            one: 1 opublikowany post
+            other: "%{count} opublikowanych postów"
         member:
           icon: Członek
           text:
@@ -44,4 +43,4 @@ pl:
       all_members: Zobacz wszystkich członków
       twitter:
         icon: Logo Twitter
-
+      dropdown: Organization actions

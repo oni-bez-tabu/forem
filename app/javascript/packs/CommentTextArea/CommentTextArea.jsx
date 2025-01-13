@@ -81,7 +81,7 @@ export const CommentTextArea = ({ vanillaTextArea }) => {
         ref={textAreaRef}
         triggerCharacter="@"
         maxSuggestions={6}
-        searchInstructionsMessage="Type to search for a user"
+        searchInstructionsMessage="Wyszukaj użytkownika"
         replaceElement={vanillaTextArea}
         fetchSuggestions={(username) =>
           fetchSearch('usernames', {

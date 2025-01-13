@@ -1,4 +1,3 @@
----
 pl:
   contact_prompts:
     if_any_questions_html: <a href="/contact">Skontaktuj się z nami</a> jeśli masz jakiekolwiek pytania.
@@ -25,27 +24,27 @@ pl:
     counted_user:
       one: "%{count} profil"
       other: "%{count} profili"
-    not_following: "Nie obserwujesz nikogo"
-    following_everyone: "Obserwujesz %{details}"
-    you_are_following: "Obserwujesz"
-    and: "i"
+    not_following: Nie obserwujesz nikogo
+    following_everyone: Obserwujesz %{details}
+    you_are_following: Obserwujesz
+    and: i
   date:
     abbr_month_names:
-    -
-    - sty.
-    - lut.
-    - mar.
-    - kwi.
-    - maj.
-    - cze.
-    - lip.
-    - sie.
-    - wrz.
-    - paź.
-    - lis.
-    - gru. 
+      - 
+      - sty.
+      - lut.
+      - mar.
+      - kwi.
+      - maj.
+      - cze.
+      - lip.
+      - sie.
+      - wrz.
+      - paź.
+      - lis.
+      - gru.
   datetime:
-    distance_in_words_ago: # https://github.com/openstreetmap/openstreetmap-website/issues/2255
+    distance_in_words_ago:
       about_x_hours:
         one: około 1 godzinę temu
         other: około %{count} godzin temu
@@ -169,55 +168,55 @@ pl:
       what_is_a_billboard: Co to jest billboard?
       report_billboard: Zgłoś billboard
   errors:
-      messages:
-        accepted: musi być zaakceptowane
-        bad_protocol: musi zaczynać się od %{protocols}
-        bad_uri: jest nieprawidłowym adresem URL
-        blank: nie może być puste
-        confirmation: nie pasuje do %{attribute}
-        contains_prohibited_characters: zawiera znaki niedozwolone lub niedozwolone znaki unicode
-        empty: nie może być puste
-        equal_to: musi być równe %{count}
-        even: musi być parzyste
-        exclusion: jest zarezerwowane
-        general: 'Błąd: %{errors}'
-        greater_than: musi być większe niż %{count}
-        greater_than_or_equal_to: musi być większe lub równe %{count}
-        inclusion: nie jest zawarte w liście
-        invalid: jest nieprawidłowe
-        less_than: musi być mniejsze niż %{count}
-        less_than_or_equal_to: musi być mniejsze lub równe %{count}
-        model_invalid: 'Walidacja nie powiodła się: %{errors}'
-        not_a_number: nie jest liczbą
-        not_an_integer: musi być liczbą całkowitą
-        odd: musi być nieparzyste
-        other_than: musi być inne niż %{count}
-        present: musi być puste
-        required: musi istnieć
-        taken: jest już zajęte
-        too_long:
-          one: jest za długie (maksimum to 1 znak)
-          other: jest za długie (maksimum to %{count} znaków)
-        too_short:
-          one: jest za krótkie (minimum to 1 znak)
-          other: jest za krótkie (minimum to %{count} znaków)
-        try_again_email: 'Wystąpił błąd. Spróbuj ponownie lub wyślij e-mail na adres: %{email}'
-        wrong_length:
-          one: ma niewłaściwą długość (powinno być 1 znak)
-          other: ma niewłaściwą długość (powinno być %{count} znaków)
+    messages:
+      accepted: musi być zaakceptowane
+      bad_protocol: musi zaczynać się od %{protocols}
+      bad_uri: jest nieprawidłowym adresem URL
+      blank: nie może być puste
+      confirmation: nie pasuje do %{attribute}
+      contains_prohibited_characters: zawiera znaki niedozwolone lub niedozwolone znaki unicode
+      empty: nie może być puste
+      equal_to: musi być równe %{count}
+      even: musi być parzyste
+      exclusion: jest zarezerwowane
+      general: "Błąd: %{errors}"
+      greater_than: musi być większe niż %{count}
+      greater_than_or_equal_to: musi być większe lub równe %{count}
+      inclusion: nie jest zawarte w liście
+      invalid: jest nieprawidłowe
+      less_than: musi być mniejsze niż %{count}
+      less_than_or_equal_to: musi być mniejsze lub równe %{count}
+      model_invalid: "Walidacja nie powiodła się: %{errors}"
+      not_a_number: nie jest liczbą
+      not_an_integer: musi być liczbą całkowitą
+      odd: musi być nieparzyste
+      other_than: musi być inne niż %{count}
+      present: musi być puste
+      required: musi istnieć
+      taken: jest już zajęte
+      too_long:
+        one: jest za długie (maksimum to 1 znak)
+        other: jest za długie (maksimum to %{count} znaków)
+      too_short:
+        one: jest za krótkie (minimum to 1 znak)
+        other: jest za krótkie (minimum to %{count} znaków)
+      try_again_email: "Wystąpił błąd. Spróbuj ponownie lub wyślij e-mail na adres: %{email}"
+      wrong_length:
+        one: ma niewłaściwą długość (powinno być 1 znak)
+        other: ma niewłaściwą długość (powinno być %{count} znaków)
   time:
-      formats:
-        admin_user: "%Y-%m-%d, %H:%M"
-        comment: "%B %d, %Y"
-        email_verified: "%b %e '%y, %H:%M"
-        github: "%b %d, %Y"
-        json: "%b %e, %Y"
-        medium: "%-d %b, %Y"
-        members: "%d %b"
-        members_with_year: "%d %b, %Y"
-        reddit: "%b %e '%y"
-        short: "%-e %b"
-        short_with_yy: "%b %-d '%y"
-        short_with_year: "%b %-e, %Y"
-        stackexchange: "%e %b '%y"
-        long: "%b %e %y, %H:%M"
+    formats:
+      admin_user: "%Y-%m-%d, %H:%M"
+      comment: "%B %d, %Y"
+      email_verified: "%b %e '%y, %H:%M"
+      github: "%b %d, %Y"
+      json: "%b %e, %Y"
+      medium: "%-d %b, %Y"
+      members: "%d %b"
+      members_with_year: "%d %b, %Y"
+      reddit: "%b %e '%y"
+      short: "%-e %b"
+      short_with_yy: "%b %-d '%y"
+      short_with_year: "%b %-e, %Y"
+      stackexchange: "%e %b '%y"
+      long: "%b %e %y, %H:%M"

@@ -1,4 +1,3 @@
----
 pl:
   views:
     moderations:
@@ -6,7 +5,7 @@ pl:
       actions:
         meta:
           title: Moderowanie %{title}
-          title2: '[Moderuj] %{title}'
+          title2: "[Moderuj] %{title}"
         heading: Moderuj Post
         subtitle: Oceń jakość tego posta
         abusive:
@@ -53,8 +52,8 @@ pl:
           user_admin: Admin:Użytkownik
           resource_admin: ResourceAdmin:Artykuł
         errors:
-          one: '1 błąd uniemożliwił zapisanie tej blokady:'
-          other: '%{count} błędy uniemożliwiły zapisanie tej blokady:'
+          one: "1 błąd uniemożliwił zapisanie tej blokady:"
+          other: "%{count} błędy uniemożliwiły zapisanie tej blokady:"
         experience:
           heading: Ustaw charakter postu.
           heading2: Poziom charakteru posta
@@ -62,7 +61,7 @@ pl:
           aria_label: Otwórz sekcję poziomu doświadczenia
           icon: Książka
           desc_html: Kto <em>może</em> uznać ten post za najbardziej wartościowy, w oparciu o ogólny charakter postu?
-          from: '%{lvl} - '
+          from: "%{lvl} - "
           level:
             Advanced: Intensywny
             Beginner: Umiarkowany
@@ -105,16 +104,16 @@ pl:
         tag:
           subtitle: Dostosowania Tagów
           add: Dodaj
-          added_html: '<b>Aktualnie dodany tag:</b> %{tag}'
-          live_html: '<b>Aktualne tagi na żywo:</b> %{tags}'
+          added_html: <b>Aktualnie dodany tag:</b> %{tag}
+          live_html: <b>Aktualne tagi na żywo:</b> %{tags}
           reason: Powód dostosowania (Bądź super miły) - Wystarczy podać powód, powiadomienie zajmie się resztą.
           remove: Usuń
-          removed_html: '<b>Aktualnie usunięty tag:</b> %{tag}'
+          removed_html: <b>Aktualnie usunięty tag:</b> %{tag}
           select: Wybierz Tag
           submit: Prześlij dostosowanie tagu
           tag_name: Nazwa Tagu
           undo:
-            button: '×'
+            button: ×
             confirm: Czy na pewno chcesz cofnąć %{type} tagu %{tag}?
             type:
               addition: dodanie
@@ -139,8 +138,8 @@ pl:
         flag_to_admins: Oflaguj do Adminów
         vote_up: Wysoka Jakość
         featured_past_day:
-          one: '%{count} post z ostatniego dnia został wyróżniony.'
-          other: '%{count} posty z ostatniego dnia zostały wyróżnione.'
+          one: "%{count} post z ostatniego dnia został wyróżniony."
+          other: "%{count} posty z ostatniego dnia zostały wyróżnione."
       feed:
         inbox_filter: Skrzynka odbiorcza
         latest_filter: Najnowsze
@@ -168,6 +167,8 @@ pl:
         user: Użytkownik
         user_warned: Użytkownik ostrzeżony
         view_details: Zobacz szczegóły
+        max_score: Max score
+        no_max_if_zero: No max if set to zero
       aside:
         all: Wszystkie tagi
         code_of_conduct: Kodeks postępowania
@@ -175,7 +176,7 @@ pl:
         feedback:
           subtitle: Masz pomysły, jak ulepszyć swoje doświadczenia z moderacją?
           description: Proszę napisz do nas na %{email}!
-        hello: 'Cześć! 👋'
+        hello: Cześć! 👋
         thanks: Dziękujemy za pomoc w utrzymaniu %{community} bezpiecznym! ❤️
         inbox: Skrzynka odbiorcza
         resources: Zasoby
@@ -183,13 +184,14 @@ pl:
         terms_and_conditions: Warunki użytkowania
         trusted: Przewodnik dla zaufanych użytkowników
         moderating_tags: Moderowane tagi
+        following_tags: Following tags
       author: Autor
       comments:
         view_comment: Zobacz komentarz
         view_details: Zobacz szczegóły
       date: Data
       notice:
-        subtitle: '%{community} Moderatorzy'
+        subtitle: "%{community} Moderatorzy"
         desc1_html: Okresowo przyznajemy niektórym członkom %{community} zwiększone uprawnienia, aby pomóc moderować społeczność.
         desc2_html: Sprawdź nasz %{code} i przeczytaj nasz %{trusted} oraz %{tag}.
         desc3_html: Jeśli chciałbyś nam pomóc jako zaufany użytkownik lub moderator tagów, proszę napisz do nas na %{email} i powiedz, którą rolę chciałbyś pełnić i dlaczego. Jeśli chodzi o moderację tagów, powiedz nam, które tagi chciałbyś moderować.
@@ -208,4 +210,4 @@ pl:
         new: Nowi
         established: Ustanowieni
         filter: Filtruj według członków
-        label: 'Członkowie'
+        label: Członkowie

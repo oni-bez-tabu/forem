@@ -1,14 +1,43 @@
-<% num_followers_past_days = Follow.followable_user(@user.id).where("created_at > ?", 24.hours.ago).size %>
+<%= render 'mailers/notify_mailer/email_header' do %>
+  <table style="width:100%;" cellpadding="0" cellspacing="0">
+    <!-- Header -->
+    <tr>
+      <td align="center" bgcolor="#FFFFFF" style="padding: 25px 2px 35px;">
+        <h1 style="margin: 0; font-size: 24px; color: #333;">
+          <%= @follower.name %></a> właśnie zaczął Cię obserwować na <%= community_name %>
+        </h1>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img style="border-radius:100%;" width="150px"
+          src="<%= optimized_image_url(URL.local_image(@follower.profile_image), width: 150)%>"
+          alt="Zdjęcie profilowe <%= @follower.name %>">
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 24px 2%; text-align: center;">
+        <a style="background:<%= Settings::UserExperience.primary_brand_color_hex %>;color:white;padding:12px;border-radius:8px;text-decoration:none;display:block;margin-top:4px;font-size:20px;font-weight:bold"
+          href='<%= URL.user(@follower) %>'>
+          Zobacz ich profil
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 24px 2%">
+        <table style="width:100%;" cellpadding="0" cellspacing="0">
+          <tr>
+            <td bgcolor="#F8F8F8"
+              style="padding: 20px; text-align: center; color: #3a3c3d; font-size: 16px; border-radius: 8px;border:2px solid #3a3c3d">
+              <h3 style="font-weight:600">Masz teraz <%= pluralize(@user.good_standing_followers_count, "obserwującego", "obserwujących") %>.
+                  <p>
+                    Kiedy ktoś obserwuje Cię na <%= community_name %>, Twoje posty będą priorytetowo wyświetlane w ich aktualnościach i powiadomieniach. Takie są przywileje popularności.
+                  </p>
 
-<% if num_followers_past_days.positive? %>
-  <h3 style="font-weight:600;font-size:0.95em;color:#3ac1b4">Masz <%= num_followers_past_days %> nowych obserwujących na <%= community_name %> w ciągu ostatniego dnia!</h3>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 <% end %>
-
-<h2 style="font-size:32px;">
-  <a href="<%= user_url(@follower) %>"><%= @follower.name %></a> właśnie zaczął Cię obserwować 🤗</h2>
-<h3 style="font-weight:600">Zobacz wszystkich swoich ostatnich obserwujących
-  <a href="<%= app_url("/dashboard/user_followers") %>">tutaj</a>.</h3>
-<p>
-  Kiedy ktoś Cię obserwuje na
-  <a href="<%= app_url %>"><%= community_name %></a>, Twoje posty będą priorytetowe w ich kanałach i powiadomieniach. Takie są uroki popularności, przypuszczam.
-</p>

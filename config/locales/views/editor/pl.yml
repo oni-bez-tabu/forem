@@ -1,4 +1,3 @@
----
 pl:
   views:
     editor:
@@ -19,10 +18,10 @@ pl:
       preview: Podgląd
       video:
         progress:
-          heading: "⏳ Trwa transkodowanie wideo ⏳"
+          heading: ⏳ Trwa transkodowanie wideo ⏳
           notice_1: Otrzymasz e-mail po zakończeniu tego procesu.
           notice_2: To jest zwykły nieopublikowany post. Dodaj tytuł/tagi/treść/itp., a następnie oznacz jako opublikowany po zakończeniu przetwarzania wideo.
         submit_image:
           button: Zatwierdź zmianę
-          text: 'URL obrazu podglądu: '
+          text: "URL obrazu podglądu: "
           placeholder: Nowy URL miniatury

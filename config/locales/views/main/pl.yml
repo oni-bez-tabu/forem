@@ -1,4 +1,3 @@
----
 pl:
   views:
     main:
@@ -25,13 +24,13 @@ pl:
       nav:
         admin: Admin
         dashboard: Twój panel
-        placeholder: "..."
+        placeholder: ...
         list: Lista lektur
         moderator_center: Centrum moderatora
         other: Inne
         settings: Ustawienia
         coins_count: "Na Twoim koncie jest:"
-        coins_name: "educoinów"
+        coins_name: educoinów
       nav_name:
         About: O nas
         Code of Conduct: Kodeks postępowania
@@ -46,7 +45,7 @@ pl:
         Terms of use: Warunki użytkowania
         Videos: Filmy
       side:
-        active_discussions: "Aktywne dyskusje"
+        active_discussions: Aktywne dyskusje
         listings:
           heading: Ogłoszenia
           all: Zobacz wszystkie
@@ -69,6 +68,8 @@ pl:
         powered:
           text_html: Made with love and %{rails}. %{community} <span title="copyright">&copy;</span> %{copyright}.
           rails: Ruby on Rails
-        sidebar_desc_html: "%{community}\n%{desc}"
+        sidebar_desc_html: |-
+          %{community}
+          %{desc}
       create_post: Utwórz post
       signout: Wyloguj się

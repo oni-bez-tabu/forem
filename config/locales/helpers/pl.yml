@@ -1,4 +1,3 @@
----
 pl:
   helpers:
     label:
@@ -73,15 +72,15 @@ pl:
         url: https://twojastrona.pl
         location: Gdańsk, Polska
         email: kontakt@przykladowafirma.pl
-        company_size: "..."
-        story: "..."
-        tech_stack: "..."
-        cta_body_markdown: "..."
+        company_size: ...
+        story: ...
+        tech_stack: ...
+        cta_body_markdown: ...
         cta_button_text: Odwiedź stronę Przykładowej Firmy
         cta_button_url: https://przykladowafirma.pl
-        proof: "..."
+        proof: ...
       response_template:
-        title: "..."
+        title: ...
       user:
         name: Jan Kowalski
         email: jan.kowalski@przykladowafirma.pl
@@ -91,10 +90,10 @@ pl:
       app_logo: Logo aplikacji
       follow:
         aria_label:
-          Organization: 'Obserwuj organizację: %{name}'
-          Tag: 'Obserwuj tag: %{name}'
-          User: 'Obserwuj użytkownika: %{name}'
-          default: 'Obserwuj %{type}: %{name}'
+          Organization: "Obserwuj organizację: %{name}"
+          Tag: "Obserwuj tag: %{name}"
+          User: "Obserwuj użytkownika: %{name}"
+          default: "Obserwuj %{type}: %{name}"
         text:
           Organization: Obserwuj
           Tag: Obserwuj
@@ -118,7 +117,7 @@ pl:
     authentication_helper:
       any_of_those: którykolwiek z nich
       email_password: Email i hasło
-      reminder: '%{method} zostało użyte do utworzenia konta, więc proszę użyj ich ponownie, jeśli zostaniesz poproszony/a o zalogowanie.'
+      reminder: "%{method} zostało użyte do utworzenia konta, więc proszę użyj ich ponownie, jeśli zostaniesz poproszony/a o zalogowanie."
       that: że
       invite_only: Nie możesz tego zrobić, dopóki nie wyłączysz Trybu Tylko-zaproszenia
     comments_helper:
@@ -140,7 +139,7 @@ pl:
           Jeśli uważasz, że doszło do pomyłki, proszę odpowiedz na ten e-mail, a my ponownie to sprawdzimy.
 
           Zespół %{community}
-        subject: "Naruszenie Kodeksu Postępowania w %{community}"
+        subject: Naruszenie Kodeksu Postępowania w %{community}
       reporter:
         body: |
           Cześć,
@@ -149,7 +148,7 @@ pl:
 
           Dziękujemy za pomoc w tworzeniu pozytywnego i otwartego środowiska dla wszystkich!
           Zespół %{community}
-        subject: "Zgłoszenie w %{community}"
+        subject: Zgłoszenie w %{community}
       affected:
         body: |
           Cześć,
@@ -159,7 +158,7 @@ pl:
           Dziękujemy za bycie wspaniałym i prosimy o kontakt e-mailowy w przypadku jakichkolwiek pytań! Przyjmujemy wszystkie opinie i pomysły na rozwój otwartej i inkludującej społeczności.
 
           Zespół %{community}
-        subject: "Uprzejme ostrzeżenie od %{community}"
+        subject: Uprzejme ostrzeżenie od %{community}
     listing_helper:
       option:
         one: "%{cl_name} (%{count} kredyt)"

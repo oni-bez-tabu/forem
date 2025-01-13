@@ -26,8 +26,8 @@ if (ageMin >= AGE_OF_TEEN) {
       </div>
     ` : `
       <div class="audlt-content">
-        <h2>Ten post został oznaczony jako dla młodzieży 15+</h2>
-        <p>Post zawiera materiały przeznaczone dla młodzieży powyżej 15 roku życia. Mogą pojawić się treści zawierające przemoc, wulgarny język lub nieodpowiednie dla młodszych odbiorców tematy. Wchodząc na stronę, potwierdzasz że masz ukończone 15 lat.</p>
+        <h2>Ten post został oznaczony jako dla osób 15+</h2>
+        <p>Post zawiera materiały przeznaczone dla osób powyżej 15 roku życia. Mogą pojawić się treści zawierające przemoc, wulgarny język lub nieodpowiednie dla młodszych odbiorców tematy. Wchodząc na stronę, potwierdzasz że masz ukończone 15 lat.</p>
         <button class="crayons-btn crayons-btn--success" id="confirmAge">Mam ukończone 15 lat - Wchodzę</button>
         <button class="crayons-btn crayons-btn--warning" id="denyAccess">Mam mniej niż 15 lat - Wyjdź</button>
       </div>
