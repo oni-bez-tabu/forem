@@ -1,0 +1,7 @@
+<div id="talks-form" style="display: none;">
+  <%= render 'form', talk: Talk.new %>
+</div>
+
+<div id="talks-list" class="talks-list"></div>
+
+<%= javascript_include_tag "talks", defer: true %>

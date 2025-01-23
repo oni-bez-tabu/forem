@@ -6,6 +6,7 @@ import {
 } from '../topNavigation/utilities';
 import { waitOnBaseData } from '../utilities/waitOnBaseData';
 import { initializePodcastPlayback } from '../utilities/podcastPlayback';
+import { initializeTalks } from '../utilities/talks';
 import { createRootFragment } from '../shared/preact/preact-root-fragment';
 import { trackCreateAccountClicks } from '@utilities/ahoy/trackEvents';
 import { showWindowModal, closeWindowModal } from '@utilities/showModal';
@@ -77,6 +78,7 @@ if (document.getElementById('video-player-source')) {
 }
 
 initializePodcastPlayback();
+initializeTalks();
 InstantClick.on('change', () => {
   if (document.location.pathname.startsWith('/dashboard')) {
     import('./initializers/initializeDashboardSort').then(({ initializeDashboardSort }) => {

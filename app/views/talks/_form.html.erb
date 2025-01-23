@@ -1,0 +1,23 @@
+<%= form_with(model: talk, url: '/talks/create', class: 'talk-form') do |f| %>
+  <div class='field'>
+    <%= f.label :title, 'Tytuł spotkania' %>
+    <%= f.text_field :title %>
+  </div>
+  
+  <div class='field'>
+    <%= check_box_tag :future_meeting, '1', false, class: 'future-meeting-checkbox' %>
+    <%= label_tag :future_meeting, 'W przyszłości' %>
+  </div>
+
+  <div class='field'>
+    <%= f.check_box :video %>
+    <%= f.label :video, 'Spotkanie z obrazem' %>
+  </div>
+
+  <div class='field start-date-field' style="display: none;">
+    <%= f.label :start_date, 'Data rozpoczęcia' %>
+    <%= f.datetime_local_field :start_date %>
+  </div>
+
+  <%= f.submit 'Utwórz', class: 'btn btn-primary' %>
+<% end %> 

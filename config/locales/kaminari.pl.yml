@@ -1,11 +1,27 @@
 pl:
   views:
     pagination:
-      next: Następna
-      last: Ostatnia
-      aria_next: Następna strona
-      aria_previous: Poprzednia strona
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "&hellip;"
   helpers:
     page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Nie znaleziono %{entry_name}"
+          one: "Wyświetlanie <b>1</b> %{entry_name}"
+          few: "Wyświetlanie <b>wszystkich %{count}</b> %{entry_name}"
+          many: "Wyświetlanie <b>wszystkich %{count}</b> %{entry_name}"
+          other: "Wyświetlanie <b>wszystkich %{count}</b> %{entry_name}"
       more_pages:
-        display_entries: "%{first}&nbsp;-&nbsp;%{last} z %{total}"
+        display_entries: "Wyświetlanie %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> z <b>%{total}</b>"
+
+  kaminari:
+    pagination:
+      first: "Pierwsza"
+      last: "Ostatnia"
+      previous: "Poprzednia"
+      next: "Następna"
+      truncate: "..."

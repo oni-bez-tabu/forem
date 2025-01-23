@@ -185,3 +185,86 @@
 .forem-background {
   fill: var(--accent-brand);
 }
+
+.resizer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(225, 0, 0, 0.8);
+  cursor: ew-resize;
+  z-index: 50000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media screen and (min-width: 768px) {
+    width: 5px;
+    height: 100%;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+    height: 5px;
+  }
+}
+
+.toggle-size-button {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50001;
+  
+  @media screen and (min-width: 768px) {
+    left: -10px;
+    transform: translateY(-50%);
+    top: 50%;
+  }
+
+  @media screen and (max-width: 767px) {
+    left: 50%;
+    transform: translateX(-50%);
+    top: -10px
+  }
+}
+
+.toggle-size-button:hover {
+  background: #f0f0f0;
+}
+
+.resizer:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.app-builder-container {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  z-index: 1000;
+
+  @media screen and (min-width: 768px) {
+    min-width: 350px;
+    max-width: 100vw;
+    height: calc(100vh - 56px);
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+    max-height: calc(100vh - 56px);
+    min-height: 130px;
+  }
+}
+
+[role="dialog"] {
+  z-index: 30000;
+}
+
+.r-sfbmgh {
+  z-index: 5000000 !important;
+}

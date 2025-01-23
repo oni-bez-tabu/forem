@@ -85,6 +85,12 @@ namespace :admin do
         post :pin
       end
     end
+    
+    resources :talks, only: [:index] do
+      collection do
+        delete ':status/update_status/:id', to: 'talks#update_status', constraints: { status: /(finished|banned)/ }
+      end
+    end
 
     resources :badges, only: %i[index edit update new create]
     resources :badge_achievements, only: %i[index destroy]

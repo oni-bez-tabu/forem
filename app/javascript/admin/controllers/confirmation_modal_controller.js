@@ -16,6 +16,7 @@ window.addEventListener('load', () => {
 const nonRedirectEndpoints = [
   '/admin/content_manager/badge_achievements',
   '/admin/customization/billboards',
+  '/admin/content_manager/talks',
 ];
 
 const redirectEndpoints = ['/admin/advanced/broadcasts'];
@@ -34,7 +35,7 @@ export default class ConfirmationModalController extends ModalController {
   }
 
   handleRecord({ endpoint, id, outcome }) {
-    if (nonRedirectEndpoints.includes(endpoint)) {
+    if (nonRedirectEndpoints.some(path => endpoint.startsWith(path))) {
       this.removeRecordAsync({ id, outcome });
       return;
     }
