@@ -55,7 +55,8 @@ const AppBuilder = ({access, channelId, token, username, isHost, video }) => {
             const resizer = document.createElement('div');
             resizer.className = 'resizer';
             element.parentNode.insertBefore(resizer, element);
-            
+            element.style.width = '950px';
+
             const toggleButton = document.createElement('button');
             toggleButton.className = 'toggle-size-button';
             toggleButton.innerHTML = '⇄';
@@ -148,6 +149,10 @@ const AppBuilder = ({access, channelId, token, username, isHost, video }) => {
 
       window.AgoraAppBuilder.default.on("join", () => {  
         sessionStorage.setItem('activeTalkId', channelId);
+      });
+
+      window.AgoraAppBuilder.default.on("ready-to-join", () => {  
+        window.dispatchEvent(new CustomEvent('joiningTalk', { detail: { joining: false }}));
       });
     };
   }, [sdkLoaded]);

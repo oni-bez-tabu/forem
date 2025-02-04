@@ -31,6 +31,7 @@ namespace :admin do
   namespace :settings do
     resources :authentications, only: [:create]
     resources :campaigns, only: [:create]
+    resources :talks, only: [:create]
     resources :communities, only: [:create]
     resources :general_settings, only: [:create]
     resources :mandatory_settings, only: [:create]

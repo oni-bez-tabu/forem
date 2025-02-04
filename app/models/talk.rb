@@ -6,7 +6,8 @@ class Talk < ApplicationRecord
     scheduled: 1,
     started: 2,
     finished: 3,
-    banned: 4
+    banned: 4,
+    removed: 5
   }, _default: 0
 
   validates :title, presence: true
@@ -32,6 +33,10 @@ class Talk < ApplicationRecord
 
   def can_be_banned?
     started?
+  end
+
+  def can_be_removed?
+    created? || started? || finished?
   end
 
   private

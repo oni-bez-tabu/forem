@@ -376,6 +376,7 @@ Rails.application.routes.draw do
     get '/talks/active', to: 'talks#active'
     get '/talks/join/:id', to: 'talks#join'
     get '/talks/scheduled', to: 'talks#scheduled'
+    delete '/talks/:id', to: 'talks#destroy'
 
     get "/feed", to: "articles#feed", as: "feed", defaults: { format: "rss" }
     get "/feed/tag/:tag", to: "articles#feed", as: "tag_feed", defaults: { format: "rss" }
