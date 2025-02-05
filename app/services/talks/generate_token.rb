@@ -12,7 +12,7 @@ module Talks
 
     def call
       response = HTTParty.post(
-        'https://managedservices-prod.rteappbuilder.com/v1/token/generate',
+        "#{ApplicationConfig['RTE_BASE_URL']}/token/generate",
         headers: headers,
         body: payload.to_json,
         timeout: TIMEOUT
@@ -29,8 +29,8 @@ module Talks
     def headers
       {
         'Accept' => 'application/json',
-        'X-API-KEY' => '',
-        'X-Project-ID' => '',
+        'X-API-KEY' => ApplicationConfig['RTE_API_KEY'],
+        'X-PROJECT-ID' => ApplicationConfig['RTE_PROJECT_ID'],
         'Content-Type' => 'application/json'
       }
     end

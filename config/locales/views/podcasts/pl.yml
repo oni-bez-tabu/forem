@@ -3,7 +3,7 @@ pl:
     podcasts:
       meta:
         title: Podcasty
-        description: Odkryj techniczne podcasty dla %{member}
+        description: Odkryj zbiory podcastów z nie!tabu
         og:
           title: Podcasty na %{community}
       browse: Przeglądaj
