@@ -65,12 +65,10 @@ const Item = ({ item, children, currentUserId }) => {
         if (response.ok) {
           window.location.reload();
         } else {
-          const error = await response.json();
-          alert('Nie udało się usunąć audycji: ' + (error.error || 'Nieznany błąd'));
+          alert('Nie udało się usunąć audycji...');
         }
       } catch (error) {
         console.error(error);
-        alert('Wystąpił błąd podczas usuwania audycji');
       }
     }
     setIsMenuOpen(false);
@@ -310,7 +308,6 @@ const Loader = () => {
 const TalksList = ({ activeTalkId, currentUserId, allow_anonymous_listening_description }) => {
   const [talks, setTalks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTalks = async () => {
@@ -319,11 +316,8 @@ const TalksList = ({ activeTalkId, currentUserId, allow_anonymous_listening_desc
         if (response.ok) {
           const data = await response.json();
           setTalks(data);
-        } else {
-          setError('Nie udało się pobrać listy audycji');
-        }
+        } 
       } catch (error) {
-        setError('Wystąpił błąd podczas pobierania danych');
         console.error(error);
       } finally {
         setLoading(false);
@@ -377,7 +371,6 @@ const LoadingPlaceholder = () => {
 const ScheduledTalksList = ({ currentUserId }) => {
   const [scheduledTalks, setScheduledTalks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const fetchScheduledTalks = async () => {
     try {
@@ -385,11 +378,8 @@ const ScheduledTalksList = ({ currentUserId }) => {
       if (response.ok) {
         const data = await response.json();
         setScheduledTalks(data);
-      } else {
-        setError('Nie udało się pobrać listy zaplanowanych audycji');
       }
     } catch (error) {
-      setError('Wystąpił błąd podczas pobierania danych');
       console.error(error);
     } finally {
       setLoading(false);

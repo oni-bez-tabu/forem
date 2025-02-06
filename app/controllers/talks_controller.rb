@@ -44,17 +44,17 @@ class TalksController < ApplicationController
     
     render json: { success: true }, status: :ok
   rescue StandardError => e
-    Rails.logger.error "Błąd podczas przetwarzania webhooka: #{e.message}"
+    Rails.logger.error "Error processing webhook: #{e.message}"
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
   def create
     unless current_user
-      return render json: { error: 'Musisz być zalogowany' }, status: :unauthorized
+      return render json: { error: 'You must be logged in' }, status: :unauthorized
     end
     
     if current_user.talks.where(status: Talk.statuses[:started]).exists?
-      return render json: { error: 'Masz już aktywną transmisję' }, status: :unprocessable_entity
+      return render json: { error: 'You already have an active transmission' }, status: :unprocessable_entity
     end
     
     @talk = Talk.new(talk_params)
@@ -91,15 +91,15 @@ class TalksController < ApplicationController
     @talk = Talk.find_by!(channel_id: params[:id])
     
     if @talk.banned?
-      return render json: { error: 'Ten kanał został zbanowany' }, status: :forbidden
+      return render json: { error: 'This channel has been banned' }, status: :forbidden
     end
 
     if @talk.started? && @talk.start_date < 2.hours.ago
-      return render json: { error: 'Kanał przekroczył maksymalny czas trwania (2 godziny)' }, status: :forbidden
+      return render json: { error: 'Channel has exceeded maximum duration (2 hours)' }, status: :forbidden
     end
 
     unless current_user || Settings::Talk.allow_anonymous_listening
-      return render json: { error: 'Musisz być zalogowany, aby dołączyć do rozmowy' }, status: :unauthorized
+      return render json: { error: 'You must be logged in to join the conversation' }, status: :unauthorized
     end
 
     username = if current_user
@@ -125,7 +125,7 @@ class TalksController < ApplicationController
       video: @talk.video
     }, status: :ok
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Nie znaleziono rozmowy' }, status: :not_found
+    render json: { error: 'Talk not found' }, status: :not_found
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
@@ -162,7 +162,7 @@ class TalksController < ApplicationController
       render json: { errors: @talk.errors }, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Nie znaleziono rozmowy' }, status: :not_found
+    render json: { error: 'Talk not found' }, status: :not_found
   end
 
   private

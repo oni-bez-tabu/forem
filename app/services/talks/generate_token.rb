@@ -18,7 +18,7 @@ module Talks
         timeout: TIMEOUT
       )
 
-      raise "Błąd generowania tokenu: #{response.body}" unless response.success?
+      raise "Token generation error: #{response.body}" unless response.success?
       response.parsed_response
     end
 

@@ -48,7 +48,7 @@ const AppBuilder = ({access, channelId, token, username, isHost, video }) => {
           return enterRoom();
         });
       } catch (error) {
-        alert("error");
+        alert("Error");
         console.error("Error joining room:", error);
       }
     };

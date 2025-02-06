@@ -26,7 +26,7 @@ module Talks
         timeout: TIMEOUT
       )
 
-      raise "Błąd tworzenia kanału: #{response.body}" unless response.success?
+      raise "Channel creation error: #{response.body}" unless response.success?
       
       result_struct.new(
         channel_id: response['channel'],
@@ -34,7 +34,7 @@ module Talks
         viewer_id: response['viewer_pass_phrase']
       )
     rescue *HANDLED_ERRORS => e
-      raise "Błąd połączenia: #{e.message}"
+      raise "Connection error: #{e.message}"
     end
 
     private

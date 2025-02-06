@@ -16,12 +16,12 @@ export const joinTalk = async (channel_id) => {
       return { success: true };
     } else {
       window.dispatchEvent(new CustomEvent('joiningTalk', { detail: { joining: false }}));
-      console.error('Nie udało się dołączyć do audycji');
-      return { success: false, error: 'Nie udało się dołączyć do audycji' };
+      console.error('Failed to join the broadcast');
+      return { success: false, error: 'Failed to join the broadcast' };
     }
   } catch (error) {
     window.dispatchEvent(new CustomEvent('joiningTalk', { detail: { joining: false }}));
-    console.error('Wystąpił błąd:', error);
+    console.error('An error occurred:', error);
     return { success: false, error: error.message };
   }
 }; 

@@ -37,7 +37,7 @@ module Talks
         response: parsed_response 
       }
     rescue StandardError => e
-      Rails.logger.error("Błąd podczas banowania użytkownika w Agorze: #{e.message}")
+      Rails.logger.error("Error while banning user in Agora: #{e.message}")
       { success: false, error: e.message }
     end
   end

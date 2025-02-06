@@ -33,7 +33,7 @@ module Admin
           
           response = Talks::BanUserService.call(@talk.channel_id)
           unless response[:success]
-            render json: { error: "Nie udało się zbanować użytkownika w Agorze" }, status: :unprocessable_entity
+            render json: { error: "Failed to ban user in Agora" }, status: :unprocessable_entity
             return
           end
         else

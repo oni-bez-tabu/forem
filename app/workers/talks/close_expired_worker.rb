@@ -11,7 +11,7 @@ module Talks
         if response[:success]
           talk.update(status: :banned)
         else
-          Rails.logger.error("Nie udało się zbanować talka #{talk.id}: #{response[:error]}")
+          Rails.logger.error("Failed to ban talk #{talk.id}: #{response[:error]}")
         end
       end
     end
