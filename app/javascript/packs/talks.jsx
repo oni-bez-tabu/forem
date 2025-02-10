@@ -1,7 +1,6 @@
 import { h, render, Fragment } from 'preact';
 import { closeWindowModal, showWindowModal } from '@utilities/showModal';
 import { useState, useEffect } from 'preact/hooks';
-import { Spinner } from '@crayons/Spinner/Spinner';
 
 const Item = ({ item, children, currentUserId }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +31,7 @@ const Item = ({ item, children, currentUserId }) => {
     if (adaptedItem.status === 'started') {
       const updateDuration = () => {
         const now = new Date();
-        const diff = now - adaptedItem.publishedDate;
+        const diff = Math.max(0, now - adaptedItem.publishedDate);
         const minutes = Math.floor(diff / 60000);
         const seconds = Math.floor((diff % 60000) / 1000);
         setDuration(`${minutes}:${seconds.toString().padStart(2, '0')}`);
@@ -52,7 +51,7 @@ const Item = ({ item, children, currentUserId }) => {
   };
 
   const handleDelete = async () => {
-    if (confirm('Czy na pewno chcesz usunąć tę audycję?')) {
+    if (confirm('Czy na pewno chcesz usunąć?')) {
       try {
         const response = await fetch(`/talks/${adaptedItem.id}`, {
           method: 'DELETE',
@@ -65,7 +64,7 @@ const Item = ({ item, children, currentUserId }) => {
         if (response.ok) {
           window.location.reload();
         } else {
-          alert('Nie udało się usunąć audycji...');
+          alert('Nie udało się usunąć...');
         }
       } catch (error) {
         console.error(error);
@@ -152,14 +151,14 @@ const Item = ({ item, children, currentUserId }) => {
                 </button>
               )}
               <a href="https://3000-onibeztabu-forem-rulnqudx0es.ws-eu117.gitpod.io/report-abuse" className="crayons-link crayons-link--block w-100">
-                Zgłoś audycję
+                Zgłoś
               </a>
               {currentUserId === item.user.id && (
                 <button
                   onClick={handleDelete}
                   className="crayons-link crayons-link--block w-100 color-accent-danger border-0 bg-transparent"
                 >
-                  Usuń audycję
+                  Usuń
                 </button>
               )}
             </div>
@@ -234,7 +233,7 @@ const CreateTalkButton = ({ isDisabled, currentUserId, adminOnlyCreationDescript
     showWindowModal({
       document: window.parent.document,
       modalContent: modalContentElement,
-      title: 'Utwórz nową audycję',
+      title: 'Utwórz pokój',
       size: 'small',
       onOpen: () => {
         const modalForm = window.parent.document.querySelector('#window-modal form');
@@ -257,17 +256,17 @@ const CreateTalkButton = ({ isDisabled, currentUserId, adminOnlyCreationDescript
         className="c-btn c-btn--primary whitespace-nowrap w-100"
         disabled={isDisabled || (!isAdmin && adminOnlyCreationDescription)}
       >
-        Rozpocznij audycję
+        Utwórz pokój
       </button>
       <p className="fs-s color-base-60 align-center m:align-left mt-2" >
-        Dziel się wiedzą na żywo i buduj społeczność wokół swoich zainteresowań
+        Inspiruj rozmowy i twórz społeczność wokół tego, co Cię pasjonuje.
       </p>
     </div>
    
   );
 };
 
-const JoinTalkButton = ({ channelId, userId, isDisabled, currentUserId }) => {
+const JoinTalkButton = ({ channelId, userId, isDisabled, currentUserId, children }) => {
   const handleJoin = async () => {
     const url = new URL(window.location.href);
     url.searchParams.set('activeTalk', channelId);
@@ -280,7 +279,7 @@ const JoinTalkButton = ({ channelId, userId, isDisabled, currentUserId }) => {
       className={`c-btn c-btn--secondary`}
       disabled={isDisabled}
     >
-      {currentUserId === userId ? 'Wejdź jako host' : 'Wejdź'}
+      {children || (currentUserId === userId ? 'Wejdź jako host' : 'Wejdź')}
     </button>
   );
 };
@@ -348,7 +347,16 @@ const TalksList = ({ activeTalkId, currentUserId, allow_anonymous_listening_desc
               userId={talk.user.id} 
               isDisabled={!!activeTalkId || (!currentUserId && !allow_anonymous_listening_description)}
               currentUserId={currentUserId}
-            />
+            >
+              {talk.scheduled_channel_id && (
+                <JoinTalkButton
+                  channelId={talk.scheduled_channel_id} 
+                  userId={talk.user.id}
+                  isDisabled={false}
+                  currentUserId={currentUserId}
+                />
+              )}
+            </JoinTalkButton>
           </Item>
         ))
       )}
@@ -407,7 +415,7 @@ const ScheduledTalksList = ({ currentUserId }) => {
   return (
     <Fragment>
       <div className="pt-2 flex justify-center">
-        <strong>Nadchodzące audycje</strong>
+        <strong>Nadchodzące</strong>
       </div>
       {scheduledTalks.length > 0 ? (
         scheduledTalks.map((talk) => (
@@ -418,14 +426,16 @@ const ScheduledTalksList = ({ currentUserId }) => {
                 userId={talk.user.id}
                 isDisabled={false}
                 currentUserId={currentUserId}
-              />
+              >
+                Rozpocznij 
+              </JoinTalkButton>
             )}
           </Item>
         ))
       ) : (
         <div className="flex items-center justify-center min-h-[200px]">
           <div className="text-center p-2 text-base text-gray-600">
-            Brak zaplanowanych audycji
+            Brak planowanych 
           </div>
         </div>
       )}
