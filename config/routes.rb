@@ -370,6 +370,14 @@ Rails.application.routes.draw do
     get "/readinglist", to: "reading_list_items#index"
     get "/readinglist/:view", to: "reading_list_items#index", constraints: { view: /archive/ }
 
+    get "/talks", to: "talks#index"
+    post '/talks/notify', to: 'talks#notify'
+    post '/talks/create', to: 'talks#create'
+    get '/talks/active', to: 'talks#active'
+    get '/talks/join/:id', to: 'talks#join'
+    get '/talks/scheduled', to: 'talks#scheduled'
+    delete '/talks/:id', to: 'talks#destroy'
+
     get "/feed", to: "articles#feed", as: "feed", defaults: { format: "rss" }
     get "/feed/tag/:tag", to: "articles#feed", as: "tag_feed", defaults: { format: "rss" }
     get "/feed/latest", to: "articles#feed", as: "latest_feed", defaults: { format: "rss" }

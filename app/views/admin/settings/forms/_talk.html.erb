@@ -1,0 +1,31 @@
+<%= form_for(Settings::Talk.new,
+             url: admin_settings_talks_path,
+             html: { data: { action: "submit->config#updateConfigurationSettings" } }) do |f| %>
+  <details class="crayons-card">
+    <summary class="crayons-subtitle-2 p-6">Talk Settings</summary>
+    <div class="p-6 pt-0">
+      <fieldset class="grid gap-4">
+        <div class="crayons-field crayons-field--checkbox">
+          <%= f.check_box :allow_anonymous_listening, 
+                         checked: Settings::Talk.allow_anonymous_listening, 
+                         class: "crayons-checkbox" %>
+          <div class="mt-0">
+            <%= admin_config_label :allow_anonymous_listening %>
+            <%= admin_config_description Constants::Settings::Talk.details[:allow_anonymous_listening][:description] %>
+          </div>
+        </div>
+
+        <div class="crayons-field crayons-field--checkbox">
+          <%= f.check_box :admin_only_creation, 
+                         checked: Settings::Talk.admin_only_creation, 
+                         class: "crayons-checkbox" %>
+          <div class="mt-0">                 
+            <%= admin_config_label :admin_only_creation %>
+            <%= admin_config_description Constants::Settings::Talk.details[:admin_only_creation][:description] %>
+          </div>
+        </div>
+      </fieldset>
+      <%= render "update_setting_button", f: f %>
+    </div>
+  </details>
+<% end %>

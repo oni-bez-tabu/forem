@@ -1,0 +1,63 @@
+<h1 class="crayons-title mb-3">Talks</h1>
+
+<div
+  data-controller="confirmation-modal"
+  data-confirmation-modal-root-selector-value="#confirmation-modal-root"
+  data-confirmation-modal-content-selector-value="#confirmation-modal"
+  data-confirmation-modal-title-value="Potwierdź zmiany"
+  data-confirmation-modal-size-value="m">
+
+  <%= paginate @talks %>
+
+  <table class="crayons-table" width="100%">
+    <thead>
+      <tr>
+        <th scope="col">Tytuł</th>
+        <th scope="col">Autor</th>
+        <th scope="col">Data rozpoczęcia</th>
+        <th scope="col">Data zakończenia</th>
+        <th scope="col">Channel ID</th>
+        <th scope="col">Status</th>
+        <th scope="col">Akcje</th>
+      </tr>
+    </thead>
+    <tbody class="crayons-card">
+      <% @talks.each do |talk| %>
+        <tr data-row-id="<%= talk.id %>">
+          <td><%= talk.title %></td>
+          <td><%= talk.user.name %></td>
+          <td><%= talk.start_date.strftime("%Y-%m-%d %H:%M") %></td>
+          <td><%= talk.end_date&.strftime("%Y-%m-%d %H:%M") %></td>
+          <td><%= talk.channel_id %></td>
+          <td><%= talk.status %></td>
+          <td class="flex gap-2">
+            <% if talk.can_be_finished? %>
+              <button
+                class="crayons-btn crayons-btn--secondary"
+                data-endpoint="/admin/content_manager/talks/finished/update_status"
+                data-action="click->confirmation-modal#openModal"
+                data-username="<%= current_user.username %>"
+                data-item-id="<%= talk.id %>">
+                Zakończ
+              </button>
+            <% end %>
+            
+            <% if talk.can_be_banned? %>
+              <button
+                class="crayons-btn crayons-btn--danger"
+                data-endpoint="/admin/content_manager/talks/banned/update_status"
+                data-action="click->confirmation-modal#openModal"
+                data-username="<%= current_user.username %>"
+                data-item-id="<%= talk.id %>">
+                Zbanuj
+              </button>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @talks %>
+  <%= render partial: "admin/shared/destroy_confirmation_modal" %>
+</div>

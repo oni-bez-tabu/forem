@@ -40,6 +40,10 @@
   font-weight: bold;
   font-style: italic;
 }
+@font-face {
+  font-family: "Icomoon";
+  @include font-src('44393f83cfe6e236d297.ttf');
+}
 
 // Content fonts
 body {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_02_170357) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_23_192317) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "ltree"
@@ -1134,6 +1134,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_02_170357) do
     t.index ["var"], name: "index_settings_smtp_on_var", unique: true
   end
 
+  create_table "settings_talks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "value"
+    t.string "var", null: false
+    t.index ["var"], name: "index_settings_talks_on_var", unique: true
+  end
+
   create_table "settings_user_experiences", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1211,6 +1219,23 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_02_170357) do
     t.index ["social_preview_template"], name: "index_tags_on_social_preview_template"
     t.index ["supported"], name: "index_tags_on_supported"
     t.index ["taggings_count"], name: "index_tags_on_taggings_count"
+  end
+
+  create_table "talks", force: :cascade do |t|
+    t.string "channel_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "end_date"
+    t.string "host_id", null: false
+    t.datetime "start_date", null: false
+    t.integer "status", default: 0, null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.boolean "video", default: false, null: false
+    t.string "viewer_id", null: false
+    t.index ["channel_id"], name: "index_talks_on_channel_id"
+    t.index ["status"], name: "index_talks_on_status"
+    t.index ["user_id"], name: "index_talks_on_user_id"
   end
 
   create_table "tweets", force: :cascade do |t|
@@ -1545,6 +1570,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_02_170357) do
   add_foreign_key "tag_adjustments", "users", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
   add_foreign_key "tags", "badges", on_delete: :nullify
+  add_foreign_key "talks", "users"
   add_foreign_key "tweets", "users", on_delete: :nullify
   add_foreign_key "user_blocks", "users", column: "blocked_id"
   add_foreign_key "user_blocks", "users", column: "blocker_id"

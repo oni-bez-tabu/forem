@@ -174,3 +174,7 @@ drip_email_worker:
   description: "Send drip emails to users based on their registration date"
   cron: "37 * * * *" # Every hour on the 37 minute
   class: "Emails::DripEmailWorker"
+close_expired_talks:
+  description: "Closes talks that are older than 2 hours"
+  cron: "*/5 * * * *"  # Uruchamia się co 5 minut
+  class: "Talks::CloseExpiredWorker"

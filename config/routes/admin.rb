@@ -31,6 +31,7 @@ namespace :admin do
   namespace :settings do
     resources :authentications, only: [:create]
     resources :campaigns, only: [:create]
+    resources :talks, only: [:create]
     resources :communities, only: [:create]
     resources :general_settings, only: [:create]
     resources :mandatory_settings, only: [:create]
@@ -83,6 +84,12 @@ namespace :admin do
       member do
         delete :unpin
         post :pin
+      end
+    end
+    
+    resources :talks, only: [:index] do
+      collection do
+        delete ':status/update_status/:id', to: 'talks#update_status', constraints: { status: /(finished|banned)/ }
       end
     end
 

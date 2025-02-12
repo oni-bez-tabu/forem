@@ -1,0 +1,33 @@
+<%= content_for :page_meta do %>
+  <% title "Pokoje" %>
+  <%= content_for :page_meta do %>
+    <link rel="canonical" href="<%= app_url(pod_path) %>" />
+    <meta name="description" content="Otwórz swój pokój, wciągnij społeczność do rozmowy i twórz unikalne audycje. Nagrywaj i publikuj na platformach podcastowych – wszystko w jednym miejscu.">
+    <%= meta_keywords_default %>
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="<%= app_url(pod_path) %>" />
+    <meta property="og:title" content="Pokoje na nie!tabu" />
+    <meta property="og:image" content="<%= Settings::General.main_social_image %>">
+
+    <meta property="og:description" content="Otwórz swój pokój, wciągnij społeczność do rozmowy i twórz unikalne audycje. Nagrywaj i publikuj na platformach podcastowych – wszystko w jednym miejscu." />
+    <meta property="og:site_name" content="<%= community_name %>" />
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@<%= Settings::General.social_media_handles["twitter"] %>">
+    <meta name="twitter:creator" content="@<%= Settings::General.social_media_handles["twitter"] %>">
+    <meta name="twitter:title" content="Pokoje na nie!tabu">
+    <meta name="twitter:description" content="Otwórz swój pokój, wciągnij społeczność do rozmowy i twórz unikalne audycje. Nagrywaj i publikuj na platformach podcastowych – wszystko w jednym miejscu." />
+    <meta name="twitter:image:src" content="<%= Settings::General.main_social_image %>">
+  <% end %>
+
+<% end %>
+
+<div id="talks-form" style="display: none;">
+  <%= render 'form', talk: Talk.new %>
+</div>
+<div id="talks-list" 
+     data-settings="<%= @talk_settings.to_json %>">
+</div>
+
+<%= javascript_include_tag "talks", defer: true %>
