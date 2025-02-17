@@ -286,7 +286,7 @@ const JoinTalkButton = ({ channelId, userId, isDisabled, currentUserId, children
 
 const Loader = () => {
   return (
-    <div className="loader-overlay fixed inset-0 bg-white/80 z-50">
+    <div className="loader-overlay fixed inset-0 z-50">
       <div className="loader-content">
         <iframe 
           src="https://lottie.host/embed/e1194cb2-a25b-4090-a308-6a7ee9637bb6/ImvuNShUCA.lottie"
@@ -294,8 +294,9 @@ const Loader = () => {
             width: '100%',
             height: '300px',
             border: 'none',
-            background: 'transparent',
-            pointerEvents: 'none'
+            backgroundColor: 'transparent',
+            pointerEvents: 'none',
+            colorScheme: 'light'
           }}
         />
         <p>Mamy nadzieje na Twoją aktywność :) <br/> Baw się dobrze!</p>
@@ -414,31 +415,27 @@ const ScheduledTalksList = ({ currentUserId }) => {
 
   return (
     <Fragment>
-      <div className="pt-2 flex justify-center">
-        <strong>Nadchodzące</strong>
-      </div>
       {scheduledTalks.length > 0 ? (
-        scheduledTalks.map((talk) => (
-          <Item key={talk.id} item={talk} currentUserId={currentUserId}>
-            {talk.scheduled_channel_id && (
-              <JoinTalkButton
-                channelId={talk.scheduled_channel_id} 
-                userId={talk.user.id}
-                isDisabled={false}
-                currentUserId={currentUserId}
-              >
-                Rozpocznij 
-              </JoinTalkButton>
-            )}
-          </Item>
-        ))
-      ) : (
-        <div className="flex items-center justify-center min-h-[200px]">
-          <div className="text-center p-2 text-base text-gray-600">
-            Brak planowanych 
+        <>
+          <div className="pt-2 flex justify-center">
+            <strong>Nadchodzące</strong>
           </div>
-        </div>
-      )}
+          {scheduledTalks.map((talk) => (
+            <Item key={talk.id} item={talk} currentUserId={currentUserId}>
+              {talk.scheduled_channel_id && (
+                <JoinTalkButton
+                  channelId={talk.scheduled_channel_id} 
+                  userId={talk.user.id}
+                  isDisabled={false}
+                  currentUserId={currentUserId}
+                >
+                  Rozpocznij 
+                </JoinTalkButton>
+              )}
+            </Item>
+          ))}
+        </>
+      ) : null}
     </Fragment>
   );
 };
