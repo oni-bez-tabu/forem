@@ -199,7 +199,7 @@ function buildArticleHTML(article, currentUserId = null) {
     : (reactionsCount == 1 ? `reakcja` : `reakcje`)
     var reactionIcons = document.getElementById('reaction-category-resources');
 
-    if (article.class_name !== 'User' && reactionsCount > 0) {
+    if (article.class_name !== 'User' && reactionsCount > 0 && reactionIcons) {
       var icons = [];
       for (var category of article.public_reaction_categories) {
         var icon = reactionIcons.querySelector(
@@ -236,7 +236,7 @@ function buildArticleHTML(article, currentUserId = null) {
       profileUsername = article.slug;
       userName = article.title;
     } else {
-      picUrl = article.user.profile_image_90;
+      picUrl = article.user.profile_image_90.replace('media.dev.to/', 'media2.dev.to/').replace('/cdn-cgi/', '/dynamic/');
       profileUsername = article.user.username;
       userName = filterXSS(article.user.name);
       if (article.user.cached_base_subscriber) {
@@ -258,7 +258,7 @@ function buildArticleHTML(article, currentUserId = null) {
         '" class="crayons-logo crayons-logo--l"><img alt="' +
         article.organization.name +
         ' logo" src="' +
-        article.organization.profile_image_90 +
+        article.organization.profile_image_90.replace('media.dev.to/', 'media2.dev.to/').replace('/cdn-cgi/', '/dynamic/') +
         '" class="crayons-logo__image" loading="lazy"/></a>';
       forOrganization =
         '<span><span class="crayons-story__tertiary fw-normal"> dla </span><a href="/' +

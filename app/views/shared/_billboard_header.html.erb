@@ -23,7 +23,7 @@
       <%= crayons_icon_tag("small-overflow-horizontal", class: "pointer-events-none", title: t("billboard.menu.icon")) %>
   </button>
 
-  <div id="sponsorship-dropdown-<%= billboard.id %>" class="crayons-dropdown sponsorship-dropdown right-0">
+  <div id="sponsorship-dropdown-<%= billboard.id %>" class="crayons-dropdown bb-dropdown right-0">
     <ul class="list-none m-0">
         <li>
           <a class="crayons-link crayons-link--block" href='/billboards'>
@@ -37,6 +37,14 @@
           <%= I18n.t("billboard.menu.manage_preferences") %>
         </a>
       </li>
+      <% if user_signed_in? %>
+        <li class="js-admin-billboard-link hidden">
+          <a class="crayons-link crayons-link--block" href="/admin/customization/billboards/<%= billboard.id %>/edit">
+            <%= crayons_icon_tag("edit", width: 16, height: 16, aria_hidden: true, class: "c-btn__icon") %>
+            <%= I18n.t("billboard.menu.edit_billboard") %>
+          </a>
+        </li>
+      <% end %>
       <hr />
       <li>
         <a class="crayons-link crayons-link--block" href="/report-abuse?billboard=<%= billboard.id %>">

@@ -32,11 +32,7 @@
   <% if @badge.credits_awarded > 0 && Listing.feature_enabled? %>
     <hr style="opacity:0.4;width: 150px;margin: 30px auto;" />
     <p>
-      Otrzymujesz również <strong><a href="<%= credits_url %>"><%= @badge.credits_awarded %> nowych kredytów</a></strong> do wykorzystania na <strong><a href="<%= listings_url %>">listach społeczności</a></strong><br />
-      jeśli masz coś, co chciałbyś promować. 🎉
-    </p>
-    <p>
-      <strong><a href="<%= app_url(about_listings_url) %>">Więcej informacji o listach<a></strong>
+      Otrzymujesz również <strong><a href="<%= credits_url %>"><%= @badge.credits_awarded %> educoinów</a></strong> do wykorzystania w <strong><a href="<%= listings_url %>">społeczności</a></strong><br />
     </p>
   <% end %>
 </center>

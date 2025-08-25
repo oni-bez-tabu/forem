@@ -7,9 +7,5 @@ Gratulacje, <%= @user.name %>! Otrzymałeś odznakę <%= @badge.title %>! Koniec
 <%= user_url(@user) %>
 
 <% if @badge.credits_awarded > 0 && Listing.feature_enabled? %>
-  Otrzymujesz również <%= @badge.credits_awarded %> nowych kredytów do wykorzystania na listach społeczności, jeśli masz coś, co chciałbyś promować: <%= listings_url %>
-
-  Aby zarządzać swoimi kredytami, odwiedź: <%= credits_url %>
-
-  Aby uzyskać więcej informacji o listach, odwiedź: <%= app_url(about_listings_url) %>
+  Otrzymujesz również <%= @badge.credits_awarded %> educoinów do wykorzystania w społeczności.
 <% end %>

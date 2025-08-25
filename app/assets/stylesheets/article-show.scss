@@ -608,6 +608,14 @@ center .ff-container {
   transform: none;
 }
 
+
+body.user-role--admin, .user-role--super_admin, .current-user-is-article-author {
+  .crayons-article__actions {
+    display: block !important;
+    min-height: 42px !important;
+  }
+}
+
 .audlt-content {
   text-align: center;
 

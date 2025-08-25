@@ -24,11 +24,12 @@ pl:
       nav:
         admin: Admin
         dashboard: Twój panel
-        placeholder: ...
+        placeholder: "..."
         list: Lista lektur
         moderator_center: Centrum moderatora
         other: Inne
         settings: Ustawienia
+        account: Konto
         coins_count: "Na Twoim koncie jest:"
         coins_name: educoinów
       nav_name:
@@ -68,8 +69,6 @@ pl:
         powered:
           text_html: Made with love and %{rails}. %{community} <span title="copyright">&copy;</span> %{copyright}.
           rails: Ruby on Rails
-        sidebar_desc_html: |-
-          %{community}
-          %{desc}
+        sidebar_desc_html: "%{community}\n%{desc}"
       create_post: Utwórz post
       signout: Wyloguj się
