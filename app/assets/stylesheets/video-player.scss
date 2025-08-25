@@ -6,9 +6,18 @@
   word-break: normal;
 
   .crayons-article__video__player {
+    position: relative;
     background-position: center;
     background-size: cover;
     padding-bottom: 56.25%;
+
+    .video-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
 
     &.native {
       height: calc(100vw * (9 / 16)); // Maintain 16:9 ratio
