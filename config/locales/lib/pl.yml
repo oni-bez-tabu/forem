@@ -181,6 +181,9 @@ pl:
           spam:
             description: Individual (case insensitive) phrases that trigger spam alerts, comma separated.
             placeholder: used cars near you, pokemon go hack
+          content_spec:
+            description: Wewnętrzny opis treści uznawanych ogólnie za „w temacie” — bądź bardzo opisowy, aby jak najlepiej odróżnić się od innych społeczności.
+            placeholder: np. „Miejsce, gdzie deweloperzy dzielą się pracą, zadają pytania i uczą się od siebie nawzajem... Ale znacznie dłużej i bardziej konkretnie”
         smtp:
           address:
             description: Address of the remote mail server
@@ -234,3 +237,6 @@ pl:
           bottom_of_body_content:
             description: Content that will be appended to the bottom of the body tag on every page (WARNING — This will cache within the page request unevenly. Proceed with care).
             placeholder: Leave empty if you do not want to add anything.
+          feed_lookback_days:
+            description: Określa, jak daleko wstecz kanał sięga po nowe posty (w dniach)
+            placeholder: "10"

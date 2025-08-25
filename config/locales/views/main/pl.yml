@@ -24,7 +24,7 @@ pl:
       nav:
         admin: Admin
         dashboard: Twój panel
-        placeholder: "..."
+        placeholder: ...
         list: Lista lektur
         moderator_center: Centrum moderatora
         other: Inne
@@ -69,6 +69,8 @@ pl:
         powered:
           text_html: Made with love and %{rails}. %{community} <span title="copyright">&copy;</span> %{copyright}.
           rails: Ruby on Rails
-        sidebar_desc_html: "%{community}\n%{desc}"
+        sidebar_desc_html: |-
+          %{community}
+          %{desc}
       create_post: Utwórz post
       signout: Wyloguj się

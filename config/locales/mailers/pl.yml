@@ -28,6 +28,7 @@ pl:
       new_badge: Właśnie dostałeś odznakę
       video_upload: Twoje przesyłanie filmu jest zakończone
       base_subscriber: Gratulacje! Jesteś teraz subskrybentem nie!tabu++
+      subforem_moderator: Gratulacje! Jesteś teraz moderatorem dla %{subforem_name}
     verification_mailer:
       from: Weryfikacja e-maila %{community} <%{email}>
       verify_ownership: Zweryfikuj własność Twojego konta na %{community}
