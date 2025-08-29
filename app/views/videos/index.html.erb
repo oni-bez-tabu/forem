@@ -25,14 +25,14 @@
     <% if @tag %>
       <div class="crayons-subtitle-2 pl-4 pt-4">
         <a href="/videos">
-          All videos
+          Powrót do wszystkich
         </a>
       </div>
     <% end %>
     <header class="crayons-page-header">
       <h1 class="crayons-title">
         <% if @tag %>
-          <%= render_tag_link(@tag.accessible_name, path_suffix: "/videos") %> on Video
+          <%= render_tag_link(@tag.accessible_name, path_suffix: "/videos") %>
         <% else %>
           <%= t("views.videos.heading", community: community_name) %>
         <% end %>
