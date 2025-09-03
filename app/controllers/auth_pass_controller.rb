@@ -4,13 +4,16 @@ class AuthPassController < ApplicationController
 
   # Use the iframe session store for specific actions
   before_action :allow_cross_origin_requests, only: [:iframe, :token_login]
-  before_action :use_iframe_session_store, only: [:iframe]
+  # Disabled: using same-origin iframe, so we keep main session to access current_user
+  # before_action :use_iframe_session_store, only: [:iframe]
 
   def iframe
-    unless Subforem.cached_all_domains.include?(request.host)
-      render plain: "Unauthorized", status: :unauthorized
-      return
-    end
+    # NOTE: Domain whitelist disabled per platform decision (no subforem usage).
+    # Keeping original logic commented out for potential future re-enable.
+    # unless Subforem.cached_all_domains.include?(request.host)
+    #   render plain: "Unauthorized", status: :unauthorized
+    #   return
+    # end
 
     if user_signed_in? && user_not_signed_out?(current_user)
       # User is authenticated on the main domain

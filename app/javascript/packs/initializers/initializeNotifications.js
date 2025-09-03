@@ -6,9 +6,10 @@ import { initializeSubscribeButton } from '../../packs/subscribeButton';
 /* global InstantClick, instantClick */
 
 function markNotificationsAsRead() {
-  if (navigator.userAgent === 'ForemWebView/1') {
-    return;
-  }
+  // Disabled: allow auto-mark-as-read also in ForemWebView
+  // if (navigator.userAgent === 'ForemWebView/1') {
+  //   return;
+  // }
   setTimeout(() => {
     if (document.getElementById('notifications-container')) {
       getCsrfToken().then((csrfToken) => {

@@ -184,7 +184,7 @@ function search(query, filters, sortBy, sortDirection) {
   // if search is empty
   if ((getQueryParams(document.location.search).q === '' || getQueryParams(document.location.search).q === undefined) && searchParams.toString().includes('class_name=Article')) {
     document.getElementById('substories').innerHTML =
-    '<div class="p-9 align-center crayons-card bold">Let\'s kick off a search!</div>';
+    '<div class="p-9 align-center crayons-card bold">Rozpocznij wyszukiwanie!</div>';
     return;
   }
 
