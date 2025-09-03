@@ -2,7 +2,7 @@
   <li id="user-profile-link-placeholder" class="border-0 border-b-1 border-solid border-base-20 py-3 mb-2">
     <a href="/<%= current_user.username %>" id="first-nav-link" class="c-link c-link--default c-link--block lh-tight">
       <div>
-        <span class="fw-medium block">My Profile</span>
+        <span class="fw-medium block">Mój profil</span>
         <small class="fs-s opacity-75"></small>
       </div>
     </a>
@@ -32,7 +32,7 @@
   <li>
     <nav class="border-0 border-b-1 border-solid border-base-20 py-2">
       <ul class="default-navigation-links sidebar-navigation-links spec-sidebar-navigation-links">
-        <%= render partial: "layouts/sidebar_nav_link", collection: NavigationLink.where(id: @navigation_links[:default_nav_ids]).where.not(name: ["Home", "Reading List"]).ordered, as: :link %>
+        <%= render partial: "layouts/sidebar_nav_link", collection: NavigationLink.where(id: @navigation_links[:other_nav_ids]).where.not(name: ["Home", "Reading List"]).ordered, as: :link %>
       </ul>
     </nav>
   </li>

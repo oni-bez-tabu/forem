@@ -76,6 +76,13 @@ function fetchBaseData() {
             document.body.classList.add("hidden-shell");
           }
 
+          if (isForemWebview) {
+            const articleLayouts = document.querySelectorAll('.crayons-layout--article');
+            articleLayouts.forEach((el) => {
+              el.style.marginBottom = '70px';
+            });
+          }
+
           setTimeout(() => {
             if (typeof ga === 'function') {
               ga('set', 'userId', userJson.id);

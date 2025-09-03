@@ -35,7 +35,7 @@
         <%= javascript_include_tag "onboardingRedirectCheck", "contentDisplayPolicy", defer: true %>
       <% end %>
       <%= yield(:page_meta) %>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
       <%= favicon_link_tag Settings::General.favicon_url %>
       <link rel="apple-touch-icon" href="<%= optimized_image_url(Settings::General.logo_png, width: 180, fetch_format: "png") %>">
       <link rel="apple-touch-icon" sizes="152x152" href="<%= optimized_image_url(Settings::General.logo_png, width: 152, fetch_format: "png") %>">
