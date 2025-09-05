@@ -71,7 +71,7 @@ function fetchBaseData() {
             }
           }
 
-          const isForemWebview = navigator.userAgent === 'ForemWebView/1';
+          const isForemWebview = navigator.userAgent && navigator.userAgent.includes('ForemWebView/1');
           if (isForemWebview || window.frameElement) { // Hide top bar and footer when loaded within iframe
             document.body.classList.add("hidden-shell");
           }
