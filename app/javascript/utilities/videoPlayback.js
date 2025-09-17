@@ -63,6 +63,8 @@ export function initializeVideoPlayback() {
         const player = videojs(elementId, {
           controls: true,
           preload: 'auto',
+          autoplay: 'muted',
+          muted: true,
           poster: metadata.video_thumbnail_url,
           playbackRates: [0.5, 1, 1.25, 1.5, 2],
           html5: {
@@ -70,13 +72,18 @@ export function initializeVideoPlayback() {
           },
         });
 
-        if (seconds) {
-          player.ready(() => {
-            try {
+        player.ready(() => {
+          try {
+            player.muted(true);
+            if (seconds) {
               player.currentTime(seconds);
-            } catch (e) {}
-          });
-        }
+            }
+            const playPromise = player.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+              playPromise.catch(() => {});
+            }
+          } catch (e) {}
+        });
 
         player.on('play', () => {
           videoPlayerEvent(true);
