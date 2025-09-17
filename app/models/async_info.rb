@@ -61,6 +61,10 @@ class AsyncInfo
           dom_class: ApplicationPolicy.base_dom_class_for(record: Article, query: :moderate?),
           visible: visible?(record: Article, query: :moderate?)
         },
+        {
+          dom_class: ApplicationPolicy.base_dom_class_for(record: :video, query: :new?),
+          visible: visible?(record: :video, query: :new?)
+        },
       ],
       apple_auth: user.email.to_s.end_with?("@privaterelay.appleid.com")
     }
