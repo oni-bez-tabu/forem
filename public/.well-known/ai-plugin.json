@@ -1,18 +1,18 @@
 {
   "schema_version": "v1",
-  "name_for_human": "DEV Community",
-  "name_for_model": "dev",
-  "description_for_human": "Recommending posts and members from DEV Community.",
-  "description_for_model": "Recommending articles or users from DEV Community. Always link to a url for the resource returned.",
+  "name_for_human": "nie!tabu",
+  "name_for_model": "nie!tabu",
+  "description_for_human": "Polecane artykuły z nie!tabu.",
+  "description_for_model": "Polecane artykuły z nie!tabu. Zawsze linkuj url dla zasobu zwróconego przez api.",
   "auth": {
     "type": "none"
   },
   "api": {
     "type": "openapi",
-    "url": "https://dev.to/openapi.yml",
+    "url": "https://nietabu.pl/openapi.yml",
     "is_user_authenticated": false
   },
-  "logo_url": "https://dev.to/logo.png",
-  "contact_email": "yo@dev.to",
-  "legal_info_url": "https://dev.to/terms"
+  "logo_url": "https://nietabu-images.s3.amazonaws.com/uploads/logos/resized_logo_QFubs082sUnHVy4L9SyY.png",
+  "contact_email": "hej@nietabu.pl",
+  "legal_info_url": "https://nietabu.pl/terms"
 }

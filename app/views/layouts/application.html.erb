@@ -90,6 +90,46 @@
           }
         </script>
 
+        <script>
+          (function () {
+            var ua = navigator.userAgent || '';
+            var isAndroid = /Android/i.test(ua);
+            var isForemWebView = /ForemWebView\/1/i.test(ua);
+            if (isAndroid && isForemWebView) {
+              // Add a class for CSS-based disabling of selection/callout
+              document.body.classList.add('android-webview-no-select');
+
+              // Prevent long-press actions like context menu and selection outside editable controls
+              var isEditableTarget = function (el) {
+                if (!el) return false;
+                var tag = el.tagName;
+                if (!tag) return false;
+                var name = tag.toLowerCase();
+                if (name === 'input' || name === 'textarea' || name === 'select') return true;
+                if (el.isContentEditable) return true;
+                return false;
+              };
+
+              document.addEventListener('contextmenu', function (e) {
+                if (!isEditableTarget(e.target)) {
+                  e.preventDefault();
+                }
+              });
+
+              document.addEventListener('selectstart', function (e) {
+                if (!isEditableTarget(e.target)) {
+                  e.preventDefault();
+                }
+              });
+
+              // Some WebViews also react to gesture events
+              document.addEventListener('gesturestart', function (e) {
+                e.preventDefault();
+              });
+            }
+          })();
+        </script>
+
         <%= render "layouts/styles", qualifier: "secondary" %>
         <div id="body-styles">
           <style>

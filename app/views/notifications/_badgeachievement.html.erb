@@ -19,7 +19,7 @@
   <% credits_awarded = json_data["badge_achievement"]["badge"]["credits_awarded"] %>
   <% if credits_awarded.to_i > 0 %>
     <p class="max-w-75 mx-auto">
-      You also received <%= link_to("#{credits_awarded} new credits", "/credits", class: "crayons-link crayons-link--brand fw-bold") %>. 🎉
+      Otrzymałeś/aś <%= credits_awarded %> educoinów! 🎉
     </p>
   <% end %>
 </div>

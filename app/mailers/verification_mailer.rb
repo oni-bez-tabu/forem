@@ -18,7 +18,7 @@ class VerificationMailer < ApplicationMailer
     @user = User.find(params[:user_id])
     mail(
       to: @user.email,
-      subject: "Sign in to #{Settings::Community.community_name} with a magic code",
+      subject: "Zaloguj się do #{Settings::Community.community_name} za pomocą jednorazowego kodu",
       from: "#{Settings::Community.community_name} <#{ForemInstance.from_email_address}>",
       reply_to: ForemInstance.reply_to_email_address
     )
