@@ -1,7 +1,7 @@
 {
   "schema_version": "v1",
   "name_for_human": "nie!tabu",
-  "name_for_model": "nie!tabu",
+  "name_for_model": "nietabu",
   "description_for_human": "Polecane artykuły z nie!tabu.",
   "description_for_model": "Polecane artykuły z nie!tabu. Zawsze linkuj url dla zasobu zwróconego przez api.",
   "auth": {
