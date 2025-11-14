@@ -53,6 +53,146 @@
   }
 }
 
+.runtime-banner--android {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  background: linear-gradient(135deg, #fafbfc 0%, #f1f5f9 100%);
+  color: #0f172a;
+  border-radius: 18px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.2);
+  border: none;
+
+  &__wrapper {
+    position: relative;
+    padding: var(--su-4);
+    padding-bottom: var(--su-4);
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: var(--su-3);
+  }
+
+  &__icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    object-fit: cover;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(209, 213, 219, 0.35));
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+    flex-shrink: 0;
+  }
+
+  &__text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--su-2);
+    padding-right: var(--su-2);
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #0f172a;
+  }
+
+  &__description {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #475569;
+  }
+
+  &__cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: var(--su-2);
+    padding: 11px var(--su-3);
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #1d9bf0, #2563eb);
+    color: #ffffff !important;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    box-shadow: 0 16px 35px rgba(37, 99, 235, 0.28);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      animation: shimmer 4s infinite;
+    }
+  }
+
+  &__cta:hover,
+  &__cta:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 22px 45px rgba(37, 99, 235, 0.35);
+    background: linear-gradient(135deg, #0ea5e9, #1d4ed8);
+  }
+  
+  @keyframes shimmer {
+    0% {
+      left: -100%;
+    }
+    50%, 100% {
+      left: 200%;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding: 4px;
+    border-radius: 50%;
+    z-index: 10;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    
+    &:hover {
+      background: rgba(15, 23, 42, 0.08);
+    }
+    
+    &:focus {
+      outline: none;
+    }
+    
+    svg {
+      color: #64748b;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
 // Larger devices (i.e. iPad) display the reactions to the left instead of the
 // bottom of the screen. Because of this we only need to move the banner higher
 // up to avoid blocking the reaction buttons when size is <= $breakpoint-m
