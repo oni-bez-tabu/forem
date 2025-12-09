@@ -109,37 +109,6 @@ export const RuntimeBanner = () => {
     );
   }
 
-  // iOS: pozostaw dotychczasowy baner PWA bez zmian
-  if (os === 'iOS') {
-    const targetURL = URL_TUTORIAL_IOS;
-    const bannerText = {
-      title: "Dodaj nie!tabu do swoich aplikacji",
-      description: "Dzięki temu będziesz otrzymywać notyfikacje."
-    };
-
-    return (
-      <div class="runtime-banner">
-        <a
-          href={targetURL}
-          class="flex items-center flex-1"
-          rel="noopener noreferrer"
-        >
-          <Icon src={SmallBell} native />
-          <div class="flex flex-col pl-3">
-            <span>{bannerText.title}</span>
-            <span>{bannerText.description}</span>
-          </div>
-        </a>
-        <Button
-          onClick={dismissBanner}
-          class="runtime-banner__dismiss color-base-inverted"
-          icon={CloseIcon}
-          tooltip="Zamknij baner"
-        />
-      </div>
-    );
-  }
-
   // Inne systemy: nie pokazuj banera
   removeFromDOM();
   return;
