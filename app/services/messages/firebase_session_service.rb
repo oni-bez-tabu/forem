@@ -11,10 +11,13 @@ module Messages
 
     def call
       cache_key = "messages/firebase_session/#{user.id}"
-      self.class.firebase_session_cache.fetch(cache_key, expires_in: 1.hour) do
+      result = self.class.firebase_session_cache.fetch(cache_key, expires_in: 1.hour) do
+        Rails.logger.info "FirebaseSessionService: cache miss for user #{user.id}, generating token..."
         ensure_firebase_user
         generate_custom_token
       end
+      Rails.logger.info "FirebaseSessionService: returning token=#{result.present?} for user #{user.id}"
+      result
     end
 
     # W development z wyłączonym dev:cache Rails używa null_store, który nie persystuje.

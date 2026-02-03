@@ -108,7 +108,7 @@ async function initMessagesCount() {
     };
 
     const firestoreAdapter = new FirebaseFirestoreAdapter(db);
-    const functionsAdapter = new FirebaseFunctionsAdapter({ firebaseConfig });
+    const functionsAdapter = new FirebaseFunctionsAdapter({ firebaseConfig, region: "europe-west1" });
 
     const client = new ChatClient({
       firebaseConfig,
