@@ -378,7 +378,10 @@ module Messages
     end
 
     def generate_custom_token
-      return unless firebase_configured?
+      unless firebase_configured?
+        Rails.logger.warn "FirebaseSessionService: not configured - email=#{$firebase_service_account_email.present?} key=#{$firebase_private_key.present?}"
+        return
+      end
 
       begin
         require "jwt"
