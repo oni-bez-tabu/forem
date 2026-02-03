@@ -1,0 +1,97 @@
+@import '../config/import';
+
+#page-content.messages {
+  max-width: none;
+}
+
+#page-content.messages #page-content-inner {
+  padding: 0;
+}
+
+#page-content.messages #main-content {
+  height: calc(100vh - var(--header-height));
+  overflow: hidden;
+}
+
+#page-content.messages #chat-app {
+  height: 100%;
+  width: 100%;
+}
+
+#page-content.messages #page-content-inner {
+  overflow: hidden;
+}
+
+#page-content.messages #chat-app > div {
+  height: 100%;
+}
+
+// Scope'owanie klas Tailwind do #chat-app dla wyższej specyficzności nad Crayons
+#chat-app {
+  // Nadpisanie klas szerokości - Crayons używa innych wartości niż Tailwind
+  // Crayons: w-full = 100vw, w-10 = 10%
+  // Tailwind: w-full = 100%, w-10 = 2.5rem (40px)
+  .w-full {
+    width: 100% !important; // Tailwind: 100% zamiast Crayons: 100vw
+  }
+
+  .w-10 {
+    width: 2.5rem !important; // Tailwind: 2.5rem (40px) zamiast Crayons: 10%
+  }
+
+  .w-12 {
+    width: 3rem !important; // Tailwind: 3rem (48px) zamiast Crayons: 12%
+  }
+
+  .w-auto {
+    width: auto !important;
+  }
+
+  // Nadpisanie klas responsive lg: z wyższą specyficznością
+  @media (min-width: 1024px) {
+    .lg\:block {
+      display: block !important;
+    }
+
+    .lg\:flex {
+      display: flex !important;
+    }
+
+    .lg\:hidden {
+      display: none !important;
+    }
+
+    .lg\:w-\[360px\] {
+      width: 360px !important;
+    }
+
+    .lg\:shrink-0 {
+      flex-shrink: 0 !important;
+    }
+
+    .lg\:px-6 {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+    }
+  }
+
+  // Nadpisanie klas responsive sm: (np. hidden + sm:flex w hover actions)
+  @media (min-width: 640px) {
+    .sm\:flex {
+      display: flex !important;
+    }
+
+    .sm\:hidden {
+      display: none !important;
+    }
+  }
+
+  // Nadpisanie group-hover:* (Crayons potrafi nadpisywać invisible/opacity)
+  .group:hover .group-hover\:visible {
+    visibility: visible !important;
+  }
+
+  .group:hover .group-hover\:opacity-100 {
+    opacity: 1 !important;
+  }
+}

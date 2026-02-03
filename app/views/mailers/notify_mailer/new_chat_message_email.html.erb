@@ -1,0 +1,19 @@
+<head>
+  <style type="text/css">
+    img {
+      max-width:100%;
+      height:auto;
+      border:none
+    }
+  </style>
+</head>
+
+<h2 style="font-size:25px;">
+  <a href="<%= user_url(@from_user) %>"><%= @from_user.name.presence || @from_user.username %></a> wysyła Ci wiadomość
+</h2>
+
+<p style="font-size:16px;color:#666;margin:20px 0;">
+  Masz nową wiadomość w czacie.
+</p>
+
+<a style="background:#3c7dc1;color:white;padding:5px 14px;border-radius:3px;text-decoration:none;display:inline-block;margin-top:4px;" href='<%= app_url(@chat_path) %>'>Otwórz czat na <%= community_name %></a>

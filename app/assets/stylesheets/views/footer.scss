@@ -21,6 +21,10 @@
   display: none;
 }
 
+.messages + #footer {
+  display: none;
+}
+
 .passwords-new + #footer {
   display: none;
 }

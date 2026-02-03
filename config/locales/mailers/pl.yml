@@ -18,6 +18,7 @@ pl:
       moderator: "Gratulacje! Jesteś teraz moderatorem dla #%{tag_name}"
       new_follower: właśnie zaczął Cię obserwować na %{community}
       new_mention: "%{name} właśnie wspomniał o Tobie w swoim %{type}"
+      new_chat_message: "%{name} wysyła Ci wiadomość"
       org_deleted: "%{community} - Potwierdzenie usunięcia organizacji"
       new_reply: "%{name} odpowiedział na Twój %{type}"
       feedback: Dziękujemy za zgłoszenie na %{community}

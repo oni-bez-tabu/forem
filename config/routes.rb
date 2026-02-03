@@ -106,6 +106,12 @@ Rails.application.routes.draw do
       resources :reads, only: [:create]
     end
 
+    namespace :messages do
+      get "/session", to: "sessions#show", defaults: { format: :json }
+      post "/webhooks/notifications", to: "webhooks#notifications", defaults: { format: :json }
+      post "/webhooks/upload", to: "webhooks#upload", defaults: { format: :json }
+    end
+
     namespace :incoming_webhooks do
       get "/mailchimp/:secret/unsubscribe", to: "mailchimp_unsubscribes#index", as: :mailchimp_unsubscribe_check
       post "/mailchimp/:secret/unsubscribe", to: "mailchimp_unsubscribes#create", as: :mailchimp_unsubscribe
@@ -116,6 +122,8 @@ Rails.application.routes.draw do
     resources :bottom_items, only: [:index]
 
     resources :messages, only: [:create]
+    get "/message", to: "messages#show"
+    get "/message/:target", to: "messages#show"
     resources :articles, only: %i[update create destroy] do
       patch "/admin_unpublish", to: "articles#admin_unpublish"
       patch "/admin_featured_toggle", to: "articles#admin_featured_toggle"

@@ -13,7 +13,11 @@
     "test": "test"
   },
   "resolutions": {
-    "glob-parent": "^6.0.1"
+    "glob-parent": "^6.0.1",
+    "@org/chat-core": "file:./vendor/assets/javascripts/org-chat-core-0.6.0.tgz",
+    "@org/chat-ui-shared": "file:./vendor/assets/javascripts/org-chat-ui-shared-0.6.0.tgz",
+    "@org/chat-ui-preact": "file:./vendor/assets/javascripts/org-chat-ui-preact-0.6.0.tgz",
+    "preact": "10.20.2"
   },
   "scripts": {
     "prepare": "husky install",
@@ -117,6 +121,9 @@
     "@babel/preset-typescript": "^7.23.3",
     "@honeybadger-io/js": "^6.9.1",
     "@hotwired/stimulus": "3.2.2",
+    "@org/chat-core": "file:./vendor/assets/javascripts/org-chat-core-0.6.0.tgz",
+    "@org/chat-ui-preact": "file:./vendor/assets/javascripts/org-chat-ui-preact-0.6.0.tgz",
+    "@org/chat-ui-shared": "file:./vendor/assets/javascripts/org-chat-ui-shared-0.6.0.tgz",
     "@rails/ujs": "7.1.3",
     "ahoy.js": "^0.4.4",
     "algoliasearch": "4.23.3",
@@ -153,7 +160,8 @@
     "rails-erb-loader": "^5.5.2",
     "react-colorful": "^5.6.1",
     "react-dates": "^21.8.0",
-    "web-share-wrapper": "^0.2.2"
+    "web-share-wrapper": "^0.2.2",
+    "wouter": "^3.9.0"
   },
   "packageManager": "yarn@4.1.0"
 }

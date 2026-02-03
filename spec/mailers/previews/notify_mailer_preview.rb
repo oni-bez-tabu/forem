@@ -91,4 +91,28 @@ class NotifyMailerPreview < ActionMailer::Preview
   def export_email
     NotifyMailer.with(user: User.last, attachment: "attachment").export_email
   end
+
+  def new_chat_message_email
+    to_user = User.find(11) || User.last
+    from_user = User.find(1) || User.first
+    NotifyMailer.with(
+      to_user: to_user,
+      from_user: from_user,
+      thread_id: "thread_test_123",
+      thread_name: nil,
+      thread_type: "direct"
+    ).new_chat_message_email
+  end
+
+  def new_chat_message_email_group
+    to_user = User.find(11) || User.last
+    from_user = User.find(1) || User.first
+    NotifyMailer.with(
+      to_user: to_user,
+      from_user: from_user,
+      thread_id: "thread_test_456",
+      thread_name: "Grupa testowa",
+      thread_type: "group"
+    ).new_chat_message_email
+  end
 end

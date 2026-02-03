@@ -38,6 +38,10 @@
       <%= f.label :email_mention_notifications, class: "crayons-field__label" %>
     </div>
     <div class="crayons-field crayons-field--checkbox">
+      <%= f.check_box :email_chat_notifications, class: "crayons-checkbox" %>
+      <%= f.label :email_chat_notifications, t("helpers.label.users_notification_setting.email_chat_notifications"), class: "crayons-field__label" %>
+    </div>
+    <div class="crayons-field crayons-field--checkbox">
       <%= f.check_box :email_badge_notifications, class: "crayons-checkbox" %>
       <%= f.label :email_badge_notifications,  class: "crayons-field__label" %>
     </div>
@@ -61,6 +65,10 @@
     <div class="crayons-field crayons-field--checkbox">
       <%= f.check_box :mobile_mention_notifications, class: "crayons-checkbox" %>
       <%= f.label :mobile_mention_notifications, t("helpers.label.users_notification_setting.mobile_mention_notifications"), class: "crayons-field__label" %>
+    </div>
+    <div class="crayons-field crayons-field--checkbox">
+      <%= f.check_box :mobile_chat_notifications, class: "crayons-checkbox" %>
+      <%= f.label :mobile_chat_notifications, t("helpers.label.users_notification_setting.mobile_chat_notifications"), class: "crayons-field__label" %>
     </div>
   </div>
 

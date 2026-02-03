@@ -29,6 +29,32 @@
     top: calc(var(--su-1) * -1);
     right: 0;
     box-shadow: 0 0 0 2px var(--header-bg);
+    // Ujednolicenie rozmiaru badge'y w topbarze (wiadomości/powiadomienia),
+    // żeby jednocyfrowy licznik nie wyglądał na większy od dwucyfrowego.
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 18px;
+    min-width: 18px;
+    padding: 0 6px;
+    border-radius: 999px;
+    line-height: 1;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  // Ikona wiadomości jest bardziej "prostokątna", więc badge wygląda lepiej
+  // gdy jest minimalnie niżej niż pozostałe.
+  #messages-unread-count {
+    top: calc((var(--su-1) * -1) + 4px);
+  }
+
+  // Mniejszy padding (tło) linku wiadomości, żeby wizualnie dopasować go
+  // do ikon powiadomień i moderacji – ikona zostaje tej samej wielkości.
+  #messages-link.c-link--icon-alone {
+    padding: var(--su-1);
   }
 }
 

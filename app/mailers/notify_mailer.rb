@@ -56,6 +56,27 @@ class NotifyMailer < ApplicationMailer
          subject: I18n.t("mailers.notify_mailer.new_mention", name: @mentioner.name, type: @mentionable_type))
   end
 
+  def new_chat_message_email
+    @to_user = params[:to_user]
+    @from_user = params[:from_user]
+    @thread_id = params[:thread_id]
+    @thread_name = params[:thread_name]
+    @thread_type = params[:thread_type]
+
+    return if @to_user.email.blank?
+    return if RateLimitChecker.new.limit_by_email_recipient_address(@to_user.email)
+
+    @unsubscribe = generate_unsubscribe_token(@to_user.id, :email_chat_notifications)
+    @chat_path = if @thread_type == "group" && @thread_name.present?
+                   "/message/#{@thread_name}"
+                 else
+                   "/message/@#{@from_user.username}"
+                 end
+
+    mail(to: @to_user.email,
+         subject: I18n.t("mailers.notify_mailer.new_chat_message", name: @from_user.name.presence || @from_user.username))
+  end
+
   def unread_notifications_email
     @user = params[:user]
     return if RateLimitChecker.new.limit_by_email_recipient_address(@user.email)

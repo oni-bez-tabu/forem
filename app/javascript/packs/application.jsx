@@ -110,6 +110,7 @@ function getPageEntries() {
   return Object.entries({
     'notifications-index': document.getElementById('notifications-link'),
     'moderations-index': document.getElementById('moderation-link'),
+    'messages-show': document.getElementById('messages-link'),
     'articles_search-index': document.getElementById('search-link'),
   });
 }

@@ -59,6 +59,9 @@ pl:
         new: 💬 Nowy Komentarz
       new_mention:
         new: 🗣️ Nowa Wzmianka
+      chat_message:
+        new: 💬 Nowa Wiadomość
+        body: "%{user} wysyła Ci wiadomość"
     payments:
       customer:
         usd: usd

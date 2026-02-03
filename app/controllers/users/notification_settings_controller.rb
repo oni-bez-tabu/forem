@@ -5,6 +5,7 @@ module Users
     after_action :verify_authorized
 
     ALLOWED_PARAMS = %i[email_badge_notifications
+                        email_chat_notifications
                         email_comment_notifications
                         email_community_mod_newsletter
                         email_digest_periodic
@@ -14,6 +15,7 @@ module Users
                         email_newsletter
                         email_tag_mod_newsletter
                         email_unread_notifications
+                        mobile_chat_notifications
                         mobile_comment_notifications
                         mobile_mention_notifications
                         mod_roundrobin_notifications
