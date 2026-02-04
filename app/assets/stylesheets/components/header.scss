@@ -45,12 +45,6 @@
     }
   }
 
-  // Ikona wiadomości jest bardziej "prostokątna", więc badge wygląda lepiej
-  // gdy jest minimalnie niżej niż pozostałe.
-  #messages-unread-count {
-    top: calc((var(--su-1) * -1) + 4px);
-  }
-
   // Mniejszy padding (tło) linku wiadomości, żeby wizualnie dopasować go
   // do ikon powiadomień i moderacji – ikona zostaje tej samej wielkości.
   #messages-link.c-link--icon-alone {

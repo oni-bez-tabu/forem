@@ -112,7 +112,9 @@ function setCurrentUserToNavBar(user) {
   }
 
   const educoinPoints = document.getElementById('nav-coins-count');
-  educoinPoints.textContent = user.credits_count;
+  if (educoinPoints) {
+    educoinPoints.textContent = `${user.credits_count}\u00A0`;
+  }
 }
 
 function initializeBaseUserData() {
