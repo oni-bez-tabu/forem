@@ -1,5 +1,7 @@
 module Messages
   class SessionsController < ApplicationController
+    prepend_before_action :current_user_by_token, only: [:show]
+    skip_before_action :verify_authenticity_token, if: :token_authenticated?
     before_action :authenticate_user!
     respond_to :json
 

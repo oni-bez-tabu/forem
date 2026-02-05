@@ -1,4 +1,6 @@
 class SearchController < ApplicationController
+  prepend_before_action :current_user_by_token, only: [:usernames]
+  skip_before_action :verify_authenticity_token, if: :token_authenticated?
   before_action :authenticate_user!, only: %i[tags reactions usernames]
   before_action :format_integer_params
   before_action :sanitize_params, only: %i[listings reactions feed_content]
