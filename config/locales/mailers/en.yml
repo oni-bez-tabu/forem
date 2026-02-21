@@ -23,6 +23,7 @@ en:
       subforem_moderator: "Gratulacje! Jesteś teraz moderatorem dla %{subforem_name}"
       new_follower: właśnie zaczął Cię obserwować na %{community}
       new_mention: "%{name} właśnie wspomniał/a o Tobie"
+      new_chat_message: "%{name} wysyła Ci wiadomość"
       org_deleted: "%{community} - Potwierdzenie usunięcia organizacji"
       new_reply: "%{name} odpowiedział/a"
       feedback: Dziękujemy za zgłoszenie na %{community}

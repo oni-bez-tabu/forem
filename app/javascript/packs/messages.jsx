@@ -298,6 +298,14 @@ function ChatWithRouting({ currentUserId, client, tobyAlertUrl }) {
   );
 }
 
+function isBlockedMobileUA() {
+  const ua = navigator.userAgent;
+  const isForemNative = /ForemWebView|DEV-Native-ios|DEV-Native-android/i.test(ua);
+  if (isForemNative) return false;
+  const isMobile = /iPhone|iPad|Android.*Mobile/i.test(ua);
+  return isMobile;
+}
+
 export function App() {
   const [state, setState] = useState({
     client: null,
@@ -420,6 +428,18 @@ export function App() {
     const el = document.getElementById("chat-app");
     return el?.dataset?.tobyAlertUrl || "";
   }, []);
+
+  if (isBlockedMobileUA()) {
+    return (
+      <div style={containerStyle}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", padding: "24px", textAlign: "center" }}>
+          <p style={{ fontSize: "16px", fontWeight: 600, color: "#1f2937" }}>
+             Zaktualizuj aplikację mobilną, aby korzystać z modułu wiadomości.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (state.loading) {
     return (
