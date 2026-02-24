@@ -17,7 +17,7 @@ module Messages
         return render json: { error: "Invalid payload" }, status: :bad_request
       end
 
-      Rails.logger.info "Chat webhook accepted: event=#{payload['event']} toUser=#{payload.dig('toUser', 'id')} fromUser=#{payload.dig('fromUser', 'id')}"
+      Rails.logger.info "Chat webhook accepted: event=#{payload['event']} fromUser=#{payload.dig('fromUser', 'id')} recipients_count=#{payload['recipients']&.size}"
 
       # Enqueue worker to process notification asynchronously
       Messages::ChatNotificationWorker.perform_async(payload.to_json)
@@ -125,19 +125,16 @@ module Messages
       return false unless payload["thread"].is_a?(Hash)
       return false unless payload["message"].is_a?(Hash)
       return false unless payload["fromUser"].is_a?(Hash)
-      return false unless payload["toUser"].is_a?(Hash)
 
-      # Validate required thread fields
       return false if payload.dig("thread", "id").blank?
       return false if payload.dig("thread", "type").blank?
-
-      # Validate required message fields
       return false if payload.dig("message", "id").blank?
       return false if payload.dig("message", "type").blank?
-
-      # Validate required user fields
       return false if payload.dig("fromUser", "id").blank?
-      return false if payload.dig("toUser", "id").blank?
+
+      recipients = payload["recipients"]
+      return false unless recipients.is_a?(Array)
+      return false unless recipients.any? { |r| r.is_a?(Hash) && r["id"].present? }
 
       true
     end

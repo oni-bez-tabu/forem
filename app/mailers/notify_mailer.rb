@@ -67,8 +67,8 @@ class NotifyMailer < ApplicationMailer
     return if RateLimitChecker.new.limit_by_email_recipient_address(@to_user.email)
 
     @unsubscribe = generate_unsubscribe_token(@to_user.id, :email_chat_notifications)
-    @chat_path = if @thread_type == "group" && @thread_name.present?
-                   "/message/#{@thread_name}"
+    @chat_path = if @thread_type == "group" && @thread_id.present?
+                   "/message/#{@thread_id}"
                  else
                    "/message/@#{@from_user.username}"
                  end

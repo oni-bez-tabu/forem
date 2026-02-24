@@ -299,11 +299,7 @@ function ChatWithRouting({ currentUserId, client, tobyAlertUrl }) {
 }
 
 function isBlockedMobileUA() {
-  const ua = navigator.userAgent;
-  const isForemNative = /ForemWebView|DEV-Native-ios|DEV-Native-android/i.test(ua);
-  if (isForemNative) return false;
-  const isMobile = /iPhone|iPad|Android.*Mobile/i.test(ua);
-  return isMobile;
+  return /ForemWebView/i.test(navigator.userAgent);
 }
 
 export function App() {
