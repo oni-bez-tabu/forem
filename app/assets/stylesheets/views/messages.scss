@@ -94,4 +94,38 @@
   .group:hover .group-hover\:opacity-100 {
     opacity: 1 !important;
   }
+
+  // Nadpisanie klas padding - Crayons nadpisuje wartości Tailwind
+  .px-2 {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+
+  .py-6 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .pb-28 {
+    padding-bottom: 7rem !important;
+  }
+
+  @media (min-width: 640px) {
+    .sm\:px-3 {
+      padding-left: 0.75rem !important;
+      padding-right: 0.75rem !important;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .md\:px-4 {
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+    }
+  }
+
+  // Padding dla listy wątków - ostatni wątek był obcinany bez padding-bottom
+  .overflow-y-auto.flex-col {
+    padding-bottom: 4rem !important;
+  }
 }

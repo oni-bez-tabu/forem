@@ -52,8 +52,7 @@ function TobyBanner({ tobyAlertUrl }) {
       style={{
         marginTop: "auto",
         paddingTop: "24px",
-        marginBottom: "24px",
-        paddingBottom: "50px",
+        paddingBottom: "16px",
         display: "flex",
         justifyContent: "center",
         paddingLeft: "16px",
