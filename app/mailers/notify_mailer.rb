@@ -59,6 +59,7 @@ class NotifyMailer < ApplicationMailer
   def new_chat_message_email
     @to_user = params[:to_user]
     @from_user = params[:from_user]
+    @user = @to_user
     @thread_id = params[:thread_id]
     @thread_name = params[:thread_name]
     @thread_type = params[:thread_type]

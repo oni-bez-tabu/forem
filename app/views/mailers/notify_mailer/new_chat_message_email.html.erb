@@ -1,19 +1,36 @@
-<head>
-  <style type="text/css">
-    img {
-      max-width:100%;
-      height:auto;
-      border:none
-    }
-  </style>
-</head>
+<%= render 'mailers/notify_mailer/email_header', avatar_user: @from_user do %>
+  <table style="width:100%;" cellpadding="0" cellspacing="0">
+    <!-- Heading -->
+    <tr>
+      <td align="center" bgcolor="#FFFFFF" style="padding: 25px 2px 35px;">
+        <h1 style="margin: 0; font-size: 24px; color: #333;">
+          <%= @from_user.name.presence || @from_user.username %> wysyła Ci wiadomość na <%= community_name %>
+        </h1>
+      </td>
+    </tr>
 
-<h2 style="font-size:25px;">
-  <a href="<%= user_url(@from_user) %>"><%= @from_user.name.presence || @from_user.username %></a> wysyła Ci wiadomość
-</h2>
+    <!-- Content box (gray background) -->
+    <tr>
+      <td>
+        <table style="width:100%;" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="width: 30px"></td>
+            <td bgcolor="#F8F8F8" style="padding: 8px; text-align: left; color: #3a3c3d; font-size: 16px; border-radius: 8px;">
+              Masz nową wiadomość w czacie.
+            </td>
+            <td style="width: 30px"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
 
-<p style="font-size:16px;color:#666;margin:20px 0;">
-  Masz nową wiadomość w czacie.
-</p>
-
-<a style="background:#3c7dc1;color:white;padding:5px 14px;border-radius:3px;text-decoration:none;display:inline-block;margin-top:4px;" href='<%= app_url(@chat_path) %>'>Otwórz czat na <%= community_name %></a>
+    <!-- CTA -->
+    <tr>
+      <td style="padding: 16px 8px; text-align: center;">
+        <a style="background:<%= Settings::UserExperience.primary_brand_color_hex %>;color:white;padding:12px;border-radius:8px;text-decoration:none;display:block;margin-top:4px;font-size:20px;font-weight:bold" href='<%= app_url(@chat_path) %>'>
+          Otwórz czat na <%= community_name %>
+        </a>
+      </td>
+    </tr>
+  </table>
+<% end %>
