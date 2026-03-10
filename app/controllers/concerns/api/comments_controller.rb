@@ -4,6 +4,7 @@ module Api
 
     ATTRIBUTES_FOR_SERIALIZATION = %i[
       id processed_html user_id ancestry deleted hidden_by_commentable_user created_at
+      body_markdown commentable_id commentable_type
     ].freeze
     private_constant :ATTRIBUTES_FOR_SERIALIZATION
 
@@ -41,7 +42,28 @@ module Api
       set_surrogate_key_header Comment.table_key, edge_cache_keys(tree_with_root_comment)
     end
 
+    def create
+      authenticate_with_api_key!
+      comment = CommentCreator.build_comment(comment_params, current_user: @user)
+      authorize comment
+
+      if comment.save
+        render json: {
+          id: comment.id,
+          id_code: comment.id_code_generated,
+          body_markdown: comment.body_markdown,
+          created_at: comment.created_at.utc.iso8601,
+        }, status: :created
+      else
+        render json: { error: comment.errors_as_sentence }, status: :unprocessable_entity
+      end
+    end
+
     private
+
+    def comment_params
+      params.require(:comment).permit(:body_markdown, :commentable_id, :commentable_type, :parent_id)
+    end
 
     # ancestry wraps a single or multiple trees of comments into a single hash,
     # in the case of an article comments, the hash has multiple keys (the root comments),

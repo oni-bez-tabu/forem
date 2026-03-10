@@ -15,7 +15,8 @@ resources :articles, only: %i[index show create update] do
 end
 
 resources :subforems, only: [:index]
-resources :comments, only: %i[index show]
+resources :comments, only: %i[index show create]
+resources :notifications, only: [:index]
 resources :videos, only: [:index]
 resources :podcast_episodes, only: [:index]
 resources :users, only: %i[show] do
