@@ -1,10 +1,927 @@
-.talks-container {
-  position: relative;
-  min-height: 200px;
+@import 'config/import';
+
+// ══════════════════════════════════════════════
+// TALKS MODULE – scoped styles, nothing global
+// ══════════════════════════════════════════════
+
+// ── Footer hiding (scoped to talks page) ──
+#page-content.talks + #footer { display: none; }
+
+// ── Page-level layout overrides ──
+#page-content.talks {
+  max-width: none;
+}
+#page-content.talks #page-content-inner {
+  padding: 0;
 }
 
-.loader-overlay {
+// ══════════════════════════════════════════════
+// TALKS LANDING – all styles scoped here
+// ══════════════════════════════════════════════
+.talks-landing {
+  // ── Talks-specific CSS variables (light theme defaults) ──
+  --talks-purple: #7c3aed;
+  --talks-accent: #a855f7;
+  --talks-pink: #e040a0;
+  --talks-live: #ef4444;
+  --talks-bar-h: 68px;
+
+  // Light theme: use Forem vars + light-specific overrides
+  --talks-bg: var(--body-bg);
+  --talks-card: var(--card-bg);
+  --talks-border: var(--card-border);
+  --talks-text: var(--body-color);
+  --talks-muted: var(--card-color-tertiary);
+  --talks-sub-color: var(--card-color-secondary);
+  --talks-vignette-rgb: 245, 245, 248;
+  --talks-dropdown-bg: var(--card-bg);
+  --talks-dropdown-border: var(--card-border);
+  --talks-step-bg: rgba(0,0,0,0.025);
+  --talks-step-hover-bg: rgba(168,85,247,0.06);
+  --talks-bar-bg: rgba(255,255,255,0.85);
+  --talks-bar-shadow: rgba(0,0,0,0.08);
+  --talks-dots-bg: rgba(0,0,0,0.05);
+  --talks-dots-hover-bg: rgba(0,0,0,0.09);
+  --talks-dots-border: rgba(0,0,0,0.1);
+  --talks-dd-item-color: var(--card-color-secondary);
+  --talks-dd-item-hover-bg: rgba(168,85,247,0.08);
+  --talks-dd-sep: rgba(0,0,0,0.06);
+  --talks-dd-icon-bg: rgba(0,0,0,0.05);
+  --talks-rc-host-color: var(--card-color-tertiary);
+  --talks-rc-timer-color: var(--card-color-tertiary);
+  --talks-divider-color: rgba(0,0,0,0.07);
+  --talks-canvas-alpha-mult: 0.5;
+  --talks-av-border-color: var(--card-bg);
+  --talks-room-card-bg: linear-gradient(130deg, rgba(109,40,217,0.1) 0%, rgba(224,64,160,0.06) 100%);
+  --talks-room-card-border: rgba(168,85,247,0.25);
+  --talks-room-card-shadow: 0 0 30px rgba(109,40,217,0.1), inset 0 1px 0 rgba(255,255,255,0.1);
+
+  position: relative;
+  min-height: calc(100vh - var(--header-height, 56px));
+  overflow: hidden;
+  font-family: var(--ff-sans-serif);
+  color: var(--talks-text);
+  background: var(--talks-bg);
+}
+
+// ── Dark theme overrides ──
+body.dark-theme .talks-landing {
+  --talks-vignette-rgb: 8, 8, 14;
+  --talks-step-bg: rgba(255,255,255,0.025);
+  --talks-step-hover-bg: rgba(168,85,247,0.04);
+  --talks-bar-bg: rgba(8,8,14,0.75);
+  --talks-bar-shadow: rgba(0,0,0,0.5);
+  --talks-dots-bg: rgba(255,255,255,0.05);
+  --talks-dots-hover-bg: rgba(255,255,255,0.09);
+  --talks-dots-border: rgba(255,255,255,0.07);
+  --talks-dd-item-color: rgba(240,240,248,0.75);
+  --talks-dd-item-hover-bg: rgba(168,85,247,0.1);
+  --talks-dd-sep: rgba(255,255,255,0.06);
+  --talks-dd-icon-bg: rgba(255,255,255,0.05);
+  --talks-rc-host-color: rgba(240,240,248,0.45);
+  --talks-rc-timer-color: rgba(240,240,248,0.35);
+  --talks-divider-color: rgba(255,255,255,0.07);
+  --talks-canvas-alpha-mult: 1;
+  --talks-av-border-color: #0d0d18;
+  --talks-room-card-bg: linear-gradient(130deg, rgba(109,40,217,0.18) 0%, rgba(224,64,160,0.11) 100%);
+  --talks-room-card-border: rgba(168,85,247,0.35);
+  --talks-room-card-shadow: 0 0 50px rgba(109,40,217,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+// ══════════════════════════════════════════════
+// CANVAS & VIGNETTE
+// ══════════════════════════════════════════════
+.talks-canvas-bg {
   position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.talks-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 50%, transparent 15%, rgba(var(--talks-vignette-rgb), 0.82) 100%),
+    linear-gradient(to bottom, rgba(var(--talks-vignette-rgb), 0.55) 0%, rgba(var(--talks-vignette-rgb), 0.15) 45%, rgba(var(--talks-vignette-rgb), 0.55) 100%);
+}
+
+// ══════════════════════════════════════════════
+// PAGE GRID
+// ══════════════════════════════════════════════
+.talks-page {
+  position: relative;
+  z-index: 3;
+  height: calc(100vh - var(--header-height, 56px) - var(--talks-bar-h));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 24px 36px 16px;
+  gap: 32px;
+  align-items: center;
+
+  @media (max-width: $breakpoint-m) {
+    grid-template-columns: 1fr;
+    padding: 16px 16px calc(var(--talks-bar-h) + 16px);
+    gap: 20px;
+    height: auto;
+    min-height: calc(100vh - var(--header-height, 56px));
+    align-items: start;
+  }
+}
+
+// ══════════════════════════════════════════════
+// ACTIVE TALK OVERLAY
+// ══════════════════════════════════════════════
+.talks-active-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  pointer-events: all;
+}
+
+// ══════════════════════════════════════════════
+// LEFT COLUMN
+// ══════════════════════════════════════════════
+.talks-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.talks-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--talks-accent);
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: talks-up 0.5s 0.05s forwards;
+}
+
+.talks-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--talks-accent);
+  box-shadow: 0 0 8px var(--talks-accent);
+  animation: talks-blink 2s infinite;
+}
+
+.talks-landing h1 {
+  font-family: 'Syne', var(--ff-sans-serif);
+  font-size: clamp(28px, 2.6vw, 42px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: talks-up 0.55s 0.12s forwards;
+
+  em {
+    font-style: normal;
+    background: linear-gradient(135deg, #c084fc 0%, #e040a0 55%, #fb923c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @media (max-width: $breakpoint-m) {
+    font-size: clamp(24px, 5.5vw, 34px);
+  }
+}
+
+.talks-sub {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--talks-sub-color);
+  max-width: 380px;
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: talks-up 0.55s 0.18s forwards;
+
+  @media (max-width: $breakpoint-m) {
+    font-size: 12px;
+    max-width: none;
+  }
+}
+
+// ── Steps ──
+.talks-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  animation: talks-up 0.6s 0.26s forwards;
+}
+
+.talks-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--talks-step-bg);
+  border: 1px solid var(--talks-border);
+  border-radius: 10px;
+  transition: border-color 0.2s, background 0.2s;
+
+  &:hover {
+    border-color: rgba(168,85,247,0.22);
+    background: var(--talks-step-hover-bg);
+  }
+}
+
+.talks-sn {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', var(--ff-sans-serif);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--talks-accent);
+  background: rgba(168,85,247,0.1);
+  border: 1px solid rgba(168,85,247,0.18);
+}
+
+.talks-st {
+  strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--talks-text);
+    margin-bottom: 1px;
+  }
+
+  span {
+    font-size: 11px;
+    color: var(--talks-muted);
+  }
+}
+
+// ══════════════════════════════════════════════
+// RIGHT COLUMN
+// ══════════════════════════════════════════════
+.talks-right {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height, 56px) - var(--talks-bar-h) - 48px);
+
+  @media (max-width: $breakpoint-m) {
+    height: auto;
+    min-height: 260px;
+  }
+}
+
+// ── Section label ──
+.talks-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--talks-accent);
+  margin-bottom: 10px;
+  flex-shrink: 0;
+  opacity: 0;
+  animation: talks-up 0.5s 0.32s forwards;
+}
+
+.talks-section-label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--talks-accent);
+  box-shadow: 0 0 8px var(--talks-accent);
+}
+
+// ══════════════════════════════════════════════
+// ROOM CARD
+// ══════════════════════════════════════════════
+.talks-room-card {
+  background: var(--talks-room-card-bg);
+  border: 1px solid var(--talks-room-card-border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  position: relative;
+  overflow: visible;
+  box-shadow: var(--talks-room-card-shadow);
+  flex-shrink: 0;
+  opacity: 0;
+  animation: talks-up 0.6s 0.4s forwards;
+  margin-bottom: 8px;
+
+  &--menu-open {
+    z-index: 100;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 18px;
+    right: 18px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(168,85,247,0.65), rgba(224,64,160,0.65), transparent);
+  }
+}
+
+.talks-live-pill {
+  position: absolute;
+  top: -10px;
+  left: 18px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(239,68,68,0.16);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 100px;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #ff7070;
+
+  &::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--talks-live);
+    animation: talks-blink 1.4s infinite;
+  }
+}
+
+.talks-rc-left {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.talks-host-av {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 4px 18px rgba(109,40,217,0.38);
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+  }
+
+  &--live::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--talks-live);
+    border: 2px solid var(--talks-av-border-color);
+    animation: talks-blink 1.8s infinite;
+  }
+}
+
+.talks-rc-info {
+  min-width: 0;
+}
+
+.talks-rc-title {
+  font-family: 'Syne', var(--ff-sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--talks-text);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+
+  @media (max-width: $breakpoint-m) {
+    max-width: 160px;
+  }
+}
+
+.talks-rc-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.talks-rc-host {
+  color: var(--talks-rc-host-color);
+}
+
+.talks-rc-timer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--talks-rc-timer-color);
+  font-variant-numeric: tabular-nums;
+
+  svg {
+    opacity: 0.5;
+  }
+}
+
+.talks-rc-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+// ── Join button ──
+.talks-btn-join {
+  padding: 9px 20px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--talks-purple), var(--talks-accent));
+  border: none;
+  color: #fff;
+  font-family: 'Syne', var(--ff-sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 18px rgba(109,40,217,0.4);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(109,40,217,0.6);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// ══════════════════════════════════════════════
+// 3-DOT MENU
+// ══════════════════════════════════════════════
+.talks-dots-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--talks-dots-bg);
+  border: 1px solid var(--talks-dots-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s;
+  position: relative;
+  color: var(--talks-text);
+
+  &:hover {
+    background: var(--talks-dots-hover-bg);
+    border-color: var(--talks-dots-border);
+  }
+
+  svg {
+    pointer-events: none;
+  }
+}
+
+.talks-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 200;
+  background: #fff;
+  border: 1px solid var(--talks-dropdown-border);
+  border-radius: 13px;
+  padding: 6px;
+  min-width: 200px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.06);
+  opacity: 0;
+  transform: translateY(6px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.18s, transform 0.18s;
+
+  &.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+  }
+
+  body.dark-theme & {
+    background: #1c1c28;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(168,85,247,0.1);
+  }
+}
+
+.talks-dd-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--talks-dd-item-color);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+
+  &:hover {
+    background: var(--talks-dd-item-hover-bg);
+    color: var(--talks-text);
+  }
+
+  &.danger {
+    color: rgba(239,68,68,0.75);
+
+    &:hover {
+      background: rgba(239,68,68,0.1);
+      color: #ff7070;
+    }
+  }
+}
+
+.talks-dd-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--talks-dd-icon-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.talks-dd-sep {
+  height: 1px;
+  background: var(--talks-dd-sep);
+  margin: 4px 6px;
+}
+
+// ══════════════════════════════════════════════
+// DIVIDER
+// ══════════════════════════════════════════════
+.talks-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--talks-divider-color), transparent);
+  margin: 10px 0;
+  flex-shrink: 0;
+  opacity: 0;
+  animation: talks-up 0.5s 0.46s forwards;
+}
+
+// ══════════════════════════════════════════════
+// VIDEO SECTION (wrapper for conditional hiding)
+// ══════════════════════════════════════════════
+.talks-video-section {
+  display: contents;
+
+  &--hidden {
+    display: none;
+
+    @media (max-width: $breakpoint-m) {
+      display: contents;
+    }
+  }
+}
+
+// ══════════════════════════════════════════════
+// VIDEO PLACEHOLDER
+// ══════════════════════════════════════════════
+.talks-video-wrap {
+  flex: 1;
+  min-height: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--talks-border);
+  background: var(--talks-card);
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: talks-up 0.6s 0.52s forwards;
+
+  @media (max-width: $breakpoint-m) {
+    flex: none;
+    aspect-ratio: 16 / 9;
+  }
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+.talks-video-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.talks-video-ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background:
+    linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 40%, transparent 70%),
+    radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.35), transparent 70%);
+}
+
+.talks-play-ring {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--talks-purple), var(--talks-pink));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  animation: talks-breathe 3s ease-in-out infinite;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.talks-triangle {
+  width: 0;
+  height: 0;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-left: 19px solid #fff;
+  margin-left: 4px;
+}
+
+.talks-vid-cap {
+  text-align: center;
+
+  strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    margin-bottom: 3px;
+  }
+
+  span {
+    font-size: 12px;
+    color: var(--talks-muted);
+  }
+}
+
+// ══════════════════════════════════════════════
+// SCHEDULED SECTION
+// ══════════════════════════════════════════════
+.talks-scheduled-section {
+  margin-top: 14px;
+  flex-shrink: 0;
+}
+
+.talks-scheduled-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--talks-muted);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+// ══════════════════════════════════════════════
+// STICKY BOTTOM BAR
+// ══════════════════════════════════════════════
+.talks-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  height: var(--talks-bar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 36px;
+  background: var(--talks-bar-bg);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border-top: 1px solid rgba(168,85,247,0.15);
+  box-shadow: 0 -1px 0 rgba(168,85,247,0.08), 0 -20px 60px var(--talks-bar-shadow);
+  opacity: 0;
+  animation: talks-slideUp 0.6s 0.7s forwards;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(168,85,247,0.5), rgba(224,64,160,0.5), transparent);
+  }
+
+  @media (max-width: $breakpoint-m) {
+    padding: 0 16px;
+    height: 60px;
+  }
+}
+
+.talks-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 160px;
+
+  @media (max-width: $breakpoint-m) {
+    display: none;
+  }
+}
+
+.talks-bar-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--talks-live);
+  box-shadow: 0 0 8px var(--talks-live);
+  animation: talks-blink 1.6s infinite;
+  flex-shrink: 0;
+}
+
+.talks-bar-live-text {
+  font-size: 12px;
+  color: var(--talks-muted);
+  white-space: nowrap;
+
+  span {
+    color: var(--talks-text);
+    font-weight: 600;
+    opacity: 0.55;
+  }
+}
+
+.talks-bar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @media (max-width: $breakpoint-m) {
+    position: static;
+    transform: none;
+    width: 100%;
+  }
+}
+
+// ── CTA button in bar ──
+.talks-btn-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6d28d9 0%, #a855f7 45%, #e040a0 100%);
+  border: none;
+  color: #fff;
+  font-family: 'Syne', var(--ff-sans-serif);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow:
+    0 0 0 1px rgba(168,85,247,0.3),
+    0 4px 24px rgba(109,40,217,0.55),
+    0 0 60px rgba(109,40,217,0.18);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.14), transparent 60%);
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 0 0 1px rgba(168,85,247,0.5), 0 8px 36px rgba(109,40,217,0.7), 0 0 100px rgba(109,40,217,0.28);
+  }
+
+  &:active {
+    transform: translateY(0) scale(1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  @media (max-width: $breakpoint-m) {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+.talks-btn-bar-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.talks-btn-bar-wrap {
+  position: relative;
+  display: inline-block;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 18px;
+    border: 1px solid rgba(168,85,247,0.3);
+    animation: talks-ringPulse 2.5s ease-out infinite;
+    pointer-events: none;
+  }
+
+  &::after {
+    animation-delay: 1.25s;
+  }
+
+  @media (max-width: $breakpoint-m) {
+    display: block;
+    width: 100%;
+  }
+}
+
+.talks-bar-right {
+  display: flex;
+  align-items: center;
+  min-width: 160px;
+  justify-content: flex-end;
+  opacity: 0.6;
+
+  @media (max-width: $breakpoint-m) {
+    display: none;
+  }
+}
+
+// ══════════════════════════════════════════════
+// LOADER (preserved from original)
+// ══════════════════════════════════════════════
+.loader-overlay {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -21,11 +938,69 @@
   text-align: center;
 }
 
+// ══════════════════════════════════════════════
+// LOADING PLACEHOLDER
+// ══════════════════════════════════════════════
+.talks-loading-placeholder {
+  padding: 20px;
+}
+
+// ══════════════════════════════════════════════
+// EMPTY STATE
+// ══════════════════════════════════════════════
+.talks-empty-state {
+  text-align: center;
+  padding: 20px;
+  color: var(--talks-muted);
+  font-size: 14px;
+}
+
+// ══════════════════════════════════════════════
+// ANIMATIONS
+// ══════════════════════════════════════════════
+@keyframes talks-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes talks-slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes talks-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+@keyframes talks-breathe {
+  0%, 100% { box-shadow: 0 0 0 10px rgba(109,40,217,0.12), 0 0 44px rgba(109,40,217,0.38); }
+  50%      { box-shadow: 0 0 0 20px rgba(109,40,217,0.05), 0 0 70px rgba(109,40,217,0.55); }
+}
+
+@keyframes talks-ringPulse {
+  0%   { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.18); }
+}
+
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+// ══════════════════════════════════════════════
+// REDUCED MOTION
+// ══════════════════════════════════════════════
+@media (prefers-reduced-motion: reduce) {
+  .talks-landing *,
+  .talks-landing *::before,
+  .talks-landing *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  50% {
-    opacity: .5;
+
+  .talks-canvas-bg {
+    display: none;
   }
 }
