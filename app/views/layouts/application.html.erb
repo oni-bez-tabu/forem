@@ -89,7 +89,14 @@
         
         <%# First script to run no matter what %>
         <script>
-          if ((navigator.userAgent && navigator.userAgent.includes('ForemWebView/1')) || window.frameElement) {
+          if (/ForemWebView/i.test(navigator.userAgent || '')) {
+            document.body.classList.add("hidden-shell");
+            delete document.body.dataset.gaTracking;
+            delete document.body.dataset.ga4TrackingId;
+            delete document.body.dataset.cookieyesApiKey;
+            delete document.body.dataset.cookieBannerUserContext;
+            delete document.body.dataset.cookieBannerPlatformContext;
+          } else if (window.frameElement) {
             document.body.classList.add("hidden-shell");
           }
         </script>
