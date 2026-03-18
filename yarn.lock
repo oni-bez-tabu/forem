@@ -10104,6 +10104,9 @@ __metadata:
     svgo: "npm:2.8.0"
     web-share-wrapper: "npm:^0.2.2"
     wouter: "npm:^3.9.0"
+  dependenciesMeta:
+    canvas:
+      optional: true
   languageName: unknown
   linkType: soft
 
