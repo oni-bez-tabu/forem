@@ -1,0 +1,660 @@
+<% title "Toby AI" %>
+<% set_surrogate_key_header "tobyai" %>
+<%= content_for :page_meta do %>
+  <meta name="description" content="Nie wiesz, o co zapytać na Nietabu.pl? Wybierz temat rozmowy i zacznij bez tabu o edukacji seksualnej, relacjach, BDSM czy związkach. Zapraszamy">
+<% end %>
+<% splash_questions = [
+  "Jak ogarnac stres przed pierwsza wizyta w klubie?",
+  "Jak rozmawiac o granicach przed pierwszym spotkaniem?",
+  "Jak zaczac rozmowe o prezerwatywach i badaniach?",
+  "Co zabrac na pierwsza impreze i jak sie przygotowac?",
+  "Jak nie brac odmowy do siebie i zostac w kontakcie z emocjami?",
+  "Jak ustalic zasady w otwartym zwiazku, zeby bylo fair?",
+  "Jak zaproponowac nowa fantazje partnerowi lub partnerce?",
+  "Jak elegancko zakonczyc interakcje, gdy to nie ten vibe?",
+  "Jak zadbac o aftercare po bardziej intensywnej sesji?",
+  "Jak zaczac temat kinkow, kiedy trudno o tym mowic?",
+  "Jak poradzic sobie z zazdroscia i niepewnoscia?",
+  "Jak przygotowac sie do spotkania z inna para?",
+  "Jak zadbac o komfort i bezpieczenstwo obu stron?",
+  "Jak rozmawiac o roznym libido bez presji?",
+  "Jak budowac bliskosc i zaufanie krok po kroku?",
+  "Jak delikatnie powiedziec partnerowi, ze chcialabym sprobowac trojkata?",
+  "Macie sprawdzone sposoby na budowanie zaufania przed pierwsza wymiana partnerow?",
+  "Jak zaczac rozmowe o granicach w lozku, zeby nie wyszlo sztywno?",
+  "Czy sa pozycje, ktore polecacie na leniwy weekend, cos przytulnego i bliskiego?",
+  "Jakie macie doswiadczenia z klubami - lepiej isc solo, w parze czy w grupie znajomych?",
+  "Co zrobic, gdy jedno z nas ma nizsze libido i przez to pojawiaja sie spiela?",
+  "Jakie zasady komunikacji ustalacie po imprezie - debrief, check-in, cos jeszcze?",
+  "Jak szczerze mowic o fantazjach, kiedy boje sie oceny?",
+  "Czy ktos poleci starter-kit do BDSM (bezpieczne, podstawowe akcesoria)?",
+  "Jakie sygnaly ostrzegawcze w relacjach otwartych zauwazaliscie u siebie?",
+  "Jak zadbac o aftercare po intensywnej sesji BDSM - co u Was dziala najlepiej?",
+  "Jak pisac pierwsza wiadomosc do pary w aplikacji, zeby nie brzmiec jak copy-paste?",
+  "Ktore pozycje najlepiej sprawdzaja sie przy duzej roznicy wzrostu?",
+  "Jak odmawiac na imprezie, zeby bylo asertywnie, ale milo i bez spiny?",
+  "Co robic, kiedy po pierwszych doswiadczeniach LS pojawia sie niespodziewana zazdrosc?"
+] %>
+
+<%= javascript_include_tag "tobySplash", defer: true %>
+
+<style>
+  body { overflow: hidden; }
+  #footer { display: none; }
+
+  #webchat-container {
+    height: calc(100vh - 56px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #webchat-container iframe {
+    height: 100%;
+    width: 100%;
+    border: none;
+  }
+
+  .toby-splash {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .toby-splash-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: transparent;
+  }
+
+  body.dark-theme .toby-splash-bg {
+    background: rgba(12, 11, 9, 0.9);
+  }
+
+  #outer-splash-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .toby-splash-copy {
+    position: relative;
+    z-index: 2;
+    max-width: min(680px, 94%);
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-family: 'Syne', var(--ff-sans-serif, system-ui, -apple-system, sans-serif);
+    background: linear-gradient(130deg, rgba(109,40,217,0.18) 0%, rgba(224,64,160,0.11) 100%);
+    border: 1px solid rgba(168,85,247,0.35);
+    border-radius: 20px;
+    padding: 44px 36px 36px;
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    box-shadow:
+      0 0 50px rgba(109,40,217,0.2),
+      0 24px 60px rgba(0,0,0,0.18),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+    opacity: 0;
+    animation: tobyFadeUp 0.6s 0.15s forwards;
+  }
+
+  .toby-splash-copy::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(168,85,247,0.65), rgba(224,64,160,0.65), transparent);
+  }
+
+  .toby-splash-copy h1 {
+    font-family: 'Syne', var(--ff-sans-serif, system-ui, sans-serif);
+    font-size: clamp(36px, 6vw, 52px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    margin: 0 0 14px;
+    background: linear-gradient(135deg, #c084fc 0%, #e040a0 55%, #fb923c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .toby-splash-copy p {
+    font-size: clamp(15px, 2vw, 18px);
+    font-weight: 400;
+    line-height: 1.55;
+    margin: 0 auto 28px;
+    max-width: 520px;
+    color: rgba(255,255,255,0.82);
+  }
+
+  .toby-start-btn-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .toby-start-btn-wrap::before,
+  .toby-start-btn-wrap::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 16px;
+    border: 1px solid rgba(168,85,247,0.3);
+    animation: tobyRingPulse 2.5s ease-out infinite;
+    pointer-events: none;
+  }
+
+  .toby-start-btn-wrap::after {
+    animation-delay: 1.25s;
+  }
+
+  .toby-start-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 28px;
+    white-space: nowrap;
+    font-family: 'Syne', var(--ff-sans-serif, system-ui, -apple-system, sans-serif);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+    background: linear-gradient(135deg, #6d28d9 0%, #a855f7 45%, #e040a0 100%);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow:
+      0 0 0 1px rgba(168,85,247,0.3),
+      0 4px 24px rgba(109,40,217,0.55),
+      0 0 60px rgba(109,40,217,0.18);
+  }
+
+  .toby-start-button-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .toby-start-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.14), transparent 60%);
+    pointer-events: none;
+  }
+
+  .toby-splash-stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 18px;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.55);
+    opacity: 0;
+    animation: tobyFadeUp 0.5s 0.4s forwards;
+  }
+
+  .toby-splash-stat strong {
+    color: rgba(255,255,255,0.85);
+  }
+
+  .toby-splash-stat::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    animation: tobyBlink 2s infinite;
+  }
+
+  @keyframes tobyBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  .toby-start-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      0 0 0 1px rgba(168,85,247,0.5),
+      0 8px 36px rgba(109,40,217,0.7),
+      0 0 100px rgba(109,40,217,0.28);
+  }
+
+  .toby-start-button:active {
+    transform: translateY(0) scale(1);
+  }
+
+  @keyframes tobyFadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes tobyRingPulse {
+    0%   { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.18); }
+  }
+
+  @media (max-width: 420px) {
+    .toby-splash-copy {
+      padding: 32px 18px 24px;
+    }
+    .toby-start-button {
+      font-size: 13px;
+      padding: 11px 20px;
+      gap: 8px;
+    }
+    .toby-splash-stat {
+      font-size: 11px;
+    }
+  }
+
+  /* === Light mode splash overrides === */
+  body:not(.dark-theme) .toby-splash-bg {
+    background: rgba(246, 246, 246, 0.55);
+  }
+
+  body:not(.dark-theme) .toby-splash-copy {
+    color: #1a1a2e;
+    background: linear-gradient(130deg, rgba(109,40,217,0.08) 0%, rgba(224,64,160,0.05) 100%);
+    border: 1px solid rgba(168,85,247,0.2);
+    box-shadow:
+      0 0 50px rgba(109,40,217,0.08),
+      0 24px 60px rgba(0,0,0,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+
+  body:not(.dark-theme) .toby-splash-copy::before {
+    background: linear-gradient(90deg, transparent, rgba(168,85,247,0.35), rgba(224,64,160,0.35), transparent);
+  }
+
+  body:not(.dark-theme) .toby-splash-copy h1 {
+    background: linear-gradient(135deg, #7c3aed 0%, #c026d3 55%, #e040a0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  body:not(.dark-theme) .toby-splash-copy p {
+    color: rgba(26,26,46,0.7);
+  }
+
+  body:not(.dark-theme) .toby-splash-stat {
+    color: rgba(26,26,46,0.5);
+  }
+
+  body:not(.dark-theme) .toby-splash-stat strong {
+    color: rgba(26,26,46,0.8);
+  }
+
+  body:not(.dark-theme) .toby-start-btn-wrap::before,
+  body:not(.dark-theme) .toby-start-btn-wrap::after {
+    border-color: rgba(168,85,247,0.2);
+  }
+
+  body:not(.dark-theme) .toby-start-button {
+    box-shadow:
+      0 0 0 1px rgba(168,85,247,0.2),
+      0 4px 24px rgba(109,40,217,0.3),
+      0 0 60px rgba(109,40,217,0.08);
+  }
+
+  body:not(.dark-theme) .toby-start-button:hover {
+    box-shadow:
+      0 0 0 1px rgba(168,85,247,0.35),
+      0 8px 36px rgba(109,40,217,0.4),
+      0 0 100px rgba(109,40,217,0.12);
+  }
+</style>
+
+<div id="webchat-container">
+  <%# === SPLASH OVERLAY (outer page) === %>
+  <div
+    id="startBanner"
+    class="toby-splash"
+    data-questions="<%= json_escape(splash_questions.to_json) %>"
+  >
+    <div class="toby-splash-bg">
+      <canvas id="outer-splash-canvas"></canvas>
+    </div>
+    <div class="toby-splash-copy">
+      <h1>Toby AI</h1>
+      <p>Twoja bezpieczna przestrzen do rozmowy o seksualnosci, relacjach i bliskosci. Anonimowo, bez oceniania.</p>
+      <div class="toby-start-btn-wrap">
+        <% if user_signed_in? %>
+          <button class="toby-start-button" onclick="outerStartTobyChat()">
+            <span class="toby-start-button-icon">💬</span>
+            Rozpocznij rozmowe
+          </button>
+        <% else %>
+          <button class="toby-start-button" onclick="redirectToLogin()">
+            <span class="toby-start-button-icon">💬</span>
+            Zaloguj sie i porozmawiaj
+          </button>
+        <% end %>
+      </div>
+      <div class="toby-splash-stat">Juz ponad <strong>1 000</strong> przeprowadzonych rozmow</div>
+    </div>
+  </div>
+
+  <%# === IFRAME — 1:1 working Botpress code === %>
+  <% if user_signed_in? %>
+  <iframe id="toby-iframe"
+    srcdoc='
+    <!doctype html>
+    <html lang="pl">
+      <head>
+        <style>
+          body {
+            margin: 0;
+            overflow: hidden;
+            font-family: "Inter", sans-serif;
+          }
+
+          body.dark-theme {
+            background: #000;
+            color: #fff;
+          }
+
+          #webchat {
+            height: 100vh;
+            padding: 0;
+          }
+
+          #webchat .bpWebchat {
+            position: unset;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            max-width: 100%;
+            z-index: 10;
+          }
+
+          #webchat .bpFab {
+            display: none;
+          }
+
+          /* === Botpress restyling — talks/splash theme === */
+
+          /* Body background sync with parent theme */
+          body.dark-theme {
+            background: rgb(12,11,9);
+          }
+          body.light-theme {
+            background: #f6f6f6;
+          }
+
+          /* Transparent webchat wrapper */
+          .bpWebchat {
+            background: transparent !important;
+          }
+
+          /* Centered container with gradient border */
+          .bpContainer {
+            max-width: 720px !important;
+            margin: 0 auto !important;
+            border-radius: 20px !important;
+            border: 1px solid rgba(168,85,247,0.3) !important;
+            background: linear-gradient(130deg, rgba(109,40,217,0.06) 0%, rgba(224,64,160,0.04) 100%) !important;
+            box-shadow: 0 0 50px rgba(109,40,217,0.12), 0 24px 60px rgba(0,0,0,0.15) !important;
+            overflow: hidden !important;
+          }
+
+          /* Header — gradient bottom line */
+          .bpHeaderContainer {
+            border: none !important;
+            background: none !important;
+            box-shadow: none !important;
+            position: relative !important;
+          }
+          .bpHeaderContainer::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 24px;
+            right: 24px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(168,85,247,0.4), rgba(224,64,160,0.4), transparent);
+          }
+
+          /* Message list — transparent bg */
+          .bpMessageListContainer {
+            background: transparent !important;
+          }
+
+          /* Toby (incoming) bubbles — gradient bg + border + glow */
+          .bpMessageContainer[data-direction=incoming] .bpMessageBlocksBubble {
+            background: linear-gradient(130deg, rgba(109,40,217,0.15) 0%, rgba(224,64,160,0.08) 100%) !important;
+            border: 1px solid rgba(168,85,247,0.25) !important;
+            border-radius: 16px !important;
+            border-bottom-left-radius: 4px !important;
+            box-shadow: 0 0 20px rgba(109,40,217,0.1) !important;
+          }
+
+          /* User (outgoing) bubbles — simpler style */
+          .bpMessageContainer[data-direction=outgoing] .bpMessageBlocksBubble {
+            background: rgba(168,85,247,0.12) !important;
+            border: 1px solid rgba(168,85,247,0.15) !important;
+            border-radius: 16px !important;
+            border-bottom-right-radius: 4px !important;
+          }
+
+          /* Quick reply buttons */
+          .bpMessageBlocksButton {
+            background: linear-gradient(135deg, #6d28d9 0%, #a855f7 45%, #e040a0 100%) !important;
+            border: none !important;
+            border-radius: 10px !important;
+            color: #fff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 18px rgba(109,40,217,0.35) !important;
+            transition: transform 0.2s, box-shadow 0.2s !important;
+          }
+          .bpMessageBlocksButton:hover {
+            transform: translateY(-1px) !important;
+            box-shadow: 0 6px 24px rgba(109,40,217,0.5) !important;
+          }
+
+          /* Composer container — gradient border + glassmorphism */
+          .bpComposerContainer {
+            margin: 12px !important;
+            border-radius: 14px !important;
+            border: 1px solid rgba(168,85,247,0.3) !important;
+            background: linear-gradient(130deg, rgba(109,40,217,0.08) 0%, rgba(224,64,160,0.04) 100%) !important;
+            box-shadow: 0 0 20px rgba(109,40,217,0.08) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+          }
+          .bpComposerContainer:focus-within {
+            border-color: rgba(168,85,247,0.6) !important;
+            box-shadow: 0 0 30px rgba(109,40,217,0.15) !important;
+          }
+          .bpComposerInput {
+            background: transparent !important;
+          }
+
+          /* Welcome marquee — avatar gradient ring */
+          .bpMessageListMarqueeAvatarContainer {
+            border: 2px solid transparent !important;
+            background: linear-gradient(var(--bpGray-1), var(--bpGray-1)) padding-box,
+                        linear-gradient(135deg, #7c3aed, #e040a0) border-box !important;
+            border-radius: 50% !important;
+            padding: 3px !important;
+          }
+
+          /* Scroll down button */
+          .bpMessageListScrollDownButtonButton {
+            background: linear-gradient(135deg, #6d28d9, #a855f7) !important;
+            border-radius: 20px !important;
+          }
+
+          /* Send/voice button icons */
+          .bpComposerVoiceButtonIcon,
+          .bpComposerButtonIcon {
+            background: linear-gradient(135deg, #6d28d9, #a855f7) !important;
+          }
+
+          /* Mobile: full width on small screens */
+          @media (max-width: 768px) {
+            .bpContainer {
+              max-width: 100% !important;
+              border-radius: 0 !important;
+              border-left: none !important;
+              border-right: none !important;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div id="webchat"></div>
+
+        <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+        <script>
+          function applyThemeFromParent() {
+            const isDark = window.parent.document.body.classList.contains("dark-theme");
+            document.body.className = isDark ? "dark-theme" : "light-theme";
+            return isDark;
+          }
+
+          function observeParentThemeChanges() {
+            if (!window.parent || !window.parent.document || !window.parent.document.body) return;
+            new MutationObserver(function() { applyThemeFromParent(); })
+              .observe(window.parent.document.body, { attributes: true, attributeFilter: ["class"] });
+          }
+
+          function hasStoredConversation() {
+            try {
+              const d = JSON.parse(localStorage.getItem("botpress-webchat") || "{}");
+              return d && d.state && d.state.conversationId !== undefined;
+            } catch (e) { return false; }
+          }
+
+          function startTobyChat() {
+            window.botpress.open();
+          }
+
+          function initBotpressChat(isDarkTheme) {
+            window.botpress.init({
+              "botId": "f0db948a-91fa-4275-951d-241f583d3b31",
+              "configuration": {
+                "showPoweredBy": false,
+                "composerPlaceholder": "Co kryjesz w sobie? ;)",
+                "botName": "Toby",
+                "botAvatar": "https://files.bpcontent.cloud/2025/02/12/19/20250212192231-UW31IUJF.png",
+                "botDescription": "",
+                "color": "#3e63dd",
+                "variant": "soft",
+                "themeMode": isDarkTheme ? "dark" : "light",
+                "fontFamily": "inter",
+                "radius": 0.5,
+                "additionalStylesheetUrl": "https://files.bpcontent.cloud/2025/04/03/10/20250403101724-PCQPPNK4.css?v=9"
+              },
+              "clientId": "a2074688-d88a-473f-895b-74e4a4ccc4d4",
+              "selector": "#webchat"
+            });
+
+            window.botpress.on("webchat:ready", function() {
+              if (hasStoredConversation()) {
+                window.botpress.open();
+              }
+            });
+          }
+
+          document.addEventListener("DOMContentLoaded", function() {
+            const isDarkMode = applyThemeFromParent();
+            observeParentThemeChanges();
+            initBotpressChat(isDarkMode);
+
+            if (hasStoredConversation()) {
+              window.botpress.open();
+            }
+          });
+        </script>
+      </body>
+    </html>'
+  ></iframe>
+  <% end %>
+
+  <%# === OUTER PAGE SCRIPTS === %>
+  <script>
+    function redirectToLogin() {
+      window.location.href = "/enter";
+    }
+
+    function adjustWebchatHeight() {
+      var topbar = document.getElementById("topbar");
+      var webchat = document.getElementById("webchat-container");
+      if (!topbar || !webchat) return;
+      var windowHeight = window.innerHeight;
+      var topbarHeight = topbar.offsetHeight;
+      var paddingBottom = (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone) ? 30 : 0;
+      webchat.style.height = (windowHeight - topbarHeight - paddingBottom) + "px";
+    }
+
+    adjustWebchatHeight();
+    window.addEventListener("resize", adjustWebchatHeight);
+
+    <% if user_signed_in? %>
+    function outerStartTobyChat() {
+      var banner = document.getElementById("startBanner");
+
+      // 1. Fade out outer splash
+      if (banner) {
+        banner.style.transition = "opacity 0.4s ease";
+        banner.style.opacity = "0";
+        banner.addEventListener("transitionend", function() {
+          banner.style.display = "none";
+          if (window._tobySplashInstance) window._tobySplashInstance.destroy();
+        }, { once: true });
+      }
+
+      // 2. Open botpress inside iframe
+      var iframe = document.getElementById("toby-iframe");
+      if (iframe && iframe.contentWindow) {
+        try {
+          iframe.contentWindow.startTobyChat();
+        } catch(e) {
+          // iframe not ready yet — retry when it loads
+          iframe.addEventListener("load", function() {
+            try { iframe.contentWindow.startTobyChat(); } catch(e2) {}
+          }, { once: true });
+        }
+      }
+    }
+
+    // Auto-skip splash if stored conversation exists
+    (function() {
+      try {
+        var d = JSON.parse(localStorage.getItem("botpress-webchat") || "{}");
+        if (d && d.state && d.state.conversationId !== undefined) {
+          var banner = document.getElementById("startBanner");
+          if (banner) banner.style.display = "none";
+          if (window._tobySplashInstance) window._tobySplashInstance.destroy();
+        }
+      } catch(e) {}
+    })();
+    <% end %>
+  </script>
+</div>

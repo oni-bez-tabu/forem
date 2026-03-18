@@ -32,6 +32,10 @@ class PagesController < ApplicationController
     set_surrogate_key_header "about_listings_page"
   end
 
+  def toby_ai
+    set_surrogate_key_header "toby_ai_page"
+  end
+
   def badge
     render layout: false
     set_surrogate_key_header "badge_page"
