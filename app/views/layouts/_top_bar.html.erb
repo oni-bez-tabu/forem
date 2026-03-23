@@ -66,12 +66,10 @@
           </span>
         </span>
 
-        <span class="trusted-visible-block">
-          <a href="<%= message_path %>" id="messages-link" class="c-link c-link--icon-alone c-link--block mx-1" aria-label="Wiadomości">
-            <%= crayons_icon_tag("mail-line", native: true, width: 32, height: 32, title: "Wiadomości") %>
-            <span class="c-indicator c-indicator--danger hidden" id="messages-unread-count"></span>
-          </a>
-        </span>
+        <a href="<%= message_path %>" id="messages-link" class="c-link c-link--icon-alone c-link--block mx-1" aria-label="Wiadomości">
+          <%= crayons_icon_tag("mail-line", native: true, width: 32, height: 32, title: "Wiadomości") %>
+          <span class="c-indicator c-indicator--danger hidden" id="messages-unread-count"></span>
+        </a>
         <a href="<%= notifications_path %>" id="notifications-link" class="c-link c-link--icon-alone c-link--block mx-1" aria-label="<%= t("views.main.header.notifications.aria_label") %>">
           <%= crayons_icon_tag(:bell, title: t("views.main.header.notifications.icon")) %>
           <span class="c-indicator c-indicator--danger hidden" id="notifications-number"></span>
