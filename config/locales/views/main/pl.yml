@@ -29,6 +29,7 @@ pl:
         moderator_center: Centrum moderatora
         other: Inne
         settings: Ustawienia
+        account: Konto
         coins_count: "Na Twoim koncie jest:"
         coins_name: educoinów
       nav_name:

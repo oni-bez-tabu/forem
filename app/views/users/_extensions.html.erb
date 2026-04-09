@@ -3,3 +3,5 @@
 <%= render partial: "response_templates" %>
 
 <%= render partial: "publishing_from_rss" %>
+
+<%= render partial: "api_keys" if current_user.trusted? %>

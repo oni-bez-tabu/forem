@@ -23,7 +23,7 @@ export const LoadingArticle = ({ version }) => {
         </div>
         <div className="crayons-story__indention">
           <div className="crayons-scaffold-loading w-75 h-0 py-3 mb-2" />
-          <div className="crayons-scaffold-loading w-50 h-0 py-2 mb-8" />
+          <div className="crayons-scaffold-loading w-40 h-0 py-2 mb-8" />
         </div>
       </div>
     </div>

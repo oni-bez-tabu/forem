@@ -56,9 +56,11 @@ pl:
         email_comment_notifications: Wyślij mi e-mail, gdy ktoś odpowie mi w wątku komentarzy
         email_follower_notifications: Wyślij mi e-mail, gdy ktoś nowy zacznie mnie obserwować
         email_mention_notifications: Wyślij mi e-mail, gdy ktoś mnie wspomni
+        email_chat_notifications: Wyślij mi e-mail, gdy ktoś wyśle mi wiadomość w czacie
         email_badge_notifications: Wyślij mi e-mail, gdy otrzymam odznakę
         email_unread_notifications: Wyślij mi okresowe przypomnienia, że mam nieprzeczytane powiadomienia na %{community}
         mobile_mention_notifications: Wyślij mi powiadomienie push, gdy ktoś mnie wspomni
+        mobile_chat_notifications: Wyślij mi powiadomienie push, gdy ktoś wyśle mi wiadomość w czacie
         mobile_comment_notifications: Wyślij mi powiadomienie push, gdy ktoś odpowie mi w wątku komentarzy
         welcome_notifications: Wyślij mi czasami wskazówki, jak ulepszyć swoje doświadczenie w %{community}
         reaction_notifications: Wyślij powiadomienia, gdy ktoś zareaguje na móją treść, taką jak komentarze lub posty

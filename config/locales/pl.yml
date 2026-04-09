@@ -30,7 +30,7 @@ pl:
     and: i
   date:
     abbr_month_names:
-      - 
+      - brak
       - sty.
       - lut.
       - mar.
@@ -167,6 +167,7 @@ pl:
       manage_preferences: Zarządzaj preferencjami
       what_is_a_billboard: Co to jest billboard?
       report_billboard: Zgłoś billboard
+      edit_billboard: Edytuj billboard
   errors:
     messages:
       accepted: musi być zaakceptowane

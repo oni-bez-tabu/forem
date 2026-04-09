@@ -1,7 +1,8 @@
 article_attributes_to_include = %i[
   title path id user_id comments_count public_reactions_count organization_id
   reading_time video_thumbnail_url video video_duration_in_minutes edited_at
-  experience_level_rating experience_level_rating_distribution main_image_height type_of
+  experience_level_rating experience_level_rating_distribution main_image_height
+  type_of subforem_id
 ]
 article_methods_to_include = %i[
   readable_publish_date flare_tag class_name
@@ -24,18 +25,27 @@ json.array!(@stories) do |article|
   json.pinned article.pinned?
 
   if article.main_image?
-    json.main_image cloud_cover_url(article.main_image)
+    json.main_image cloud_cover_url(article.main_image, article.subforem_id)
   else
     json.main_image nil
   end
 
+  json.url URL.article(article)
+
   json.tag_list article.cached_tag_list_array
   json.extract! article, *article_methods_to_include
 
-  json.top_comments article.public_send(@comments_variant.to_sym) do |comment|
+  json.top_comments article.public_send(@comments_variant.to_sym).first(3) do |comment|
     comment = comment.decorate
     json.comment_id comment.id
     json.extract! comment, :user_id, :published_timestamp, :published_at_int, :safe_processed_html, :path
     json.extract! comment.user, :username, :name, :profile_image_90
   end
+
+  json.subforem_logo Settings::General.logo_png(subforem_id: article.subforem_id)
+
+  json.context_note article.context_notes.first&.processed_html
+
+  json.current_user_signed_in user_signed_in?
+  json.feed_config @feed_config&.id
 end

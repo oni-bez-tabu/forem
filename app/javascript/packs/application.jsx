@@ -93,6 +93,14 @@ InstantClick.on('change', () => {
   }
 
   initializePodcastPlayback();
+
+  const searchElement = document.getElementById('search-input');
+  const articleContainer = document.getElementById('article-show-container');
+  if (searchElement && articleContainer?.dataset?.articleId) {
+    searchElement.placeholder = 'Find related posts...';
+  } else {
+    searchElement.placeholder = 'Search...';
+  }
 });
 
 // Initialize data-runtime context to the body data-attribute
@@ -102,6 +110,7 @@ function getPageEntries() {
   return Object.entries({
     'notifications-index': document.getElementById('notifications-link'),
     'moderations-index': document.getElementById('moderation-link'),
+    'messages-show': document.getElementById('messages-link'),
     'articles_search-index': document.getElementById('search-link'),
   });
 }
@@ -198,6 +207,7 @@ document.ready.then(() => {
     'js-hamburger-trigger',
   )[0];
   hamburgerTrigger.addEventListener('click', getNavigation);
+
 
   // Dynamically loading the script.js.
   // We don't currently have dynamic insert working, so using this

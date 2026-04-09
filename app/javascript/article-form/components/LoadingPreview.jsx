@@ -14,7 +14,7 @@ export const LoadingPreview = ({ version }) => {
     <div data-testid="loading-preview" title="Loading preview...">
       {cover}
       <div className="crayons-story__indention w-100 mt-6 ">
-        <div className="crayons-scaffold-loading w-50 h-0 py-4 mb-2" />
+        <div className="crayons-scaffold-loading w-40 h-0 py-4 mb-2" />
         <div className="crayons-story__meta w-100 mb-5">
           <div className="crayons-scaffold-loading w-10 h-0 py-3 mr-2" />
           <div className="crayons-scaffold-loading w-15 h-0 py-3" />

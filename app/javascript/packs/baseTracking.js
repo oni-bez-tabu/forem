@@ -2,6 +2,7 @@
 /* global isTouchDevice */
 
 function initializeBaseTracking() {
+  if (/ForemWebView/i.test(navigator.userAgent || '')) return;
   showCookieConsentBanner();
   trackGoogleAnalytics3();
   trackGoogleAnalytics4();

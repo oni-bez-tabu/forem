@@ -11,7 +11,7 @@
         <div>
           <span class="fs-s"><%= t("views.main.nav.coins_count") %> 
             <span class="c-indicator c-indicator--close fs-s" style="position:relative; top:0">
-              <strong id="nav-coins-count"></strong> <%= t("views.main.nav.coins_name") %> 
+              <strong id="nav-coins-count"></strong><%= t("views.main.nav.coins_name") %> 
             </span>
           </span>
         </div>
@@ -27,15 +27,23 @@
     <li>
       <a href="<%= mod_path %>" class="c-link c-link--block trusted-visible-block"><%= t("views.main.nav.moderator_center") %></a>
     </li>
-    <%= application_policy_content_tag("li", record: Article, query: :create?) do %>
-      <a href="<%= new_path %>" class="c-link c-link--block"><%= t("views.main.create_post") %></a>
+    <% if ArticlePolicy.is_root_subforem? %>
+      <li>
+        <button 
+          class="c-link c-link--block w-full text-left" 
+          onclick="window.openSubforemModal()">
+          <%= t("views.main.create_post") %>
+        </button>
+      </li>
+    <% else %>
+      <%= application_policy_content_tag("li", record: Article, query: :create?) do %>
+        <a href="<%= new_path %>" class="c-link c-link--block"><%= t("views.main.create_post") %></a>
+      <% end %>
     <% end %>
-    <% if policy(:video).new? %>
-    <li>
+    <%= application_policy_content_tag("li", record: :video, query: :new?) do %>
       <a class="c-link c-link--block" href="<%= new_video_path %>" data-no-instant>
         <%= t("views.dashboard.actions.upload") %>
       </a>
-    </li>
     <% end %>
     <li>
       <a href="<%= readinglist_path %>" class="c-link c-link--block"><%= t("views.main.nav.list") %></a>

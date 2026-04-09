@@ -1,121 +1,116 @@
-import { h, Component } from 'preact';
-import PropTypes from 'prop-types';
+import { h, Component } from 'preact'
+import PropTypes from 'prop-types'
 
-import { userData, updateOnboarding } from '../utilities';
+import { userData, updateOnboarding } from '../utilities'
 
-import { ProfileImage } from './ProfileForm/ProfileImage';
-import { Navigation } from './Navigation';
-import { TextArea } from './ProfileForm/TextArea';
-import { TextInput } from './ProfileForm/TextInput';
-import { CheckBox } from './ProfileForm/CheckBox';
+import { ProfileImage } from './ProfileForm/ProfileImage'
+import { Navigation } from './Navigation'
+import { TextArea } from './ProfileForm/TextArea'
+import { TextInput } from './ProfileForm/TextInput'
+import { CheckBox } from './ProfileForm/CheckBox'
 
-import { request } from '@utilities/http';
+import { request } from '@utilities/http'
 
 /* eslint-disable camelcase */
 export class ProfileForm extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleColorPickerChange = this.handleColorPickerChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.user = userData();
+    this.handleFieldChange = this.handleFieldChange.bind(this)
+    this.handleColorPickerChange = this.handleColorPickerChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+    this.user = userData()
+
     this.state = {
       groups: [],
       formValues: {
         username: this.user.username,
+        name: this.user.name,
         profile_image_90: this.user.profile_image_90,
       },
       canSkip: false,
       last_onboarding_page: 'v2: personal info form',
       profile_image_90: this.user.profile_image_90,
-    };
+    }
   }
 
   componentDidMount() {
-    this.getProfileFieldGroups();
-    updateOnboarding('v2: personal info form');
+    this.getProfileFieldGroups()
+    updateOnboarding('v2: personal info form')
   }
 
   async getProfileFieldGroups() {
     try {
-      const response = await request(`/profile_field_groups?onboarding=true`);
+      const response = await request(`/profile_field_groups?onboarding=true`)
       if (response.ok) {
-        const data = await response.json();
-        this.setState({ groups: data.profile_field_groups });
+        const data = await response.json()
+        this.setState({ groups: data.profile_field_groups })
       } else {
-        throw new Error(response.statusText);
+        throw new Error(response.statusText)
       }
     } catch (error) {
-      this.setState({ error: true, errorMessage: error.toString() });
+      this.setState({ error: true, errorMessage: error.toString() })
     }
   }
 
   async onSubmit() {
-    const { formValues, last_onboarding_page } = this.state;
-    const { username, profile_image_90, ...newFormValues } = formValues;
+    const { formValues, last_onboarding_page } = this.state
+    const { username, name, profile_image_90, ...newFormValues } = formValues
+
     try {
       const response = await request('/onboarding', {
         method: 'PATCH',
         body: {
-          user: { last_onboarding_page, profile_image_90, username },
+          user: { last_onboarding_page, profile_image_90, username, name },
           profile: { ...newFormValues },
         },
-      });
-      if (!response.ok) {
-        throw response;
-      }
-      const { next } = this.props;
-      next();
+      })
+
+      if (!response.ok) throw response
+
+      this.props.next()
     } catch (error) {
-      Honeybadger.notify(error);
-      let errorMessage = 'Unable to continue, please try again.';
+      Honeybadger.notify(error)
+      let errorMessage = 'Unable to continue, please try again.'
+
       if (error.status === 422) {
-        // parse validation error messages from UsersController#onboarding
-        const errorData = await error.json();
-        errorMessage = errorData.errors;
-        this.setState({ error: true, errorMessage });
-      } else {
-        this.setState({ error: true, errorMessage });
+        const errorData = await error.json()
+        errorMessage = errorData.errors
       }
+
+      this.setState({ error: true, errorMessage })
     }
   }
 
   handleFieldChange(e) {
-    const { formValues } = { ...this.state };
-    const currentFormState = formValues;
-    const { name, value } = e.target;
-
-    currentFormState[name] = value;
-    this.setState({
-      formValues: currentFormState,
-      canSkip: this.formIsEmpty(currentFormState),
-    });
+    const { name, value } = e.target
+    this.setState((prev) => {
+      const formValues = { ...prev.formValues, [name]: value }
+      return {
+        formValues,
+        canSkip: this.formIsEmpty(formValues),
+      }
+    })
   }
 
   handleColorPickerChange(e) {
-    const { formValues } = { ...this.state };
-    const currentFormState = formValues;
+    const field = e.target
+    const { name, value } = field
+    const sibling = field.nextElementSibling || field.previousElementSibling
+    if (sibling) sibling.value = value
 
-    const field = e.target;
-    const { name, value } = field;
-
-    const sibling = field.nextElementSibling
-      ? field.nextElementSibling
-      : field.previousElementSibling;
-    sibling.value = value;
-
-    currentFormState[name] = value;
-    this.setState({
-      formValues: currentFormState,
-      canSkip: this.formIsEmpty(currentFormState),
-    });
+    this.setState((prev) => {
+      const formValues = { ...prev.formValues, [name]: value }
+      return {
+        formValues,
+        canSkip: this.formIsEmpty(formValues),
+      }
+    })
   }
 
   formIsEmpty(currentFormState) {
-    // Once we've derived the new form values, check if the form is empty
-    // and use that value to set the `canSkip` property on the state.
-    Object.values(currentFormState).filter((v) => v.length > 0).length === 0;
+    return Object.values(currentFormState).filter((v) => v.length > 0)
+      .length === 0
   }
 
   renderAppropriateFieldType(field) {
@@ -127,7 +122,7 @@ export class ProfileForm extends Component {
             field={field}
             onFieldChange={this.handleFieldChange}
           />
-        );
+        )
       case 'text_area':
         return (
           <TextArea
@@ -135,7 +130,7 @@ export class ProfileForm extends Component {
             field={field}
             onFieldChange={this.handleFieldChange}
           />
-        );
+        )
       default:
         return (
           <TextInput
@@ -143,7 +138,7 @@ export class ProfileForm extends Component {
             field={field}
             onFieldChange={this.handleFieldChange}
           />
-        );
+        )
     }
   }
 
@@ -151,33 +146,38 @@ export class ProfileForm extends Component {
     this.setState({ profile_image_90: url }, () => {
       this.handleFieldChange({
         target: { name: 'profile_image_90', value: url },
-      });
-    });
-  };
+      })
+    })
+  }
 
   render() {
-    const { prev, slidesCount, currentSlideIndex, communityConfig } =
-      this.props;
-    const { username, name } = this.user;
-    const { canSkip, groups = [], error, errorMessage } = this.state;
-    const SUMMARY_MAXLENGTH = 200;
-    const summaryCharacters = this.state?.formValues?.summary?.length || 0;
+    const {
+      prev,
+      slidesCount,
+      currentSlideIndex,
+      communityConfig,
+    } = this.props
+    const { canSkip, groups = [], error, errorMessage } = this.state
+    const SUMMARY_MAXLENGTH = 200
+    const summaryCharacters =
+      this.state.formValues.summary?.length || 0
 
-    const sections = groups.map((group) => {
-      return (
-        <div key={group.id} class="onboarding-profile-sub-section">
-          <h2>{group.name}</h2>
-          {group.description && (
-            <div class="color-base-60">{group.description})</div>
+    // text inputs for the onboarding groups
+    const sections = groups.map((group) => (
+      <div key={group.id} class="onboarding-profile-sub-section">
+        <h2>{group.name}</h2>
+        {group.description && (
+          <div class="color-base-60">{group.description}</div>
+        )}
+        <div>
+          {group.profile_fields.map((field) =>
+            this.renderAppropriateFieldType(field)
           )}
-          <div>
-            {group.profile_fields.map((field) => {
-              return this.renderAppropriateFieldType(field);
-            })}
-          </div>
         </div>
-      );
-    });
+      </div>
+    ))
+
+    const { username, name } = this.user
 
     return (
       <div
@@ -191,7 +191,10 @@ export class ProfileForm extends Component {
           aria-describedby="subtitle"
         >
           {error && (
-            <div role="alert" class="crayons-notice crayons-notice--danger m-2">
+            <div
+              role="alert"
+              class="crayons-notice crayons-notice--danger m-2"
+            >
               An error occurred: {errorMessage}
             </div>
           )}
@@ -208,6 +211,8 @@ export class ProfileForm extends Component {
                 Opowiedz nam trochę o sobie — tak będą Ciebie widzieć inni na {communityConfig.communityName}. Zawsze będziesz mógł/mogła to później edytować w swoich Ustawieniach
               </h2>
             </header>
+
+            {/* Profile image + built‐in name prop */}
             <div className="onboarding-profile-sub-section mt-8">
               <ProfileImage
                 onMainImageUrlChange={this.onProfileImageUrlChange}
@@ -216,6 +221,25 @@ export class ProfileForm extends Component {
                 name={name}
               />
             </div>
+
+            {/* NEW: Name field */}
+            <div className="onboarding-profile-sub-section">
+              <TextInput
+                field={{
+                  attribute_name: 'name',
+                  label: 'Name',
+                  default_value: name,
+                  required: true,
+                  maxLength: 50,
+                  placeholder_text: 'Your full name',
+                  description: '',
+                  input_type: 'text',
+                }}
+                onFieldChange={this.handleFieldChange}
+              />
+            </div>
+
+            {/* existing Username field */}
             <div className="onboarding-profile-sub-section">
               <TextInput
                 field={{
@@ -231,6 +255,8 @@ export class ProfileForm extends Component {
                 onFieldChange={this.handleFieldChange}
               />
             </div>
+
+            {/* Bio */}
             <div className="onboarding-profile-sub-section">
               <TextArea
                 field={{
@@ -250,7 +276,6 @@ export class ProfileForm extends Component {
               >
                 <span class="screen-reader-only" aria-live="polite">
                 Została liczba znaków: {SUMMARY_MAXLENGTH - summaryCharacters}
- {SUMMARY_MAXLENGTH - summaryCharacters}
                 </span>
                 <span id="summary-characters">
                   {summaryCharacters}/{SUMMARY_MAXLENGTH}
@@ -260,6 +285,7 @@ export class ProfileForm extends Component {
 
             {sections}
           </div>
+
           <Navigation
             prev={prev}
             next={this.onSubmit}
@@ -270,7 +296,7 @@ export class ProfileForm extends Component {
           />
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -282,6 +308,5 @@ ProfileForm.propTypes = {
   communityConfig: PropTypes.shape({
     communityName: PropTypes.string.isRequired,
   }),
-};
-
+}
 /* eslint-enable camelcase */

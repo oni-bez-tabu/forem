@@ -59,3 +59,31 @@ body[data-runtime='Browser-Windows'] .Browser-Windows-only,
 body[data-runtime='Browser-macOS'] .Browser-macOS-only {
   display: var(--runtime-display, block);
 }
+
+// Disable text selection and long-press callout specifically in Android Forem WebView
+// Allow selection for editable controls to preserve expected input behavior
+body.android-webview-no-select,
+body[data-runtime='ForemWebView-Android'] {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+body.android-webview-no-select input,
+body.android-webview-no-select textarea,
+body.android-webview-no-select [contenteditable='true'],
+body.android-webview-no-select select,
+body[data-runtime='ForemWebView-Android'] input,
+body[data-runtime='ForemWebView-Android'] textarea,
+body[data-runtime='ForemWebView-Android'] [contenteditable='true'],
+body[data-runtime='ForemWebView-Android'] select {
+  -webkit-user-select: text;
+  -webkit-touch-callout: default;
+  user-select: text;
+}
+
+// Adjust CookieYes consent container position on Android WebView
+body.android-webview-no-select .cky-consent-container,
+body[data-runtime='ForemWebView-Android'] .cky-consent-container {
+  bottom: 20px !important;
+}

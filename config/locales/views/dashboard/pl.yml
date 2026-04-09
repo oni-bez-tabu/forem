@@ -140,6 +140,7 @@ pl:
         empty:
           desc: Tutaj możesz zarządzać swoimi postami, ale jeszcze nic nie napisałeś.
           new: Napisz swój pierwszy post teraz
+          status_desc: Nie masz tu jeszcze żadnych krótkich postów...
         statuses: Pokaż krótkie posty
         full: Pokaż pełne posty
       subscriptions:

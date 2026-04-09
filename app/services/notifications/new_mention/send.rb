@@ -22,6 +22,7 @@ module Notifications
           user_id: mention.user_id,
           notifiable_id: mention.id,
           notifiable_type: "Mention",
+          subforem_id: mention.mentionable.subforem_id,
           action: nil,
           json_data: json_data,
         )
@@ -37,20 +38,24 @@ module Notifications
             ["views.notifications.mention.comment_mobile", mention.mentionable.commentable.title.strip]
           end
 
-        PushNotifications::Send.call(
-          user_ids: [target],
-          title: I18n.t("services.notifications.new_mention.new"),
-          body: "#{I18n.t(
+        I18n.with_locale(Settings::UserExperience.default_locale) do
+          localized_title = I18n.t("services.notifications.new_mention.new")
+          localized_message = I18n.t(
             message_key,
             user: mention.mentionable.user.username,
-            title: mentionable_title, # For an article this should be title, for comment should be article's title
-          )}:\n" \
-              "#{strip_tags(mention.mentionable.processed_html).strip}",
-          payload: {
-            url: URL.url(mention.mentionable.path),
-            type: "new mention"
-          },
-        )
+            title: mentionable_title,
+          )
+
+          PushNotifications::Send.call(
+            user_ids: [target],
+            title: localized_title,
+            body: "#{localized_message}:\n#{strip_tags(mention.mentionable.processed_html).strip}",
+            payload: {
+              url: URL.url(mention.mentionable.path),
+              type: "new mention"
+            },
+          )
+        end
       end
 
       private

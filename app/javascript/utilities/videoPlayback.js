@@ -12,7 +12,7 @@
 /* eslint no-use-before-define: 0 */
 /* eslint no-param-reassign: 0 */
 /* eslint no-useless-escape: 0 */
-/* global jwplayer */
+/* global videojs */
 
 import ahoy from 'ahoy.js';
 
@@ -56,35 +56,46 @@ export function initializeVideoPlayback() {
   }
 
   function initWebPlayer(seconds, metadata) {
-    const waitingOnJWP = setInterval(() => {
-      if (typeof jwplayer !== 'undefined') {
-        clearInterval(waitingOnJWP);
-        const playerInstance = jwplayer(`video-player-${metadata.id}`);
-        playerInstance.setup({
-          file: metadata.video_source_url,
-          mediaid: metadata.video_code,
-          image: metadata.video_thumbnail_url,
-          playbackRateControls: true,
-          tracks: [
-            {
-              file: metadata.video_closed_caption_track_url,
-              label: 'English',
-              kind: 'captions',
-              default: false,
-            },
-          ],
+    const waitForVJS = setInterval(() => {
+      if (typeof videojs !== 'undefined') {
+        clearInterval(waitForVJS);
+        const elementId = `videojs-player-${metadata.id}`;
+        const player = videojs(elementId, {
+          controls: true,
+          preload: 'auto',
+          autoplay: true,
+          poster: metadata.video_thumbnail_url,
+          playbackRates: [0.5, 1, 1.25, 1.5, 2],
+          html5: {
+            vhs: { enableLowInitialPlaylist: true },
+          },
         });
-        if (seconds) {
-          jwplayer().on('firstFrame', () => {
-            jwplayer().seek(seconds);
-          });
-          jwplayer().on('play', () => {
-            videoPlayerEvent(true);
-          });
-          jwplayer().on('pause', () => {
-            videoPlayerEvent(false);
-          });
-        }
+
+        player.ready(() => {
+          try {
+            player.muted(false);
+            if (seconds) {
+              player.currentTime(seconds);
+            }
+            const playPromise = player.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+              playPromise.catch(() => {
+                player.muted(true);
+                const retryPromise = player.play();
+                if (retryPromise && typeof retryPromise.catch === 'function') {
+                  retryPromise.catch(() => {});
+                }
+              });
+            }
+          } catch (e) {}
+        });
+
+        player.on('play', () => {
+          videoPlayerEvent(true);
+        });
+        player.on('pause', () => {
+          videoPlayerEvent(false);
+        });
       }
     }, 2);
   }
@@ -146,7 +157,6 @@ export function initializeVideoPlayback() {
     } else if (window.Forem.Runtime.isNativeAndroid('videoMessage')) {
       deviceType = 'Android';
     } else {
-      // jwplayer is initialized and no further interaction is needed
       initWebPlayer(seconds, metadata);
       return;
     }

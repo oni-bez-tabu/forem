@@ -165,3 +165,8 @@ pl:
       deleted: E-mail został usunięty!
       updated: E-mail został zaktualizowany!
       wrong: Coś poszło nie tak podczas usuwania e-maila.
+    subforems_controller:
+      created: Subforum zostało utworzone!
+      created_with_ai: Subforem został utworzony! Szczegóły są generowane w tle.
+      updated: Subforum zostało zaktualizowane!
+      deleted: Subforum zostało usunięte!

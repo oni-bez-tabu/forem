@@ -1,0 +1,14 @@
+<% title "Wiadomości" %>
+
+<%= content_for :page_meta do %>
+  <link rel="canonical" href="<%= app_url("/message") %>" />
+  <meta name="description" content="Wiadomości — <%= community_name %>">
+  <%= meta_keywords_default %>
+  <link rel="stylesheet" href="/chat-ui.css" />
+<% end %>
+
+<main id="main-content">
+  <div id="chat-app" data-toby-alert-url="<%= asset_path("toby-alert.png") %>"></div>
+</main>
+
+<%= javascript_include_tag "messages", defer: true %>

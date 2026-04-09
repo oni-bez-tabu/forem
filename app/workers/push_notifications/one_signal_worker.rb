@@ -20,7 +20,9 @@
           app_id: ApplicationConfig['ONESIGNAL_APP_ID'],
           include_external_user_ids: user_ids,
           headings: { en: title },
-          contents: { en: body }
+          contents: { en: body },
+          ios_badgeType: "Increase",
+          ios_badgeCount: 1
         }
         body[:url] = redirectUrl if redirectUrl.present?
   

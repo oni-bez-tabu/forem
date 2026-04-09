@@ -1,9 +1,16 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "to.dev.dev_android",
-    "sha256_cert_fingerprints":
-    ["2B:A7:3D:9B:CE:6F:54:F9:B1:99:EC:45:E0:F2:D2:2E:2E:BF:3B:E8:89:5D:1C:30:B1:B9:C2:52:04:48:AD:48"]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.nietabu.app",
+      "sha256_cert_fingerprints": [
+        "72:F1:E2:00:49:90:46:0E:79:A3:C7:95:14:BE:66:28:AC:21:6B:ED:40:A1:37:7A:C5:55:97:2C:CC:41:EA:0B",
+        "FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C"
+      ]
+    }
   }
-}]
+]

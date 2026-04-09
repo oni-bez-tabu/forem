@@ -1,7 +1,7 @@
 module Notifications
   class NewBadgeAchievementWorker
     include Sidekiq::Job
-    sidekiq_options queue: :low_priority, retry: 10
+    sidekiq_options queue: :medium_priority, retry: 10
 
     def perform(badge_achievement_id)
       badge_achievement = BadgeAchievement.find_by(id: badge_achievement_id)

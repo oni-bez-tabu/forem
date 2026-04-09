@@ -12,19 +12,19 @@ pl:
         sign_in: Zaloguj się
       comments:
         all:
-          one: Wszystkie %{count} komentarze
-          other: Wszystkie %{count} komentarze
+          one: Wszystkie komentarze
+          other: Wszystkie komentarze
         last:
-          one: Ostatnie %{count} komentarze
-          other: Ostatnie %{count} komentarze
+          one: Ostatnie komentarze
+          other: Ostatnie komentarze
         recent: Najnowsze komentarze
         view: Zobacz całą aktywność
         view_all:
-          one: Zobacz wszystkie %{count} komentarze
-          other: Zobacz wszystkie %{count} komentarze
+          one: Zobacz wszystkie komentarze
+          other: Zobacz wszystkie komentarze
         view_last:
           one: Zobacz ostatni komentarz
-          other: Zobacz ostatnie %{count} komentarze
+          other: Zobacz ostatnie komentarze
       github:
         heading: Repozytoria na GitHubie
         fork: Fork
