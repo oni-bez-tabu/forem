@@ -538,7 +538,7 @@ const ScheduledTalksList = ({ currentUserId, onCountChange }) => {
 // ══════════════════════════════════════════════
 // VIDEO EMBED (YouTube lazy-load)
 // ══════════════════════════════════════════════
-const YOUTUBE_ID = 'sNqazWi4M9s';
+const YOUTUBE_ID = 'IymeK0Uf7Ms';
 
 const VideoEmbed = () => {
   const [playing, setPlaying] = useState(false);
@@ -719,12 +719,10 @@ const TalksView = () => {
             loading={talksLoading}
           />
           <ScheduledTalksList currentUserId={currentUserId} onCountChange={setScheduledCount} />
-          {/* TODO: odkomentować po nagraniu filmu i wrzuceniu na YT
           <div className={`talks-video-section ${totalItems > 2 ? 'talks-video-section--hidden' : ''}`}>
             {totalItems > 0 && <div className="talks-divider" />}
             <VideoEmbed />
           </div>
-          */}
         </div>
       </div>
 
