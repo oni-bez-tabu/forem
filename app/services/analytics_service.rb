@@ -1,5 +1,8 @@
 class AnalyticsService
-  DEFAULT_REACTION_TOTALS = { total: 0, like: 0, readinglist: 0, unicorn: 0 }.freeze
+  DEFAULT_REACTION_TOTALS = {
+    total: 0, like: 0, readinglist: 0, unicorn: 0,
+    exploding_head: 0, raised_hands: 0, fire: 0, unique_reactors: 0
+  }.freeze
 
   def initialize(user_or_org, start_date: "", end_date: "", article_id: nil)
     @user_or_org = user_or_org
@@ -65,6 +68,114 @@ class AnalyticsService
     { domains: domains }
   end
 
+  # Returns top contributors who engaged with the user/org's articles
+  # via reactions (excl. bookmarks) and comments, excluding self-interactions.
+  # Comments are weighted 6x, reactions 1x.
+  def top_contributors(limit: 20)
+    return [] unless article_data.exists?
+
+    # Use subqueries to avoid loading all IDs into memory for large datasets
+    article_ids_subquery = article_data.select(:id)
+
+    # Determine author IDs to exclude self-interactions
+    author_ids = article_data.distinct.pluck(:user_id)
+
+    # Reactions (excl readinglist/self) → weight 1
+    reactions_sql = Reaction.for_analytics
+      .where(reactable_id: article_ids_subquery, reactable_type: "Article")
+      .where.not(category: "readinglist")
+      .where.not(user_id: author_ids)
+    reactions_sql = reactions_sql.where(created_at: start_date..end_date) if start_date && end_date
+    reactions_query = reactions_sql
+      .select("user_id, COUNT(*) AS reactions_count, 0 AS comments_count, COUNT(*) AS score")
+      .group(:user_id)
+
+    # Comments (excl self, score > 0) → weight 6
+    # Comments carry more weight than reactions because they require
+    # significantly more effort and drive meaningful discussion.
+    comments_sql = Comment
+      .where(commentable_id: article_ids_subquery, commentable_type: "Article")
+      .where("score > 0")
+      .where.not(user_id: author_ids)
+    comments_sql = comments_sql.where(created_at: start_date..end_date) if start_date && end_date
+    comments_query = comments_sql
+      .select("user_id, 0 AS reactions_count, COUNT(*) AS comments_count, COUNT(*) * 6 AS score")
+      .group(:user_id)
+
+    # UNION and aggregate
+    union_sql = "(" \
+      "#{reactions_query.to_sql}" \
+      " UNION ALL " \
+      "#{comments_query.to_sql}" \
+    ")"
+
+    rows = ActiveRecord::Base.connection.select_all(
+      "SELECT user_id, SUM(reactions_count)::int AS reactions_count, " \
+      "SUM(comments_count)::int AS comments_count, SUM(score)::int AS score " \
+      "FROM #{union_sql} AS combined " \
+      "GROUP BY user_id ORDER BY score DESC, user_id ASC LIMIT #{limit.to_i}",
+    )
+
+    user_ids = rows.map { |r| r["user_id"] }
+    users_by_id = User.where(id: user_ids).index_by(&:id)
+
+    rows.filter_map do |row|
+      user = users_by_id[row["user_id"]]
+      next unless user
+
+      {
+        user_id: user.id,
+        username: user.username,
+        name: user.name,
+        profile_image: user.profile_image_90,
+        reactions_count: row["reactions_count"],
+        comments_count: row["comments_count"],
+        score: row["score"]
+      }
+    end
+  end
+
+  # Returns what percentage of followers engaged (reacted or commented)
+  # with the user/org's articles in the given period.
+  def follower_engagement
+    follower_scope = Follow
+      .where(followable_type: user_or_org.class.name, followable_id: user_or_org.id)
+      .where(blocked: false)
+
+    total_followers = follower_scope.count
+    return { total_followers: 0, engaged_followers: 0, ratio: 0.0 } if total_followers.zero?
+    return { total_followers: total_followers, engaged_followers: 0, ratio: 0.0 } unless article_data.exists?
+
+    follower_ids_subquery = follower_scope.select(:follower_id)
+    article_ids_subquery = article_data.select(:id)
+
+    # Followers who reacted (excl readinglist)
+    reacting_scope = Reaction.for_analytics
+      .where(reactable_id: article_ids_subquery, reactable_type: "Article")
+      .where.not(category: "readinglist")
+      .where(user_id: follower_ids_subquery)
+    reacting_scope = reacting_scope.where(created_at: start_date..end_date) if start_date && end_date
+
+    # Followers who commented (score > 0)
+    commenting_scope = Comment
+      .where(commentable_id: article_ids_subquery, commentable_type: "Article")
+      .where("score > 0")
+      .where(user_id: follower_ids_subquery)
+    commenting_scope = commenting_scope.where(created_at: start_date..end_date) if start_date && end_date
+
+    engaged_count = ActiveRecord::Base.connection.select_value(
+      "SELECT COUNT(DISTINCT user_id) FROM (" \
+      "#{reacting_scope.select(:user_id).to_sql} UNION ALL #{commenting_scope.select(:user_id).to_sql}" \
+      ") AS engaged",
+    ).to_i
+
+    {
+      total_followers: total_followers,
+      engaged_followers: engaged_count,
+      ratio: (engaged_count.to_f / total_followers * 100).round(1)
+    }
+  end
+
   private
 
   attr_reader(
@@ -105,17 +216,21 @@ class AnalyticsService
 
   def calculate_reactions_totals
     # NOTE: the order of the keys needs to be the same as the one of the counts
-    keys = %i[total like readinglist unicorn]
+    keys = %i[total like readinglist unicorn exploding_head raised_hands fire unique_reactors]
     counts = reaction_data.pick(
       Arel.sql("COUNT(*)"),
       Arel.sql("COUNT(*) FILTER (WHERE category = 'like')"),
       Arel.sql("COUNT(*) FILTER (WHERE category = 'readinglist')"),
       Arel.sql("COUNT(*) FILTER (WHERE category = 'unicorn')"),
+      Arel.sql("COUNT(*) FILTER (WHERE category = 'exploding_head')"),
+      Arel.sql("COUNT(*) FILTER (WHERE category = 'raised_hands')"),
+      Arel.sql("COUNT(*) FILTER (WHERE category = 'fire')"),
+      Arel.sql("COUNT(DISTINCT user_id)"),
     )
 
     if counts
-      # this transforms the counts, eg. [1, 0, 1, 0]
-      # in a hash, eg. {total: 1, like: 0, readinglist: 1, unicorn: 0}
+      # this transforms the counts, eg. [1, 0, 1, 0, ...]
+      # in a hash, eg. {total: 1, like: 0, readinglist: 1, unicorn: 0, ...}
       keys.zip(counts).to_h
     else
       DEFAULT_REACTION_TOTALS
@@ -154,16 +269,24 @@ class AnalyticsService
       Arel.sql("COUNT(*) FILTER (WHERE category = 'like')").as("like"),
       Arel.sql("COUNT(*) FILTER (WHERE category = 'readinglist')").as("readinglist"),
       Arel.sql("COUNT(*) FILTER (WHERE category = 'unicorn')").as("unicorn"),
+      Arel.sql("COUNT(*) FILTER (WHERE category = 'exploding_head')").as("exploding_head"),
+      Arel.sql("COUNT(*) FILTER (WHERE category = 'raised_hands')").as("raised_hands"),
+      Arel.sql("COUNT(*) FILTER (WHERE category = 'fire')").as("fire"),
+      Arel.sql("COUNT(DISTINCT user_id)").as("unique_reactors"),
     ).group("DATE(created_at)")
 
     # this transforms the collection of pseudo Reaction objects previously selected
-    # in a hash, eg. {total: 1, like: 0, readinglist: 1, unicorn: 0}
+    # in a hash with all reaction category counts plus unique reactors
     reactions.each_with_object({}) do |reaction, hash|
       hash[reaction.date.iso8601] = {
         total: reaction.total,
         like: reaction.like,
         readinglist: reaction.readinglist,
-        unicorn: reaction.unicorn
+        unicorn: reaction.unicorn,
+        exploding_head: reaction.exploding_head,
+        raised_hands: reaction.raised_hands,
+        fire: reaction.fire,
+        unique_reactors: reaction.unique_reactors
       }
     end
   end
@@ -192,7 +315,10 @@ class AnalyticsService
 
   def stats_per_day(date, comments_stats:, follows_stats:, reactions_stats:, page_views_stats:)
     # we need these defaults because SQL doesn't return any data for dates that don't have any
-    default_reactions_stats = { total: 0, like: 0, readinglist: 0, unicorn: 0 }
+    default_reactions_stats = {
+      total: 0, like: 0, readinglist: 0, unicorn: 0,
+      exploding_head: 0, raised_hands: 0, fire: 0, unique_reactors: 0
+    }
     default_page_views_stats = { total: 0, average_read_time_in_seconds: 0, total_read_time_in_seconds: 0 }
     iso_date = date.iso8601
 

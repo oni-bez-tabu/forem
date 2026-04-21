@@ -3,18 +3,19 @@
   <head>
     <% if user_signed_in? && current_page?(root_path) %>
       <% if params[:feed_type] == "discover" || params[:feed_type].blank? %>
-        <link rel="prefetch" href="/stories/feed/?page=1&type_of=discover">
+        <link rel="preload" href="/stories/feed/?page=1&type_of=discover" as="fetch" crossorigin="same-origin">
       <% elsif params[:feed_type] == "following" %>
-        <link rel="prefetch" href="/stories/feed/?page=1&type_of=following">
+        <link rel="preload" href="/stories/feed/?page=1&type_of=following" as="fetch" crossorigin="same-origin">
       <% end %>
-      <link rel="prefetch" href="/<%= ENV.fetch("BILLBOARD_URL_COMPONENT", "bb") %>/feed_first">
-      <link rel="prefetch" href="/<%= ENV.fetch("BILLBOARD_URL_COMPONENT", "bb") %>/feed_second">
-      <link rel="prefetch" href="/<%= ENV.fetch("BILLBOARD_URL_COMPONENT", "bb") %>/feed_third">
-      <link rel="prefetch" href="/sidebars/home">
+      <link rel="preload" href="/<%= ENV.fetch("BILLBOARD_URL_COMPONENT", "bb") %>/feed_first" as="fetch" crossorigin="same-origin">
+      <link rel="preload" href="/<%= ENV.fetch("BILLBOARD_URL_COMPONENT", "bb") %>/feed_second" as="fetch" crossorigin="same-origin">
+      <link rel="preload" href="/<%= ENV.fetch("BILLBOARD_URL_COMPONENT", "bb") %>/feed_third" as="fetch" crossorigin="same-origin">
+      <link rel="preload" href="/sidebars/home" as="fetch" crossorigin="same-origin">
     <% end %>
     <meta charset="utf-8">
     <% title = yield(:title) %>
     <title><%= title || community_name.to_s %></title>
+    <%= yield(:page_meta) %>
     <% unless internal_navigation? %>
       <meta name="last-updated" content="<%= Time.current %>">
       <meta name="user-signed-in" content="<%= user_signed_in? %>">
@@ -35,9 +36,8 @@
         <%= javascript_include_tag "onboardingRedirectCheck", "contentDisplayPolicy", defer: true %>
         <%= javascript_include_tag "messagesCount", defer: true %>
       <% end %>
-      <%= yield(:page_meta) %>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-      <%= favicon_link_tag Settings::General.favicon_url %>
+      <%= favicon_link_tag Images::Optimizer.call(Settings::General.favicon_url, width: 32) %>
       <link rel="apple-touch-icon" href="<%= optimized_image_url(Settings::General.logo_png, width: 180, fetch_format: "png") %>">
       <link rel="apple-touch-icon" sizes="152x152" href="<%= optimized_image_url(Settings::General.logo_png, width: 152, fetch_format: "png") %>">
       <link rel="apple-touch-icon" sizes="180x180" href="<%= optimized_image_url(Settings::General.logo_png, width: 180, fetch_format: "png") %>">
@@ -57,115 +57,130 @@
     <%= Settings::UserExperience.head_content.html_safe %>
   </head>
   <% unless internal_navigation? %>
-    <% cache(release_adjusted_cache_key("top-html-and-config--#{user_signed_in?}--#{@article.present?}-#{request.host}")) do %>
-      <body
-        class="<%= Settings::UserExperience.default_font.tr("_", "-") %>-article-body default-header"
-        data-user-status="<%= j(user_logged_in_status) %>"
-        data-is-root-subforem="<%= j(is_root_subforem?) %>"
-        <% if RequestStore.store[:subforem_id].present? %>
-          data-subforem-id="<%= j(RequestStore.store[:subforem_id]) %>"
+    <body
+      class="<%= Settings::UserExperience.default_font.tr("_", "-") %>-article-body default-header"
+      data-user-status="<%= j(user_logged_in_status) %>"
+      data-is-root-subforem="<%= j(is_root_subforem?) %>"
+      <% if RequestStore.store[:subforem_id].present? %>
+        data-subforem-id="<%= j(RequestStore.store[:subforem_id]) %>"
+      <% end %>
+      data-side-nav-visible="<%= Subforem.cached_discoverable_ids.size > 1 %>"
+      data-community-name="<%= j(community_name) %>"
+      data-subscription-icon="<%= asset_path("subscription-icon.png") %>"
+      data-locale="<%= j(I18n.locale) %>"
+      data-honeybadger-key="<%= j(ApplicationConfig["HONEYBADGER_JS_API_KEY"]) %>"
+      data-deployed-at="<%= j(ForemInstance.deployed_at) %>"
+      data-latest-commit-id="<%= j(ForemInstance.latest_commit_id) %>"
+      data-ga-tracking="<%= j(Settings::General.ga_tracking_id) %>"
+      data-cookie-banner-user-context="<%= j(Settings::General.cookie_banner_user_context) %>"
+      data-cookie-banner-platform-context="<%= j(Settings::General.coolie_banner_platform_context) %>"
+      data-algolia-id="<%= j(Settings::General.algolia_application_id) if feature_flag_enabled?(:algolia_frontend) %>"
+      data-algolia-search-key="<%= j(Settings::General.algolia_search_only_api_key) if feature_flag_enabled?(:algolia_frontend) %>"
+      data-algolia-display="<%= j(Settings::General.display_algolia_branding) %>"
+      data-onesignal-app-id="<%= j(ApplicationConfig["ONESIGNAL_APP_ID"]) %>"
+      data-cookieyes-api-key="<%= j(ApplicationConfig["COOKIEYES_API_KEY"]) %>"
+      data-firebase-api-key="<%= j(ApplicationConfig["FIREBASE_API_KEY"]) %>"
+      data-firebase-project-id="<%= j(ApplicationConfig["FIREBASE_PROJECT_ID"]) %>"
+      data-firebase-use-emulator="<%= j(ApplicationConfig["FIREBASE_USE_EMULATOR"]) %>"
+      data-dynamic-url-component="<%= ENV.fetch("BILLBOARD_URL_COMPONENT", "bb") %>"
+      data-ga4-tracking-id="<%= j(Settings::General.ga_analytics_4_id) %>">
+      <%# Repeat of stylesheets in <head> to fix rendering glitch: https://github.com/forem/forem/issues/12377 %>
+      
+      <%# First script to run no matter what %>
+      <script>
+        if (navigator.userAgent === 'ForemWebView/1' || window.frameElement) {
+          document.body.classList.add("hidden-shell");
+        }
+        <%# This is for rolling out or rolling back the app sidebar. %>
+        <%# Use this format to make JS compatible: YYYY-MM-DDTHH:MM:SS (e.g. 2023-12-31T23:59:59) %>
+        <% if ENV["MAKE_SIDEBAR_INVISIBLE_DATE"].present? %>
+          if (new Date() > new Date("<%= ENV["MAKE_SIDEBAR_INVISIBLE_DATE"] %>")) {
+            document.body.dataset.sideNavVisible = "false";
+          } 
         <% end %>
-        data-side-nav-visible="<%= Subforem.cached_discoverable_ids.size > 1 %>"
-        data-community-name="<%= j(community_name) %>"
-        data-subscription-icon="<%= asset_path("subscription-icon.png") %>"
-        data-locale="<%= j(I18n.locale) %>"
-        data-honeybadger-key="<%= j(ApplicationConfig["HONEYBADGER_JS_API_KEY"]) %>"
-        data-onesignal-app-id="<%= j(ApplicationConfig["ONESIGNAL_APP_ID"]) %>"
-        data-cookieyes-api-key="<%= j(ApplicationConfig["COOKIEYES_API_KEY"]) %>"
-        data-deployed-at="<%= j(ForemInstance.deployed_at) %>"
-        data-latest-commit-id="<%= j(ForemInstance.latest_commit_id) %>"
-        data-ga-tracking="<%= j(Settings::General.ga_tracking_id) %>"
-        data-cookie-banner-user-context="<%= j(Settings::General.cookie_banner_user_context) %>"
-        data-cookie-banner-platform-context="<%= j(Settings::General.coolie_banner_platform_context) %>"
-        data-algolia-id="<%= j(Settings::General.algolia_application_id) if feature_flag_enabled?(:algolia_frontend) %>"
-        data-algolia-search-key="<%= j(Settings::General.algolia_search_only_api_key) if feature_flag_enabled?(:algolia_frontend) %>"
-        data-algolia-display="<%= j(Settings::General.display_algolia_branding) %>"
-        data-firebase-api-key="<%= j(ApplicationConfig["FIREBASE_API_KEY"]) %>"
-        data-firebase-project-id="<%= j(ApplicationConfig["FIREBASE_PROJECT_ID"]) %>"
-        data-firebase-use-emulator="<%= j(ApplicationConfig["FIREBASE_USE_EMULATOR"]) %>"
-        data-dynamic-url-component="<%= ENV.fetch("BILLBOARD_URL_COMPONENT", "bb") %>"
-        data-ga4-tracking-id="<%= j(Settings::General.ga_analytics_4_id) %>">
-        <%# Repeat of stylesheets in <head> to fix rendering glitch: https://github.com/forem/forem/issues/12377 %>
-        
-        <%# First script to run no matter what %>
-        <script>
-          if (/ForemWebView/i.test(navigator.userAgent || '')) {
-            document.body.classList.add("hidden-shell");
-            delete document.body.dataset.gaTracking;
-            delete document.body.dataset.ga4TrackingId;
-            delete document.body.dataset.cookieyesApiKey;
-            delete document.body.dataset.cookieBannerUserContext;
-            delete document.body.dataset.cookieBannerPlatformContext;
-          } else if (window.frameElement) {
-            document.body.classList.add("hidden-shell");
+        <% if ENV["MAKE_SIDEBAR_VISIBLE_DATE"].present? %>
+          if (new Date() > new Date("<%= ENV["MAKE_SIDEBAR_VISIBLE_DATE"] %>")) {
+            document.body.dataset.sideNavVisible = "true";
           }
-        </script>
-
-        <script>
-          (function () {
-            var ua = navigator.userAgent || '';
-            var isAndroid = /Android/i.test(ua);
-            var isForemWebView = /ForemWebView\/1/i.test(ua);
-            if (isAndroid && isForemWebView) {
-              // Add a class for CSS-based disabling of selection/callout
-              document.body.classList.add('android-webview-no-select');
-
-              // Prevent long-press actions like context menu and selection outside editable controls
-              var isEditableTarget = function (el) {
-                if (!el) return false;
-                var tag = el.tagName;
-                if (!tag) return false;
-                var name = tag.toLowerCase();
-                if (name === 'input' || name === 'textarea' || name === 'select') return true;
-                if (el.isContentEditable) return true;
-                return false;
-              };
-
-              document.addEventListener('contextmenu', function (e) {
-                if (!isEditableTarget(e.target)) {
-                  e.preventDefault();
-                }
-              });
-
-              document.addEventListener('selectstart', function (e) {
-                if (!isEditableTarget(e.target)) {
-                  e.preventDefault();
-                }
-              });
-
-              // Some WebViews also react to gesture events
-              document.addEventListener('gesturestart', function (e) {
-                e.preventDefault();
-              });
-            }
-          })();
-        </script>
-
-        <%= render "layouts/styles", qualifier: "secondary" %>
-        <div id="body-styles">
-          <style>
-            :root {
-              --accent-brand-lighter-rgb: <%= Color::CompareHex.new([Settings::UserExperience.primary_brand_color_hex]).brightness(1.35, only_values: true) %>;
-              --accent-brand-rgb: <%= Color::CompareHex.new([Settings::UserExperience.primary_brand_color_hex]).brightness(1, only_values: true) %>;
-              --accent-brand-darker-rgb: <%= Color::CompareHex.new([Settings::UserExperience.primary_brand_color_hex]).brightness(0.8, only_values: true) %>;
-            }
-          </style>
-        </div>
-        <% if user_signed_in? %>
-          <%= render "layouts/user_config" %>
         <% end %>
-        <div id="audiocontent" data-podcast="">
-          <%= yield(:audio) %>
-        </div>
-        <div id="talkscontent"></div>
-        <% cache("main-side-bar-#{user_signed_in?}", expires_in: 5.minutes) do %>
+      </script>
+
+      <script>
+        if (/ForemWebView/i.test(navigator.userAgent || '')) {
+          document.body.classList.add("hidden-shell");
+          delete document.body.dataset.gaTracking;
+          delete document.body.dataset.ga4TrackingId;
+          delete document.body.dataset.cookieyesApiKey;
+          delete document.body.dataset.cookieBannerUserContext;
+          delete document.body.dataset.cookieBannerPlatformContext;
+        } else if (window.frameElement) {
+          document.body.classList.add("hidden-shell");
+        }
+      </script>
+
+      <script>
+        (function () {
+          var ua = navigator.userAgent || '';
+          var isAndroid = /Android/i.test(ua);
+          var isForemWebView = /ForemWebView\/1/i.test(ua);
+          if (isAndroid && isForemWebView) {
+            document.body.classList.add('android-webview-no-select');
+
+            var isEditableTarget = function (el) {
+              if (!el) return false;
+              var tag = el.tagName;
+              if (!tag) return false;
+              var name = tag.toLowerCase();
+              if (name === 'input' || name === 'textarea' || name === 'select') return true;
+              if (el.isContentEditable) return true;
+              return false;
+            };
+
+            document.addEventListener('contextmenu', function (e) {
+              if (!isEditableTarget(e.target)) {
+                e.preventDefault();
+              }
+            });
+
+            document.addEventListener('selectstart', function (e) {
+              if (!isEditableTarget(e.target)) {
+                e.preventDefault();
+              }
+            });
+
+            document.addEventListener('gesturestart', function (e) {
+              e.preventDefault();
+            });
+          }
+        })();
+      </script>
+
+      <%= render "layouts/styles", qualifier: "secondary" %>
+      <div id="body-styles">
+        <style>
+          :root {
+            --accent-brand-lighter-rgb: <%= Color::CompareHex.new([Settings::UserExperience.primary_brand_color_hex]).brightness(1.35, only_values: true) %>;
+            --accent-brand-rgb: <%= Color::CompareHex.new([Settings::UserExperience.primary_brand_color_hex]).brightness(1, only_values: true) %>;
+            --accent-brand-darker-rgb: <%= Color::CompareHex.new([Settings::UserExperience.primary_brand_color_hex]).brightness(0.8, only_values: true) %>;
+          }
+        </style>
+      </div>
+      <% if user_signed_in? %>
+        <%= render "layouts/user_config" %>
+      <% end %>
+      <div id="audiocontent" data-podcast="">
+        <%= yield(:audio) %>
+      </div>
+      <div id="talkscontent"></div>
+      <% unless ENV["DISABLE_MAIN_SIDE_BAR"] == "yes" %>
+        <% cache("main-side-bar-#{user_signed_in?}-#{RequestStore.store[:subforem_id]}", expires_in: 10.minutes) do %>
           <% if Subforem.cached_discoverable_ids.any? %>
             <%= render "layouts/main_side_bar" %>
           <% end %>
         <% end %>
-        <%= render "layouts/top_bar" %>
-        <div id="active-broadcast" class="broadcast-wrapper"></div>
-    <% end %>
+      <% end %>
+      <%= render "layouts/top_bar" %>
+      <div id="active-broadcast" class="broadcast-wrapper"></div>
   <% end %>
 <div id="page-content" class="wrapper <%= view_class %>" data-current-page="<%= current_page %>">
   <% if flash[:global_notice] %>
@@ -189,15 +204,15 @@
     <% end %>
     <%= yield %>
     <div id="runtime-banner-container"></div>
+    <div id="i18n-translations" data-translations="<%= i18n_translations_for_javascript.to_json %>"></div>
   </div>
 </div>
 <% unless internal_navigation? %>
-  <% cache("footer-and-signup-modal-#{user_signed_in?}-#{ForemInstance.deployed_at}-#{Settings::General.admin_action_taken_at&.rfc3339}-#{request.host}", expires_in: 24.hours) do %>
+  <% cache("footer-and-signup-modal-#{user_signed_in?}-#{ForemInstance.deployed_at}-#{formatted_admin_action_taken_at}-#{request.host}-#{RequestStore.store[:subforem_id]}", expires_in: 24.hours) do %>
     <%= render "layouts/footer" %>
     <%= render "layouts/signup_modal" unless user_signed_in? %>
     <div id="cookie-consent"></div>
   <% end %>
-  <div id="i18n-translations" data-translations="<%= { I18n.locale.to_sym => { core: I18n::JS.translations[I18n.locale.to_sym][:core] } }.to_json %>"></div>
   <%= render "articles/reaction_category_resources" %>
   <%= render "layouts/bottom_scripts"  %>
   <%= Settings::UserExperience.bottom_of_body_content.html_safe %>

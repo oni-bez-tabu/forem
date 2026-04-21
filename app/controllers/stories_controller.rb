@@ -129,6 +129,13 @@ class StoriesController < ApplicationController
     redirect_page_if_different_subforem
     return if performed?
 
+    if @page.redirect_to_url.present?
+      redirect_options = { status: :moved_permanently }
+      redirect_options[:allow_other_host] = true if @page.redirect_to_url.start_with?("http://", "https://")
+      redirect_to @page.redirect_to_url, **redirect_options
+      return
+    end
+
     @story_show = true
     set_surrogate_key_header "show-page-#{params[:username]}"
 
@@ -174,21 +181,67 @@ class StoriesController < ApplicationController
 
   def handle_organization_index
     @user = @organization
+    redirect_if_organization_view_param
+    return if performed?
+
+    main_page = @organization.main_page
+    is_readme = main_page.present? && FeatureFlag.enabled?(:org_readme, FeatureFlag::Actor[@organization])
     @stories = ArticleDecorator.decorate_collection(@organization.articles.published.from_subforem
       .includes(:distinct_reaction_categories, :subforem)
       .limited_column_select
       .order(published_at: :desc).page(@page).per(8))
-    @organization_article_index = true
-    @organization_users = @organization.users.order(badge_achievements_count: :desc)
-    if !user_signed_in? && @organization_users.sum(:score).negative? && @stories.sum(&:score) <= 0
+    @organization_article_index = !is_readme
+
+    # Anti-spam/visibility guard: apply for both README and non-README views
+    user_score = @organization.active_users.sum(:score)
+    if !user_signed_in? && user_score.negative? && @stories.sum(&:score) <= 0
       not_found
     end
+
+    unless is_readme
+      # Get active users ordered by badge achievements
+      # For find_each_respecting_scope compatibility, we get ordered IDs first (with order column in select)
+      # then create a relation that preserves that order when .ids is called
+      # This avoids the DISTINCT/ORDER BY conflict when find_each_respecting_scope calls .ids
+      ordered_user_data = @organization.active_users
+                                       .select("users.id, users.badge_achievements_count")
+                                       .order(Arel.sql("users.badge_achievements_count DESC NULLS LAST, users.id ASC"))
+                                       .pluck(:id, :badge_achievements_count)
+      ordered_user_ids = ordered_user_data.map(&:first)
+
+      # Create a relation that preserves the order when .ids is called by find_each_respecting_scope
+      # The limit applied in the view will be respected by checking the relation's limit_value
+      @organization_users = User.where(id: ordered_user_ids).extending(Module.new do
+        ids_array = ordered_user_ids.dup # Capture in closure
+        define_method :ids do
+          # Return IDs in the order they were provided, preserving the badge_achievements_count ordering
+          # This is called by in_batches_respecting_scope to get all IDs before batching
+          # Check if a limit was applied to this relation and respect it
+          # limit_value is available on ActiveRecord::Relation
+          limit = limit_value
+          if limit
+            ids_array.take(limit)
+          else
+            ids_array
+          end
+        end
+      end)
+    end
+
     redirect_if_inactive_in_subforem_for_organization
     return if performed?
 
     set_organization_json_ld
     set_surrogate_key_header @organization.record_key
-    render template: "organizations/show"
+
+    if is_readme
+      @readme_html = main_page.processed_html
+      @cover_image_url = @organization.cover_image_url if @organization.cover_image.present?
+      @org_readme_show = true
+      render template: "organizations/show_readme"
+    else
+      render template: "organizations/show"
+    end
   end
 
   def handle_user_index
@@ -220,7 +273,7 @@ class StoriesController < ApplicationController
     @profile = @user&.profile&.decorate || Profile.create(user: @user)&.decorate
     @is_user_flagged = Reaction.where(user_id: session_current_user_id, reactable: @user).any?
 
-    set_surrogate_key_header @user.record_key
+    set_surrogate_key_header(*@user.profile_cache_keys)
     set_user_json_ld
 
     render template: "users/show"
@@ -240,11 +293,15 @@ class StoriesController < ApplicationController
     redirect_to admin_user_path(@user.id) if REDIRECT_VIEW_PARAMS.include?(params[:view])
   end
 
+  def redirect_if_organization_view_param
+    redirect_to admin_organization_path(@organization.id) if REDIRECT_VIEW_PARAMS.include?(params[:view])
+  end
+
   def redirect_if_inactive_in_subforem_for_user
     return unless @comments.none? &&
-                    @pinned_stories.none? &&
-                    @stories.none? &&
-                    RequestStore.store[:subforem_id] != RequestStore.store[:default_subforem_id]
+      @pinned_stories.none? &&
+      @stories.none? &&
+      RequestStore.store[:subforem_id] != RequestStore.store[:default_subforem_id]
 
     subforem = Subforem.find(RequestStore.store[:default_subforem_id])
     redirect_to URL.url(@user.username, subforem), allow_other_host: true, status: :moved_permanently
@@ -252,8 +309,8 @@ class StoriesController < ApplicationController
 
   def redirect_if_inactive_in_subforem_for_organization
     return unless @stories.none? &&
-                    RequestStore.store[:subforem_id] != RequestStore.store[:default_subforem_id]
-    
+      RequestStore.store[:subforem_id] != RequestStore.store[:default_subforem_id]
+
     subforem = Subforem.find(RequestStore.store[:default_subforem_id])
     redirect_to URL.url(@organization.slug, subforem), allow_other_host: true, status: :moved_permanently
   end
@@ -267,7 +324,8 @@ class StoriesController < ApplicationController
 
   def handle_article_show
     assign_article_show_variables
-    set_surrogate_key_header @article.record_key
+    user_keys = @article.user&.profile_identity_cache_keys
+    set_surrogate_key_header(*[@article.record_key, *user_keys].compact)
     redirect_if_appropriate
     return if performed?
 
@@ -277,8 +335,13 @@ class StoriesController < ApplicationController
   def assign_feed_stories
     if params[:timeframe].in?(Timeframe::FILTER_TIMEFRAMES)
       @stories = Articles::Feeds::Timeframe.call(params[:timeframe])
+    elsif params[:timeframe] == "latest_less_filtered"
+      @stories = Articles::Feeds::Latest.call(page: @page)
     elsif params[:timeframe] == Timeframe::LATEST_TIMEFRAME
-      @stories = Articles::Feeds::Latest.call(minimum_score: Settings::UserExperience.home_feed_minimum_score)
+      base_relation = Articles::Feeds::Latest.call(minimum_score: Settings::UserExperience.home_feed_minimum_score, page: @page)
+      score_minimum = Settings::UserExperience.index_minimum_score
+      author_id = current_user&.id || -1
+      @stories = base_relation.where("articles.score >= ? OR articles.user_id = ?", score_minimum, author_id)
     else
       @default_home_feed = true
       feed = Articles::Feeds::LargeForemExperimental.new(page: @page, tag: params[:tag])
@@ -318,7 +381,8 @@ class StoriesController < ApplicationController
       # considering non cross posted articles with a more recent publication date
       @collection_articles = @article.collection.articles
         .published.from_subforem
-        .order(Arel.sql("COALESCE(crossposted_at, published_at) ASC"))
+        .select(:id, :path, :title, :slug, :published_at, :crossposted_at, :user_id, :organization_id, :cached_tag_list, :subforem_id, :main_image)
+        .order(Arel.sql("COALESCE(articles.crossposted_at, articles.published_at) ASC"))
     end
 
     @comments_to_show_count = @article.cached_tag_list_array.include?("discuss") ? 50 : 30
@@ -404,7 +468,13 @@ class StoriesController < ApplicationController
   end
 
   def set_article_json_ld
-    @article_json_ld = {
+    @article_json_ld = build_article_json_ld
+  end
+
+  private
+
+  def build_article_json_ld
+    json_ld = {
       "@context": "http://schema.org",
       "@type": "Article",
       mainEntityOfPage: {
@@ -436,6 +506,98 @@ class StoriesController < ApplicationController
       datePublished: @article.published_timestamp,
       dateModified: @article.edited_at&.iso8601 || @article.published_timestamp
     }
+
+    # Add discussion forum structured data if article has comments
+    return json_ld unless @article.comments_count.positive?
+
+    # Add main discussion forum posting for the article
+    json_ld[:mainEntity] = {
+      "@type": "DiscussionForumPosting",
+      "@id": "#article-discussion-#{@article.id}",
+      headline: @article.title,
+      text: @article.processed_html_final,
+      author: {
+        "@type": "Person",
+        name: @user.name,
+        url: URL.user(@user)
+      },
+      datePublished: @article.published_timestamp,
+      dateModified: @article.edited_at&.iso8601 || @article.published_timestamp,
+      url: URL.article(@article),
+      interactionStatistic: [
+        {
+          "@type": "InteractionCounter",
+          interactionType: "https://schema.org/CommentAction",
+          userInteractionCount: @article.comments_count
+        },
+        {
+          "@type": "InteractionCounter",
+          interactionType: "https://schema.org/LikeAction",
+          userInteractionCount: @article.public_reactions_count
+        },
+      ]
+    }
+
+    # Add comment structured data
+    comments_data = fetch_comments_for_json_ld
+    return json_ld unless comments_data.any?
+
+    json_ld[:mainEntity][:comment] = comments_data
+    json_ld
+  end
+
+  private
+
+  def fetch_comments_for_json_ld
+    # Fetch top-level comments with their nested replies
+    comments_tree = Comments::Tree.for_commentable(@article, limit: 10, order: "top", include_negative: false)
+
+    comments_data = []
+    comments_tree.each do |root_comment, sub_comments|
+      comment_data = build_comment_json_ld(root_comment)
+
+      # Add nested replies
+      if sub_comments.any?
+        comment_data[:comment] = sub_comments.map { |comment, _| build_comment_json_ld(comment) }
+      end
+
+      comments_data << comment_data
+    end
+
+    comments_data
+  end
+
+  def build_comment_json_ld(comment)
+    comment_data = {
+      "@type": "Comment",
+      "@id": "#comment-#{comment.id}",
+      text: comment.processed_html_final,
+      author: {
+        "@type": "Person",
+        name: comment&.user&.name,
+        url: URL.user(comment&.user)
+      },
+      datePublished: comment.created_at.iso8601,
+      dateModified: comment.edited_at&.iso8601 || comment.created_at.iso8601,
+      url: URL.comment(comment),
+      interactionStatistic: [
+        {
+          "@type": "InteractionCounter",
+          interactionType: "https://schema.org/LikeAction",
+          userInteractionCount: comment.public_reactions_count
+        },
+      ]
+    }
+
+    # Add parent comment reference if this is a reply
+    if comment.ancestry.present?
+      comment_data[:parentItem] = {
+        "@type": "Comment",
+        "@id": "#comment-#{comment&.parent&.id}"
+      }
+    end
+
+    comment_data
   end
 
   def seo_optimized_images
@@ -478,5 +640,38 @@ class StoriesController < ApplicationController
     return params[:comments_sort] if Comment::VALID_SORT_OPTIONS.include? params[:comments_sort]
 
     "top"
+  end
+
+  def build_comment_json_ld(comment)
+    comment_data = {
+      "@type": "Comment",
+      "@id": "#comment-#{comment.id}",
+      text: comment.processed_html_final,
+      author: {
+        "@type": "Person",
+        name: comment.user.name,
+        url: URL.user(comment.user)
+      },
+      datePublished: comment.created_at.iso8601,
+      dateModified: comment.edited_at&.iso8601 || comment.created_at.iso8601,
+      url: URL.comment(comment),
+      interactionStatistic: [
+        {
+          "@type": "InteractionCounter",
+          interactionType: "https://schema.org/LikeAction",
+          userInteractionCount: comment.public_reactions_count
+        },
+      ]
+    }
+
+    # Add parent comment reference if this is a reply
+    if comment.ancestry.present?
+      comment_data[:parentItem] = {
+        "@type": "Comment",
+        "@id": "#comment-#{comment&.parent&.id}"
+      }
+    end
+
+    comment_data
   end
 end

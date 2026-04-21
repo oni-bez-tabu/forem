@@ -78,6 +78,8 @@ class GithubTag
 
     def clean_relative_path!(readme_html, url)
       readme = Nokogiri::HTML(readme_html)
+      uri = URI.parse(url)
+      base_github_url = "#{uri.scheme}://#{uri.host}"
 
       readme.css("img, a").each do |element|
         attribute = element.name == "img" ? "src" : "href"
@@ -86,7 +88,23 @@ class GithubTag
         element["src"] = "" if attribute == "src" && element.attributes[attribute].blank?
 
         path = element.attributes[attribute].value
-        element.attributes[attribute].value = "#{url}#{path}" if path[0, 4] != "http"
+        next if path.blank? # Skip missing/empty attributes — avoids bogus rewrite to .../HEAD/
+        next if path.start_with?("http", "//", "data:", "mailto:") # Skip absolute/non-relative URLs
+
+        # Handle different types of relative paths
+        if path.start_with?("/")
+          # Absolute path from GitHub root (e.g., /owner/repo/blob/main/file.png)
+          element.attributes[attribute].value = "#{base_github_url}#{path}"
+        elsif path.start_with?("#")
+          # Anchor link (e.g., #license)
+          element.attributes[attribute].value = "#{url}#{path}"
+        elsif element.name == "img"
+          # Relative image path — resolve to raw content URL so the CDN caches valid bytes
+          element.attributes[attribute].value = "#{url.sub('github.com', 'raw.githubusercontent.com')}/HEAD/#{path}"
+        else
+          # Relative path (e.g., blob/main/file.png)
+          element.attributes[attribute].value = "#{url}/#{path}"
+        end
       end
 
       readme.to_html

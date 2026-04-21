@@ -22,6 +22,7 @@ module Articles
         remove_all_notifications if became_unpublished?
         send_to_mentioned_users_and_followers if remains_published?
         refresh_auto_audience_segments if became_published?
+        complete_onboarding_first_post if became_published?
       end
 
       Result.new(success: success, article: article.decorate)
@@ -42,12 +43,18 @@ module Articles
       article_params.delete :published_at if article.published_at && !article.scheduled?
 
       # NOTE: It's surprising that this is article.user and not @user
-      Articles::Attributes.new(article_params, article.user)
+      Articles::Attributes.new(article_params, article.user, organization: article.organization)
         .for_update(update_edited_at: update_edited_at)
     end
 
     def refresh_auto_audience_segments
       user.refresh_auto_audience_segments
+    end
+
+    def complete_onboarding_first_post
+      return if user.registered_at&.before?(28.days.ago)
+
+      user.onboarding_checklist&.complete_item!("made_first_post")
     end
 
     def became_published?

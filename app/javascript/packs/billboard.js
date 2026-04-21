@@ -9,13 +9,13 @@ export async function getBillboard() {
   const cookieConsent = document.cookie
     .split('; ')
     .find(row => row.startsWith('cookieyes-consent='));
-    
+
   if (!cookieConsent || cookieConsent.includes('action:,')) {
     return;
   }
 
-  const placeholderElements = document.getElementsByClassName(
-    'js-billboard-container',
+  const placeholderElements = document.querySelectorAll(
+    '.js-bb-c, .js-billboard-container, .new-bb-container, .sidebar-bb, .below-post-bb, .feed-bb-c'
   );
 
   const promises = [...placeholderElements].map(generateBillboard);
@@ -23,6 +23,43 @@ export async function getBillboard() {
 }
 
 async function generateBillboard(element) {
+  // Callback to process attribute mutations
+  function handleAttributeMutations(mutations) {
+    mutations.forEach(mutation => {
+      if (mutation.type === "attributes") {
+        const { attributeName, target } = mutation;
+        const allowedAttributes = new Set([
+          "class",
+          "style",
+          "data-display-unit",
+          "data-id",
+          "data-category-click",
+          "data-category-impression",
+          "data-context-type",
+          "data-special",
+          "data-article-id",
+          "data-impression-recorded",
+          "data-type-of"
+        ]);
+        if (!allowedAttributes.has(attributeName)) {
+          // Remove any attribute that isn't allowed
+          target.removeAttribute(attributeName);
+        }
+      }
+    });
+  }
+
+  // Attach a MutationObserver to a specific billboard element
+  function observeThisBillboard(element) {
+    // Avoid attaching multiple observers to the same element
+    if (element.__billboardObserverAttached) return;
+    const observerConfig = { attributes: true };
+    const observer = new MutationObserver(handleAttributeMutations);
+    observer.observe(element, observerConfig);
+    // Mark the element so we don't attach another observer in the future
+    element.__billboardObserverAttached = true;
+  }
+
   let { asyncUrl } = element.dataset;
   const currentParams = window.location.href.split('?')[1];
   const cookieStatus = localStorage.getItem('cookie_status');
@@ -45,7 +82,7 @@ async function generateBillboard(element) {
       if (
         asyncUrl?.includes('post_fixed_bottom') &&
         (currentParams?.includes('context=digest') || isInternalNav || isNativeUserAgent)
-      ) {     
+      ) {
         return;
       }
 
@@ -55,6 +92,16 @@ async function generateBillboard(element) {
       generatedElement.innerHTML = htmlContent;
       element.innerHTML = '';
       element.appendChild(generatedElement);
+
+      // Set article ID from article container if present
+      const articleContainer = document.getElementById('article-show-container');
+      if (articleContainer && articleContainer.dataset.articleId) {
+        const billboardElement = element.querySelector('.js-billboard');
+        if (billboardElement) {
+          billboardElement.dataset.articleId = articleContainer.dataset.articleId;
+        }
+      }
+
       element.querySelectorAll('img').forEach((img) => {
         img.onerror = function () {
           this.style.display = 'none';
@@ -96,49 +143,9 @@ async function generateBillboard(element) {
 
 
       // *** Beginning of where we guard against disallowed attributes
-      const allowedAttributes = new Set([
-        "class",
-        "style",
-        "data-display-unit",
-        "data-id",
-        "data-category-click",
-        "data-category-impression",
-        "data-context-type",
-        "data-special",
-        "data-article-id",
-        "data-impression-recorded",
-        "data-type-of"
-      ]);
-      
-      // Callback to process attribute mutations
-      function handleAttributeMutations(mutations) {
-        mutations.forEach(mutation => {
-          if (mutation.type === "attributes") {
-            const { attributeName, target } = mutation;
-            if (!allowedAttributes.has(attributeName)) {
-              // Remove any attribute that isn't allowed
-              target.removeAttribute(attributeName);
-            }
-          }
-        });
-      }
-      
-      // Observer configuration for attribute changes only (no subtree on the element itself)
-      const observerConfig = { attributes: true };
-      
-      // Attach a MutationObserver to a specific billboard element
-      function observeThisBillboard(element) {
-        // Avoid attaching multiple observers to the same element
-        if (element.__billboardObserverAttached) return;
-        const observer = new MutationObserver(handleAttributeMutations);
-        observer.observe(element, observerConfig);
-        // Mark the element so we don't attach another observer in the future
-        element.__billboardObserverAttached = true;
-      }
-      
       // Initially attach observers to all existing billboard elements
       document.querySelectorAll('.js-billboard').forEach(observeThisBillboard);
-      
+
       // To handle new billboard elements that are added dynamically,
       // observe the document body for added nodes.
       const bodyObserver = new MutationObserver(mutations => {
@@ -157,7 +164,7 @@ async function generateBillboard(element) {
           }
         });
       });
-      
+
       bodyObserver.observe(document.body, { childList: true, subtree: true });
 
       // *** End of guarding against disallowed attributes

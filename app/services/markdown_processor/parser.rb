@@ -28,13 +28,16 @@ module MarkdownProcessor
       @liquid_tag_options = liquid_tag_options.merge({ source: @source, user: @user })
     end
 
-    # @param prefix_images_options [Hash] params, that need to be passed further to HtmlParser#prefix_all_images
     def finalize(link_attributes: {}, prefix_images_options: { width: 800, synchronous_detail_detection: false })
       options = { hard_wrap: true, filter_html: false, link_attributes: link_attributes }
       renderer = Redcarpet::Render::HTMLRouge.new(options)
       markdown = Redcarpet::Markdown.new(renderer, Constants::Redcarpet::CONFIG)
       catch_xss_attempts(@content)
-      code_tag_content = convert_code_tags_to_triple_backticks(@content)
+      
+      # Workaround for Redcarpet dropping link text at nesting levels >= 5 (16+ spaces)
+      content_with_fixed_links = convert_deeply_nested_links_to_html(@content)
+      
+      code_tag_content = convert_code_tags_to_triple_backticks(content_with_fixed_links)
       escaped_content = escape_liquid_tags_in_codeblock(code_tag_content)
       html = markdown.render(escaped_content)
       sanitized_content = ActionController::Base.helpers.sanitize html, { scrubber: RenderedMarkdownScrubber.new }
@@ -47,19 +50,25 @@ module MarkdownProcessor
 
         html = markdown.render(parsed_liquid.render)
       rescue NoMethodError => e
-        if e.message.include?('line_number')
-          # Handle the specific NoMethodError
-          Rails.logger.error("Liquid rendering error: #{e.message}")
-          html = sanitized_content.to_str
-        else
-          raise e
-        end
+        raise e unless e.message.include?("line_number")
+
+        # Handle the specific NoMethodError
+        Rails.logger.error("Liquid rendering error: #{e.message}")
+        html = sanitized_content.to_str
       rescue Liquid::SyntaxError => e
         html = e.message
       end
 
       html = add_target_blank_to_outbound_links(html)
       parse_html(html, prefix_images_options)
+    end
+
+    def convert_deeply_nested_links_to_html(content)
+      content.gsub(/^(?: {16,}|\t{4,})[-*+ \d.]* .*$/) do |line|
+        line.gsub(/\[([^\]]*)\]\(([^)]*)\)/) do
+          "<a href=\"#{$2}\">#{$1}</a>"
+        end
+      end
     end
 
     def add_target_blank_to_outbound_links(html)
@@ -167,6 +176,7 @@ module MarkdownProcessor
         .remove_nested_linebreak_in_list
         .prefix_all_images(**prefix_images_options)
         .wrap_all_images_in_links
+        .enforce_gif_like_videos
         .add_control_class_to_codeblock
         .add_control_panel_to_codeblock
         .add_fullscreen_button_to_panel

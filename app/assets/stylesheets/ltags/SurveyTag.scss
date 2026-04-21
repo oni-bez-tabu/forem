@@ -12,26 +12,39 @@
   background-color: var(--theme-container-background, white);
   border-radius: var(--radius-lg, 5px);
   box-sizing: border-box;
-  padding: 15px 25px 25px;
+  padding: calc(4px + 0.6vw) calc(7px + 0.6vw) calc(7px + 0.6vw);
   font-family: var(--ff-sans-serif);
-  
+
   .survey-title {
     margin: 10px 0 25px;
-    text-align: center;
+    text-align: left;
     font-size: 1.4em;
     color: var(--body-color);
+    padding-top: 10px;
   }
 }
 
 .survey-poll {
-  padding-bottom: 1em;
+  padding-bottom: 1.8em;
   border-bottom: 1px solid var(--form-border, #eee);
   margin-bottom: 1em;
 
   h3 {
-    margin: 15px 0px;
-    font-size: 1.1em;
+    margin: 15px 0px 16px !important;
+    font-size: 1.05em !important;
+    font-weight: 500 !important;
     color: var(--body-color);
+    padding: var(--su-2) var(--su-2) !important;
+    border: 1px solid var(--form-border, #eee);
+    border-radius: var(--radius-md, 5px);
+    background-color: rgba(0, 0, 0, 0.05);
+
+  }
+
+  &.survey-poll-long-question {
+    h3 {
+      font-size: 1em !important;
+    }
   }
 }
 
@@ -42,6 +55,23 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  &.survey-poll-answers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-flow: row;
+    gap: 10px;
+
+    .survey-poll-option {
+      padding: 3px 8px;
+      font-size: calc(0.8em + 0.1vw);
+
+      .option-text {
+        white-space: normal;
+      }
+    }
+
+  }
 
   .survey-poll-option {
     border: 1px solid var(--form-border);
@@ -63,6 +93,14 @@
       color: var(--body-color);
       flex: 1;
       cursor: pointer;
+
+      .option-supplementary-text {
+        font-size: 0.85em;
+        color: var(--card-color-tertiary, $medium-gray);
+        margin-top: 4px;
+        font-style: italic;
+        line-height: 1.3;
+      }
     }
 
     &:hover {
@@ -80,7 +118,7 @@
       border-color: var(--cta-branded-border);
       box-shadow: 1px 1px 1px var(--cta-branded-border);
       cursor: default;
-      
+
       .option-text {
         color: var(--cta-branded-color);
         font-weight: var(--fw-bold, 700);
@@ -102,13 +140,72 @@
   }
 }
 
+// Scale supplementary text container (above the scale)
+.scale-supplementary-text-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px auto 24px;
+  max-width: 560px;
+
+  .scale-supplementary-text-left,
+  .scale-supplementary-text-right {
+    font-size: 0.8em;
+    color: var(--card-color-tertiary, $medium-gray);
+    font-weight: var(--fw-medium, 500);
+    max-width: 40%;
+    text-align: center;
+    line-height: 1.2;
+    min-width: 220px;
+  }
+
+  // .scale-supplementary-text-left {
+  //   text-align: left;
+  // }
+
+  // .scale-supplementary-text-right {
+  //   text-align: right;
+  // }
+}
+
+// Show/hide supplementary text based on layout
+.scale-supplementary-text-horizontal {
+  // Show horizontal version by default
+  display: flex;
+
+  // Hide for scale-many-options on smaller screens (vertical layout)
+  .survey-poll.scale-many-options & {
+    @media (max-width: ($breakpoint-xl - 1px)) {
+      display: none;
+    }
+  }
+}
+
+.scale-supplementary-text-vertical {
+  // Hide vertical version by default
+  display: none;
+  font-size: 0.7em;
+  color: var(--card-color-tertiary, $medium-gray);
+  font-weight: var(--fw-normal, 400);
+  margin-top: 2px;
+  line-height: 1.1;
+
+  // Show for scale-many-options on smaller screens (vertical layout)
+  .survey-poll.scale-many-options & {
+    @media (max-width: ($breakpoint-xl - 1px)) {
+      display: block;
+    }
+  }
+}
+
 // Scale poll specific styles for surveys
 .survey-poll[data-poll-type="scale"] {
   .survey-poll-answers {
+
     // Default vertical layout for more than 10 options
     .survey-poll-option {
       justify-content: space-between;
-      
+
       .scale-value {
         font-size: 1.2em;
         font-weight: bold;
@@ -119,10 +216,14 @@
         background: rgba(var(--cta-branded-bg-rgb), 0.1);
         border-radius: var(--radius-sm, 4px);
         margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
     }
   }
-  
+
   // Horizontal layout for 5 options (always horizontal)
   &.scale-5-options {
     .survey-poll-answers {
@@ -130,7 +231,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 8px;
-      
+
       .survey-poll-option {
         flex: 0 0 auto;
         min-width: 30px;
@@ -138,7 +239,7 @@
         padding: 4px 4px;
         justify-content: center;
         text-align: center;
-        
+
         .scale-value {
           font-size: 1.1em;
           font-weight: bold;
@@ -149,21 +250,26 @@
           background: rgba(var(--cta-branded-bg-rgb), 0.1);
           border-radius: var(--radius-sm, 4px);
           margin: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
-        
+
         input[type="radio"] {
           display: none; // Hide radio button for cleaner horizontal layout
         }
-        
+
         .option-text {
           display: flex;
+          flex-direction: column;
           justify-content: center;
           align-items: center;
         }
       }
     }
   }
-  
+
   // Horizontal layout for more than 5 options (only at xl breakpoint)
   &.scale-many-options {
     .survey-poll-answers {
@@ -172,7 +278,7 @@
         flex-wrap: wrap;
         justify-content: center;
         gap: 8px;
-        
+
         .survey-poll-option {
           flex: 0 0 auto;
           min-width: 30px;
@@ -180,7 +286,7 @@
           padding: 4px 4px;
           justify-content: center;
           text-align: center;
-          
+
           .scale-value {
             font-size: 1.1em;
             font-weight: bold;
@@ -191,14 +297,19 @@
             background: rgba(var(--cta-branded-bg-rgb), 0.1);
             border-radius: var(--radius-sm, 4px);
             margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
           }
-          
+
           input[type="radio"] {
             display: none; // Hide radio button for cleaner horizontal layout
           }
-          
+
           .option-text {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
           }
@@ -227,11 +338,12 @@
   align-items: center;
   margin-top: 1em;
   padding: 0 5px;
-  
+
   .survey-progress {
     font-size: 0.9em;
     color: var(--card-color-tertiary, $medium-gray);
     display: none;
+
     @media (min-width: $breakpoint-m) {
       display: block;
     }
@@ -247,6 +359,7 @@
     cursor: pointer;
     font-weight: var(--fw-medium, 500);
     min-width: 44%;
+
     @media (min-width: $breakpoint-m) {
       min-width: 25%;
     }
@@ -267,7 +380,7 @@
 .survey-complete-message {
   text-align: center;
   padding: 3em 1em;
-  
+
   h3 {
     // Also map the final success text to the branded color for consistency
     color: var(--cta-branded-color);

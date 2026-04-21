@@ -1,6 +1,14 @@
 ---
 en:
   views:
+    auth:
+      welcome_to_subforem: "Welcome to %{community_name} — part of the Forem network!"
+      create:
+        text: Create account
+        aria_label: Create new account
+      login:
+        text: Log in
+        aria_label: Log in
     badges:
       meta:
         title: Badges
@@ -74,30 +82,7 @@ en:
         description: My saved posts.
         og:
           title: Reading List - %{community}
-    search:
-      heading: Search results%{for}
-      for: " for %{query}"
-      placeholder: Search...
-      icon:
-        aria_label: Search
-        title: Search
-      nav:
-        posts: Posts
-        podcasts: Podcasts
-        people: People
-        comments: Comments
-        my_posts: My posts only
-        organizations: Organizations
-        tags: Tags
-      sort:
-        aria_label: Search result sort options
-        relevance: Most Relevant
-        newest: Newest
-        oldest: Oldest
-      meta:
-        title: Search Results%{for}
-        for: " for %{query}"
-        description: "%{site} => Search Results"
+
     series:
       meta:
         description: View %{title} on %{site}
@@ -116,15 +101,19 @@ en:
         week: Week
         month: Month
         infinity: Infinity
-      readers: Readers Summary
-      followers: New Followers Summary
-      reactions: "Reactions Summary"
-      comments: "Comments Summary"
+      readers: Readers
+      readers_description: "Page views from all visitors (anonymous views are estimated). Read time is tracked for logged-in readers only."
+      followers: New Followers
+      reactions: "Reactions"
+      comments: "Comments"
       traffic:
-        text: "Traffic Source Summary"
+        text: "Traffic Sources"
         source: Source
         views: Views
       reactions_history: "Reactions History"
+      by: by
+      top_contributors:
+        heading: Top Engagers
     sticky:
       joined: Joined
       default_cta: Learn more

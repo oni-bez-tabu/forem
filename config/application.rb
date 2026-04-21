@@ -47,6 +47,9 @@ module PracticalDeveloper
     ## Rails 6.1
     # Make `form_with` generate non-remote forms by default. We want this to be true as it was the default in 5.2
     config.action_view.form_with_generates_remote_forms = true
+    
+    # Disable partial writes to avoid issues with strong_migrations
+    config.active_record.partial_inserts = false
 
     ## Rails 7.0
     config.action_dispatch.cookies_serializer = :json
@@ -74,7 +77,7 @@ module PracticalDeveloper
     config.autoload_paths += Dir["#{config.root}/lib"]
     config.eager_load_paths += Dir["#{config.root}/lib"]
 
-    config.middleware.use Rack::Deflater
+    config.middleware.use Rack::Deflater unless Rails.env.development?
 
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.yml")]
 

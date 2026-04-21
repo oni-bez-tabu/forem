@@ -98,6 +98,17 @@ export const EditorFormattingHelp = ({ openModal }) => (
       <li>
         Za pomocą "drag&dropa" możesz dodawać zdjęcia do treści posta jak również zmieniać jego okładkę.
       </li>
+      <li>
+        Embed coding agent sessions from Claude Code, Codex, Gemini CLI, and
+        more:{' '}
+        <code>{'{% agent_session ID %}'}</code>. Use named slices to embed
+        different parts throughout your post:{' '}
+        <code>{'{% agent_session ID planning %}'}</code>.{' '}
+        <a href="/agent_sessions/new" target="_blank" rel="noopener noreferrer">
+          Upload a session
+        </a>
+        .
+      </li>
     </ul>
   </div>
 );
