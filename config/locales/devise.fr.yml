@@ -46,6 +46,11 @@ en:
       updated: "Your password has been changed successfully. You are now signed in."
       updated_not_active: "Your password has been changed successfully."
     registrations:
+      age_gate:
+        heading: "Avant de créer un compte"
+        description: "Cette communauté est réservée aux adultes. Veuillez confirmer que vous avez 18 ans ou plus pour continuer."
+        checkbox: "J'ai 18 ans ou plus"
+        continue: "Continuer"
       agreement:
         sign_in_html: "By signing in, you are agreeing to our <a href=\"%{privacy_path}\">privacy policy</a>, <a href=\"%{terms_path}\">terms of use</a> and <a href=\"%{code_of_conduct_path}\">code of conduct</a>."
         sign_up_html: "By signing up, you are agreeing to our <a href=\"%{privacy_path}\">privacy policy</a>, <a href=\"%{terms_path}\">terms of use</a> and <a href=\"%{code_of_conduct_path}\">code of conduct</a>."

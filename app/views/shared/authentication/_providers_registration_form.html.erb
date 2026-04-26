@@ -1,23 +1,85 @@
-<div class="registration__actions-providers">
-  <% authentication_enabled_providers.each do |provider| %>
-    <% next unless display_social_login?(provider.provider_name) %>
-    <%= form_with url: provider.sign_in_path(state: "navbar_basic"), class: "flex w-100", local: true do |f| %>
-      <%= f.button type: :submit, class: "flex w-100 p-3 radius-default items-center bg-base-inverted color-primary registration__button-container brand-#{provider.provider_name}" do %>
-        <%= crayons_icon_tag("#{provider.provider_name}-icon", class: "crayons-icon--default", aria_hidden: true, width: 24, height: 24) %>
-        <span class="w-100 flex fw-medium fs-s justify-center items-center self-center color-primary">
-          <%= t("views.auth.provider.text", action: params[:state] == "new-user" ? t("views.auth.provider.signup") : t("views.auth.provider.login"), provider: provider.official_name) %>
-        </span>
+<% age_gate = params[:state] == "new-user" %>
+<div class="<%= age_gate ? "registration__age-gate-wrapper" : "" %>">
+  <div class="registration__actions-providers <%= age_gate ? "registration__age-gate-blurred" : "" %>" data-age-gate-target="<%= age_gate ? "providers" : "" %>">
+    <% authentication_enabled_providers.each do |provider| %>
+      <% next unless display_social_login?(provider.provider_name) %>
+      <%= form_with url: provider.sign_in_path(state: "navbar_basic"), class: "flex w-100", local: true do |f| %>
+        <%= f.button type: :submit, class: "flex w-100 p-3 radius-default items-center bg-base-inverted color-primary registration__button-container brand-#{provider.provider_name}" do %>
+          <%= crayons_icon_tag("#{provider.provider_name}-icon", class: "crayons-icon--default", aria_hidden: true, width: 24, height: 24) %>
+          <span class="w-100 flex fw-medium fs-s justify-center items-center self-center color-primary">
+            <%= t("views.auth.provider.text", action: params[:state] == "new-user" ? t("views.auth.provider.signup") : t("views.auth.provider.login"), provider: provider.official_name) %>
+          </span>
+        <% end %>
       <% end %>
     <% end %>
-  <% end %>
-  <% if params[:state] == "new-user" && Settings::Authentication.allow_email_password_registration && !ForemInstance.invitation_only? %>
-    <a href="<%= url_for(request.params.merge(state: "email_signup").except("i")) %>"
-      class="flex w-100 p-3 radius-default items-center bg-base-inverted color-primary registration__button-container"
-      data-no_instant="">
-      <%= crayons_icon_tag(:email, class: "crayons-icon--default", aria_hidden: true, width: 24, height: 24) %>
-      <span class="w-100 flex fw-medium fs-s justify-center items-center self-center color-primary">
-        <%= t("views.auth.provider.email.text") %>
-      </span>
-    </a>
+    <% if params[:state] == "new-user" && Settings::Authentication.allow_email_password_registration && !ForemInstance.invitation_only? %>
+      <a href="<%= url_for(request.params.merge(state: "email_signup").except("i")) %>"
+        class="flex w-100 p-3 radius-default items-center bg-base-inverted color-primary registration__button-container"
+        data-no_instant="">
+        <%= crayons_icon_tag(:email, class: "crayons-icon--default", aria_hidden: true, width: 24, height: 24) %>
+        <span class="w-100 flex fw-medium fs-s justify-center items-center self-center color-primary">
+          <%= t("views.auth.provider.email.text") %>
+        </span>
+      </a>
+    <% end %>
+  </div>
+
+  <% if age_gate %>
+    <div id="age-gate" class="registration__age-gate" role="dialog" aria-modal="true" aria-labelledby="age-gate-heading">
+      <div class="registration__age-gate-card crayons-card">
+        <h2 id="age-gate-heading" class="crayons-subtitle-2 mb-2"><%= t("devise.registrations.age_gate.heading") %></h2>
+        <p class="color-secondary mb-4"><%= t("devise.registrations.age_gate.description") %></p>
+        <label class="registration__age-gate-checkbox-label mb-4">
+          <input id="age-gate-checkbox" type="checkbox" class="registration__age-gate-checkbox" />
+          <span class="registration__age-gate-checkbox-mark" aria-hidden="true"></span>
+          <span class="registration__age-gate-checkbox-text"><%= t("devise.registrations.age_gate.checkbox") %></span>
+        </label>
+        <button id="age-gate-continue" type="button" class="crayons-btn crayons-btn--l w-100" disabled>
+          <%= t("devise.registrations.age_gate.continue") %>
+        </button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var wrapper = document.currentScript.parentElement;
+        var providers = wrapper.querySelector('[data-age-gate-target="providers"]');
+        var gate = wrapper.querySelector('#age-gate');
+        var checkbox = wrapper.querySelector('#age-gate-checkbox');
+        var button = wrapper.querySelector('#age-gate-continue');
+
+        function release() {
+          gate.remove();
+          providers.classList.remove('registration__age-gate-blurred');
+          providers.removeAttribute('inert');
+        }
+
+        // Skip the gate inside the native mobile shell — age verification happens
+        // before the WebView is shown.
+        var ua = navigator.userAgent || '';
+        if (ua.indexOf('ForemWebView/1') !== -1 || ua === 'DEV-Native-ios' || window.frameElement) {
+          release();
+          return;
+        }
+
+        try {
+          if (localStorage.getItem('age_confirmed') === '1') {
+            release();
+            return;
+          }
+        } catch (e) { /* localStorage unavailable; show the gate */ }
+
+        providers.setAttribute('inert', '');
+
+        checkbox.addEventListener('change', function () {
+          button.disabled = !checkbox.checked;
+        });
+
+        button.addEventListener('click', function () {
+          if (!checkbox.checked) return;
+          try { localStorage.setItem('age_confirmed', '1'); } catch (e) { /* noop */ }
+          release();
+        });
+      })();
+    </script>
   <% end %>
 </div>
