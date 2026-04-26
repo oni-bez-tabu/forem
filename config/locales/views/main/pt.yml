@@ -32,7 +32,7 @@ pt:
         placeholder: "..."
         list: Lista de leitura
         moderator_center: Centro de Moderação
-        other: Outros
+        other: Informações
         settings: Configurações
         account: Conta
       nav_name:
