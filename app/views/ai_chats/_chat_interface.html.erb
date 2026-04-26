@@ -2,19 +2,19 @@
   <% unless local_assigns[:hide_header] %>
     <div class="ai-chat-header">
       <div class="bot-icon">🤖</div>
-      <h1><%= title || "AI Community Buddy" %> <span class="beta-badge">BETA</span></h1>
+      <h1><%= title || t("views.ai_chats.title") %> <span class="beta-badge">BETA</span></h1>
     </div>
   <% end %>
 
   <div id="ai-chat-messages" class="ai-chat-messages">
     <div class="message ai">
-      <%= greeting || "Hello! I'm your community buddy. I see you've been exploring some interesting topics lately. How can I help you today?" %>
+      <%= greeting || t("views.ai_chats.greeting") %>
     </div>
   </div>
 
   <form id="ai-chat-form" class="ai-chat-input-area" data-chat-context="<%= chat_context || 'community' %>">
-    <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." autocomplete="off">
-    <button type="submit" id="ai-chat-send" class="ai-chat-send">Send</button>
+    <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="<%= t("views.ai_chats.placeholder") %>" autocomplete="off">
+    <button type="submit" id="ai-chat-send" class="ai-chat-send"><%= t("views.ai_chats.send") %></button>
   </form>
 </div>
 
@@ -86,14 +86,14 @@
         indicator.remove();
 
         if (data.error) {
-          appendMessage('ai', 'Error: ' + data.error);
+          appendMessage('ai', <%= raw t("views.ai_chats.error_prefix").to_json %> + data.error);
         } else {
           appendMessage('ai', data.message);
           chatHistory = data.history;
         }
       } catch (err) {
         indicator.remove();
-        appendMessage('ai', 'Error: Failed to connect to server.');
+        appendMessage('ai', <%= raw t("views.ai_chats.error_connection").to_json %>);
       } finally {
         input.disabled = false;
         sendButton.disabled = false;

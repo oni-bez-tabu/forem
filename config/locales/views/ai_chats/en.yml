@@ -1,0 +1,10 @@
+---
+en:
+  views:
+    ai_chats:
+      title: AI Community Buddy
+      greeting: Hello! I'm your community buddy. I see you've been exploring some interesting topics lately. How can I help you today?
+      placeholder: Type your message...
+      send: Send
+      error_prefix: "Error: "
+      error_connection: "Error: Failed to connect to server."

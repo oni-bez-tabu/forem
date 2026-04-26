@@ -1,3 +1,4 @@
+---
 pl:
   views:
     editor:
@@ -18,10 +19,17 @@ pl:
       preview: Podgląd
       video:
         progress:
-          heading: ⏳ Trwa transkodowanie wideo ⏳
+          heading: "⏳ Trwa transkodowanie wideo ⏳"
           notice_1: Otrzymasz e-mail po zakończeniu tego procesu.
           notice_2: To jest zwykły nieopublikowany post. Dodaj tytuł/tagi/treść/itp., a następnie oznacz jako opublikowany po zakończeniu przetwarzania wideo.
         submit_image:
           button: Zatwierdź zmianę
-          text: "URL obrazu podglądu: "
+          text: 'URL obrazu podglądu: '
           placeholder: Nowy URL miniatury
+      cover_video_link:
+        add: Link do filmu w tle
+        change: Zmień link do filmu
+      ai_helper:
+        sidecar_title: Pomocnik %{community_name}
+        title: Pomocnik %{community_name}
+        greeting: Cześć! Jestem Twoim asystentem pisania. Znam wytyczne edytora %{community_name}. Potrzebujesz pomocy z Markdownem, osadzaniem, formatowaniem lub porad dotyczących wytycznych i oczekiwań społeczności?

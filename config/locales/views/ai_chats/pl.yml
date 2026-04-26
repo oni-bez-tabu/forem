@@ -1,0 +1,10 @@
+---
+pl:
+  views:
+    ai_chats:
+      title: Asystent społeczności
+      greeting: Cześć! Jestem Twoim asystentem społeczności. Widzę, że ostatnio eksplorujesz ciekawe tematy. W czym mogę pomóc?
+      placeholder: Wpisz swoją wiadomość...
+      send: Wyślij
+      error_prefix: "Błąd: "
+      error_connection: "Błąd: Nie udało się połączyć z serwerem."

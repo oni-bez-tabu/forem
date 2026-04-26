@@ -14,6 +14,7 @@ module Api
       num = [per_page, per_page_max].min
 
       @video_articles = Article.with_video.from_subforem
+        .where.not(video_code: [nil, ""])
         .includes([:user])
         .select(INDEX_ATTRIBUTES_FOR_SERIALIZATION)
         .order(hotness_score: :desc)

@@ -9,12 +9,13 @@ class Organization < ApplicationRecord
   COLOR_HEX_REGEXP = /\A#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/
   INTEGER_REGEXP = /\A\d+\z/
 
-  SOCIAL_LINK_PLATFORMS = %w[youtube discord linkedin instagram facebook spotify twitch mastodon].freeze
+  SOCIAL_LINK_PLATFORMS = %w[youtube discord linkedin instagram tiktok facebook spotify twitch mastodon].freeze
   SOCIAL_LINK_DOMAINS = {
     "youtube" => /(youtube\.com|youtu\.be)\z/i,
     "discord" => /(discord\.com|discord\.gg)\z/i,
     "linkedin" => /linkedin\.com\z/i,
     "instagram" => /instagram\.com\z/i,
+    "tiktok" => /tiktok\.com\z/i,
     "facebook" => /(facebook\.com|fb\.com)\z/i,
     "spotify" => /(spotify\.com|open\.spotify\.com)\z/i,
     "twitch" => /twitch\.tv\z/i,
@@ -66,7 +67,6 @@ class Organization < ApplicationRecord
   validates :cta_body_markdown, length: { maximum: 256 }
   validates :cta_button_text, length: { maximum: 20 }
   validates :cta_button_url, length: { maximum: 255 }, url: { allow_blank: true, no_local: true }
-  validates :github_username, length: { maximum: 50 }
   validates :location, :email, length: { maximum: 64 }
   validates :name, :profile_image, presence: true
   validates :name, length: { maximum: 50 }
@@ -328,8 +328,6 @@ class Organization < ApplicationRecord
 
   def remove_at_from_usernames
     self.twitter_username = twitter_username.delete("@") if twitter_username
-    self.github_username = github_username.delete("@") if github_username
-    self.instagram_username = instagram_username.delete("@") if instagram_username
   end
 
   def downcase_slug

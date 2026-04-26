@@ -1,3 +1,4 @@
+---
 pl:
   views:
     comments:
@@ -31,8 +32,8 @@ pl:
       collapse: Zwiń
       edit: Edycja komentarza
       edited:
-        text_html: • Edytowano dnia %{date}
-        short_html: • Edytowano
+        text_html: "• Edytowano dnia %{date}"
+        short_html: "• Edytowano"
       expand: Rozwiń
       visible_signed_in:
         text_html: Niektóre komentarze mogą być widoczne tylko dla zalogowanych użytkowników. %{sign_in}, aby zobaczyć wszystkie komentarze.
@@ -53,7 +54,7 @@ pl:
         deleted: "[Komentarz z usuniętego posta]"
       re:
         text_html: "%{re}%{title}"
-        re: "Odp: "
+        re: 'Odp: '
       settings:
         meta:
           title: Ustawienia komentarza
@@ -81,7 +82,7 @@ pl:
             accessible_via_permalink: Komentarz ukryty przez autora posta - wątek dostępny tylko przez permalink
       write:
         errors:
-          one: "1 błąd uniemożliwił zapisanie tego komentarza:"
+          one: '1 błąd uniemożliwił zapisanie tego komentarza:'
           other: "%{count} błędy uniemożliwiły zapisanie tego komentarza:"
         field:
           aria_label: Dodaj komentarz do dyskusji
@@ -103,6 +104,7 @@ pl:
         submit: Wyślij
         preview: Podgląd
         cancel: Odrzuć
+        continue_editing: Kontynuuj edycję
       menu:
         aria_label: Przełącz menu rozwijane
         icon: Menu rozwijane
@@ -125,7 +127,7 @@ pl:
         heart:
           aria_label: polub
           title: Polub
-          icon: "Polub komentarz: "
+          icon: 'Polub komentarz: '
           count_html: "%{num}%{likes}"
           text: Polub
         reply:
@@ -147,11 +149,14 @@ pl:
         one: Komentarzy (%{count})
         other: Komentarzy (%{count})
       empty: Nowy
-      add: "dodaj\_komentarz"
+      add: dodaj komentarz
       summary:
         count_html:
-          one: "%{count}%{start}\_komentarz%{end}"
+          one: "%{count}%{start} komentarz%{end}"
           few_html:
-            other: "%{count}%{start}\_komentarze%{end}"
-          other: "%{count}%{start}\_komentarzy%{end}"
+            other: "%{count}%{start} komentarze%{end}"
+          other: "%{count}%{start} komentarzy%{end}"
         title: Komentarze
+      limited_unauthenticated:
+        text_html: Wyświetlany jest tylko fragment wszystkich komentarzy. %{sign_in}, aby zobaczyć wszystkie komentarze do tego posta.
+        sign_in: Zaloguj się

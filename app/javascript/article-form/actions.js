@@ -32,23 +32,39 @@ export function previewArticle(payload, successCb, failureCb) {
 
 export function getArticle() {}
 
+const ARTICLE_PAYLOAD_KEYS = [
+  'id',
+  'title',
+  'tagList', 'tag_list',
+  'description',
+  'canonicalUrl', 'canonical_url',
+  'publishedAtTime', 'published_at_time',
+  'publishedAtDate', 'published_at_date',
+  'timezone',
+  'series',
+  'bodyMarkdown', 'body_markdown',
+  'published',
+  'mainImage', 'main_image',
+  'videoSourceUrl', 'video_source_url',
+  'organizationId', 'organization_id',
+  'coAuthorIdsList', 'co_author_ids_list',
+  'version',
+  'archived',
+  'collectionId', 'collection_id',
+  'bodyUrl', 'body_url',
+  'typeOf', 'type_of',
+  'ageMin', 'age_min',
+  'subforemId', 'subforem_id',
+  'videoThumbnailUrl', 'video_thumbnail_url',
+];
+
 export function processPayload(payload) {
-  const {
-    /* eslint-disable no-unused-vars */
-    previewShowing,
-    helpShowing,
-    previewResponse,
-    helpHTML,
-    imageManagementShowing,
-    moreConfigShowing,
-    errors,
-    organizations,
-    authorId,
-    coAuthorsData,
-    /* eslint-enable no-unused-vars */
-    ...neededPayload
-  } = payload;
-  return neededPayload;
+  return ARTICLE_PAYLOAD_KEYS.reduce((acc, key) => {
+    if (payload[key] !== undefined) {
+      acc[key] = payload[key];
+    }
+    return acc;
+  }, {});
 }
 
 export function submitArticle({ payload, onSuccess, onError }) {

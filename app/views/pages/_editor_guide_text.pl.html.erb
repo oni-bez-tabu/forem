@@ -51,11 +51,11 @@
     </h2>
 <p>Poniżej znajdują się przykłady często stosowanej składni Markdown. Jeśli chcesz zagłębić się bardziej, zajrzyj na <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet" target="_blank" rel="noopener">tę ściągawkę.</a></p>
 
-<%= render partial: "editor_guide_h3", locals: { id: "markdown-bold-and-italic", title: "Pogrubienie i kursywa" } %>
+<%= render partial: "pages/editor_guide_h3", locals: { id: "markdown-bold-and-italic", title: "Pogrubienie i kursywa" } %>
 <p><em>Kursywa</em>: <code>*gwiazdki*</code> lub <code>_podkreślenia_</code></p>
 <p><strong>Pogrubienie</strong>: <code>**podwójne gwiazdki**</code> lub <code>__podwójne podkreślenia__</code></p>
 
-<%= render partial: "editor_guide_h3", locals: { id: "markdown-links", title: "Linki" } %>
+<%= render partial: "pages/editor_guide_h3", locals: { id: "markdown-links", title: "Linki" } %>
 <p><a href="<%= app_url %>">Jestem linkiem wewnętrznym</a>: <code>[Jestem linkiem wewnętrznym](umieść-link-tutaj)</code></p>
 <p><a name="zakotwiczone">Linki zakotwiczone</a> (na przykład do spisu treści)</p>
 <pre>
@@ -66,7 +66,7 @@
   ### Rozdział 1 <%= "<a name=\"rozdział-1\"></a>" %>
 </pre>
 
-<%= render partial: "editor_guide_h3", locals: { id: "markdown-inline-images", title: "Obrazy w tekście" } %>
+<%= render partial: "pages/editor_guide_h3", locals: { id: "markdown-inline-images", title: "Obrazy w tekście" } %>
 <p>
   Przy dodawaniu GIF-ów do postów i komentarzy pamiętaj, że istnieje limit 200 megapikseli na klatkę/stronę.
   <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--OsLaFSo9--/c_fill,f_auto,fl_progressive,h_220,q_auto,w_220/https://thepracticaldev.s3.amazonaws.com/uploads/user/profile_image/31047/af153cd6-9994-4a68-83f4-8ddf3e13f0bf.jpg" alt="przykładowy obrazek, z Sloan" loading="lazy" />
@@ -77,11 +77,11 @@
     <figcaption>Możesz nawet dodać podpis za pomocą tagu HTML <code>figcaption</code>!</figcaption>
 </figure>
 
-<%= render partial: "editor_guide_h3", locals: { id: "markdown-headers", title: "Nagłówki" } %>
+<%= render partial: "pages/editor_guide_h3", locals: { id: "markdown-headers", title: "Nagłówki" } %>
 <p>Dodaj nagłówek do swojego posta za pomocą tej składni:</p>
 <pre># Jeden '#' dla nagłówka h1<br>## Dwa '#' dla nagłówka h2<br>...<br>###### Sześć '#' dla nagłówka h6</pre>
 
-<%= render partial: "editor_guide_h3", locals: { id: "author-notes", title: "Notatki/Autor" } %>
+<%= render partial: "pages/editor_guide_h3", locals: { id: "author-notes", title: "Notatki/Autor" } %>
 <p>Dodaj ukryte notatki/komentarze do swojego artykułu za pomocą tej składni:</p>
 <pre>&lt;!-- To nie pojawi się w treści! --&gt;</pre>
 
@@ -90,7 +90,7 @@
   <a href="#dostepnosc" aria-label="stały link do Dostępność"><%= crayons_icon_tag("small-link", aria_hidden: true) %></a>
 </h2>
 <p>Ludzie korzystają z treści online na różne sposoby, dlatego istnieją pewne rzeczy, które możesz zrobić, aby Twoje posty były łatwiej zrozumiałe dla szerokiego grona użytkowników. Więcej na temat dostępności w sieci możesz dowiedzieć się na stronie <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">Wprowadzenie do dostępności w sieci W3C</a>, ale istnieją dwie główne metody, aby uczynić swoje posty bardziej dostępnymi: dostarczanie alternatywnych opisów dla używanych obrazków oraz dodawanie odpowiednich nagłówków.</p>
-<%= render partial: "editor_guide_h3", locals: { id: "alt-text-for-images", title: "Dostarczanie alternatywnych opisów dla obrazów" } %>
+<%= render partial: "pages/editor_guide_h3", locals: { id: "alt-text-for-images", title: "Dostarczanie alternatywnych opisów dla obrazów" } %>
 <p>Niektórzy użytkownicy mogą nie być w stanie zobaczyć lub łatwo przetworzyć obrazów, które używasz w swoich postach. Dostarczenie alternatywnego opisu dla obrazu pomaga upewnić się, że każdy może zrozumieć Twój post, bez względu na to, czy może zobaczyć obraz, czy nie.</p>
 <p>Kiedy dodajesz obraz w edytorze, zobaczysz następujący tekst do skopiowania i wklejenia do swojego postu:</p>
 <pre>![Opis obrazka](/ścieżka-do-pliku/mój-obrazek.png)</pre>
@@ -98,23 +98,23 @@
 <pre>![Wykres kołowy pokazujący, że 40% odpowiedziało "Tak", 50% odpowiedziało "Nie", a 10% odpowiedziało "Nie wiem"](/ścieżka-do-pliku/mój-obrazek.png)</pre>
 <p>Dzięki temu, jeśli ktoś czyta Twój post za pomocą urządzenia wspomagającego, takiego jak czytnik ekranowy (który zamienia treść pisemną na mowę), usłyszy opis, który wprowadziłeś.</p>
 
-<%= render partial: "editor_guide_h3", locals: { id: "accessible-headings", title: "Dostarczanie nagłówków" } %>
+<%= render partial: "pages/editor_guide_h3", locals: { id: "accessible-headings", title: "Dostarczanie nagłówków" } %>
 <p>Nagłówki dostarczają zarysu Twojego postu czytelnikom, w tym osobom, które nie widzą ekranu dobrze. Wiele technologii wspomagających (takich jak czytniki ekranowe) pozwala użytkownikom przejść bezpośrednio do określonego nagłówka, co pomaga im znaleźć i zrozumieć treść Twojego postu z łatwością.</p>
 <p><a href="#markdown-headers">Nagłówki można dodawać na poziomach 1 - 6</a>. Unikaj używania nagłówka pierwszego poziomu (tj. '# Tekst nagłówka'). Podczas tworzenia posta, tytuł posta automatycznie staje się nagłówkiem pierwszego poziomu i pełni specjalną rolę na stronie, podobnie jak nagłówek artykułu w gazecie. Podobnie jak artykuł gazetowy ma tylko jeden nagłówek, może to być mylące, jeśli na stronie istnieją multiple nagłówki pierwszego poziomu.</p>
 <p>W treści swojego posta, zacznij od nagłówków drugiego poziomu dla każdej sekcji (np. '## Tekst nagłówka sekcji'), i zwiększaj poziom nagłówka o jeden, gdy chcesz dodać podsekcję, na przykład:</p>
 <pre>## Ciekawostki o leniwach</br></br>### Prędkość</br></br>Leniwie poruszają się z maksymalną prędkością 0,27 km/h!</pre>
 
-<%= render partial: "liquid_tag_section_intro", locals: { styles: "font-size:2.8em;" } %>
+<%= render partial: "pages/liquid_tag_section_intro", locals: { styles: "font-size:2.8em;" } %>
 
-<%= render partial: "editor_guide_h3", locals: { id: "supported-url-embeds-list", title: "Obsługiwane osadzone adresy URL" } %>
+<%= render partial: "pages/editor_guide_h3", locals: { id: "supported-url-embeds-list", title: "Obsługiwane osadzone adresy URL" } %>
 
-<%= render partial: "supported_url_embeds_list" %>
+<%= render partial: "pages/supported_url_embeds_list" %>
 
-<%= render partial: "editor_guide_h3", locals: { id: "supported-nonurl-embeds-list", title: "Obsługiwane osadzone obiekty spoza adresów URL" } %>
+<%= render partial: "pages/editor_guide_h3", locals: { id: "supported-nonurl-embeds-list", title: "Obsługiwane osadzone obiekty spoza adresów URL" } %>
 
-<%= render partial: "supported_nonurl_embeds_list" %>
+<%= render partial: "pages/supported_nonurl_embeds_list" %>
 
-<%= render partial: "editor_guide_h3", locals: { id: "common-gotchas", title: "Powszechne błędy" } %>
+<%= render partial: "pages/editor_guide_h3", locals: { id: "common-gotchas", title: "Powszechne błędy" } %>
 <p>
   Listy są pisane tak samo jak w dowolnym innym edytorze Markdown.
   Jeśli dodajesz obrazek między numerowaną listą, upewnij się jednak, że obrazek jest wciśnięty,

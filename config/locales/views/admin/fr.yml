@@ -350,6 +350,7 @@ fr:
           oauth_email: "E-mail %{provider}"
           github: GitHub
           twitter: Twitter
+          instagram: Instagram
           visit: Visit profile
           options:
             icon: Options

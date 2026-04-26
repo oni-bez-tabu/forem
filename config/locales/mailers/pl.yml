@@ -25,6 +25,8 @@ pl:
       export: Eksport Twojej treści jest gotowy
       unread_notifications:
         one: 🔥 Masz %{count} nieprzeczytane powiadomienie na %{community}
+        few: 🔥 Masz %{count} nieprzeczytane powiadomienia na %{community}
+        many: 🔥 Masz %{count} nieprzeczytanych powiadomień na %{community}
         other: 🔥 Masz %{count} nieprzeczytane powiadomienia na %{community}
       new_badge: Właśnie dostałeś odznakę
       video_upload: Twoje przesyłanie filmu jest zakończone
@@ -35,3 +37,23 @@ pl:
       verify_ownership: Zweryfikuj własność Twojego konta na %{community}
     custom_mailer:
       from: Newsletter
+    organization_invitation_mailer:
+      subject: "Zaproszono Cię do dołączenia do %{organization_name} na %{community}"
+      greeting: "Cześć %{name}!"
+      invited_by_html: "<strong>%{inviter_name}</strong> zaprosił/a Cię do dołączenia do <strong>%{organization_name}</strong> jako członek."
+      invited_by_text: "%{inviter_name} zaprosił/a Cię do dołączenia do %{organization_name} jako członek."
+      invited_html: "Zaproszono Cię do dołączenia do <strong>%{organization_name}</strong> jako członek."
+      invited_text: "Zaproszono Cię do dołączenia do %{organization_name} jako członek."
+      what_is_organization: "Organizacje na %{community} pozwalają zespołom i grupom współpracować, dzielić się treściami i budować wspólną obecność. Jako członek będziesz mógł publikować artykuły w imieniu organizacji i współpracować ze swoim zespołem."
+      confirm_button: "Zaakceptuj zaproszenie"
+      alternative_link: "Możesz też skopiować ten adres i wkleić go do przeglądarki:"
+    organization_membership_notification_mailer:
+      subject: "Zostałeś dodany do %{organization_name} na %{community}"
+      greeting: "Cześć %{name}!"
+      added_by_html: "<strong>%{inviter_name}</strong> dodał/a Cię do <strong>%{organization_name}</strong> jako członka."
+      added_by_text: "%{inviter_name} dodał/a Cię do %{organization_name} jako członka."
+      added_html: "Zostałeś dodany do <strong>%{organization_name}</strong> jako członek."
+      added_text: "Zostałeś dodany do %{organization_name} jako członek."
+      what_is_organization: "Organizacje na %{community} pozwalają zespołom i grupom współpracować, dzielić się treściami i budować wspólną obecność. Jako członek będziesz mógł publikować artykuły w imieniu organizacji i współpracować ze swoim zespołem."
+      view_organization_button: "Zobacz organizację"
+      organization_url: "Odwiedź stronę swojej organizacji"

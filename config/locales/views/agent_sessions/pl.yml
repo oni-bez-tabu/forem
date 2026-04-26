@@ -1,0 +1,36 @@
+---
+pl:
+  views:
+    agent_sessions:
+      share_link: Link udostępniania
+      copy_link: Kopiuj
+      by_author: "autor: %{name}"
+      make_public: Upublicznij
+      make_private: Ukryj
+      public_label: Publiczna
+      private_label: Prywatna
+      public_description: Każdy może zobaczyć przez bezpośredni link i osadzić w swoich postach
+      private_description: Tylko Ty możesz osadzić tę sesję w swoich postach
+      security_warning: Przed upublicznieniem sesji uważnie ją przejrzyj, aby upewnić się, że nie udostępniasz niczego, czego nie powinieneś.
+      switched_to_model: "Przełączono na %{model}"
+      not_available_title: Sesja niedostępna
+      not_available_description: Ta sesja agenta nie istnieje lub nie jest publicznie dostępna.
+      not_available_sign_in_hint: Jeśli to Twoja sesja, zaloguj się, aby ją zobaczyć.
+      parse_file: Wczytaj plik
+      parsing_progress: Przetwarzanie...
+      step_reading: Odczytywanie pliku
+      step_parsing: Przetwarzanie wiadomości
+      scrubbing_secrets: Usuwanie sekretów
+      ready_to_curate: Gotowe do edycji
+      save_and_upload: Zapisz i wyślij
+      saving: Zapisywanie...
+      curate_before_upload: Prześlij plik sesji agenta kodowania. Zostanie on przetworzony i oczyszczony lokalnie w Twojej przeglądarce — następnie możesz wybrać, które fragmenty zachować przed zapisaniem.
+      client_parse_error: Nie udało się przetworzyć pliku sesji.
+      curated_data_too_large: Wybrane dane są zbyt duże. Odznacz więcej wiadomości, aby zmniejszyć rozmiar.
+      unsupported_file_type: Nieobsługiwany typ pliku. Użyj plików .jsonl lub .json.
+      uploading_to_storage: Wysyłanie pliku...
+      upload_complete: Wysyłanie zakończone
+      loading_for_curation: Ładowanie sesji do edycji...
+      re_curate: Edytuj ponownie z oryginalnego pliku
+      raw_file_retention_notice: "Oryginalny plik dostępny jeszcze przez %{days} dni"
+      raw_file_expired: Oryginalny plik nie jest już dostępny (wygasł po 90 dniach)

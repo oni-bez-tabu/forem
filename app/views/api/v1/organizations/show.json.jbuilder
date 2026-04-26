@@ -7,7 +7,6 @@ json.extract!(
   :name,
   :summary,
   :twitter_username,
-  :github_username,
   :url,
   :location,
   :tech_stack,

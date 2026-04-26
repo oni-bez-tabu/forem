@@ -1,3 +1,4 @@
+---
 pl:
   views:
     notifications:
@@ -8,13 +9,13 @@ pl:
       heading: Powiadomienia
       article:
         published_html: "%{user} opublikował %{title}"
-        mod_greeting: Hej %{user} 👋
+        mod_greeting: "Hej %{user} \U0001F44B"
         welcome_html: "%{user} jest nowy w społeczności. Sprawdź ich post i zostaw miły komentarz, aby poczuli się mile widziani!"
         mod_opt_out: Nie chcesz otrzymywać tych powiadomień?
         change_settings: Zmień ustawienia
       badge:
         heading_html: Otrzymałeś odznakę %{badge}
-        awarded_html: Otrzymujesz również %{credits} do wykorzystania na %{listings}, jeśli masz coś, co chciałbyś promować. 🎉
+        awarded_html: "Otrzymujesz również %{credits} do wykorzystania na %{listings}, jeśli masz coś, co chciałbyś promować. \U0001F389"
         credits:
           one: "%{count} nowy kredyt"
           other: "%{count} nowych kredytów"
@@ -27,10 +28,10 @@ pl:
       comment:
         commented_html: "%{user} skomentował %{title}"
         first_html: "%{user} napisał swój pierwszy komentarz do %{title}"
-        first_reply: Daj im pierwszą odpowiedź! 🎉
+        first_reply: "Daj im pierwszą odpowiedź! \U0001F389"
         left_html: "%{user} właśnie zostawił komentarz do %{title}."
         replied_html: "%{user} odpowiedział w wątku do %{title}"
-        mod_greeting: Hej %{user} 👋
+        mod_greeting: "Hej %{user} \U0001F44B"
         welcome_html: "%{user} jest nowy w społeczności. Zostaw miłą odpowiedź, aby poczuli się mile widziani."
         mod_opt_out: Nie chcesz otrzymywać tych powiadomień?
         change_settings: Zmień ustawienia
@@ -56,7 +57,7 @@ pl:
       milestone:
         heading_html: Twój post %{title} osiągnął %{type}!
         check: Sprawdź swój panel kontrolny
-        intro: 🎉🎉🎉🎉🎉🎉🎉🎉
+        intro: "\U0001F389\U0001F389\U0001F389\U0001F389\U0001F389\U0001F389\U0001F389\U0001F389"
         type:
           View:
             one: "%{count} wyświetleń"
@@ -86,10 +87,21 @@ pl:
           unknown: Ty
       settings: Ustawienia
       tag:
-        heading: Hej 👋
+        heading: "Hej \U0001F44B"
         add_html: Moderatorzy dodali tag <strong>%{tag}</strong> do Twojego posta %{title}. Moderatorzy uznali, że ten tag najlepiej reprezentuje Twój artykuł.
         check_html: Sprawdź %{other}, które mogą być bardziej odpowiednie
         other: inne popularne tagi
-        reason: "Powód działania:"
+        reason: 'Powód działania:'
         remove_html: Moderatorzy usunęli tag <strong>%{tag}</strong> z Twojego posta %{title}. Niektóre tagi mają specjalne wytyczne dotyczące zgłoszeń, a moderatorzy muszą dostosować tagi, aby najlepiej pasowały do społeczności.
-        support_html: Dziękujemy za bycie częścią %{community}! %{email} 🤗
+        support_html: "Dziękujemy za bycie częścią %{community}! %{email} \U0001F917"
+      organization:
+        deverification_heading: Weryfikacja cofnięta
+        deverification_html: Weryfikacja dla %{org} została cofnięta, ponieważ nie mogliśmy już znaleźć linku do strony Twojej organizacji pod wcześniej zweryfikowanym adresem URL.
+        reverify: Zweryfikuj ponownie swoją organizację
+      subforem:
+        heading: "Twój post został przeniesiony \U0001F44B"
+        change_html: Twój post %{title} został automatycznie przeniesiony z %{old_community_link} do %{new_community_link}.
+        reason: 'Powód przeniesienia:'
+        misc_explanation: To nasza otwarta przestrzeń dyskusyjna, w której mile widziane są wszelkiego rodzaju treści do ogólnych rozmów i interakcji społecznościowych, które nie pasują do naszych innych społeczności.
+        explanation_html: Pomaga to zapewnić, że Twoje treści docierają do najbardziej odpowiednich odbiorców w naszej sieci i utrzymuje jakość każdej społeczności.
+        support_html: "Dziękujemy za bycie częścią %{community}! %{email} \U0001F917"

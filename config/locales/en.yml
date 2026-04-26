@@ -35,6 +35,20 @@ en:
     article_form_co_authors: Co-authors
     article_form_co_authors_description: Add up to 4 co-authors from %{org_name}.
     article_form_co_authors_placeholder: Add up to 4...
+    article_form_cover_video_button: Cover Video Link
+    article_form_cover_video_button_change: Change Video Link
+    article_form_cover_video_modal_title: Add Cover Video Link
+    article_form_cover_video_modal_description: Enter a YouTube, Mux, or Twitch video URL to use as the cover video for your article.
+    article_form_cover_video_url_label: Video URL
+    article_form_cover_video_url_placeholder: https://www.youtube-or-mux-or-twitch.com/watch?v=...
+    article_form_cover_video_error_invalid: Please enter a valid YouTube, Mux, or Twitch video URL.
+    article_form_cover_video_supported_formats: "Supported formats:"
+    article_form_cover_video_twitch_note: "*only direct video links, not channel stream"
+    article_form_cover_video_add_link: Add Link
+    article_form_cover_video_update_link: Update Link
+    article_form_cover_video_cancel: Cancel
+    article_form_cover_video_remove: Remove
+    article_form_cover_video_close: Close
     comments_preview: Preview
     comments_continue_editing: Continue editing
     survey_enter_response: Enter your response here...
@@ -247,3 +261,7 @@ en:
       short_with_yy: "%b %-d '%y"
       short_with_year: "%b %-e, %Y"
       stackexchange: "%b %e '%y"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "Validation failed: %{errors}"

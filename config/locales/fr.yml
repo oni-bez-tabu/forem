@@ -35,6 +35,20 @@ fr:
     article_form_co_authors: Co-auteurs
     article_form_co_authors_description: Ajoutez jusqu'à 4 co-auteurs de %{org_name}.
     article_form_co_authors_placeholder: Ajouter jusqu'à 4...
+    article_form_cover_video_button: Lien vidéo de couverture
+    article_form_cover_video_button_change: Modifier le lien vidéo
+    article_form_cover_video_modal_title: Ajouter un lien vidéo de couverture
+    article_form_cover_video_modal_description: Saisissez l'URL d'une vidéo YouTube, Mux ou Twitch à utiliser comme vidéo de couverture de votre article.
+    article_form_cover_video_url_label: URL de la vidéo
+    article_form_cover_video_url_placeholder: https://www.youtube-or-mux-or-twitch.com/watch?v=...
+    article_form_cover_video_error_invalid: Veuillez saisir une URL valide de vidéo YouTube, Mux ou Twitch.
+    article_form_cover_video_supported_formats: "Formats pris en charge :"
+    article_form_cover_video_twitch_note: "*uniquement les liens vidéo directs, pas les flux de chaîne"
+    article_form_cover_video_add_link: Ajouter le lien
+    article_form_cover_video_update_link: Mettre à jour le lien
+    article_form_cover_video_cancel: Annuler
+    article_form_cover_video_remove: Supprimer
+    article_form_cover_video_close: Fermer
     comments_preview: Aperçu
     comments_continue_editing: Continuer l'édition
     survey_enter_response: Entrez votre réponse ici...
@@ -270,3 +284,7 @@ fr:
       short_with_yy: "%-e %b '%y"
       short_with_year: "%-e %b, %Y"
       stackexchange: "%b %e '%y"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "La validation a échoué : %{errors}"

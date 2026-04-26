@@ -321,6 +321,7 @@ class Article < ApplicationRecord
                on: %i[create update]
 
   after_update_commit :update_dependent_embeds_if_key_info_changed
+  after_update_commit :trigger_freeform_context_note_generation, if: :saved_change_to_featured?
 
   # The trigger `update_reading_list_document` is used to keep the `articles.reading_list_document` column updated.
   #
@@ -976,10 +977,9 @@ class Article < ApplicationRecord
 
   def trigger_freeform_context_note_generation
     return unless Ai::Base::DEFAULT_KEY.present?
-    return if score < 50 || comment_score < 25
-    return if published_at.blank? || published_at < 1.week.ago
+    return unless featured
     return if context_notes.exists?
-    
+
     Articles::GenerateFreeformContextNoteWorker.perform_async(id)
   end
 

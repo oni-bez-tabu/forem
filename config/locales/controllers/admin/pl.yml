@@ -1,4 +1,39 @@
 pl:
+  admin_controller:
+    dashboard:
+      title: Panel administracyjny
+      welcome: Witamy w panelu administracyjnym
+    users:
+      title: Zarządzaj użytkownikami
+      suspend: Zawieś
+      unsuspend: Cofnij zawieszenie
+      ban: Zbanuj
+      unban: Cofnij bana
+      delete: Usuń
+      edit: Edytuj
+      view: Zobacz
+    articles:
+      title: Zarządzaj artykułami
+      delete: Usuń
+      edit: Edytuj
+      view: Zobacz
+      publish: Opublikuj
+      unpublish: Cofnij publikację
+    comments:
+      title: Zarządzaj komentarzami
+      delete: Usuń
+      edit: Edytuj
+      view: Zobacz
+      moderate: Moderuj
+    reports:
+      title: Zarządzaj zgłoszeniami
+      view: Zobacz
+      resolve: Rozwiąż
+      dismiss: Odrzuć
+    settings:
+      title: Zarządzaj ustawieniami
+      save: Zapisz
+      cancel: Anuluj
   admin:
     articles_controller:
       saved: Artykuł zapisany!
@@ -71,6 +106,33 @@ pl:
       credit_updated: Pomyślnie zaktualizowano kredyty
       deletion_scheduled: Usunięcie organizacji "%{organization_name}" jest zaplanowane.
       error: "Twoja organizacja, %{organization_name}, nie mogła zostać usunięta: %{error}."
+      fully_trusted_enabled: Status pełnego zaufania został włączony dla tej organizacji.
+      fully_trusted_disabled: Status pełnego zaufania został wyłączony dla tej organizacji.
+      baseline_score_updated: Bazowa ocena została zaktualizowana!
+      verified_enabled: Ta organizacja została zweryfikowana.
+      verified_disabled: Weryfikacja tej organizacji została cofnięta.
+      org_feature_enabled: "%{feature} zostało włączone dla tej organizacji."
+      org_feature_disabled: "%{feature} zostało wyłączone dla tej organizacji."
+      org_feature_invalid: Podano nieprawidłową funkcję organizacji.
+    org_features_controller:
+      invalid_feature: Podano nieprawidłową funkcję.
+      global_enabled: "%{feature} zostało włączone dla wszystkich organizacji."
+      global_disabled: Globalny dostęp do %{feature} został wyłączony. Dostęp zachowują tylko organizacje z indywidualnie włączoną funkcją.
+      cta_updated: Ustawienia CTA uaktualnień zostały zaktualizowane.
+    page_templates_controller:
+      created: Szablon strony został pomyślnie utworzony!
+      updated: Szablon strony został pomyślnie zaktualizowany!
+      deleted: Szablon strony został pomyślnie usunięty!
+      cannot_delete_with_pages: Nie można usunąć szablonu, gdy są do niego przypisane strony. Najpierw usuń lub przenieś strony.
+    surveys_controller:
+      created: Ankieta została utworzona!
+      updated: Ankieta została zaktualizowana!
+      deleted: Ankieta została usunięta!
+      wrong: Coś poszło nie tak podczas operacji na ankiecie.
+    talks_controller:
+      invalid_status: Nieprawidłowy status.
+      status_change_not_allowed: Zmiana statusu nie jest dozwolona.
+      status_updated: Status został zaktualizowany.
     pages_controller:
       updated: Strona została pomyślnie zaktualizowana.
       created: Strona została pomyślnie utworzona.
@@ -144,6 +206,10 @@ pl:
       confirm_sent: E-mail potwierdzający został wysłany!
       manual_verification_sent: E-mail został zweryfikowany ręcznie!
       tag_not_found: Tag "%{tag_name}" nie został znaleziony
+      email_confirmed: E-mail został potwierdzony!
+      email_confirm_fail: Potwierdzenie e-maila nie powiodło się.
+      pending_email_confirmed: Oczekująca zmiana e-maila została potwierdzona!
+      pending_email_confirm_fail: Brak oczekującej zmiany e-maila do potwierdzenia.
     welcome_controller:
       thread_content: |
         ---

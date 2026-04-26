@@ -10,6 +10,9 @@ pl:
         moderation:
           aria_label: Moderacja
           icon: Moderacja
+        manage:
+          aria_label: Zarządzaj subforum
+          icon: Zarządzaj subforum
         notifications:
           aria_label: Powiadomienia
           icon: Powiadomienia
@@ -23,6 +26,8 @@ pl:
           text: Zaloguj się
       nav:
         admin: Admin
+        manage_subforem: Zarządzaj subforum
+        agent_sessions: Sesje agentów
         dashboard: Twój panel
         placeholder: ...
         list: Lista lektur

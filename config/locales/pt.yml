@@ -1,5 +1,9 @@
 ---
 pt:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "A validação falhou: %{errors}"
   div: div
   span: span
   img: img
@@ -35,6 +39,20 @@ pt:
     article_form_co_authors: Co-autores
     article_form_co_authors_description: Adicione até 4 co-autores da %{org_name}.
     article_form_co_authors_placeholder: Adicionar até 4...
+    article_form_cover_video_button: Link de vídeo de capa
+    article_form_cover_video_button_change: Alterar link do vídeo
+    article_form_cover_video_modal_title: Adicionar link de vídeo de capa
+    article_form_cover_video_modal_description: Informe uma URL de vídeo do YouTube, Mux ou Twitch para usar como vídeo de capa do seu artigo.
+    article_form_cover_video_url_label: URL do vídeo
+    article_form_cover_video_url_placeholder: https://www.youtube-or-mux-or-twitch.com/watch?v=...
+    article_form_cover_video_error_invalid: Informe uma URL válida de vídeo do YouTube, Mux ou Twitch.
+    article_form_cover_video_supported_formats: "Formatos suportados:"
+    article_form_cover_video_twitch_note: "*apenas links diretos de vídeo, não transmissões do canal"
+    article_form_cover_video_add_link: Adicionar link
+    article_form_cover_video_update_link: Atualizar link
+    article_form_cover_video_cancel: Cancelar
+    article_form_cover_video_remove: Remover
+    article_form_cover_video_close: Fechar
     comments_preview: Visualizar
     comments_continue_editing: Continuar editando
     survey_enter_response: Digite sua resposta aqui...

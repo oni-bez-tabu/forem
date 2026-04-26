@@ -104,7 +104,7 @@ class OrganizationSettingsController < ApplicationController
     permitted = params.require(:organization).permit(
       :name, :summary, :tag_line, :slug, :url, :proof, :profile_image,
       :location, :company_size, :tech_stack, :email, :story,
-      :bg_color_hex, :text_color_hex, :twitter_username, :github_username,
+      :bg_color_hex, :text_color_hex, :twitter_username,
       :cta_button_text, :cta_button_url, :cta_body_markdown,
       :cover_image,
       social_links: Organization::SOCIAL_LINK_PLATFORMS,

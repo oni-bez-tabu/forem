@@ -3,6 +3,7 @@ import { useState } from 'preact/hooks';
 import PropTypes from 'prop-types';
 import { useMediaQuery, BREAKPOINTS } from '@components/useMediaQuery';
 import { Button } from '@crayons';
+import { locale } from '@utilities/locale';
 
 const VideoLinkModal = ({ onClose, onSave, currentUrl, isOpen }) => {
   const [url, setUrl] = useState(currentUrl || '');
@@ -40,7 +41,7 @@ const VideoLinkModal = ({ onClose, onSave, currentUrl, isOpen }) => {
     }
 
     if (!validateUrl(trimmedUrl)) {
-      setError('Please enter a valid YouTube, Mux, or Twitch video URL.');
+      setError(locale('core.article_form_cover_video_error_invalid'));
       return;
     }
 
@@ -63,12 +64,12 @@ const VideoLinkModal = ({ onClose, onSave, currentUrl, isOpen }) => {
         aria-describedby="video-modal-desc"
       >
         <div className="crayons-modal__box__header">
-          <h2 id="video-modal-title" className="crayons-subtitle-2">Add Cover Video Link</h2>
-          <button 
-            onClick={handleCancel} 
+          <h2 id="video-modal-title" className="crayons-subtitle-2">{locale('core.article_form_cover_video_modal_title')}</h2>
+          <button
+            onClick={handleCancel}
             className="crayons-btn crayons-btn--ghost crayons-btn--icon"
             style={{maxWidth: '60px'}}
-            aria-label="Close"
+            aria-label={locale('core.article_form_cover_video_close')}
             type="button"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" class="crayons-icon" xmlns="http://www.w3.org/2000/svg">
@@ -78,12 +79,12 @@ const VideoLinkModal = ({ onClose, onSave, currentUrl, isOpen }) => {
         </div>
         <div className="crayons-modal__box__body">
           <p id="video-modal-desc" className="color-base-70 mb-4">
-            Enter a YouTube, Mux, or Twitch video URL to use as the cover video for your article.
+            {locale('core.article_form_cover_video_modal_description')}
           </p>
           <form onSubmit={handleSubmit}>
             <div className="crayons-field mb-4">
               <label htmlFor="video-url-input" className="crayons-field__label">
-                Video URL
+                {locale('core.article_form_cover_video_url_label')}
               </label>
               <input
                 id="video-url-input"
@@ -95,7 +96,7 @@ const VideoLinkModal = ({ onClose, onSave, currentUrl, isOpen }) => {
                   setUrl(e.target.value);
                   setError(null);
                 }}
-                placeholder="https://www.youtube-or-mux-or-twitch.com/watch?v=..."
+                placeholder={locale('core.article_form_cover_video_url_placeholder')}
                 required={false}
               />
               {error && (
@@ -104,7 +105,7 @@ const VideoLinkModal = ({ onClose, onSave, currentUrl, isOpen }) => {
                 </p>
               )}
               <div className="mt-3 pt-2" style={{ borderTop: '1px solid var(--base-20)' }}>
-                <p className="fs-s fw-medium mb-3 color-base-90">Supported formats:</p>
+                <p className="fs-s fw-medium mb-3 color-base-90">{locale('core.article_form_cover_video_supported_formats')}</p>
                 <div className={`flex gap-3 ${isWideScreen ? 'flex-row' : 'flex-col'}`}>
                   <div style={{ border: '1px solid var(--base-20)', borderRadius: 'var(--radius)', padding: '12px', flex: '1' }}>
                     <p className="fs-s fw-medium mb-2 color-base-90">YouTube</p>
@@ -132,24 +133,24 @@ const VideoLinkModal = ({ onClose, onSave, currentUrl, isOpen }) => {
                         twitch.tv/videos/...
                       </code>
                     </div>
-                    <p className="fs-xs color-base-60 mt-2 mb-0">*only direct video links, not channel stream</p>
+                    <p className="fs-xs color-base-60 mt-2 mb-0">{locale('core.article_form_cover_video_twitch_note')}</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="flex gap-2">
-              <Button 
+              <Button
                 type="submit"
                 data-testid="save-video-btn"
               >
-                {currentUrl ? 'Update Link' : 'Add Link'}
+                {currentUrl ? locale('core.article_form_cover_video_update_link') : locale('core.article_form_cover_video_add_link')}
               </Button>
               <Button variant="secondary" onClick={handleCancel} type="button">
-                Cancel
+                {locale('core.article_form_cover_video_cancel')}
               </Button>
               {currentUrl && (
-                <Button 
-                  variant="ghost-danger" 
+                <Button
+                  variant="ghost-danger"
                   onClick={() => {
                     onSave('');
                     onClose();
@@ -157,7 +158,7 @@ const VideoLinkModal = ({ onClose, onSave, currentUrl, isOpen }) => {
                   type="button"
                   data-testid="remove-video-btn"
                 >
-                  Remove
+                  {locale('core.article_form_cover_video_remove')}
                 </Button>
               )}
             </div>
@@ -194,7 +195,7 @@ export const CoverVideoLink = ({ videoSourceUrl, onVideoUrlChange }) => {
         data-testid="add-cover-video-btn"
         style={{minHeight: '2.5rem', display: 'inline-flex', alignItems: 'center'}}
       >
-        {videoSourceUrl ? 'Change Video Link' : 'Cover Video Link'}
+        {videoSourceUrl ? locale('core.article_form_cover_video_button_change') : locale('core.article_form_cover_video_button')}
       </Button>
       <VideoLinkModal
         isOpen={showModal}

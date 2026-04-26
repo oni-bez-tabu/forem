@@ -1,3 +1,4 @@
+---
 pl:
   views:
     organizations:
@@ -11,7 +12,7 @@ pl:
         icon: Logo Instagram
       joined:
         icon: Dołączył
-        text_html: "Dołączył\_%{date}"
+        text_html: Dołączył %{date}
       location:
         icon: Lokalizacja
       logo: Zdjęcie profilowe %{org}
@@ -44,3 +45,148 @@ pl:
       twitter:
         icon: Logo Twitter
       dropdown: Organization actions
+      verified_badge: Zweryfikowana organizacja
+      social:
+        twitter: Twitter
+        github: GitHub
+        youtube: YouTube
+        discord: Discord
+        linkedin: LinkedIn
+        instagram: Instagram
+        tiktok: TikTok
+        facebook: Facebook
+        spotify: Spotify
+        twitch: Twitch
+        mastodon: Mastodon
+      header_cta:
+        expand: Rozwiń opcje
+      cover_image_alt: Obraz tła %{org}
+      settings_link: Ustawienia organizacji
+      admin_link: Administracja
+      confirm_invitation:
+        title: Potwierdź zaproszenie do organizacji
+        greeting: Cześć %{name}!
+        invited_by_html: "<strong>%{inviter_name}</strong> zaprosił(a) Cię do dołączenia do <strong>%{organization_name}</strong> jako członek."
+        invited_html: Zostałeś zaproszony do dołączenia do <strong>%{organization_name}</strong> jako członek.
+        what_is_organization: Czym jest organizacja?
+        organization_explanation: Organizacje na %{community} umożliwiają zespołom i grupom współpracę, udostępnianie treści i budowanie wspólnej obecności. Jako członek będziesz mógł publikować artykuły w imieniu organizacji i współpracować ze swoim zespołem.
+        confirm_button: Zaakceptuj zaproszenie
+        wrong_user: Musisz być zalogowany jako zaproszony użytkownik, aby potwierdzić to zaproszenie.
+        sign_in_required: Zaloguj się, aby potwierdzić członkostwo w organizacji.
+        sign_in_button: Zaloguj się
+        invalid_token: Nieprawidłowy lub wygasły token zaproszenia.
+    organization_settings:
+      page:
+        heading: W pełni konfigurowalna strona organizacji
+        cover_image: Obraz tła
+        cover_image_hint: 'Zalecane proporcje: 8:1 (np. 1600×200 lub 2400×300)'
+        readme: Zawartość strony (Markdown)
+        readme_placeholder: |-
+          Użyj Markdown i tagów Liquid, aby dostosować stronę swojej organizacji.
+
+          Przykład:
+          {% org_team twoj-slug-organizacji %}
+          {% org_team twoj-slug-organizacji role=admins limit=5 %}
+          {% org_posts twoj-slug-organizacji %}
+          {% org_posts twoj-slug-organizacji limit=5 sort=reactions min_reactions=10 since=30d %}
+          {% org_lead_form 42 %}
+        default_notice: Twoja strona używa obecnie domyślnego układu.
+        default_explanation: Domyślnie strona Twojej organizacji automatycznie wyświetla członków zespołu i ostatnie posty. Dodanie własnej zawartości poniżej zastąpi cały domyślny układ.
+        default_example_toggle: Pokaż przykład odtwarzający domyślną stronę
+        default_example: |-
+          ## Poznaj zespół
+          {%% org_team %{slug} %%}
+
+          ## Ostatnie posty
+          {%% org_posts %{slug} %%}
+        save: Zapisz stronę
+        preview: Podgląd
+      header_cta:
+        heading: Przycisk CTA w nagłówku
+        description: Dodaj przycisk wezwania do działania w nagłówku strony swojej organizacji. Możesz utworzyć prosty przycisk lub rozwijane menu z wieloma linkami.
+        button_text: Tekst przycisku
+        button_text_placeholder: Wypróbuj nasz produkt
+        button_text_help: Etykieta wyświetlana na przycisku CTA w nagłówku strony organizacji.
+        button_url: Adres URL przycisku
+        button_url_help: W przypadku prostego przycisku, odwiedzający zostaną skierowani tutaj po kliknięciu. Pozostaw puste, jeśli używasz linków rozwijanych.
+        button_url_overridden: Ignorowane — aktywne są linki rozwijane.
+        dropdown_links: Linki rozwijane (opcjonalnie)
+        dropdown_links_help: Dodaj wiele linków, aby zamienić CTA w menu rozwijane. Każdy link wymaga etykiety i adresu URL. Jeśli zostaną podane, są wyświetlane zamiast pojedynczego adresu URL przycisku.
+        link_text_placeholder: Etykieta linku
+        link_image_placeholder: Adres URL obrazu (opcjonalnie)
+        add_link: Dodaj link
+        remove_link: Usuń link
+        save: Zapisz CTA nagłówka
+      lead_forms:
+        heading: Formularze kontaktowe
+        sidebar_link: Formularze kontaktowe
+        back_to_settings: Powrót do ustawień
+        create_heading: Utwórz nowy formularz kontaktowy
+        form_title: Tytuł
+        form_title_placeholder: Zapisz się na nasz cotygodniowy newsletter
+        form_description: Opis
+        form_description_placeholder: Zapisz się, aby otrzymywać aktualizacje o naszych najnowszych produktach i ogłoszeniach.
+        form_description_help: Opcjonalny tekst wyświetlany nad przyciskiem przesyłania, wyjaśniający na co użytkownicy się zapisują.
+        form_button_text: Tekst przycisku
+        create_button: Utwórz formularz
+        your_forms: Twoje formularze
+        status_active: Aktywny
+        status_inactive: Nieaktywny
+        submissions_count:
+          zero: Brak zgłoszeń
+          one: 1 zgłoszenie
+          other: "%{count} zgłoszeń"
+        embed_code: Osadź
+        copy_embed: Skopiuj kod osadzenia
+        download_csv: Pobierz CSV
+        activate: Aktywuj
+        deactivate: Dezaktywuj
+        delete: Usuń
+        confirm_delete: Czy na pewno chcesz usunąć ten formularz kontaktowy i wszystkie jego zgłoszenia?
+        edit: Edytuj
+        edit_heading: Edytuj formularz kontaktowy
+        save_button: Zapisz zmiany
+        cancel: Anuluj
+        created: Formularz kontaktowy został utworzony.
+        updated: Formularz kontaktowy został zaktualizowany.
+        deleted: Formularz kontaktowy został usunięty.
+        activated: Formularz kontaktowy został aktywowany.
+        deactivated: Formularz kontaktowy został dezaktywowany.
+        csv:
+          name: Imię i nazwisko
+          email: E-mail
+          company: Firma
+          job_title: Stanowisko
+          username: Nazwa użytkownika
+          submitted_at: Data przesłania
+      verification:
+        heading: Weryfikacja
+        description: Zweryfikuj swoją organizację, umieszczając link do strony organizacji na swojej stronie internetowej. Spowoduje to dodanie odznaki weryfikacji do Twojego profilu.
+        verified: Twoja organizacja jest zweryfikowana!
+        verified_on: Zweryfikowano dnia %{date}
+        verified_url_html: Zweryfikowano za pośrednictwem <a href="%{url}" target="_blank" rel="noopener" class="crayons-link">%{url}</a>
+        website_required: Musisz ustawić adres strony internetowej w szczegółach swojego profilu, zanim będziesz mógł zweryfikować swoją organizację.
+        how_it_works: 'Jak to działa:'
+        step_1_html: Dodaj link do strony swojej organizacji z dowolnej podstrony swojej witryny (<strong>%{url}</strong>)
+        step_2_html: Link powinien wskazywać na <strong>%{org_url}</strong>
+        step_3: Wprowadź poniżej adres URL strony zawierającej link, a my ją sprawdzimy
+        url_label: Adres URL strony do zweryfikowania
+        url_placeholder: https://%{domain}/about
+        url_help: Wprowadź pełny adres URL strony na Twojej witrynie, która zawiera link do strony Twojej organizacji.
+        submit: Zweryfikuj organizację
+        domain_mismatch: Adres URL weryfikacji musi znajdować się w tej samej domenie co Twój adres strony internetowej.
+        url_required: Podaj adres URL do zweryfikowania.
+        check_started: Rozpoczęto sprawdzanie weryfikacji. Odśwież tę stronę za kilka sekund, aby zobaczyć wynik.
+        status_pending: Weryfikacja jest w toku. Odśwież tę stronę za kilka sekund, aby zobaczyć wynik.
+        status_failed: Weryfikacja nieudana
+        reset_on_domain_change: Domena Twojej strony internetowej się zmieniła, więc Twoja weryfikacja została zresetowana. Zweryfikuj ponownie z nową domeną.
+      sidebar:
+        invitations: Zaproszenia
+      social_links:
+        heading: Linki społecznościowe
+        description: Połącz profile społecznościowe swojej organizacji. Wprowadź nazwy użytkowników lub pełne adresy URL.
+        save: Zapisz linki społecznościowe
+      org_features_upgrade:
+        heading: Funkcja premium
+        cta_fallback: To funkcja premium. Skontaktuj się z naszym zespołem ds. partnerstw, aby dowiedzieć się więcej.
+        button_text: Dowiedz się więcej

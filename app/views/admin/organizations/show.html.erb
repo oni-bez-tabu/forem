@@ -51,26 +51,18 @@
               N/A
             <% end %>
           </li>
-          <% if @organization.github_username %>
+          <% if (instagram_link = @organization.social_link(:instagram)).present? %>
             <li>
-              <a href="https://github.com/<%= @organization.github_username %>" class="c-link c-link--icon-left inline-block" target="_blank">
-                <%= crayons_icon_tag(:github, title: t("views.admin.users.profile.github")) %>
-                <%= @organization.github_username %>
-              </a>
-            </li>
-          <% end %>
-          <% if @organization.instagram_username %>
-            <li>
-              <a href="https://instagram.com/<%= @organization.instagram_username %>" class="c-link c-link--icon-left inline-block" target="_blank">
+              <a href="<%= instagram_link %>" class="c-link c-link--icon-left inline-block" target="_blank">
                 <%= crayons_icon_tag(:instagram, title: t("views.admin.users.profile.instagram")) %>
-                <%= @organization.instagram_username %>
+                <%= instagram_link %>
               </a>
             </li>
           <% end %>
-          <% if @organization.tiktok_username %>
+          <% if (tiktok_link = @organization.social_link(:tiktok)).present? %>
             <li>
-              <a href="https://tiktok.com/<%= @organization.tiktok_username %>" class="c-link c-link--icon-left inline-block" target="_blank">
-                <%= @organization.tiktok_username %>
+              <a href="<%= tiktok_link %>" class="c-link c-link--icon-left inline-block" target="_blank">
+                <%= tiktok_link %>
               </a>
             </li>
           <% end %>

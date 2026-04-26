@@ -1,3 +1,4 @@
+---
 pl:
   views:
     admin:
@@ -10,7 +11,7 @@ pl:
           no_quality_reactions: Article has no quality reactions by trusted users.
           title: Moderator actions
         noindex:
-          reason: "Not indexed on search engines: "
+          reason: 'Not indexed on search engines: '
           reasons:
             unpublished: Unpublished
             below_minimum_score: Below minimum indexing score and not featured
@@ -81,7 +82,7 @@ pl:
         filters:
           aria_clear: Clear all filters
           aria_label: Filter
-          aria_remove: "Remove filter: %{value}"
+          aria_remove: 'Remove filter: %{value}'
           aria_more_roles: See more roles
           heading: Filters
           applied: Applied filters
@@ -109,7 +110,7 @@ pl:
           submit: Apply filters
           cancel: Cancel
         invite:
-          aria_email: "Invitation actions: %{email}"
+          aria_email: 'Invitation actions: %{email}'
           resend: Resend invite
           cancel: Cancel invite
         actions:
@@ -118,9 +119,9 @@ pl:
             heading: Add role
             role: Role
             select: Select role
-            note: "Add a note to this action:"
+            note: 'Add a note to this action:'
             submit: Add
-            warning: "Comma Delimited, All Lowercase, No @ Symbol Required In Front Of Usernames Warning: Usernames are case-sensitive and must be all lowercase! This task will fail silently when supplied with incorrect usernames."
+            warning: 'Comma Delimited, All Lowercase, No @ Symbol Required In Front Of Usernames Warning: Usernames are case-sensitive and must be all lowercase! This task will fail silently when supplied with incorrect usernames.'
           add_org:
             text: Add organization
             heading: Add organization
@@ -142,7 +143,7 @@ pl:
             add: Add
             unit: credits
             aria_credits: Amount of credits to add or remove
-            note: "Add a note to this action:"
+            note: 'Add a note to this action:'
             submit: Adjust balance
           bulk_assign_role:
             text: Bulk Assign Role
@@ -187,15 +188,15 @@ pl:
             <p>If this is the case, removing the social accounts below can help restore their social accounts. To verify if this is the case, follow steps 1 and 2 below. If verified, follow through all steps to restore their social accounts.</p>
           howto:
             subtitle: How to restore a social account
-            first_html: "Check their social account's UID via these third party tools: %{twitter_uid} and %{github_uid}"
+            first_html: 'Check their social account''s UID via these third party tools: %{twitter_uid} and %{github_uid}'
             twitter_uid: Twitter UID
             github_uid: GitHub UID
             second: Check whether or not it matches the corresponding UID below.
             third: Remove the respective account if it doesn't match.
             fourth: Ask the user to reauthorize their social account via %{app}
           onsubmit: Are you sure? This should only be done as a solution for the listed example(s).
-          uid: "UID:"
-          username: "Username:"
+          uid: 'UID:'
+          username: 'Username:'
           no_data: No data available...
           submit: Remove
         unpublish:
@@ -203,7 +204,7 @@ pl:
           onsubmit: Are you sure? All posts will be unavailable to the community.
           text1_html: Once unpublished, all posts by %{username} will become hidden and only accessible to themselves.
           text2_html: If %{username} is not suspended, they can still re-publish their posts from their dashboard.
-          note: "Note:"
+          note: 'Note:'
           note_placeholder: Note text
           submit: Unpublish all posts
         emails:
@@ -212,7 +213,7 @@ pl:
           empty2: Any emails sent to %{email} will be found here.
           previous: Previous emails (%{num})
           send: Send an email
-          to: "To: %{user} (%{email})"
+          to: 'To: %{user} (%{email})'
           subject: Subject
           subject_placeholder: What do you want to say in the subject line?
           body: Body
@@ -228,6 +229,11 @@ pl:
           verified_html: Last verified on %{time}
           reverify: Reverify
           manually_verify: Manually verify email
+          pending_email:
+            subtitle: Oczekująca zmiana adresu e-mail
+            desc: "%{user} poprosił(a) o zmianę adresu e-mail na %{email}."
+            confirm: Potwierdź nowy adres e-mail
+            confirm_dialog: Czy na pewno chcesz potwierdzić zmianę adresu e-mail na %{email}?
         flags:
           empty1: No flags received against %{user} yet.
           empty2: Any flags received against %{user} will be found here.
@@ -250,8 +256,7 @@ pl:
           note_placeholder: Add a note...
           submit: Submit
           unknown_user: Unknown user
-          unknown_user_html: |
-            <em>Unknown user</em>
+          unknown_user_html: "<em>Unknown user</em>\n"
         overview:
           comments: Comments
           posts: Posts
@@ -264,7 +269,7 @@ pl:
             subtitle: Credits
             aria_learn: Learn more about credits
             icon: Wallet
-            desc: "Grant/remove credits to purchase classified listings. "
+            desc: 'Grant/remove credits to purchase classified listings. '
             button: Adjust balance
           orgs:
             subtitle: Organizations
@@ -272,7 +277,7 @@ pl:
             aria_learn: Learn more about organizations
             aria_revoke: Revoke %{org} organization membership
             icon: Organizations
-            desc: "Add this member to organizations in your community. "
+            desc: 'Add this member to organizations in your community. '
             empty: Not part of any organization yet.
             button: Add organization
             type:
@@ -285,11 +290,11 @@ pl:
             subtitle: Roles
             aria_learn: Learn more about roles
             icon: Roles
-            desc: "Grant this member permissions by assigning a role. "
+            desc: 'Grant this member permissions by assigning a role. '
             empty: No roles assigned yet.
             button: Assign role
             locked: You can't remove this role.
-            remove: "Remove role:"
+            remove: 'Remove role:'
             remove_confirm: Are you sure?
             remove_confirm_super_admin: You are removing super admin access from this account. Do this carefully and always ensure you retain access to one or more super admin accounts
             name:
@@ -326,8 +331,8 @@ pl:
             subtitle: Tags
             aria_learn: Learn more about tag moderation
             icon: Mod
-            desc: "Add a tag that this member can moderate. "
-            remove: "Remove tag:"
+            desc: 'Add a tag that this member can moderate. '
+            remove: 'Remove tag:'
             notice_html: Adding tags for moderation is currently only possible through a particular %{tag_page}, by providing the username (%{username}).
             tag_page: tag's page
         priviliged_actions:
@@ -345,6 +350,7 @@ pl:
           email: Email
           github: GitHub
           twitter: Twitter
+          instagram: Instagram
           visit: Visit profile
           options:
             icon: Options
@@ -355,6 +361,9 @@ pl:
             banish: Banish user
             delete: Delete user
             update_email: Update User Email
+            edit_profile: Edytuj profil
+          primary_email: Podstawowy adres e-mail
+          oauth_email: E-mail %{provider}
         reports:
           subtitle: Reports submitted by %{user} (%{num})
           for_html: For %{url}
@@ -381,12 +390,12 @@ pl:
           error: Failed to change user's reptuation modifier (select between 0 and 5)
         unpublish_logs:
           subtitle_html: Unpublished by %{user} on %{time}
-          posts: "Posts:"
+          posts: 'Posts:'
           edit: Edit
-          republished: (was republished)
-          comments: "Comments:"
+          republished: "(was republished)"
+          comments: 'Comments:'
           commentable: commentable
-          created: "Created at: %{time}"
+          created: 'Created at: %{time}'
         tabs:
           overview: Overview
           notes: Notes
@@ -396,29 +405,30 @@ pl:
           unpublish_logs: Unpublish All History
           articles: Articles
           comments: Comments
+          audit_log: Dziennik audytu
         status_title: Current status
-        status_reader: "Current status:"
+        status_reader: 'Current status:'
         more_orgs:
-          one: + %{count}
-          other: + %{count}
+          one: "+ %{count}"
+          other: "+ %{count}"
         roles:
           Admin: Admin
           Tech Admin: Tech Admin
           Super Admin: Super Admin
           Resource Admin: Resource Admin
-          "Resource Admin: Article": "Resource Admin: Article"
-          "Resource Admin: Badge": "Resource Admin: Badge"
-          "Resource Admin: BadgeAchievement": "Resource Admin: BadgeAchievement"
-          "Resource Admin: Broadcast": "Resource Admin: Broadcast"
-          "Resource Admin: Comment": "Resource Admin: Comment"
-          "Resource Admin: Config": "Resource Admin: Config"
-          "Resource Admin: Billboard": "Resource Admin: Billboard"
-          "Resource Admin: DataUpdateScript": "Resource Admin: DataUpdateScript"
-          "Resource Admin: FeedbackMessage": "Resource Admin: FeedbackMessage"
-          "Resource Admin: HtmlVariant": "Resource Admin: HtmlVariant"
-          "Resource Admin: ListingCategory": "Resource Admin: ListingCategory"
-          "Resource Admin: Page": "Resource Admin: Page"
-          "Resource Admin: Tag": "Resource Admin: Tag"
+          'Resource Admin: Article': 'Resource Admin: Article'
+          'Resource Admin: Badge': 'Resource Admin: Badge'
+          'Resource Admin: BadgeAchievement': 'Resource Admin: BadgeAchievement'
+          'Resource Admin: Broadcast': 'Resource Admin: Broadcast'
+          'Resource Admin: Comment': 'Resource Admin: Comment'
+          'Resource Admin: Config': 'Resource Admin: Config'
+          'Resource Admin: Billboard': 'Resource Admin: Billboard'
+          'Resource Admin: DataUpdateScript': 'Resource Admin: DataUpdateScript'
+          'Resource Admin: FeedbackMessage': 'Resource Admin: FeedbackMessage'
+          'Resource Admin: HtmlVariant': 'Resource Admin: HtmlVariant'
+          'Resource Admin: ListingCategory': 'Resource Admin: ListingCategory'
+          'Resource Admin: Page': 'Resource Admin: Page'
+          'Resource Admin: Tag': 'Resource Admin: Tag'
           Super Moderator: Super Moderator
         statuses:
           Warned: Warned
@@ -451,7 +461,30 @@ pl:
           success: Successfully changed user's maximum score to %{max_score}.
           error: Failed to change user's maximum score (select between 0 and 100)
         max_score_title: Maximum score
-        max_score_reader: "Maximum score:"
+        max_score_reader: 'Maximum score:'
+        edit_profile:
+          heading: Edytuj profil użytkownika %{user}
+          desc_html: Zmiany, które tu wprowadzisz, są natychmiast widoczne publicznie na profilu użytkownika.
+          notice: Zachowaj ostrożność. Te zmiany są publiczne i wpływają na konto użytkownika.
+          name: Imię i nazwisko
+          username: Nazwa użytkownika
+          summary: Podsumowanie
+          location: Lokalizacja
+          website_url: Adres strony internetowej
+          submit: Zapisz zmiany w profilu
+          success: Profil został zaktualizowany.
+        audit_log:
+          title: Dziennik audytu
+          filter_by_user: Akcje wykonane przez użytkownika
+          filter_on_user: Akcje wykonane na użytkowniku
+          empty: Nie znaleziono wpisów dziennika audytu dla tego użytkownika.
+          table:
+            heading:
+              id: ID
+              user: Użytkownik
+              action: Akcja
+              data: Dane
+              date: Data
       organizations:
         profile:
           id: ID %{organizationid}
@@ -465,10 +498,65 @@ pl:
         delete:
           heading: Delete %{organization}
           onsubmit: Are you sure? This action is irreversible.
-          desc2: "Note: Deleting organization, %{organization}, will dissasociate the existing members and articles from the organization but will not delete them."
+          desc2: 'Note: Deleting organization, %{organization}, will dissasociate the existing members and articles from the organization but will not delete them.'
           role_notice: Only Super Admins are allowed to delete organizations.
           credits_notice: You cannot delete an organization that has associated credits.
           submit: Delete organizion now
         options:
           delete: Delete organization
           icon: Options
+        verified:
+          heading: Weryfikacja
+          label: Zweryfikowana organizacja
+          description: Ręcznie zweryfikuj lub anuluj weryfikację tej organizacji. Zweryfikowane organizacje wyświetlają odznakę weryfikacji na swoim profilu.
+          verify: Zweryfikuj organizację
+          revoke: Cofnij weryfikację
+          verified_notice: Ta organizacja jest zweryfikowana (od %{date}).
+          verification_url: Adres URL weryfikacji
+        fully_trusted:
+          label: W pełni zaufana organizacja
+          description: Gdy opcja jest włączona, ta organizacja może bezpośrednio dodawać członków bez potwierdzenia. Członkowie otrzymają powiadomienie e-mail zamiast zaproszenia.
+          enable: Włącz pełne zaufanie
+          disable: Wyłącz pełne zaufanie
+          enabled_notice: Ta organizacja jest w pełni zaufana. Członkowie mogą być dodawani bezpośrednio, bez potwierdzenia.
+        org_features:
+          heading: Funkcje organizacji
+          readme:
+            label: Strona Readme
+            description: Gdy opcja jest włączona, ta organizacja może tworzyć i wyświetlać własną stronę readme na swoim profilu.
+            enable: Włącz Readme
+            disable: Wyłącz Readme
+            enabled_notice: Funkcja strony readme jest włączona dla tej organizacji.
+          lead_forms:
+            label: Formularze kontaktowe
+            description: Gdy opcja jest włączona, ta organizacja może tworzyć i zarządzać formularzami pozyskiwania leadów, aby osadzać je w swoich artykułach.
+            enable: Włącz formularze
+            disable: Wyłącz formularze
+            enabled_notice: Funkcja formularzy kontaktowych jest włączona dla tej organizacji.
+          dofollow_links:
+            label: Linki Dofollow
+            description: Gdy opcja jest włączona, linki na stronie readme tej organizacji przekazują autorytet SEO (dofollow). Gdy wyłączona — wszystkie linki zewnętrzne są nofollow.
+            enable: Włącz Dofollow
+            disable: Wyłącz Dofollow
+            enabled_notice: Linki dofollow są włączone dla strony readme tej organizacji.
+      org_features:
+        heading: Funkcje organizacji
+        description: Zarządzaj flagami funkcji organizacji globalnie lub osobno dla każdej organizacji.
+        enable_global: Włącz dla wszystkich organizacji
+        disable_global: Wyłącz globalny dostęp
+        globally_enabled_notice: Ta funkcja jest włączona dla wszystkich organizacji.
+        individually_enabled:
+          one: 'Włączone indywidualnie dla %{count} organizacji:'
+          other: 'Włączone indywidualnie dla %{count} organizacji:'
+        no_orgs_enabled: Żadna organizacja nie ma włączonej tej funkcji indywidualnie. Użyj panelu administracyjnego każdej organizacji, aby ją włączyć.
+        table:
+          name: Organizacja
+          slug: Slug
+          actions: ''
+          manage: Zarządzaj
+        cta_config:
+          heading: Ustawienia CTA rozszerzenia
+          description: Skonfiguruj wezwanie do działania (call-to-action) wyświetlane organizacjom, które nie mają dostępu do funkcji. Pojawia się ono w miejscu ograniczonej funkcji.
+          text_label: Tekst CTA
+          url_label: Adres URL CTA
+          save: Zapisz ustawienia CTA

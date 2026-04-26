@@ -1,0 +1,9 @@
+---
+pl:
+  views:
+    article_form:
+      save_changes: Zapisz zmiany
+      schedule: Zaplanuj
+      publish: Opublikuj
+      loading_preview: Ładowanie podglądu
+      preview_loaded: Podgląd załadowany

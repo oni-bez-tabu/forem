@@ -23,7 +23,9 @@ pl:
       future_or_current_published_at: dozwolone są tylko przyszłe lub obecne daty published_at
       immutable_published_at: aktualizacja published_at dla artykułów, które zostały już opublikowane, jest niedozwolona
       mention_too_many:
-        one: Nie możesz wzmiankować więcej niż %{count} użytkowników w poście!
+        one: Nie możesz wzmiankować więcej niż %{count} użytkownika w poście!
+        few: Nie możesz wzmiankować więcej niż %{count} użytkowników w poście!
+        many: Nie możesz wzmiankować więcej niż %{count} użytkowników w poście!
         other: Nie możesz wzmiankować więcej niż %{count} użytkowników w poście!
     audience_segment:
       type_ofs:
@@ -44,6 +46,7 @@ pl:
     broadcast:
       single_active: Możesz mieć tylko jedno aktywne ogłoszenie
     comment:
+      cannot_be_empty: nie może być pusty. Wpisz treść przed wysłaniem.
       deleted: "[usunięte]"
       has_been_deleted: "%{type} został usunięty."
       hidden: "[ukryte przez autora posta]"
@@ -57,7 +60,9 @@ pl:
         PodcastEpisode: odcinek podcastu
       suspended_too_many: Użytkownik zawieszony z powodu zbyt wielu spamowanych interakcji, spowodowany autowymiotem.
       mention_too_many:
-        one: Nie możesz wzmiankować więcej niż %{count} użytkowników w komentarzu!
+        one: Nie możesz wzmiankować więcej niż %{count} użytkownika w komentarzu!
+        few: Nie możesz wzmiankować więcej niż %{count} użytkowników w komentarzu!
+        many: Nie możesz wzmiankować więcej niż %{count} użytkowników w komentarzu!
         other: Nie możesz wzmiankować więcej niż %{count} użytkowników w komentarzu!
     feedback_message:
       reported: (ty) wcześniej zgłosiłeś ten adres URL.
@@ -78,8 +83,22 @@ pl:
     organization:
       integer_only: Tylko liczby całkowite. Brak znaku.
       reserved_word: "%<value>s to słowo zastrzeżone. Skontaktuj się z administratorami witryny, aby uzyskać pomoc w rejestracji twojej organizacji."
+      unknown_platform: "zawiera nieznaną platformę: %{platform}"
+      social_link_too_long: "URL dla %{platform} jest zbyt długi (maks. 200 znaków)"
+      header_cta_text_too_long: "tekst przycisku jest zbyt długi (maks. %{max} znaków)"
+      header_cta_url_too_long: "URL jest zbyt długi (maks. %{max} znaków)"
+      header_cta_links_invalid: "linki muszą być tablicą"
+      header_cta_too_many_links: "ma zbyt wiele linków (maks. %{max})"
+      header_cta_link_missing_fields: "każdy link musi mieć tekst i URL"
+      header_cta_url_invalid: "Link musi być prawidłowym URL HTTP, HTTPS lub Mailto"
+      social_link_invalid: "musi być prawidłowym URL HTTP lub HTTPS"
+      social_link_domain_mismatch: "domena URL musi pasować do wybranej platformy (%{platform})"
+    lead_submission:
+      already_submitted: Ten formularz został już wysłany.
     page:
       body_must_exist: musi istnieć, jeśli nie istnieje body_html lub body_json.
+      redirect_to_url_invalid: musi być pełnym URL (zaczynającym się od http:// lub https://) lub ścieżką aplikacji (zaczynającą się od /).
+      redirect_to_url_invalid_path: nie jest rozpoznawaną ścieżką w tej aplikacji.
     podcast_episode_appearance:
       provided_role_is_not_valid: podana rola jest nieprawidłowa
     poll_skip:

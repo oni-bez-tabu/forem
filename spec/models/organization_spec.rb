@@ -23,7 +23,6 @@ RSpec.describe Organization do
       it { is_expected.to validate_length_of(:cta_button_text).is_at_most(20) }
       it { is_expected.to validate_length_of(:cta_button_url).is_at_most(255) }
       it { is_expected.to validate_length_of(:email).is_at_most(64) }
-      it { is_expected.to validate_length_of(:github_username).is_at_most(50) }
       it { is_expected.to validate_length_of(:location).is_at_most(64) }
       it { is_expected.to validate_length_of(:name).is_at_most(50) }
       it { is_expected.to validate_length_of(:proof).is_at_most(1500) }

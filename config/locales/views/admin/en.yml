@@ -360,6 +360,7 @@ en:
           oauth_email: "%{provider} email"
           github: GitHub
           twitter: Twitter
+          instagram: Instagram
           visit: Visit profile
           options:
             icon: Options

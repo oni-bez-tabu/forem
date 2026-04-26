@@ -40,6 +40,7 @@ pt:
         profile:
           primary_email: "E-mail principal"
           oauth_email: "E-mail %{provider}"
+          instagram: Instagram
           options:
             edit_profile: Editar perfil
           edit_profile:

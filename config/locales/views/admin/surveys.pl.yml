@@ -1,0 +1,19 @@
+pl:
+  admin:
+    surveys:
+      index:
+        title: Zarządzaj ankietami
+        create: Utwórz nową ankietę
+        empty: Nie znaleziono ankiet.
+        table:
+          title: Tytuł
+          active: Aktywna
+          polls_count: Pytania
+          created_at: Utworzono
+          actions: Akcje
+      new:
+        title: Nowa ankieta
+      edit:
+        title: Edytuj ankietę
+      show:
+        title: Szczegóły ankiety

@@ -65,8 +65,284 @@ pl:
         welcome_notifications: Wyślij mi czasami wskazówki, jak ulepszyć swoje doświadczenie w %{community}
         reaction_notifications: Wyślij powiadomienia, gdy ktoś zareaguje na móją treść, taką jak komentarze lub posty
         mod_roundrobin_notifications: Wyślij mi powiadomienia o nowych aktywnościach członków
+        email_community_broadcast: Wysyłaj mi e-maile z ogłoszeniami społeczności
+        mobile_new_follower_notifications: Wysyłaj mi powiadomienia push, gdy ktoś nowy zaczyna mnie obserwować
+        mobile_unread_notifications: Wysyłaj mi powiadomienia push, gdy mam nieprzeczytane powiadomienia na %{community}
+        mod_team_notifications: Wysyłaj mi powiadomienia zespołu moderatorów
       users_setting:
         feed_url: Adres URL kanału RSS
+        email_community_broadcast: Wysyłaj mi e-maile z ogłoszeniami społeczności
+        mobile_new_follower_notifications: Wysyłaj mi powiadomienia push, gdy ktoś nowy zaczyna mnie obserwować
+        mobile_unread_notifications: Wysyłaj mi powiadomienia push, gdy mam nieprzeczytane powiadomienia na %{community}
+        mod_team_notifications: Wysyłaj mi powiadomienia zespołu moderatorów
+        reaction_notifications: Wysyłaj powiadomienia, gdy ktoś zareaguje na moje treści, takie jak komentarze lub posty
+      placeholder:
+        organization:
+          name: Acme Inc.
+          slug: acmeinc
+          url: https://yoursite.com
+          location: Halifax, Nova Scotia
+          email: mail@example.com
+          company_size: "..."
+          story: "..."
+          tech_stack: "..."
+          cta_body_markdown: "..."
+          cta_button_text: Odwiedź stronę Acme
+          cta_button_url: https://example.com
+          proof: "..."
+        response_template:
+          title: "..."
+        user:
+          name: Jan Kowalski
+          email: jan.kowalski@example.com
+          username: jankowalski
+          feed_url: https://twojastrona.pl/feed
+      page_entries_info:
+        more_pages:
+          display_entries: Pokazuje %{entry_name} %{from}-%{to} z %{count} łącznie
+      listing_helper:
+        option:
+          one: "%{count} opcja"
+          few: "%{count} opcje"
+          many: "%{count} opcji"
+          other: "%{count} opcji"
+      admin:
+        user_helper:
+          today: Dzisiaj
+          yesterday: Wczoraj
+          org_join: Dołączył do organizacji
+          org_overflow:
+            one: "%{count} inny"
+            few: "%{count} innych"
+            many: "%{count} innych"
+            other: "%{count} innych"
+      application_helper:
+        subtitle:
+          week: tydzień
+          month: miesiąc
+          year: rok
+          infinity: nieskończoność
+          latest: najnowsze
+        title_text: Tytuł
+        follow:
+          text:
+            default: Obserwuj
+            Organization: Obserwuj
+            Tag: Obserwuj
+            User: Obserwuj
+          aria_label:
+            default: "Obserwuj %{type}: %{name}"
+            Organization: "Obserwuj organizację: %{name}"
+            Tag: "Obserwuj tag: %{name}"
+            User: "Obserwuj użytkownika: %{name}"
+        app_logo: Logo aplikacji
+        required: wymagane
+      articles_helper:
+        recently_created: Ostatnio utworzone
+        recently_published: Ostatnio opublikowane
+        most_views: Najwięcej wyświetleń
+        most_reactions: Najwięcej reakcji
+        most_comments: Najwięcej komentarzy
+        logo: Logo
+      authentication_helper:
+        email_password: E-mail lub hasło
+        any_of_those: dowolnego z nich
+        that: to
+        reminder: Przypomnienie
+        invite_only: Tylko na zaproszenie
+      comments_helper:
+        ama: AMA
+        ask_me_anything: Zapytaj mnie o cokolwiek
+        author: Autor
+        nbsp_likes_html:
+          one: "&nbsp;%{count} polubienie"
+          few: "&nbsp;%{count} polubienia"
+          many: "&nbsp;%{count} polubień"
+          other: "&nbsp;%{count} polubień"
+      feedback_messages_helper:
+        offender:
+          body: Treść wiadomości dla sprawcy
+          subject: Temat wiadomości dla sprawcy
+        reporter:
+          body: Treść wiadomości dla zgłaszającego
+          subject: Temat wiadomości dla zgłaszającego
+        affected:
+          body: Treść wiadomości dla poszkodowanego
+          subject: Temat wiadomości dla poszkodowanego
+      organization_helper:
+        option: Opcja
+      rate_limit_checker_helper:
+        day:
+          one: "%{count} dzień"
+          few: "%{count} dni"
+          many: "%{count} dni"
+          other: "%{count} dni"
+        general: Ogólne
+        published:
+          title: Tytuł publikacji
+          description: Opis publikacji
+        antispam:
+          title: Tytuł antyspamu
+        thing:
+          posts: posty
+          comments: komentarze
+        update:
+          title: Tytuł aktualizacji
+          description: Opis aktualizacji
+        upload:
+          title: Tytuł przesyłania
+          description: Opis przesyłania
+        user:
+          title: Tytuł użytkownika
+          description: Opis użytkownika
+        follow:
+          title: Tytuł obserwowania
+          description: Opis obserwowania
+        reaction:
+          title: Tytuł reakcji
+          description: Opis reakcji
+        feedback:
+          title: Tytuł opinii
+          description: Opis opinii
+        comment:
+          title: Tytuł komentarza
+          description: Opis komentarza
+        comment_antispam:
+          title: Tytuł antyspamu komentarzy
+        mention:
+          title: Tytuł wzmianki
+          description: Opis wzmianki
+        organization:
+          title: Tytuł organizacji
+          description: Opis organizacji
+        subscription:
+          title: Tytuł subskrypcji
+          description: Opis subskrypcji
+        recipient:
+          title: Tytuł odbiorcy
+          description: Opis odbiorcy
+        confirmation:
+          title: Tytuł potwierdzenia
+          description: Opis potwierdzenia
+        listing:
+          title: Tytuł ogłoszenia
+          description: Opis ogłoszenia
+      settings_helper:
+        novice: Początkujący
+        beginner: Podstawowy
+        mid_level: Średniozaawansowany
+        advanced: Zaawansowany
+        expert: Ekspert
+      social_link_helper:
+        n_a: N/D
+      video:
+        title: Tytuł
+        description: Opis
+        video_url: Adres URL wideo
+        video_source_url_key: Klucz URL źródła wideo
+        video_thumbnail_url: Adres URL miniatury wideo
+        video_closed_caption_track_url: Adres URL ścieżki napisów wideo
+        video_source_url: Adres URL źródła wideo
+        video_code: Kod wideo
+        video_source: Źródło wideo
+        video_embed: Osadzenie wideo
+        video_embed_html: Osadzenie wideo HTML
+        video_embed_html_5: Osadzenie wideo HTML5
+        video_embed_html_5_with_caption: Osadzenie wideo HTML5 z napisami
+        video_embed_html_5_with_caption_and_autoplay: Osadzenie wideo HTML5 z napisami i autoodtwarzaniem
+        video_embed_html_5_with_autoplay: Osadzenie wideo HTML5 z autoodtwarzaniem
+        video_embed_html_5_with_caption_and_autoplay_and_loop: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem i zapętleniem
+        video_embed_html_5_with_autoplay_and_loop: Osadzenie wideo HTML5 z autoodtwarzaniem i zapętleniem
+        video_embed_html_5_with_caption_and_loop: Osadzenie wideo HTML5 z napisami i zapętleniem
+        video_embed_html_5_with_loop: Osadzenie wideo HTML5 z zapętleniem
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_muted: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem i wyciszeniem
+        video_embed_html_5_with_autoplay_and_loop_and_muted: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem i wyciszeniem
+        video_embed_html_5_with_caption_and_loop_and_muted: Osadzenie wideo HTML5 z napisami, zapętleniem i wyciszeniem
+        video_embed_html_5_with_loop_and_muted: Osadzenie wideo HTML5 z zapętleniem i wyciszeniem
+        video_embed_html_5_with_caption_and_autoplay_and_muted: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem i wyciszeniem
+        video_embed_html_5_with_autoplay_and_muted: Osadzenie wideo HTML5 z autoodtwarzaniem i wyciszeniem
+        video_embed_html_5_with_caption_and_muted: Osadzenie wideo HTML5 z napisami i wyciszeniem
+        video_embed_html_5_with_muted: Osadzenie wideo HTML5 z wyciszeniem
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_muted_and_controls: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem, wyciszeniem i sterowaniem
+        video_embed_html_5_with_autoplay_and_loop_and_muted_and_controls: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem, wyciszeniem i sterowaniem
+        video_embed_html_5_with_caption_and_loop_and_muted_and_controls: Osadzenie wideo HTML5 z napisami, zapętleniem, wyciszeniem i sterowaniem
+        video_embed_html_5_with_loop_and_muted_and_controls: Osadzenie wideo HTML5 z zapętleniem, wyciszeniem i sterowaniem
+        video_embed_html_5_with_caption_and_autoplay_and_muted_and_controls: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, wyciszeniem i sterowaniem
+        video_embed_html_5_with_autoplay_and_muted_and_controls: Osadzenie wideo HTML5 z autoodtwarzaniem, wyciszeniem i sterowaniem
+        video_embed_html_5_with_caption_and_muted_and_controls: Osadzenie wideo HTML5 z napisami, wyciszeniem i sterowaniem
+        video_embed_html_5_with_muted_and_controls: Osadzenie wideo HTML5 z wyciszeniem i sterowaniem
+        video_embed_html_5_with_caption_and_autoplay_and_controls: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem i sterowaniem
+        video_embed_html_5_with_autoplay_and_controls: Osadzenie wideo HTML5 z autoodtwarzaniem i sterowaniem
+        video_embed_html_5_with_caption_and_controls: Osadzenie wideo HTML5 z napisami i sterowaniem
+        video_embed_html_5_with_controls: Osadzenie wideo HTML5 ze sterowaniem
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_controls: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem i sterowaniem
+        video_embed_html_5_with_autoplay_and_loop_and_controls: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem i sterowaniem
+        video_embed_html_5_with_caption_and_loop_and_controls: Osadzenie wideo HTML5 z napisami, zapętleniem i sterowaniem
+        video_embed_html_5_with_loop_and_controls: Osadzenie wideo HTML5 z zapętleniem i sterowaniem
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_muted_and_controls_and_playsinline: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem, wyciszeniem, sterowaniem i playsinline
+        video_embed_html_5_with_autoplay_and_loop_and_muted_and_controls_and_playsinline: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem, wyciszeniem, sterowaniem i playsinline
+        video_embed_html_5_with_caption_and_loop_and_muted_and_controls_and_playsinline: Osadzenie wideo HTML5 z napisami, zapętleniem, wyciszeniem, sterowaniem i playsinline
+        video_embed_html_5_with_loop_and_muted_and_controls_and_playsinline: Osadzenie wideo HTML5 z zapętleniem, wyciszeniem, sterowaniem i playsinline
+        video_embed_html_5_with_caption_and_autoplay_and_muted_and_controls_and_playsinline: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, wyciszeniem, sterowaniem i playsinline
+        video_embed_html_5_with_autoplay_and_muted_and_controls_and_playsinline: Osadzenie wideo HTML5 z autoodtwarzaniem, wyciszeniem, sterowaniem i playsinline
+        video_embed_html_5_with_caption_and_muted_and_controls_and_playsinline: Osadzenie wideo HTML5 z napisami, wyciszeniem, sterowaniem i playsinline
+        video_embed_html_5_with_muted_and_controls_and_playsinline: Osadzenie wideo HTML5 z wyciszeniem, sterowaniem i playsinline
+        video_embed_html_5_with_caption_and_autoplay_and_controls_and_playsinline: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, sterowaniem i playsinline
+        video_embed_html_5_with_autoplay_and_controls_and_playsinline: Osadzenie wideo HTML5 z autoodtwarzaniem, sterowaniem i playsinline
+        video_embed_html_5_with_caption_and_controls_and_playsinline: Osadzenie wideo HTML5 z napisami, sterowaniem i playsinline
+        video_embed_html_5_with_controls_and_playsinline: Osadzenie wideo HTML5 ze sterowaniem i playsinline
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_controls_and_playsinline: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem, sterowaniem i playsinline
+        video_embed_html_5_with_autoplay_and_loop_and_controls_and_playsinline: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem, sterowaniem i playsinline
+        video_embed_html_5_with_caption_and_loop_and_controls_and_playsinline: Osadzenie wideo HTML5 z napisami, zapętleniem, sterowaniem i playsinline
+        video_embed_html_5_with_loop_and_controls_and_playsinline: Osadzenie wideo HTML5 z zapętleniem, sterowaniem i playsinline
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_muted_and_playsinline: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem, wyciszeniem i playsinline
+        video_embed_html_5_with_autoplay_and_loop_and_muted_and_playsinline: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem, wyciszeniem i playsinline
+        video_embed_html_5_with_caption_and_loop_and_muted_and_playsinline: Osadzenie wideo HTML5 z napisami, zapętleniem, wyciszeniem i playsinline
+        video_embed_html_5_with_loop_and_muted_and_playsinline: Osadzenie wideo HTML5 z zapętleniem, wyciszeniem i playsinline
+        video_embed_html_5_with_caption_and_autoplay_and_muted_and_playsinline: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, wyciszeniem i playsinline
+        video_embed_html_5_with_autoplay_and_muted_and_playsinline: Osadzenie wideo HTML5 z autoodtwarzaniem, wyciszeniem i playsinline
+        video_embed_html_5_with_caption_and_muted_and_playsinline: Osadzenie wideo HTML5 z napisami, wyciszeniem i playsinline
+        video_embed_html_5_with_muted_and_playsinline: Osadzenie wideo HTML5 z wyciszeniem i playsinline
+        video_embed_html_5_with_caption_and_autoplay_and_playsinline: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem i playsinline
+        video_embed_html_5_with_autoplay_and_playsinline: Osadzenie wideo HTML5 z autoodtwarzaniem i playsinline
+        video_embed_html_5_with_caption_and_playsinline: Osadzenie wideo HTML5 z napisami i playsinline
+        video_embed_html_5_with_playsinline: Osadzenie wideo HTML5 z playsinline
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_playsinline: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem i playsinline
+        video_embed_html_5_with_autoplay_and_loop_and_playsinline: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem i playsinline
+        video_embed_html_5_with_caption_and_loop_and_playsinline: Osadzenie wideo HTML5 z napisami, zapętleniem i playsinline
+        video_embed_html_5_with_loop_and_playsinline: Osadzenie wideo HTML5 z zapętleniem i playsinline
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_muted_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem, wyciszeniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_autoplay_and_loop_and_muted_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem, wyciszeniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_loop_and_muted_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, zapętleniem, wyciszeniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_loop_and_muted_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z zapętleniem, wyciszeniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_autoplay_and_muted_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, wyciszeniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_autoplay_and_muted_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z autoodtwarzaniem, wyciszeniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_muted_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, wyciszeniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_muted_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z wyciszeniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_autoplay_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_autoplay_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z autoodtwarzaniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 ze sterowaniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_autoplay_and_loop_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_loop_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, zapętleniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_loop_and_controls_and_playsinline_and_poster: Osadzenie wideo HTML5 z zapętleniem, sterowaniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_muted_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem, wyciszeniem, playsinline i posterem
+        video_embed_html_5_with_autoplay_and_loop_and_muted_and_playsinline_and_poster: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem, wyciszeniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_loop_and_muted_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, zapętleniem, wyciszeniem, playsinline i posterem
+        video_embed_html_5_with_loop_and_muted_and_playsinline_and_poster: Osadzenie wideo HTML5 z zapętleniem, wyciszeniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_autoplay_and_muted_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, wyciszeniem, playsinline i posterem
+        video_embed_html_5_with_autoplay_and_muted_and_playsinline_and_poster: Osadzenie wideo HTML5 z autoodtwarzaniem, wyciszeniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_muted_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, wyciszeniem, playsinline i posterem
+        video_embed_html_5_with_muted_and_playsinline_and_poster: Osadzenie wideo HTML5 z wyciszeniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_autoplay_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, playsinline i posterem
+        video_embed_html_5_with_autoplay_and_playsinline_and_poster: Osadzenie wideo HTML5 z autoodtwarzaniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, playsinline i posterem
+        video_embed_html_5_with_playsinline_and_poster: Osadzenie wideo HTML5 z playsinline i posterem
+        video_embed_html_5_with_caption_and_autoplay_and_loop_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, autoodtwarzaniem, zapętleniem, playsinline i posterem
+        video_embed_html_5_with_autoplay_and_loop_and_playsinline_and_poster: Osadzenie wideo HTML5 z autoodtwarzaniem, zapętleniem, playsinline i posterem
+        video_embed_html_5_with_caption_and_loop_and_playsinline_and_poster: Osadzenie wideo HTML5 z napisami, zapętleniem, playsinline i posterem
+        video_embed_html_5_with_loop_and_playsinline_and_poster: Osadzenie wideo HTML5 z zapętleniem, playsinline i posterem
     placeholder:
       organization:
         name: Przykładowa Firma Sp. z o.o.
@@ -128,6 +404,8 @@ pl:
       author: Autor
       nbsp_likes_html:
         one: "&nbsp;lubi"
+        few: "&nbsp;lubią"
+        many: "&nbsp;lubią"
         other: "&nbsp;lubią"
     feedback_messages_helper:
       offender:
@@ -164,12 +442,16 @@ pl:
     listing_helper:
       option:
         one: "%{cl_name} (%{count} kredyt)"
-        other: "%{cl_name} (%{count} kredyty)"
+        few: "%{cl_name} (%{count} kredyty)"
+        many: "%{cl_name} (%{count} kredytów)"
+        other: "%{cl_name} (%{count} kredytów)"
     organization_helper:
       option: "%{org_name} (%{unspent})"
     rate_limit_checker_helper:
       day:
         one: dzień
+        few: dni
+        many: dni
         other: dni
       general: Ile %{thing} nowy członek (%{timeframe} lub mniej) może stworzyć w dowolnym okresie 5 minut?
       published:
@@ -236,4 +518,6 @@ pl:
         org_join: ", "
         org_overflow:
           one: "%{orgs} i %{count} inna"
-          other: "%{orgs} i %{count} inne"
+          few: "%{orgs} i %{count} inne"
+          many: "%{orgs} i %{count} innych"
+          other: "%{orgs} i %{count} innych"
