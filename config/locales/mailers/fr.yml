@@ -26,6 +26,12 @@ fr:
       org_deleted: "%{community} - Confirmation de la suppression de l'organisation"
       new_reply: "%{name} a répondu à votre %{type}"
       feedback: Merci pour votre rapport sur %{community}
+      feedback_response:
+        greeting: "Bonjour,"
+        body1: "Merci d'avoir signalé un contenu susceptible de violer le Code de conduite de %{community} ou nos Conditions d'utilisation. Nous examinons votre signalement et reviendrons vers vous si nous avons besoin d'informations supplémentaires pour prendre les mesures appropriées."
+        body2: "Nous apprécions votre aide alors que nous travaillons à créer un environnement positif et inclusif pour tous !"
+        sign_off: "Merci,"
+        team: "L'équipe %{community}"
       export: L'exportation de votre contenu est prête
       unread_notifications:
         one: "🔥 Vous avez %{count} notification non lue sur %{community}"

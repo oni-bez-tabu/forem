@@ -26,7 +26,13 @@ en:
       new_chat_message: "%{name} wysyła Ci wiadomość"
       org_deleted: "%{community} - Potwierdzenie usunięcia organizacji"
       new_reply: "%{name} odpowiedział/a"
-      feedback: Dziękujemy za zgłoszenie na %{community}
+      feedback: Thanks for your report on %{community}
+      feedback_response:
+        greeting: "Hi there,"
+        body1: "Thank you for flagging content that may be in violation of the %{community} Code of Conduct and/or our Terms of Use. We are looking into your report and will reach out if we require additional information in order to take appropriate action."
+        body2: "We appreciate your help as we work to foster a positive and inclusive environment for all!"
+        sign_off: "Thanks,"
+        team: "The %{community} Team"
       export: Eksport Twoich treści jest gotowy
       unread_notifications:
         one: "🔥 Masz %{count} nieprzeczytane powiadomienie na %{community}"

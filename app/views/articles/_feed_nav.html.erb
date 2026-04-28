@@ -1,46 +1,64 @@
+<style>
+  .underline-nav {
+    display: flex;
+    gap: var(--su-1);
+    margin: 6px 0 3px;
+    border-bottom: 1px solid var(--base-10);
+  }
+  .underline-nav-item {
+    color: var(--base-70);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    transition: color 0.15s ease;
+    white-space: nowrap;
+    border-radius: 0;
+  }
+  .underline-nav-item:hover {
+    color: var(--base-90);
+  }
+  .underline-nav-item.crayons-navigation__item--current {
+    color: var(--accent-brand, #3b49df);
+    font-weight: var(--fw-bold);
+  }
+  .underline-nav-item.crayons-navigation__item--current::after {
+    content: "";
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: -1px;
+    height: 2px;
+    background: var(--accent-brand, #3b49df);
+    border-radius: 2px;
+  }
+  @media (max-width: 640px) {
+    .underline-nav-item .crayons-icon { display: none; }
+    .underline-nav-item { padding: 8px 10px; font-size: var(--fs-s); }
+  }
+</style>
 <% if FeatureFlag.enabled?("discover_and_following_tabs") && user_signed_in? %>
   <% params[:feed_type] ||= "discover" %>
   <nav class="-mx-3 m:mx-0 s:flex items-center justify-between" aria-label="<%= t("views.stories.sort.aria_label") %>">
   <ul class="flex justify-between items-center w-100">
-    <style>
-      .pill-nav-item.crayons-navigation__item--current {
-        background: var(--accent-brand, #3b49df) !important;
-        color: #ffffff !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.15) !important;
-      }
-      .pill-nav-item {
-        color: var(--base-70);
-      }
-      .pill-nav-item:hover {
-        color: var(--base-90);
-      }
-    </style>
-    <div class="flex gap-1 p-1" style="background: var(--body-bg); border-radius: 9999px; box-shadow: 0 0 0 1px var(--base-20), 0 2px 5px rgba(0,0,0,0.05);margin: 6px 0 3px;">
+    <div class="underline-nav">
       <li>
-        <a data-feed-nav="discover" href="/discover" class="crayons-navigation__item pill-nav-item px-4 flex items-center gap-2 <%= "crayons-navigation__item--current" if params[:feed_type] == "discover" && !params[:timeframe].to_s.start_with?("latest") %>" style="border-radius: 9999px; transition: all 0.2s ease;">
+        <a data-feed-nav="discover" href="/discover" class="crayons-navigation__item underline-nav-item <%= "crayons-navigation__item--current" if params[:feed_type] == "discover" && !params[:timeframe].to_s.start_with?("latest") %>">
           <%= crayons_icon_tag("discover", width: 18, height: 18) %>
-          <span style="display: grid; place-items: center start;">
-            <span aria-hidden="true" style="grid-area: 1/1; visibility: hidden; font-weight: bold;"><%= t("views.stories.feed.discover") %></span>
-            <span style="grid-area: 1/1;"><%= t("views.stories.feed.discover") %></span>
-          </span>
+          <span><%= t("views.stories.feed.discover") %></span>
         </a>
       </li>
       <li>
-        <a data-feed-nav="following" href="/following" class="crayons-navigation__item pill-nav-item px-4 flex items-center gap-2 <%= "crayons-navigation__item--current" if params[:feed_type] == "following" %>" style="border-radius: 9999px; transition: all 0.2s ease;">
+        <a data-feed-nav="following" href="/following" class="crayons-navigation__item underline-nav-item <%= "crayons-navigation__item--current" if params[:feed_type] == "following" %>">
           <%= crayons_icon_tag("people", width: 18, height: 18) %>
-          <span style="display: grid; place-items: center start;">
-            <span aria-hidden="true" style="grid-area: 1/1; visibility: hidden; font-weight: bold;"><%= t("views.stories.feed.following") %></span>
-            <span style="grid-area: 1/1;"><%= t("views.stories.feed.following") %></span>
-          </span>
+          <span><%= t("views.stories.feed.following") %></span>
         </a>
       </li>
       <li>
-        <a data-feed-nav="latest" href="/latest" class="crayons-navigation__item pill-nav-item px-4 flex items-center gap-2 <%= "crayons-navigation__item--current" if params[:timeframe].to_s.start_with?("latest") %>" style="border-radius: 9999px; transition: all 0.2s ease;">
+        <a data-feed-nav="latest" href="/latest" class="crayons-navigation__item underline-nav-item <%= "crayons-navigation__item--current" if params[:timeframe].to_s.start_with?("latest") %>">
           <%= crayons_icon_tag("latest", width: 18, height: 18) %>
-          <span style="display: grid; place-items: center start;">
-            <span aria-hidden="true" style="grid-area: 1/1; visibility: hidden; font-weight: bold;"><%= t("views.stories.sort.latest") %></span>
-            <span style="grid-area: 1/1;"><%= t("views.stories.sort.latest") %></span>
-          </span>
+          <span><%= t("views.stories.sort.latest") %></span>
         </a>
       </li>
     </div>
@@ -201,22 +219,26 @@
     })();
   </script>
 <% else %>
+  <% relevant_current = %w[week month year infinity latest].exclude?(params[:timeframe]) %>
+  <% top_current = timeframe_check("week") || timeframe_check("month") || timeframe_check("year") || timeframe_check("infinity") %>
   <nav class="-mx-3 m:mx-0 s:flex items-center justify-between" aria-label="<%= t("views.stories.sort.aria_label") %>">
-    <ul class="crayons-navigation crayons-navigation--horizontal">
+    <ul class="underline-nav">
       <li>
-        <a data-text="<%= t("views.stories.sort.relevant") %>" href="<%= list_path.presence || "/" %>" class="crayons-navigation__item <%= "crayons-navigation__item--current" if %w[week month year infinity latest].exclude?(params[:timeframe]) %>"
-          <%= %w[week month year infinity latest].exclude?(params[:timeframe]) ? ' aria-current="page"'.html_safe : "" %>><%= t("views.stories.sort.relevant") %></a>
-      </li>
-      <li>
-        <a data-text="<%= t("views.stories.sort.latest") %>" href="<%= list_path %>/latest" class="crayons-navigation__item <%= "crayons-navigation__item--current" if timeframe_check("latest") %>"<%= timeframe_check("latest") ? ' aria-current="page"'.html_safe : "" %>>
-          <%= t("views.stories.sort.latest") %>
+        <a data-text="<%= t("views.stories.sort.relevant") %>" href="<%= list_path.presence || "/" %>" class="crayons-navigation__item underline-nav-item <%= "crayons-navigation__item--current" if relevant_current %>"<%= relevant_current ? ' aria-current="page"'.html_safe : "" %>>
+          <%= crayons_icon_tag("discover", width: 18, height: 18) %>
+          <span><%= t("views.stories.sort.relevant") %></span>
         </a>
       </li>
       <li>
-        <a data-text="<%= t("views.stories.sort.top") %>" href="<%= list_path %>/top/week"
-          class="crayons-navigation__item <%= "crayons-navigation__item--current" if timeframe_check("week") || timeframe_check("month") || timeframe_check("year") || timeframe_check("infinity") %>"
-          <%= timeframe_check("week") || timeframe_check("month") || timeframe_check("year") || timeframe_check("infinity") ? ' aria-current="page"'.html_safe : "" %>>
-            <%= t("views.stories.sort.top") %>
+        <a data-text="<%= t("views.stories.sort.latest") %>" href="<%= list_path %>/latest" class="crayons-navigation__item underline-nav-item <%= "crayons-navigation__item--current" if timeframe_check("latest") %>"<%= timeframe_check("latest") ? ' aria-current="page"'.html_safe : "" %>>
+          <%= crayons_icon_tag("latest", width: 18, height: 18) %>
+          <span><%= t("views.stories.sort.latest") %></span>
+        </a>
+      </li>
+      <li>
+        <a data-text="<%= t("views.stories.sort.top") %>" href="<%= list_path %>/top/week" class="crayons-navigation__item underline-nav-item <%= "crayons-navigation__item--current" if top_current %>"<%= top_current ? ' aria-current="page"'.html_safe : "" %>>
+          <%= crayons_icon_tag("fire", width: 18, height: 18) %>
+          <span><%= t("views.stories.sort.top") %></span>
         </a>
       </li>
     </ul>

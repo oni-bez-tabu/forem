@@ -22,6 +22,12 @@ pl:
       org_deleted: "%{community} - Potwierdzenie usunięcia organizacji"
       new_reply: "%{name} odpowiedział na Twój %{type}"
       feedback: Dziękujemy za zgłoszenie na %{community}
+      feedback_response:
+        greeting: Cześć,
+        body1: Dziękujemy za zgłoszenie treści, która może naruszać Kodeks postępowania %{community} lub nasz Regulamin. Sprawdzamy Twoje zgłoszenie i skontaktujemy się, jeśli będziemy potrzebować dodatkowych informacji do podjęcia odpowiednich działań.
+        body2: Doceniamy Twoją pomoc w budowaniu pozytywnej i otwartej dla wszystkich społeczności!
+        sign_off: Dziękujemy,
+        team: Zespół %{community}
       export: Eksport Twojej treści jest gotowy
       unread_notifications:
         one: 🔥 Masz %{count} nieprzeczytane powiadomienie na %{community}

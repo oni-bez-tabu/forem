@@ -27,8 +27,8 @@ pl:
           text: 'URL obrazu podglądu: '
           placeholder: Nowy URL miniatury
       cover_video_link:
-        add: Link do filmu w tle
-        change: Zmień link do filmu
+        add: Link do wideo w tle
+        change: Zmień link do wideo
       ai_helper:
         sidecar_title: Pomocnik %{community_name}
         title: Pomocnik %{community_name}
