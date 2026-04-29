@@ -13,6 +13,62 @@ fr:
       nav:
         dashboard: Dashboard
         text: "👉 Manage Your Post"
+      sections:
+        title: Sections
+        overview: Aperçu
+        stats: Statistiques
+        edit: Modifier
+        pin: Épingler
+        discussion: Discussion
+        intensity: Échelle d'intensité
+        age: Catégorie d'âge
+        delete: Supprimer
+        tips: Conseils
+      overview:
+        heading: Aperçu du post
+        series_prefix: "Série : "
+        published: Publié
+        edited: Modifié
+        draft_html: "<strong>Brouillon</strong> — ce post n'est pas encore publié."
+        org_admin_heading: "Admin de l'organisation : changer l'auteur"
+        author_label: "Auteur :"
+        update_author: Mettre à jour l'auteur
+      stats:
+        heading: Statistiques
+        view_detailed: Voir les statistiques détaillées
+        page_views: Vues
+        reactions: Réactions
+        comments: Commentaires
+      edit:
+        heading: Modifier le post
+        description: Modifiez le contenu, le titre, les tags ou l'image de couverture.
+        button: Modifier le post
+      pin:
+        heading: Épingler au profil
+        description: Épingler un post au profil le fait apparaître en haut de votre page. Vous pouvez épingler jusqu'à 5 posts.
+        pin_button: Épingler au profil
+        unpin_button: Désépingler du profil
+        pinned_note: Ce post est actuellement épinglé à votre profil.
+      discussion:
+        heading: Verrouillage de la discussion
+        description: Verrouiller la discussion empêche l'ajout de nouveaux commentaires. Les commentaires existants restent visibles.
+        lock: Verrouiller la discussion
+        unlock: Déverrouiller la discussion
+        locked_note: La discussion est actuellement verrouillée. Aucun nouveau commentaire ne peut être ajouté.
+      age:
+        heading: Catégorie d'âge
+        description: Définissez l'âge minimum requis pour le public de ce post.
+        none: Sans restriction d'âge
+        teens: À partir de 15 ans
+        adults: Réservé aux adultes (18+)
+        toggle_to_teens: Marquer 15+
+        toggle_to_adults: Marquer 18+
+        toggle_to_none: Supprimer la restriction d'âge
+      delete:
+        heading: Supprimer le post
+        recommendation_html: "<strong>Suggestion :</strong> au lieu de supprimer, envisagez de dépublier le post. Cela conserve le contenu et son historique tout en le retirant de la vue publique."
+        warning_html: "<strong>Attention :</strong> la suppression d'un post est définitive et irréversible. Tous les commentaires, réactions et statistiques seront perdus."
+        button: Supprimer le post
       rating:
         heading: Experience Level of Post
         text: Who is this post most relevant for?

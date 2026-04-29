@@ -12,6 +12,62 @@ pl:
       nav:
         dashboard: Twój panel
         text: 👉 Zarządzaj swoim postem
+      sections:
+        title: Sekcje
+        overview: Przegląd
+        stats: Statystyki
+        edit: Edycja
+        pin: Przypnij
+        discussion: Dyskusja
+        intensity: Skala intensywności
+        age: Kategoria wiekowa
+        delete: Usuń
+        tips: Porady
+      overview:
+        heading: Przegląd postu
+        series_prefix: "Seria: "
+        published: "Opublikowano"
+        edited: "Edytowano"
+        draft_html: "<strong>Szkic</strong> — ten post nie jest jeszcze opublikowany."
+        org_admin_heading: "Admin organizacji: zmień autora"
+        author_label: "Autor:"
+        update_author: Zmień autora
+      stats:
+        heading: Statystyki
+        view_detailed: Zobacz szczegółowe statystyki
+        page_views: Wyświetlenia
+        reactions: Reakcje
+        comments: Komentarze
+      edit:
+        heading: Edycja postu
+        description: Edytuj treść, tytuł, tagi lub okładkę.
+        button: Edytuj post
+      pin:
+        heading: Przypnij do profilu
+        description: Przypięty post pojawi się na górze Twojego profilu. Możesz przypiąć do 5 postów, by wyróżnić swoje najlepsze treści.
+        pin_button: Przypnij do profilu
+        unpin_button: Odepnij z profilu
+        pinned_note: Ten post jest aktualnie przypięty do Twojego profilu.
+      discussion:
+        heading: Blokada dyskusji
+        description: Zablokowanie dyskusji uniemożliwi dodawanie nowych komentarzy. Istniejące komentarze pozostaną widoczne.
+        lock: Zablokuj dyskusję
+        unlock: Odblokuj dyskusję
+        locked_note: Dyskusja jest aktualnie zablokowana. Nie można dodawać nowych komentarzy.
+      age:
+        heading: Kategoria wiekowa
+        description: Określ minimalny wiek odbiorców tego postu, który platforma będzie egzekwować.
+        none: Wiek nie wymagany
+        teens: Od 15 lat
+        adults: Tylko +18
+        toggle_to_teens: Oznacz jako +15
+        toggle_to_adults: Oznacz jako +18
+        toggle_to_none: Zdejmij oznaczenie wieku
+      delete:
+        heading: Usuń post
+        recommendation_html: "<strong>Sugestia:</strong> zamiast usuwać, rozważ wycofanie publikacji. Zachowasz treść i historię, a post zniknie z widoku publicznego. Zawsze możesz go opublikować ponownie."
+        warning_html: "<strong>Uwaga:</strong> usunięcie posta jest nieodwracalne. Wszystkie komentarze, reakcje i statystyki zostaną utracone."
+        button: Usuń post
       rating:
         heading: Jaki charakter ma ten post - "Skala intensywności"(1-5)?
         text: Charakter postu?

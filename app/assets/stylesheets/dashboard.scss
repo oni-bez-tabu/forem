@@ -492,6 +492,59 @@ $column-flex: 1;
   }
 }
 
+// Intensity scale (rating buttons grouped into newbie / intermediate / senior pods)
+.single-article-manage-form-wrapper {
+  form {
+    text-align: center;
+
+    .button-section {
+      display: inline-block;
+      border-radius: 12px;
+      padding: 3px;
+      margin: 0 4px 8px;
+
+      &.button-section-newbie {
+        background: lighten($green, 12%);
+      }
+      &.button-section-intermediate {
+        background: lighten($purple, 5%);
+      }
+      &.button-section-senior {
+        background: lighten($bold-blue, 19%);
+      }
+    }
+
+    .level-rating-button {
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      border: 2px solid white;
+      background: $black;
+      padding: 5px 0;
+      width: 38px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+
+      & + .level-rating-button {
+        margin-left: 2px;
+      }
+
+      &.selected {
+        background: $green;
+        padding: 15px 0;
+        width: 70px;
+        font-size: 20px;
+      }
+    }
+
+    .scale-pod {
+      display: inline-block;
+      width: 160px;
+    }
+  }
+}
+
 // Handle main sidebar overlap on medium-sized screens
 body[data-side-nav-visible='true']:not(.hidden-shell) {
   .manage-page-with-sidebar {

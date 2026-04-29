@@ -13,6 +13,62 @@ en:
       nav:
         dashboard: Dashboard
         text: "👉 Manage Your Post"
+      sections:
+        title: Sections
+        overview: Overview
+        stats: Statistics
+        edit: Edit Post
+        pin: Pin to Profile
+        discussion: Discussion Lock
+        intensity: Intensity Scale
+        age: Age Rating
+        delete: Delete Post
+        tips: Tips
+      overview:
+        heading: Post Overview
+        series_prefix: "Series: "
+        published: Published
+        edited: Edited
+        draft_html: "<strong>Draft</strong> — this post is not published yet."
+        org_admin_heading: "Organization Admin: Change Author"
+        author_label: "Author:"
+        update_author: Update Author
+      stats:
+        heading: Statistics
+        view_detailed: View Detailed Stats
+        page_views: Page Views
+        reactions: Reactions
+        comments: Comments
+      edit:
+        heading: Edit Post
+        description: Make changes to your post content, title, tags, or cover image.
+        button: Edit Post
+      pin:
+        heading: Pin to Profile
+        description: Pinning a post to your profile makes it appear at the top of your profile page. You can pin up to 5 posts to highlight your best work.
+        pin_button: Pin to Profile
+        unpin_button: Unpin from Profile
+        pinned_note: This post is currently pinned to your profile.
+      discussion:
+        heading: Discussion Lock
+        description: Locking the discussion prevents new comments from being posted. Existing comments will remain visible.
+        lock: Lock Discussion
+        unlock: Unlock Discussion
+        locked_note: Discussion is currently locked. No new comments can be posted.
+      age:
+        heading: Age Rating
+        description: Set the minimum audience age that this post should require.
+        none: No age restriction
+        teens: 15+ only
+        adults: Adults only (18+)
+        toggle_to_teens: Mark as 15+
+        toggle_to_adults: Mark as 18+
+        toggle_to_none: Remove age restriction
+      delete:
+        heading: Delete Post
+        recommendation_html: "<strong>Recommendation:</strong> instead of deleting, consider unpublishing your post. This keeps your content and its history while removing it from public view. You can always republish it later."
+        warning_html: "<strong>Warning:</strong> deleting your post is permanent and cannot be undone. All comments, reactions, and statistics will be lost."
+        button: Delete Post
       rating:
         heading: Experience Level of Post
         text: Who is this post most relevant for?

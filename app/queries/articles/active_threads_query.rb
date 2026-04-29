@@ -30,15 +30,16 @@ module Articles
       options = DEFAULT_OPTIONS.merge(options)
       tags, time_ago, count = options.values_at(:tags, :time_ago, :count)
 
-      relation = relation.limit(count)
-      relation = relation.cached_tagged_with(tags)
-      relation = relation.where(score: minimum_score..)
+      base = relation.limit(count).cached_tagged_with(tags)
+      scoped = base.where(score: minimum_score..)
       relation = if time_ago == "latest"
-                   relation.order(published_at: :desc)
+                   (scoped.presence || base).order(published_at: :desc)
                  elsif time_ago
-                   relation.where(published_at: time_ago..).order(comments_count: :desc)
+                   filtered = scoped.where(published_at: time_ago..)
+                   (filtered.presence || base).order(comments_count: :desc)
                  else
-                   relation.where(published_at: 3.days.ago..).order("last_comment_at DESC NULLS LAST")
+                   filtered = scoped.where(published_at: 3.days.ago..)
+                   (filtered.presence || base).order("last_comment_at DESC NULLS LAST")
                  end
       relation.pluck(:path, :title, :comments_count, :created_at, :subforem_id)
     end

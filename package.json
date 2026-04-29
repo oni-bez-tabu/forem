@@ -16,7 +16,8 @@
     "glob-parent": "^6.0.1",
     "@org/chat-core": "file:./vendor/assets/javascripts/org-chat-core-0.14.0.tgz",
     "@org/chat-ui-shared": "file:./vendor/assets/javascripts/org-chat-ui-shared-0.10.0.tgz",
-    "@org/chat-ui-preact": "file:./vendor/assets/javascripts/org-chat-ui-preact-0.9.0.tgz"
+    "@org/chat-ui-preact": "file:./vendor/assets/javascripts/org-chat-ui-preact-0.9.0.tgz",
+    "preact": "^10.20.2"
   },
   "scripts": {
     "prepare": "husky install",

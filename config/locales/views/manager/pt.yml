@@ -1,18 +1,74 @@
 ---
-en:
+pt:
   views:
     manager:
       meta:
-        title: Manage %{title}
+        title: Gerenciar %{title}
       error:
-        pins: "Uh Oh! %{error} 😬"
+        pins: "Ops! %{error} 😬"
       tools:
-        heading: 'Tools:'
-        subtitle: 'Experience Level of Post:'
-        text_html: "Is your post written more for a beginner or an advanced audience? Adjust this level as a <em>gentle</em> indicator which will help show the post to the people who will benefit the most."
+        heading: 'Ferramentas:'
+        subtitle: 'Nível de experiência do post:'
+        text_html: "Seu post foi escrito para um público iniciante ou avançado? Ajuste este nível como um indicador <em>sutil</em> que ajudará a mostrar o post para as pessoas que mais se beneficiarão."
       nav:
-        dashboard: Dashboard
-        text: "👉 Manage Your Post"
+        dashboard: Painel
+        text: "👉 Gerencie seu post"
+      sections:
+        title: Seções
+        overview: Visão geral
+        stats: Estatísticas
+        edit: Editar
+        pin: Fixar
+        discussion: Discussão
+        intensity: Escala de intensidade
+        age: Classificação etária
+        delete: Excluir
+        tips: Dicas
+      overview:
+        heading: Visão geral do post
+        series_prefix: "Série: "
+        published: Publicado
+        edited: Editado
+        draft_html: "<strong>Rascunho</strong> — este post ainda não foi publicado."
+        org_admin_heading: "Admin da organização: trocar autor"
+        author_label: "Autor:"
+        update_author: Atualizar autor
+      stats:
+        heading: Estatísticas
+        view_detailed: Ver estatísticas detalhadas
+        page_views: Visualizações
+        reactions: Reações
+        comments: Comentários
+      edit:
+        heading: Editar post
+        description: Faça alterações no conteúdo, título, tags ou imagem de capa.
+        button: Editar post
+      pin:
+        heading: Fixar no perfil
+        description: Fixar um post no seu perfil faz com que ele apareça no topo da página. Você pode fixar até 5 posts.
+        pin_button: Fixar no perfil
+        unpin_button: Desafixar do perfil
+        pinned_note: Este post está atualmente fixado no seu perfil.
+      discussion:
+        heading: Bloqueio da discussão
+        description: Bloquear a discussão impede o envio de novos comentários. Os comentários existentes continuam visíveis.
+        lock: Bloquear discussão
+        unlock: Desbloquear discussão
+        locked_note: A discussão está bloqueada no momento. Nenhum novo comentário pode ser enviado.
+      age:
+        heading: Classificação etária
+        description: Defina a idade mínima do público que este post deve exigir.
+        none: Sem restrição de idade
+        teens: A partir de 15 anos
+        adults: Apenas adultos (18+)
+        toggle_to_teens: Marcar como 15+
+        toggle_to_adults: Marcar como 18+
+        toggle_to_none: Remover restrição de idade
+      delete:
+        heading: Excluir post
+        recommendation_html: "<strong>Recomendação:</strong> em vez de excluir, considere despublicar o post. Isso preserva o conteúdo e o histórico enquanto o remove da visualização pública."
+        warning_html: "<strong>Atenção:</strong> a exclusão de um post é permanente e não pode ser desfeita. Todos os comentários, reações e estatísticas serão perdidos."
+        button: Excluir post
       rating:
         heading: Experience Level of Post
         text: Who is this post most relevant for?

@@ -19,12 +19,12 @@ RSpec.describe Articles::ActiveThreadsQuery, type: :query do
         expect(result.first.first).to eq(article.path)
       end
 
-      it "does not return articles below the minimum score threshold", :aggregate_failures do
+      it "falls back to the unfiltered tag set when nothing meets the score threshold", :aggregate_failures do
         create(:article, tags: "discuss", score: min_score - 10)
         create(:article, tags: "discuss", score: min_score - 1)
 
         result = described_class.call(tags: "discuss", time_ago: "latest", count: 10)
-        expect(result.length).to eq(0)
+        expect(result.length).to eq(2)
       end
 
       it "returns only articles at or above the minimum score", :aggregate_failures do
@@ -62,7 +62,7 @@ RSpec.describe Articles::ActiveThreadsQuery, type: :query do
         expect(result.first.first).to eq(good_article.path)
       end
 
-      it "respects both time and score filters", :aggregate_failures do
+      it "falls back to the unfiltered tag set when nothing meets both time and score", :aggregate_failures do
         time = 2.days.ago
         # Article before the time threshold
         create(:article, :past, comments_count: 20, past_published_at: time - 1.day, tags: "discuss",
@@ -72,7 +72,7 @@ RSpec.describe Articles::ActiveThreadsQuery, type: :query do
                                 score: min_score - 1)
 
         result = described_class.call(tags: "discuss", time_ago: time, count: 10)
-        expect(result.length).to eq(0)
+        expect(result.length).to eq(2)
       end
     end
 

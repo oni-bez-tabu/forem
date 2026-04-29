@@ -14641,13 +14641,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:^10.19.4":
-  version: 10.29.1
-  resolution: "preact@npm:10.29.1"
-  checksum: 10c0/55da3994d0d9ebcc26476552c6571f8be1150cccdafe842aad40eff9abc84c867555f6d01db386fc63ac4cbe9f9da245002468bb24df0642365162d8f1b545e2
-  languageName: node
-  linkType: hard
-
 "preact@npm:^10.20.2":
   version: 10.20.2
   resolution: "preact@npm:10.20.2"
