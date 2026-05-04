@@ -165,7 +165,9 @@
           }
         </style>
       </div>
-      <%= render "layouts/user_config" %>
+      <% if user_signed_in? %>
+        <%= render "layouts/user_config" %>
+      <% end %>
       <div id="audiocontent" data-podcast="">
         <%= yield(:audio) %>
       </div>

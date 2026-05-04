@@ -140,9 +140,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--body-bg);
+    background-color: white;
     padding: 0 var(--su-4);
-    color: var(--card-color-secondary);
+    color: var(--grey-700);
     text-align: center;
     font-size: var(--fs-s);
   }
@@ -179,7 +179,7 @@
     margin: var(--su-2);
 
     & ul {
-      color: var(--card-color);
+      color: $black;
     }
 
     @media (min-width: $breakpoint-s) {
