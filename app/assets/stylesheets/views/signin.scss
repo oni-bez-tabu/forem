@@ -205,7 +205,7 @@
     align-items: center;
     justify-content: center;
     z-index: var(--z-elevate);
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: color-mix(in srgb, var(--body-bg) 80%, transparent);
   }
 
   &__age-gate-card {
