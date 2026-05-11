@@ -1,5 +1,6 @@
 class SurveysController < ApplicationController
   before_action :set_survey_by_slug, only: [:show]
+  before_action :set_survey_for_results, only: [:results]
   before_action :set_survey_by_id, only: [:votes]
   before_action :authenticate_user!, only: [:votes]
 
@@ -61,6 +62,23 @@ class SurveysController < ApplicationController
     }
   end
 
+  def results
+    polls_payload = @survey.polls
+      .includes(:poll_options)
+      .reject(&:text_input?)
+      .map do |poll|
+        options = poll.poll_options.map { |o| { id: o.id, count: o.poll_votes_count.to_i } }
+        {
+          id: poll.id,
+          total: options.sum { |o| o[:count] },
+          options: options,
+        }
+      end
+
+    expires_in 10.seconds, public: true
+    render json: { polls: polls_payload }
+  end
+
   private
 
   def set_survey_by_slug
@@ -79,5 +97,12 @@ class SurveysController < ApplicationController
 
   def set_survey_by_id
     @survey = Survey.find(params[:id])
+  end
+
+  def set_survey_for_results
+    @survey = Survey.find_by(slug: params[:slug]) ||
+              Survey.find_by(old_slug: params[:slug]) ||
+              Survey.find_by(old_old_slug: params[:slug])
+    raise ActiveRecord::RecordNotFound unless @survey
   end
 end

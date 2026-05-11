@@ -241,6 +241,7 @@ Rails.application.routes.draw do
     resources :poll_skips, only: [:create]
 
     get "/survey/:slug", to: "surveys#show", as: :survey
+    get "/survey/:slug/results", to: "surveys#results", as: :survey_results
     resources :surveys, only: [] do
       member do
         get :votes

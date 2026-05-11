@@ -63,6 +63,7 @@ class SurveyTag < LiquidTagBase
     function initializeSurvey(surveyElement) {
       // --- Get all DOM elements upfront ---
       const surveyId = surveyElement.dataset.surveyId;
+      const surveySlug = surveyElement.dataset.surveySlug;
       const polls = surveyElement.querySelectorAll('.survey-poll');
       const nextBtn = surveyElement.querySelector('.survey-next-btn');
       const prevBtn = surveyElement.querySelector('.survey-prev-btn');
@@ -111,49 +112,87 @@ class SurveyTag < LiquidTagBase
         }
       }
 
+      function applyResultsData(data) {
+        if (!resultsContainer || !data || !Array.isArray(data.polls)) return;
+        data.polls.forEach((pollData) => {
+          const pollResults = resultsContainer.querySelector(
+            '.survey-results-poll[data-poll-id="' + pollData.id + '"]'
+          );
+          if (!pollResults) return;
+          const total = pollData.total || 0;
+          pollResults.dataset.pollTotal = total;
+          (pollData.options || []).forEach((opt) => {
+            const optEl = pollResults.querySelector(
+              '.survey-results-option[data-option-id="' + opt.id + '"]'
+            );
+            if (!optEl) return;
+            const count = opt.count || 0;
+            const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+            const countEl = optEl.querySelector('.survey-results-count');
+            const pctEl = optEl.querySelector('.survey-results-pct');
+            const fill = optEl.querySelector('.survey-results-bar-fill');
+            if (countEl) countEl.textContent = count;
+            if (pctEl) pctEl.textContent = pct + '%';
+            if (fill) fill.style.width = pct + '%';
+          });
+        });
+      }
+
+      function bumpUserVotesLocally() {
+        if (!resultsContainer) return;
+        Object.entries(submittedVotes).forEach(([pollId, voteData]) => {
+          const pollResults = resultsContainer.querySelector(
+            '.survey-results-poll[data-poll-id="' + pollId + '"]'
+          );
+          if (!pollResults) return;
+
+          let optionIds = [];
+          if (Array.isArray(voteData)) {
+            optionIds = voteData;
+          } else if (voteData && typeof voteData === 'object') {
+            return;
+          } else if (voteData != null) {
+            optionIds = [voteData];
+          }
+
+          optionIds.forEach((optionId) => {
+            const countEl = pollResults.querySelector(
+              '.survey-results-option[data-option-id="' + optionId + '"] .survey-results-count'
+            );
+            if (countEl) countEl.textContent = parseInt(countEl.textContent, 10) + 1;
+          });
+
+          const counts = Array.from(pollResults.querySelectorAll('.survey-results-count'))
+            .map((el) => parseInt(el.textContent, 10) || 0);
+          const total = counts.reduce((a, b) => a + b, 0);
+          pollResults.dataset.pollTotal = total;
+          pollResults.querySelectorAll('.survey-results-option').forEach((optEl, i) => {
+            const pct = total > 0 ? Math.round((counts[i] / total) * 100) : 0;
+            const fill = optEl.querySelector('.survey-results-bar-fill');
+            const pctEl = optEl.querySelector('.survey-results-pct');
+            if (fill) fill.style.width = pct + '%';
+            if (pctEl) pctEl.textContent = pct + '%';
+          });
+        });
+      }
+
       function showResults(bumpUserVotes) {
         if (!resultsContainer) return;
+        resultsContainer.style.display = 'block';
 
-        if (bumpUserVotes) {
-          Object.entries(submittedVotes).forEach(([pollId, voteData]) => {
-            const pollResults = resultsContainer.querySelector(
-              '.survey-results-poll[data-poll-id="' + pollId + '"]'
-            );
-            if (!pollResults) return; // text_input polls are skipped server-side
-
-            let optionIds = [];
-            if (Array.isArray(voteData)) {
-              optionIds = voteData;
-            } else if (voteData && typeof voteData === 'object') {
-              return; // text response — no countable option
-            } else if (voteData != null) {
-              optionIds = [voteData];
-            }
-
-            optionIds.forEach((optionId) => {
-              const countEl = pollResults.querySelector(
-                '.survey-results-option[data-option-id="' + optionId + '"] .survey-results-count'
-              );
-              if (countEl) {
-                countEl.textContent = parseInt(countEl.textContent, 10) + 1;
-              }
-            });
-
-            const counts = Array.from(pollResults.querySelectorAll('.survey-results-count'))
-              .map((el) => parseInt(el.textContent, 10) || 0);
-            const total = counts.reduce((a, b) => a + b, 0);
-            pollResults.dataset.pollTotal = total;
-            pollResults.querySelectorAll('.survey-results-option').forEach((optEl, i) => {
-              const pct = total > 0 ? Math.round((counts[i] / total) * 100) : 0;
-              const fill = optEl.querySelector('.survey-results-bar-fill');
-              const pctEl = optEl.querySelector('.survey-results-pct');
-              if (fill) fill.style.width = pct + '%';
-              if (pctEl) pctEl.textContent = pct + '%';
-            });
-          });
+        if (!surveySlug) {
+          if (bumpUserVotes) bumpUserVotesLocally();
+          return;
         }
 
-        resultsContainer.style.display = 'block';
+        window.fetch('/survey/' + encodeURIComponent(surveySlug) + '/results', { credentials: 'same-origin' })
+          .then((response) => (response.ok ? response.json() : Promise.reject('results fetch failed')))
+          .then((data) => applyResultsData(data))
+          .catch((err) => {
+            console.error('Survey results fetch failed:', err);
+            // Cache may have served stale per-option counts; fall back to bumping the user's just-cast votes.
+            if (bumpUserVotes) bumpUserVotesLocally();
+          });
       }
     #{'  '}
       // --- PHASE 1: IMMEDIATE UI SETUP (for everyone) ---
