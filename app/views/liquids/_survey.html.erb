@@ -1,6 +1,14 @@
-<div class="ltag-survey" id="survey_<%= survey.id %>" data-survey-id="<%= survey.id %>">
+<div class="ltag-survey"
+  id="survey_<%= survey.id %>"
+  data-survey-id="<%= survey.id %>"
+  data-i18n-previous="<%= t("views.survey.previous") %>"
+  data-i18n-next="<%= t("views.survey.next") %>"
+  data-i18n-finish="<%= t("views.survey.finish") %>"
+  data-i18n-question-of="<%= t("views.survey.question_of") %>"
+  data-i18n-save-error="<%= t("views.survey.save_error") %>"
+>
   <h2 class="survey-title"><%= survey.title %></h2>
-  
+
   <div class="survey-polls-container">
     <% survey.polls.each_with_index do |poll, index| %>
       <%= render partial: 'liquids/survey_poll', locals: { poll: poll, index: index } %>
@@ -8,12 +16,42 @@
   </div>
 
   <div class="survey-navigation">
-    <button class="survey-prev-btn" disabled>&larr; Previous</button>
+    <button class="survey-prev-btn" disabled>&larr; <%= t("views.survey.previous") %></button>
     <span class="survey-progress"></span>
-    <button class="survey-next-btn" disabled>Next &rarr;</button>
+    <button class="survey-next-btn" disabled><%= t("views.survey.next") %> &rarr;</button>
   </div>
 
   <div class="survey-complete-message" style="display: none;">
-    <h3>Survey completed</h3>
+    <h3><%= t("views.survey.completed") %></h3>
   </div>
+
+  <% result_polls = survey.polls.reject(&:text_input?) %>
+  <% if result_polls.any? %>
+    <div class="survey-results" style="display: none;">
+      <h3 class="survey-results-heading"><%= t("views.survey.results_heading") %></h3>
+      <% result_polls.each do |poll| %>
+        <% total_votes = poll.poll_options.sum(&:poll_votes_count) %>
+        <div class="survey-results-poll" data-poll-id="<%= poll.id %>" data-poll-total="<%= total_votes %>">
+          <h4 class="survey-results-question"><%= poll.prompt_html.html_safe %></h4>
+          <ul class="survey-results-options">
+            <% poll.poll_options.each do |option| %>
+              <% pct = total_votes.positive? ? (option.poll_votes_count.to_f / total_votes * 100).round : 0 %>
+              <li class="survey-results-option" data-option-id="<%= option.id %>">
+                <div class="survey-results-option-row">
+                  <span class="survey-results-option-label"><%= option.processed_html.present? ? option.processed_html.html_safe : option.markdown %></span>
+                  <span class="survey-results-option-meta">
+                    <span class="survey-results-count" data-base-count="<%= option.poll_votes_count %>"><%= option.poll_votes_count %></span>
+                    <span class="survey-results-pct"><%= pct %>%</span>
+                  </span>
+                </div>
+                <div class="survey-results-bar">
+                  <div class="survey-results-bar-fill" style="width: <%= pct %>%;"></div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

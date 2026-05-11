@@ -70,12 +70,21 @@ class SurveyTag < LiquidTagBase
       const finalMessage = surveyElement.querySelector('.survey-complete-message');
       const navigation = surveyElement.querySelector('.survey-navigation');
       const pollsContainer = surveyElement.querySelector('.survey-polls-container');
+      const resultsContainer = surveyElement.querySelector('.survey-results');
 
       if (polls.length === 0) return;
+
+      const i18n = {
+        next: surveyElement.dataset.i18nNext || 'Next',
+        finish: surveyElement.dataset.i18nFinish || 'Finish',
+        questionOf: surveyElement.dataset.i18nQuestionOf || 'Question %{current} of %{total}',
+        saveError: surveyElement.dataset.i18nSaveError || 'There was a problem saving your votes. Please try again.',
+      };
     #{'  '}
       const totalPolls = polls.length;
       let currentPollIndex = 0; // Default to the first poll
       let pendingVotes = {}; // Store pending votes for submission
+      let submittedVotes = {}; // Accumulated user votes across the session, kept for results display
       let currentSession = Math.floor(Math.random() * 1000000); // Generate random session number (0-999999)
 
       // --- Define UI update function (used by everyone) ---
@@ -86,18 +95,65 @@ class SurveyTag < LiquidTagBase
           poll.style.display = index === currentPollIndex ? 'block' : 'none';
         });
         if (progressIndicator) {
-          progressIndicator.textContent = 'Question ' + (currentPollIndex + 1) + ' of ' + totalPolls;
+          progressIndicator.textContent = i18n.questionOf
+            .replace('%{current}', currentPollIndex + 1)
+            .replace('%{total}', totalPolls);
         }
         if (prevBtn) prevBtn.disabled = currentPollIndex === 0;
         const isCurrentPollAnswered = polls[currentPollIndex]?.classList.contains('is-answered');
         if (nextBtn) {
           nextBtn.disabled = !isCurrentPollAnswered;
           if (currentPollIndex === totalPolls - 1) {
-            nextBtn.textContent = 'Finish';
+            nextBtn.textContent = i18n.finish;
           } else {
-            nextBtn.textContent = 'Next →';
+            nextBtn.textContent = i18n.next + ' →';
           }
         }
+      }
+
+      function showResults(bumpUserVotes) {
+        if (!resultsContainer) return;
+
+        if (bumpUserVotes) {
+          Object.entries(submittedVotes).forEach(([pollId, voteData]) => {
+            const pollResults = resultsContainer.querySelector(
+              '.survey-results-poll[data-poll-id="' + pollId + '"]'
+            );
+            if (!pollResults) return; // text_input polls are skipped server-side
+
+            let optionIds = [];
+            if (Array.isArray(voteData)) {
+              optionIds = voteData;
+            } else if (voteData && typeof voteData === 'object') {
+              return; // text response — no countable option
+            } else if (voteData != null) {
+              optionIds = [voteData];
+            }
+
+            optionIds.forEach((optionId) => {
+              const countEl = pollResults.querySelector(
+                '.survey-results-option[data-option-id="' + optionId + '"] .survey-results-count'
+              );
+              if (countEl) {
+                countEl.textContent = parseInt(countEl.textContent, 10) + 1;
+              }
+            });
+
+            const counts = Array.from(pollResults.querySelectorAll('.survey-results-count'))
+              .map((el) => parseInt(el.textContent, 10) || 0);
+            const total = counts.reduce((a, b) => a + b, 0);
+            pollResults.dataset.pollTotal = total;
+            pollResults.querySelectorAll('.survey-results-option').forEach((optEl, i) => {
+              const pct = total > 0 ? Math.round((counts[i] / total) * 100) : 0;
+              const fill = optEl.querySelector('.survey-results-bar-fill');
+              const pctEl = optEl.querySelector('.survey-results-pct');
+              if (fill) fill.style.width = pct + '%';
+              if (pctEl) pctEl.textContent = pct + '%';
+            });
+          });
+        }
+
+        resultsContainer.style.display = 'block';
       }
     #{'  '}
       // --- PHASE 1: IMMEDIATE UI SETUP (for everyone) ---
@@ -257,16 +313,17 @@ class SurveyTag < LiquidTagBase
             const failedResponses = responses.filter(response => !response.ok);
     #{'        '}
             if (failedResponses.length > 0) {
-              alert('There was a problem saving some of your votes. Please try again.');
+              alert(i18n.saveError);
               return false;
             }
     #{'        '}
-            // Clear pending votes after successful submission
+            // Remember submitted votes for results display, then clear the pending bucket
+            Object.assign(submittedVotes, pendingVotes);
             pendingVotes = {};
             return true;
           } catch (error) {
             console.error('Error submitting votes:', error);
-            alert('There was a problem saving your votes. Please try again.');
+            alert(i18n.saveError);
             return false;
           }
         }
@@ -298,6 +355,7 @@ class SurveyTag < LiquidTagBase
             if (pollsContainer) pollsContainer.style.display = 'none';
             if (navigation) navigation.style.display = 'none';
             if (finalMessage) finalMessage.style.display = 'block';
+            showResults(true);
           }
         });
     #{'    '}
@@ -371,6 +429,7 @@ class SurveyTag < LiquidTagBase
               if (pollsContainer) pollsContainer.style.display = 'none';
               if (navigation) navigation.style.display = 'none';
               if (finalMessage) finalMessage.style.display = 'block';
+              showResults(false);
               return;
             }
     #{'        '}

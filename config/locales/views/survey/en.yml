@@ -5,3 +5,10 @@ en:
       enter_response: Enter your response here...
       thank_you_response: Thank you for your response.
       thank_you_completing: Thank you for completing the survey!
+      previous: Previous
+      next: Next
+      finish: Finish
+      question_of: "Question %{current} of %{total}"
+      completed: Survey completed
+      save_error: There was a problem saving your votes. Please try again.
+      results_heading: Results
