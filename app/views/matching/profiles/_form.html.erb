@@ -31,12 +31,8 @@
 
   <div class="crayons-field mt-3">
     <%= form.label :city_id, t("matching.profiles.fields.city"), class: "crayons-field__label" %>
-    <%= form.collection_select :city_id,
-                                City.order(is_special: :desc, population_hint: :desc),
-                                :id,
-                                ->(c) { c.is_special ? c.name : "#{c.name}#{c.voivodeship.present? ? " (#{c.voivodeship})" : ''}" },
-                                { include_blank: true },
-                                class: "crayons-select", required: true %>
+    <p class="crayons-field__description"><%= t("matching.profiles.fields.city_help") %></p>
+    <%= render "matching/profiles/city_autocomplete", form: form, profile: profile %>
   </div>
 
   <div class="crayons-field mt-3">

@@ -1,0 +1,121 @@
+<%
+  # Renders an autocomplete input bound to /cities/search, persisting city_id
+  # in a hidden field. Initial value (when editing) prefills both the label
+  # and the hidden id.
+  initial_city = profile.city
+  field_id = "matching_profile_city_autocomplete"
+%>
+<div class="js-city-autocomplete" style="position: relative;">
+  <input type="text"
+         id="<%= field_id %>"
+         class="crayons-textfield js-city-search"
+         placeholder="<%= t('matching.profiles.city_autocomplete_placeholder') %>"
+         autocomplete="off"
+         aria-autocomplete="list"
+         aria-controls="<%= field_id %>-list"
+         value="<%= initial_city&.name %>">
+  <%= form.hidden_field :city_id, class: "js-city-id", value: initial_city&.id %>
+  <ul id="<%= field_id %>-list"
+      class="js-city-results"
+      role="listbox"
+      hidden
+      style="position: absolute; top: 100%; left: 0; right: 0; z-index: 30; background: var(--card-bg, white); border: 1px solid var(--card-border, #e0e0e0); border-radius: 6px; margin-top: 4px; max-height: 280px; overflow-y: auto; padding: 4px; list-style: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);"></ul>
+</div>
+
+<script>
+  (function() {
+    var wrapper = document.currentScript.previousElementSibling;
+    while (wrapper && !wrapper.classList.contains("js-city-autocomplete")) {
+      wrapper = wrapper.previousElementSibling;
+    }
+    if (!wrapper) return;
+
+    var input = wrapper.querySelector(".js-city-search");
+    var hidden = wrapper.querySelector(".js-city-id");
+    var list = wrapper.querySelector(".js-city-results");
+    var debounceTimer = null;
+    var lastQuery = null;
+    var cache = {};
+
+    function closeList() {
+      list.hidden = true;
+      list.innerHTML = "";
+    }
+
+    function selectCity(city) {
+      hidden.value = city.id;
+      input.value = city.name;
+      closeList();
+    }
+
+    function renderResults(results) {
+      if (!results.length) {
+        closeList();
+        return;
+      }
+      list.innerHTML = "";
+      results.forEach(function(city) {
+        var li = document.createElement("li");
+        li.setAttribute("role", "option");
+        li.style.cssText = "padding: 8px 12px; cursor: pointer; border-radius: 4px;";
+        li.dataset.cityId = city.id;
+        var label = city.name;
+        if (city.voivodeship) label += " · " + city.voivodeship;
+        li.textContent = label;
+        li.addEventListener("mouseenter", function() { li.style.background = "var(--card-secondary-bg, #f5f5f5)"; });
+        li.addEventListener("mouseleave", function() { li.style.background = ""; });
+        li.addEventListener("mousedown", function(e) {
+          e.preventDefault(); // prevent input blur before click registers
+          selectCity(city);
+        });
+        list.appendChild(li);
+      });
+      list.hidden = false;
+    }
+
+    function fetchResults(query) {
+      if (cache[query]) {
+        renderResults(cache[query]);
+        return;
+      }
+      fetch("/cities/search?q=" + encodeURIComponent(query), {
+        headers: { "Accept": "application/json" },
+        credentials: "same-origin"
+      }).then(function(resp) {
+        return resp.ok ? resp.json() : [];
+      }).then(function(data) {
+        cache[query] = data;
+        if (lastQuery === query) renderResults(data);
+      }).catch(function() {
+        closeList();
+      });
+    }
+
+    input.addEventListener("input", function() {
+      hidden.value = ""; // invalidate selection until user picks again
+      var q = input.value.trim();
+      lastQuery = q;
+      clearTimeout(debounceTimer);
+      if (q.length < 2) {
+        closeList();
+        return;
+      }
+      debounceTimer = setTimeout(function() { fetchResults(q); }, 180);
+    });
+
+    input.addEventListener("focus", function() {
+      if (input.value.trim().length >= 2 && cache[input.value.trim()]) {
+        renderResults(cache[input.value.trim()]);
+      }
+    });
+
+    input.addEventListener("blur", function() {
+      // Delay close slightly so mousedown on li can fire first
+      setTimeout(closeList, 150);
+    });
+
+    input.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeList();
+    });
+  })();
+</script>

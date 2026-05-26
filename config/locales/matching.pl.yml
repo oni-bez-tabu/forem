@@ -35,11 +35,13 @@ pl:
       edit_resets_moderation: "Uwaga: zmiana treści cofnie profil do akceptacji administratora."
       update: "Zapisz zmiany"
       cancel: "Anuluj"
+      city_autocomplete_placeholder: "Zacznij pisać nazwę miasta..."
       fields:
         photo: "Zdjęcie"
         photo_help: "Wybierz zdjęcie profilowe (jpg/png, do 8 MB)."
         identity_type: "Identyfikacja"
         city: "Miasto"
+        city_help: "Zacznij pisać nazwę miasta — wybierz z listy. Wybierz \"🌍 Wszędzie\" jeśli nie chcesz ograniczać do jednego miasta."
         bio: "Bio"
         bio_help: "Krótki opis siebie. Maksymalnie %{max} znaków."
     identity_types:
