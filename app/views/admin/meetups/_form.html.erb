@@ -1,7 +1,7 @@
 <%= form_with model: [:admin, meetup], local: true, html: { multipart: true } do |form| %>
   <% if meetup.errors.any? %>
-    <div class="crayons-notice crayons-notice--danger mb-4">
-      <h4><%= pluralize(meetup.errors.count, "error") %> prohibited this meetup from being saved:</h4>
+    <div class="crayons-notice p-0 mb-4" aria-live="polite">
+      <strong><%= pluralize(meetup.errors.count, "error") %> prohibited this meetup from being saved:</strong>
       <ul class="list-disc list-inside mt-2">
         <% meetup.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,108 +10,97 @@
     </div>
   <% end %>
 
-  <div class="flex flex-col gap-4">
-    <div class="crayons-field">
-      <%= form.label :name, I18n.t("admin.meetups.fields.name"), class: "crayons-field__label" %>
-      <%= form.text_field :name, class: "crayons-textfield", required: true %>
-    </div>
+  <div class="crayons-field">
+    <%= form.label :name, I18n.t("admin.meetups.fields.name"), class: "crayons-field__label" %>
+    <%= form.text_field :name, class: "crayons-textfield", required: true %>
+  </div>
 
-    <div class="crayons-field">
-      <%= form.label :slug, I18n.t("admin.meetups.fields.slug"), class: "crayons-field__label" do %>
-        <%= I18n.t("admin.meetups.fields.slug") %>
-        <p class="crayons-field__description"><%= I18n.t("admin.meetups.fields.slug_help") %></p>
-      <% end %>
-      <%= form.text_field :slug, class: "crayons-textfield", pattern: "[a-z0-9-]+" %>
-    </div>
+  <div class="crayons-field mt-3">
+    <%= form.label :slug, I18n.t("admin.meetups.fields.slug"), class: "crayons-field__label" %>
+    <%= form.text_field :slug, class: "crayons-textfield", pattern: "[a-z0-9-]+" %>
+    <p class="crayons-field__description"><%= I18n.t("admin.meetups.fields.slug_help") %></p>
+  </div>
 
-    <div class="grid grid-cols-2 gap-4">
-      <div class="crayons-field">
-        <%= form.label :organizer_user_id, I18n.t("admin.meetups.fields.organizer_user_id"), class: "crayons-field__label" %>
-        <%= form.number_field :organizer_user_id, class: "crayons-textfield" %>
-      </div>
-      <div class="crayons-field">
-        <%= form.label :organizer_organization_id, I18n.t("admin.meetups.fields.organizer_organization_id"), class: "crayons-field__label" %>
-        <%= form.number_field :organizer_organization_id, class: "crayons-textfield" %>
-      </div>
-    </div>
-    <p class="fs-xs color-base-60 -mt-2"><%= I18n.t("admin.meetups.fields.organizer_help") %></p>
+  <div class="crayons-field mt-3">
+    <%= form.label :organizer_user_id, I18n.t("admin.meetups.fields.organizer_user_id"), class: "crayons-field__label" %>
+    <%= form.number_field :organizer_user_id, class: "crayons-textfield" %>
+  </div>
 
-    <div class="crayons-field">
-      <%= form.label :venue_name, I18n.t("admin.meetups.fields.venue_name"), class: "crayons-field__label" %>
-      <%= form.text_field :venue_name, class: "crayons-textfield", required: true %>
-    </div>
+  <div class="crayons-field mt-3">
+    <%= form.label :organizer_organization_id, I18n.t("admin.meetups.fields.organizer_organization_id"), class: "crayons-field__label" %>
+    <%= form.number_field :organizer_organization_id, class: "crayons-textfield" %>
+    <p class="crayons-field__description"><%= I18n.t("admin.meetups.fields.organizer_help") %></p>
+  </div>
 
-    <div class="grid grid-cols-2 gap-4">
-      <div class="crayons-field">
-        <%= form.label :venue_city_id, I18n.t("admin.meetups.fields.venue_city_id"), class: "crayons-field__label" %>
-        <%= form.collection_select :venue_city_id, City.order(:name), :id, :name, { include_blank: true, prompt: true }, { class: "crayons-select", required: true } %>
-      </div>
-      <div class="crayons-field">
-        <%= form.label :venue_address, I18n.t("admin.meetups.fields.venue_address"), class: "crayons-field__label" %>
-        <%= form.text_field :venue_address, class: "crayons-textfield" %>
-      </div>
-    </div>
+  <div class="crayons-field mt-3">
+    <%= form.label :venue_name, I18n.t("admin.meetups.fields.venue_name"), class: "crayons-field__label" %>
+    <%= form.text_field :venue_name, class: "crayons-textfield", required: true %>
+  </div>
 
-    <div class="grid grid-cols-2 gap-4">
-      <div class="crayons-field">
-        <%= form.label :start_at, I18n.t("admin.meetups.fields.start_at"), class: "crayons-field__label" %>
-        <%= form.datetime_field :start_at, class: "crayons-textfield", required: true %>
-      </div>
-      <div class="crayons-field">
-        <%= form.label :end_at, I18n.t("admin.meetups.fields.end_at"), class: "crayons-field__label" %>
-        <%= form.datetime_field :end_at, class: "crayons-textfield", required: true %>
-      </div>
-    </div>
+  <div class="crayons-field mt-3">
+    <%= form.label :venue_city_id, I18n.t("admin.meetups.fields.venue_city_id"), class: "crayons-field__label" %>
+    <%= form.collection_select :venue_city_id, City.order(:name), :id, :name, { include_blank: true, prompt: true }, { class: "crayons-select", required: true } %>
+  </div>
 
-    <div class="grid grid-cols-2 gap-4">
-      <div class="crayons-field">
-        <%= form.label :banner, I18n.t("admin.meetups.fields.banner"), class: "crayons-field__label" do %>
-          <%= I18n.t("admin.meetups.fields.banner") %>
-          <p class="crayons-field__description"><%= I18n.t("admin.meetups.fields.banner_help") %></p>
-        <% end %>
-        <%= form.file_field :banner, accept: "image/*", class: "crayons-textfield" %>
-        <% if meetup.banner.present? %>
-          <p class="fs-xs mt-2"><a href="<%= meetup.banner.url %>" target="_blank" rel="noopener"><%= I18n.t("admin.meetups.fields.current_banner") %></a></p>
-        <% end %>
-      </div>
+  <div class="crayons-field mt-3">
+    <%= form.label :venue_address, I18n.t("admin.meetups.fields.venue_address"), class: "crayons-field__label" %>
+    <%= form.text_field :venue_address, class: "crayons-textfield" %>
+  </div>
 
-      <div class="crayons-field">
-        <%= form.label :banner_gradient, I18n.t("admin.meetups.fields.banner_gradient"), class: "crayons-field__label" %>
-        <%= form.select :banner_gradient, Meetup::BANNER_GRADIENTS.map { |g| [g.titleize, g] }, {}, class: "crayons-select" %>
-      </div>
-    </div>
+  <div class="crayons-field mt-3">
+    <%= form.label :start_at, I18n.t("admin.meetups.fields.start_at"), class: "crayons-field__label" %>
+    <%= form.datetime_field :start_at, class: "crayons-textfield", required: true %>
+  </div>
 
-    <fieldset class="crayons-field">
-      <legend class="crayons-field__label"><%= I18n.t("admin.meetups.fields.description") %></legend>
-      <div class="flex gap-4 mt-2">
-        <% Meetup::DESCRIPTION_LINK_TYPES.each do |type| %>
-          <label class="crayons-field crayons-field--radio">
-            <%= form.radio_button :description_link_type, type, class: "crayons-radio" %>
-            <%= I18n.t("admin.meetups.fields.description_link_type.#{type}") %>
-          </label>
-        <% end %>
-      </div>
-      <div class="mt-3">
-        <%= form.label :description_internal_post_id, I18n.t("admin.meetups.fields.description_internal_post_id"), class: "crayons-field__label fs-xs" %>
-        <%= form.number_field :description_internal_post_id, class: "crayons-textfield" %>
-      </div>
-      <div class="mt-2">
-        <%= form.label :description_external_url, I18n.t("admin.meetups.fields.description_external_url"), class: "crayons-field__label fs-xs" %>
-        <%= form.url_field :description_external_url, class: "crayons-textfield" %>
-      </div>
-    </fieldset>
+  <div class="crayons-field mt-3">
+    <%= form.label :end_at, I18n.t("admin.meetups.fields.end_at"), class: "crayons-field__label" %>
+    <%= form.datetime_field :end_at, class: "crayons-textfield", required: true %>
+  </div>
 
-    <div class="crayons-field crayons-field--checkbox">
-      <%= form.check_box :is_published, class: "crayons-checkbox" %>
-      <%= form.label :is_published, I18n.t("admin.meetups.fields.is_published"), class: "crayons-field__label" do %>
-        <%= I18n.t("admin.meetups.fields.is_published") %>
-        <p class="crayons-field__description"><%= I18n.t("admin.meetups.fields.is_published_help") %></p>
-      <% end %>
-    </div>
+  <div class="crayons-field mt-3">
+    <%= form.label :banner, I18n.t("admin.meetups.fields.banner"), class: "crayons-field__label" %>
+    <%= form.file_field :banner, accept: "image/*", class: "crayons-textfield" %>
+    <p class="crayons-field__description"><%= I18n.t("admin.meetups.fields.banner_help") %></p>
+    <% if meetup.banner.present? %>
+      <p class="fs-xs mt-2"><a href="<%= meetup.banner.url %>" target="_blank" rel="noopener"><%= I18n.t("admin.meetups.fields.current_banner") %></a></p>
+    <% end %>
+  </div>
 
-    <div class="mt-4">
-      <%= form.submit class: "c-btn c-btn--primary" %>
-      <%= link_to I18n.t("admin.meetups.actions.cancel"), admin_meetups_path, class: "c-btn c-btn--secondary" %>
-    </div>
+  <div class="crayons-field mt-3">
+    <%= form.label :banner_gradient, I18n.t("admin.meetups.fields.banner_gradient"), class: "crayons-field__label" %>
+    <%= form.select :banner_gradient, Meetup::BANNER_GRADIENTS.map { |g| [g.titleize, g] }, {}, class: "crayons-select" %>
+  </div>
+
+  <fieldset class="crayons-field mt-3">
+    <legend class="crayons-field__label"><%= I18n.t("admin.meetups.fields.description") %></legend>
+    <% Meetup::DESCRIPTION_LINK_TYPES.each do |type| %>
+      <div class="crayons-field crayons-field--radio mt-1">
+        <%= form.radio_button :description_link_type, type, class: "crayons-radio" %>
+        <%= form.label "description_link_type_#{type}", I18n.t("admin.meetups.fields.description_link_type.#{type}"), class: "crayons-field__label" %>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <div class="crayons-field mt-3">
+    <%= form.label :description_internal_post_id, I18n.t("admin.meetups.fields.description_internal_post_id"), class: "crayons-field__label" %>
+    <%= form.number_field :description_internal_post_id, class: "crayons-textfield" %>
+  </div>
+
+  <div class="crayons-field mt-3">
+    <%= form.label :description_external_url, I18n.t("admin.meetups.fields.description_external_url"), class: "crayons-field__label" %>
+    <%= form.url_field :description_external_url, class: "crayons-textfield" %>
+  </div>
+
+  <div class="crayons-field crayons-field--checkbox mt-3">
+    <%= form.check_box :is_published, class: "crayons-checkbox" %>
+    <label class="crayons-field__label" for="meetup_is_published">
+      <%= I18n.t("admin.meetups.fields.is_published") %>
+      <p class="crayons-field__description"><%= I18n.t("admin.meetups.fields.is_published_help") %></p>
+    </label>
+  </div>
+
+  <div class="mt-4">
+    <%= form.submit class: "crayons-btn" %>
+    <%= link_to I18n.t("admin.meetups.actions.cancel"), admin_meetups_path, class: "crayons-btn crayons-btn--outlined" %>
   </div>
 <% end %>

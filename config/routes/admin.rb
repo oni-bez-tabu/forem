@@ -144,7 +144,7 @@ namespace :admin do
     end
     resources :surveys
     resources :events
-    resources :meetups
+    resources :meetups, except: %i[show]
   end
 
   scope :customization do

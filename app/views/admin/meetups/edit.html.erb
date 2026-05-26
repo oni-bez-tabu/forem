@@ -1,9 +1,17 @@
-<div class="crayons-layout">
-  <header class="mb-4 flex items-center justify-between">
-    <h1 class="crayons-title"><%= I18n.t("admin.meetups.edit") %>: <%= @meetup.name %></h1>
-    <% if @meetup.is_published %>
-      <%= link_to I18n.t("admin.meetups.actions.view"), meetup_path(@meetup), class: "c-btn c-btn--secondary", target: "_blank", rel: "noopener" %>
-    <% end %>
-  </header>
+<header class="flex mb-6 items-center">
+  <div>
+    <h1 class="crayons-title"><%= @meetup.name %></h1>
+    <p class="fs-s color-base-60"><%= @meetup.slug %></p>
+  </div>
+
+  <% if @meetup.is_published %>
+    <div class="ml-auto">
+      <%= link_to I18n.t("admin.meetups.actions.view"), meetup_path(@meetup), class: "crayons-btn crayons-btn--outlined", target: "_blank", rel: "noopener noreferer" %>
+    </div>
+  <% end %>
+</header>
+
+<div class="crayons-card crayons-card--content-rows p-6">
+  <h2 class="crayons-subtitle-1 mb-3"><%= I18n.t("admin.meetups.edit") %></h2>
   <%= render "form", meetup: @meetup %>
 </div>

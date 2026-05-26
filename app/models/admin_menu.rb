@@ -25,6 +25,7 @@ class AdminMenu
       item(name: "emails"),
       item(name: "surveys"),
       item(name: "events"),
+      item(name: "meetups"),
       item(name: "talks"),
     ]
 

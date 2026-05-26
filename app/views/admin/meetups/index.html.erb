@@ -1,62 +1,68 @@
-<div class="crayons-layout">
-  <header class="flex items-center justify-between mb-4">
-    <h1 class="crayons-title"><%= I18n.t("admin.meetups.title") %></h1>
-    <%= link_to I18n.t("admin.meetups.new"), new_admin_meetup_path, class: "c-btn c-btn--primary" %>
-  </header>
+<h1 class="crayons-title mb-3"><%= I18n.t("admin.meetups.title") %></h1>
 
-  <nav class="mb-4 flex gap-2">
+<div class="flex items-center mb-6">
+  <div class="crayons-tabs">
     <% Admin::MeetupsController::SCOPES.each do |scope| %>
-      <%= link_to I18n.t("admin.meetups.scope.#{scope}"),
-                  admin_meetups_path(scope: scope),
-                  class: "c-btn #{@scope == scope ? 'c-btn--primary' : 'c-btn--secondary'} btn-sm" %>
+      <div>
+        <%= link_to I18n.t("admin.meetups.scope.#{scope}"),
+                    admin_meetups_path(scope: scope),
+                    class: "crayons-tabs__item #{'crayons-tabs__item--current' if @scope == scope}",
+                    data: { text: I18n.t("admin.meetups.scope.#{scope}") } %>
+      </div>
     <% end %>
-  </nav>
+  </div>
 
-  <% if @meetups.empty? %>
-    <div class="crayons-card p-6 text-center"><%= I18n.t("admin.meetups.empty_state") %></div>
-  <% else %>
-    <table class="crayons-table">
-      <thead>
-        <tr>
-          <th><%= I18n.t("admin.meetups.fields.name") %></th>
-          <th><%= I18n.t("admin.meetups.fields.start_at") %></th>
-          <th><%= I18n.t("admin.meetups.fields.venue_city") %></th>
-          <th><%= I18n.t("admin.meetups.fields.published") %></th>
-          <th><%= I18n.t("admin.meetups.fields.rsvps") %></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @meetups.each do |meetup| %>
-          <tr>
-            <td>
-              <%= link_to meetup.name, edit_admin_meetup_path(meetup) %>
-              <div class="fs-xs color-base-60"><%= meetup.slug %></div>
-            </td>
-            <td><%= I18n.l(meetup.start_at, format: :short) %></td>
-            <td><%= meetup.venue_city.name %></td>
-            <td>
-              <% if meetup.is_published %>
-                <span class="c-indicator c-indicator--positive"><%= I18n.t("admin.meetups.published") %></span>
-              <% else %>
-                <span class="c-indicator c-indicator--warning"><%= I18n.t("admin.meetups.draft") %></span>
-              <% end %>
-            </td>
-            <td><%= I18n.t("meetups.going_count", count: meetup.going_count) %> / <%= I18n.t("meetups.interested_count", count: meetup.interested_count) %></td>
-            <td class="text-right">
-              <%= link_to I18n.t("admin.meetups.actions.edit"), edit_admin_meetup_path(meetup), class: "c-btn c-btn--secondary btn-sm" %>
-              <% if meetup.is_published %>
-                <%= link_to I18n.t("admin.meetups.actions.view"), meetup_path(meetup), class: "c-btn c-btn--secondary btn-sm", target: "_blank", rel: "noopener" %>
-              <% end %>
-              <%= button_to I18n.t("admin.meetups.actions.delete"),
-                            admin_meetup_path(meetup),
-                            method: :delete,
-                            class: "c-btn c-btn--destructive btn-sm",
-                            form: { data: { turbo_confirm: I18n.t("admin.meetups.actions.confirm_delete") } } %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
+  <div class="justify-end ml-auto">
+    <%= link_to I18n.t("admin.meetups.new"), new_admin_meetup_path, class: "crayons-btn" %>
+  </div>
 </div>
+
+<% if @meetups.empty? %>
+  <div class="crayons-notice p-0 mt-1 mb-5" aria-live="polite">
+    <%= I18n.t("admin.meetups.empty_state") %>
+  </div>
+<% else %>
+  <table class="crayons-table" width="100%">
+    <thead>
+      <tr>
+        <th scope="col"><%= I18n.t("admin.meetups.fields.name") %></th>
+        <th scope="col"><%= I18n.t("admin.meetups.fields.start_at") %></th>
+        <th scope="col"><%= I18n.t("admin.meetups.fields.venue_city") %></th>
+        <th scope="col"><%= I18n.t("admin.meetups.fields.published") %></th>
+        <th scope="col"><%= I18n.t("admin.meetups.fields.rsvps") %></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody class="crayons-card">
+      <% @meetups.each do |meetup| %>
+        <tr>
+          <td>
+            <%= link_to meetup.name, edit_admin_meetup_path(meetup) %>
+            <div class="fs-xs color-base-60"><%= meetup.slug %></div>
+          </td>
+          <td><%= I18n.l(meetup.start_at, format: :short) %></td>
+          <td><%= meetup.venue_city.name %></td>
+          <td>
+            <% if meetup.is_published %>
+              <%= I18n.t("admin.meetups.published") %>
+            <% else %>
+              <%= I18n.t("admin.meetups.draft") %>
+            <% end %>
+          </td>
+          <td><%= meetup.going_count %> / <%= meetup.interested_count %></td>
+          <td class="text-right">
+            <%= link_to I18n.t("admin.meetups.actions.edit"), edit_admin_meetup_path(meetup), class: "crayons-btn crayons-btn--outlined crayons-btn--s" %>
+            <% if meetup.is_published %>
+              <%= link_to I18n.t("admin.meetups.actions.view"), meetup_path(meetup), class: "crayons-btn crayons-btn--outlined crayons-btn--s", target: "_blank", rel: "noopener noreferer" %>
+            <% end %>
+            <%= button_to I18n.t("admin.meetups.actions.delete"),
+                          admin_meetup_path(meetup),
+                          method: :delete,
+                          class: "crayons-btn crayons-btn--danger crayons-btn--s",
+                          form: { class: "inline-block", data: { turbo_confirm: I18n.t("admin.meetups.actions.confirm_delete") } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
