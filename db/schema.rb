@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_04_26_102219) do
+ActiveRecord::Schema[7.0].define(version: 2026_05_26_180000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "ltree"
@@ -390,6 +390,20 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_26_102219) do
     t.datetime "updated_at", precision: nil
     t.index ["broadcastable_type", "broadcastable_id"], name: "index_broadcasts_on_broadcastable_type_and_broadcastable_id", unique: true
     t.index ["title", "type_of"], name: "index_broadcasts_on_title_and_type_of", unique: true
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.boolean "is_special", default: false, null: false
+    t.string "name", null: false
+    t.string "name_normalized", null: false
+    t.integer "population_hint"
+    t.string "slug", null: false
+    t.datetime "updated_at", null: false
+    t.string "voivodeship"
+    t.index ["is_special"], name: "index_cities_on_is_special"
+    t.index ["name_normalized"], name: "index_cities_on_name_normalized"
+    t.index ["slug"], name: "index_cities_on_slug", unique: true
   end
 
   create_table "classified_listing_categories", force: :cascade do |t|
@@ -1980,7 +1994,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_26_102219) do
     t.integer "config_font", default: 0, null: false
     t.integer "config_homepage_feed", default: 0, null: false
     t.integer "config_navbar", default: 0, null: false
-    t.integer "config_theme", default: 0, null: false
+    t.integer "config_theme", default: 2, null: false
     t.integer "consecutive_feed_failures", default: 0, null: false
     t.text "content_preferences_input"
     t.datetime "content_preferences_updated_at"
