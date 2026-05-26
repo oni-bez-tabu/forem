@@ -59,11 +59,11 @@
 
   <div class="crayons-field mt-3">
     <%= form.label :banner, I18n.t("admin.meetups.fields.banner"), class: "crayons-field__label" %>
-    <%= form.file_field :banner, accept: "image/*", class: "crayons-textfield" %>
     <p class="crayons-field__description"><%= I18n.t("admin.meetups.fields.banner_help") %></p>
     <% if meetup.banner.present? %>
-      <p class="fs-xs mt-2"><a href="<%= meetup.banner.url %>" target="_blank" rel="noopener"><%= I18n.t("admin.meetups.fields.current_banner") %></a></p>
+      <img src="<%= meetup.banner.url %>" alt="<%= meetup.name %>" class="mt-2 mb-2" style="max-width: 320px; max-height: 160px; border-radius: 6px;">
     <% end %>
+    <%= form.file_field :banner, accept: "image/*" %>
   </div>
 
   <div class="crayons-field mt-3">

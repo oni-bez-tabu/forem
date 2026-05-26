@@ -30,7 +30,7 @@ module Admin
 
     def update
       if @meetup.update(meetup_params)
-        redirect_to admin_meetups_path, notice: I18n.t("admin.meetups.updated")
+        redirect_to edit_admin_meetup_path(@meetup), notice: I18n.t("admin.meetups.updated")
       else
         render :edit, status: :unprocessable_entity
       end
