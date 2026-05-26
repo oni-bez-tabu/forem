@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_05_26_180000) do
+ActiveRecord::Schema[7.0].define(version: 2026_05_26_190001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "ltree"
@@ -988,6 +988,50 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_26_180000) do
     t.string "output_url", null: false
     t.datetime "updated_at", null: false
     t.index ["original_url"], name: "index_media_stores_on_original_url", unique: true
+  end
+
+  create_table "meetup_rsvps", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "meetup_id", null: false
+    t.string "status", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["meetup_id", "status"], name: "index_meetup_rsvps_on_meetup_id_and_status"
+    t.index ["meetup_id", "user_id"], name: "index_meetup_rsvps_on_meetup_id_and_user_id", unique: true
+    t.index ["meetup_id"], name: "index_meetup_rsvps_on_meetup_id"
+    t.index ["user_id"], name: "index_meetup_rsvps_on_user_id"
+  end
+
+  create_table "meetups", force: :cascade do |t|
+    t.string "banner"
+    t.string "banner_gradient", default: "dusk", null: false
+    t.datetime "created_at", null: false
+    t.bigint "created_by_id", null: false
+    t.string "description_external_url"
+    t.bigint "description_internal_post_id"
+    t.string "description_link_type", null: false
+    t.datetime "end_at", null: false
+    t.integer "going_count", default: 0, null: false
+    t.integer "interested_count", default: 0, null: false
+    t.boolean "is_published", default: false, null: false
+    t.string "name", null: false
+    t.bigint "organizer_organization_id"
+    t.bigint "organizer_user_id"
+    t.string "slug", null: false
+    t.datetime "start_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "venue_address"
+    t.bigint "venue_city_id", null: false
+    t.string "venue_name", null: false
+    t.index ["created_by_id"], name: "index_meetups_on_created_by_id"
+    t.index ["description_internal_post_id"], name: "index_meetups_on_description_internal_post_id"
+    t.index ["end_at"], name: "index_meetups_on_end_at"
+    t.index ["is_published"], name: "index_meetups_on_is_published"
+    t.index ["organizer_organization_id"], name: "index_meetups_on_organizer_organization_id"
+    t.index ["organizer_user_id"], name: "index_meetups_on_organizer_user_id"
+    t.index ["slug"], name: "index_meetups_on_slug", unique: true
+    t.index ["start_at"], name: "index_meetups_on_start_at"
+    t.index ["venue_city_id"], name: "index_meetups_on_venue_city_id"
   end
 
   create_table "mentions", force: :cascade do |t|
@@ -2086,6 +2130,13 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_26_180000) do
   add_foreign_key "identities", "users", on_delete: :cascade
   add_foreign_key "lead_submissions", "organization_lead_forms", on_delete: :cascade
   add_foreign_key "lead_submissions", "users", on_delete: :cascade
+  add_foreign_key "meetup_rsvps", "meetups", on_delete: :cascade
+  add_foreign_key "meetup_rsvps", "users", on_delete: :cascade
+  add_foreign_key "meetups", "articles", column: "description_internal_post_id"
+  add_foreign_key "meetups", "cities", column: "venue_city_id"
+  add_foreign_key "meetups", "organizations", column: "organizer_organization_id"
+  add_foreign_key "meetups", "users", column: "created_by_id"
+  add_foreign_key "meetups", "users", column: "organizer_user_id"
   add_foreign_key "mentions", "users", on_delete: :cascade
   add_foreign_key "notes", "users", column: "author_id", on_delete: :nullify
   add_foreign_key "notification_subscriptions", "users", on_delete: :cascade

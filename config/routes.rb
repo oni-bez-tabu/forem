@@ -298,6 +298,10 @@ Rails.application.routes.draw do
     get "/search/feed_content", to: "search#feed_content"
     get "/search/reactions", to: "search#reactions"
     get "/cities/search", to: "cities#search", defaults: { format: :json }
+
+    resources :meetups, only: %i[index show], param: :slug do
+      resource :rsvp, only: %i[create destroy], controller: "meetups/rsvps"
+    end
     get "/notifications/:filter", to: "notifications#index", as: :notifications_filter
     get "/notifications/:filter/:org_id", to: "notifications#index", as: :notifications_filter_org
     get "/notification_subscriptions/:notifiable_type/:notifiable_id", to: "notification_subscriptions#show"

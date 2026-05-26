@@ -1,0 +1,26 @@
+<section class="crayons-card p-6 mb-6">
+  <h2 class="crayons-subtitle mb-3"><%= t("meetups.show.rsvp_heading") %></h2>
+  <p class="fs-s color-base-60 mb-4">
+    <%= t("meetups.going_count", count: meetup.going_count) %> ·
+    <%= t("meetups.interested_count", count: meetup.interested_count) %>
+  </p>
+
+  <% if user_signed_in? %>
+    <div class="flex gap-2 flex-wrap">
+      <%= button_to meetup_rsvp_path(meetup, status: "going"),
+                    method: :post,
+                    form: { class: "inline" },
+                    class: "c-btn #{current_rsvp&.status == 'going' ? 'c-btn--primary' : 'c-btn--secondary'}" do %>
+        <%= current_rsvp&.status == "going" ? "✓ #{t('meetups.rsvp.going')}" : t("meetups.rsvp.going") %>
+      <% end %>
+      <%= button_to meetup_rsvp_path(meetup, status: "interested"),
+                    method: :post,
+                    form: { class: "inline" },
+                    class: "c-btn #{current_rsvp&.status == 'interested' ? 'c-btn--primary' : 'c-btn--secondary'}" do %>
+        <%= current_rsvp&.status == "interested" ? "✓ #{t('meetups.rsvp.interested')}" : t("meetups.rsvp.interested") %>
+      <% end %>
+    </div>
+  <% else %>
+    <p><%= link_to t("meetups.rsvp.sign_in_required"), new_user_session_path, class: "c-link" %></p>
+  <% end %>
+</section>

@@ -1,0 +1,9 @@
+<div class="crayons-layout">
+  <header class="mb-4 flex items-center justify-between">
+    <h1 class="crayons-title"><%= I18n.t("admin.meetups.edit") %>: <%= @meetup.name %></h1>
+    <% if @meetup.is_published %>
+      <%= link_to I18n.t("admin.meetups.actions.view"), meetup_path(@meetup), class: "c-btn c-btn--secondary", target: "_blank", rel: "noopener" %>
+    <% end %>
+  </header>
+  <%= render "form", meetup: @meetup %>
+</div>

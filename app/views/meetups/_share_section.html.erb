@@ -1,0 +1,42 @@
+<section class="crayons-card p-6">
+  <h2 class="crayons-subtitle mb-3"><%= t("meetups.share.heading") %></h2>
+  <div class="flex gap-2 items-center">
+    <input
+      type="text"
+      readonly
+      value="<%= meetup_url(meetup) %>"
+      class="crayons-textfield flex-1"
+      id="meetup-share-url-<%= meetup.id %>"
+      data-meetup-share-url
+    >
+    <button
+      type="button"
+      class="c-btn c-btn--secondary"
+      data-meetup-copy-button
+      data-target="#meetup-share-url-<%= meetup.id %>"
+      data-copied-label="<%= t('meetups.share.copied') %>"
+    >
+      <%= t("meetups.share.copy_link") %>
+    </button>
+  </div>
+</section>
+
+<script>
+  (function() {
+    document.querySelectorAll("[data-meetup-copy-button]").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        var input = document.querySelector(btn.dataset.target);
+        if (!input) return;
+        input.select();
+        try {
+          navigator.clipboard.writeText(input.value);
+        } catch (_) {
+          document.execCommand("copy");
+        }
+        var original = btn.textContent;
+        btn.textContent = btn.dataset.copiedLabel;
+        setTimeout(function() { btn.textContent = original; }, 1500);
+      });
+    });
+  })();
+</script>

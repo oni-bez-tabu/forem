@@ -1,0 +1,35 @@
+<% title @meetup.name %>
+
+<div class="crayons-layout crayons-layout--limited-width">
+  <div class="crayons-card overflow-hidden mb-6">
+    <div class="h-64" style="<%= meetup_banner_style(@meetup) %> background-size: cover; background-position: center;"></div>
+    <div class="p-6">
+      <h1 class="crayons-title fs-xl mb-2"><%= @meetup.name %></h1>
+      <p class="fs-base color-base-70 mb-4">
+        <strong><%= I18n.l(@meetup.start_at, format: :long) %></strong>
+        — <%= I18n.l(@meetup.end_at, format: :short) %>
+      </p>
+      <dl class="grid grid-cols-1 md:grid-cols-2 gap-3 fs-s">
+        <div>
+          <dt class="color-base-60"><%= t("meetups.show.organizer") %></dt>
+          <dd><%= meetup_organizer_label(@meetup) %></dd>
+        </div>
+        <div>
+          <dt class="color-base-60"><%= t("meetups.show.venue") %></dt>
+          <dd><%= @meetup.venue_name %><br><span class="color-base-60"><%= @meetup.venue_city.name %><%= ", #{@meetup.venue_address}" if @meetup.venue_address.present? %></span></dd>
+        </div>
+      </dl>
+
+      <div class="mt-4">
+        <% if @meetup.description_link_type == "internal" && @meetup.description_internal_post %>
+          <%= link_to t("meetups.show.view_full_description"), "/#{@meetup.description_internal_post.user.username}/#{@meetup.description_internal_post.slug}", class: "c-btn c-btn--secondary" %>
+        <% elsif @meetup.description_link_type == "external" && @meetup.description_external_url.present? %>
+          <%= link_to t("meetups.show.view_full_description"), @meetup.description_external_url, class: "c-btn c-btn--secondary", target: "_blank", rel: "noopener noreferrer" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%= render "rsvp_section", meetup: @meetup, current_rsvp: @current_rsvp %>
+  <%= render "share_section", meetup: @meetup %>
+</div>

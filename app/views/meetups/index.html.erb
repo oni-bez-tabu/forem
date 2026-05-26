@@ -1,0 +1,41 @@
+<% title t("meetups.title") %>
+
+<div class="crayons-layout crayons-layout--limited-width">
+  <header class="mb-6">
+    <h1 class="crayons-title"><%= t("meetups.title") %></h1>
+    <p class="crayons-subtitle"><%= t("meetups.subtitle") %></p>
+  </header>
+
+  <% if @meetups.empty? %>
+    <div class="crayons-card p-6 text-center">
+      <p><%= t("meetups.empty_state") %></p>
+    </div>
+  <% else %>
+    <% @meetups.group_by { |m| m.start_at.to_date }.each do |day, day_meetups| %>
+      <section class="mb-6">
+        <h2 class="crayons-subtitle mb-3"><%= I18n.l(day, format: :long) %></h2>
+        <ul class="flex flex-col gap-4">
+          <% day_meetups.each do |meetup| %>
+            <li>
+              <%= link_to meetup_path(meetup), class: "crayons-card crayons-card--secondary p-0 overflow-hidden block hover:shadow-md transition" do %>
+                <div class="flex flex-col md:flex-row">
+                  <div class="md:w-48 h-32 md:h-auto" style="<%= meetup_banner_style(meetup) %> background-size: cover; background-position: center;"></div>
+                  <div class="flex-1 p-4">
+                    <h3 class="crayons-title fs-l mb-1"><%= meetup.name %></h3>
+                    <p class="text-sm fs-s color-base-70">
+                      <%= I18n.l(meetup.start_at, format: :short) %> · <%= meetup.venue_name %>, <%= meetup.venue_city.name %>
+                    </p>
+                    <p class="text-sm fs-s color-base-60 mt-2">
+                      <%= t("meetups.going_count", count: meetup.going_count) %> ·
+                      <%= t("meetups.interested_count", count: meetup.interested_count) %>
+                    </p>
+                  </div>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </section>
+    <% end %>
+  <% end %>
+</div>
