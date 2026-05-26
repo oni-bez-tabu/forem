@@ -1,5 +1,7 @@
 module Admin
   class MeetupsController < Admin::ApplicationController
+    layout "admin"
+
     SCOPES = %w[upcoming past unpublished all].freeze
 
     before_action :set_meetup, only: %i[edit update destroy]
