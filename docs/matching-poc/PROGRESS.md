@@ -78,15 +78,63 @@
 
 ---
 
+## Etap 2 — Matching profile + integracja chrome
+
+- **Status:** ✅ done
+- **Commit:** `608d91bc9`
+- **Data:** 2026-05-26
+
+### Zaimplementowane
+- Migracja `matching_profiles` (user_id unique, photo Carrierwave, identity_type enum woman/man/couple/non_binary, city_id FK, bio max 200, is_active, moderation_state pending/approved/rejected, moderation_reason)
+- Model `MatchingProfile`: walidacje, scopes `active`/`approved`/`pending_review`/`rejected`/`visible_to_others`, methods `approve!`/`reject!(reason:)`/`deactivate!`/`reactivate!`, callback `reset_moderation_on_content_change` (każda zmiana zdjęcia/identity/city/bio cofa zatwierdzony/odrzucony profil do pending), after_commit auto-emaila
+- Uploader `MatchingProfilePhotoUploader` (Carrierwave, fallback path `pending` dla nowych rekordów)
+- Worker `Matching::DeactivateProfileOnBanWorker` (Sidekiq `lock: :until_executing, on_conflict: :replace`) sprawdzający `user.suspended?` przed dezaktywacją
+- Hook w `User#update_user_roles_cache` — jedna linijka `Matching::DeactivateProfileOnBanWorker.perform_async(id) if role.name == "suspended"`, podpięta do istniejącego rolify `after_add`
+- Controllery:
+  - `MatchingController#show` (dashboard E8 uproszczony: brak profilu / pending / approved+aktywny / dezaktywowany — z odpowiednim CTA)
+  - `Matching::ProfilesController` (new/create/edit/update; blokada dla suspended; każdy edit content fields auto-resetuje moderację do pending)
+  - `Admin::MatchingProfilesController` z scopami pending/approved/rejected/inactive/all i akcjami approve/reject/deactivate/reactivate/destroy
+- Routes: public `/matching`, `/matching/onboarding`, `/matching/profile` (POST/PATCH/PUT), `/matching/profile/edit`; admin `resources :matching_profiles, only: %i[index destroy]` z member POST routes
+- Views (Crayons + admin layout style): dashboard z moderation badge i statusem dezaktywacji, onboarding card, edit z notice o resecie moderacji, shared `_form` z autocomplete'em miast po populacji + flagą "🌍 Wszędzie" na wierzchu, admin tabela z thumbnail + akcjami inline kontekstowymi (Zatwierdź/Odrzuć dla pending, Dezaktywuj/Reaktywuj dla approved, Usuń zawsze)
+- Mailer `MatchingMailer` z 2 akcjami (`approved`, `rejected`) i template'ami HTML+text w 4 locales — wysyłany przez `deliver_later` z `after_commit` modelu gdy `saved_change_to_moderation_state?`
+- Chrome integracja:
+  - `app/views/layouts/_top_bar.html.erb` — ✨ ikona obok dzwonka notyfikacji (signed-in only)
+  - `app/views/layouts/_nav_menu.html.erb` — link "✨ Matching" w avatar dropdown
+  - `Constants::Settings::TAB_LIST` + `app/views/users/_matching.html.erb` — zakładka w `/settings/matching` (link do panelu Matching)
+  - `app/models/admin_menu.rb` — pozycja "matching profiles" pod Content Manager
+  - `app/assets/images/twemoji/matching.svg` — placeholder ikonka tab settings (kopia fire.svg)
+- Locale files: `matching.{pl,en,fr,pt}.yml` z kluczami `matching.*`, `admin.matching_profiles.*`, `matching_mailer.*` plus `views.settings.tab.Matching` (PL kanoniczne)
+- Specs: model (15), request matching show (3), request profiles (6), request admin (7), worker (4) — łącznie **35/35 ✓** w Etapie 2; pełny suite Matching POC **111/111 ✓**
+
+### Uwagi / odstępstwa / długi techniczne
+- **Modyfikacja `User#update_user_roles_cache`** — dodana jedna linijka do istniejącej metody Forem zamiast tworzenia osobnego callbacka. Rolify nie wspiera array of callbacks na jednym `after_add`. Minimalna ingerencja, ale dotknęliśmy cudzego kodu — warto śledzić przy upstream merge'ach.
+- **Twemoji ikonka `matching.svg` to placeholder** (kopia `fire.svg`). Do podmiany na właściwą sparkles SVG przy polishingu. Jeśli zostawimy fire — wizualnie sugeruje co innego niż ✨ używane w nav. Dług wizualny.
+- **Onboarding to single-page form** zamiast multi-step E5→E6→E7 z mockupów. POC simplification — multi-step UX do dorobienia w polishingu Etapu 5/6.
+- **City picker w formie to `collection_select` z wszystkimi 750 miastami** posortowane (is_special DESC, population_hint DESC). Brak autocomplete'a via `/cities/search` (POC simplification — autocomplete to dług na polish, endpoint czeka gotowy).
+- **Tab "Matching" w settings to tylko link do `/matching`**, nie inline form z preferencjami. Push notification toggles (SPEC.md §7.2) dojdą w Etapie 5 razem z notyfikacjami.
+- **Brak Pundit policy dla MatchingProfile** — autoryzacja w controllerze (`block_suspended_users`, `redirect_if_profile_exists`). Pundit można dorobić jeśli będą bardziej skomplikowane reguły dostępu.
+- **Mailer side-effect na `after_commit` modelu** — z `if: :saved_change_to_moderation_state?`. Powoduje że `approve!`/`reject!` mailują automatycznie. Trade-off: testowalne, ale każda przyszła zmiana stanu z innego miejsca też wyśle email. Można potem wyciągnąć do explicit service objectu.
+- **FR/PT tłumaczenia "machinalne"**, ten sam dług co w Etapie 1.
+- **`has_role?` jest private w Forem rolify**. Wszystkie sprawdzenia idą przez `user.suspended?` (delegate na `Authorizer`). Pułapka warta zapamiętania.
+
+### Acceptance check (SPEC.md §11)
+- ✅ User zakłada profil (`POST /matching/profile` → moderation_state=pending)
+- ✅ Admin moderuje (`POST /admin/.../matching_profiles/:id/approve|reject` z opcjonalnym reason)
+- ✅ Email do usera po approve/reject (`MatchingMailer.approved|rejected.deliver_later`)
+- ✅ Ban auto-dezaktywuje profil (hook + worker)
+- ✅ Zbanowany user nie może utworzyć profilu (`block_suspended_users` w controllerze)
+- ✅ Chrome: ikona ✨ w nav, link w dropdown, tab w settings
+
+---
+
 ## Następny etap
 
-**Etap 2 — Matching profile + integracja chrome** (SPEC.md §11)
+**Etap 3 — Deklaracje + visibility + lista matchów inline + event-scoped profil** (SPEC.md §11)
 
 Zakres:
-- Migracja `matching_profiles` (user_id unique, photo_url, identity_type enum, city_id, bio, is_active, moderation_state pending/approved/rejected per ustaleń sesji #1)
-- Ban check przy tworzeniu (rolify `:suspended`) + hook auto-dezaktywacji profilu
-- API CRUD profilu + upload zdjęcia (`MatchingProfilePhotoUploader`)
-- Moderacja przez admina: lista profili pending + akcje approve/reject + email do usera (mailer w 4 locales)
-- Frontend: E5→E6→E7 (onboarding 4-step) + E8 uproszczona (header profilu)
-- Integracja chrome nietabu: ikona ✨ w nav, karta Matching w avatar dropdown, zakładka "✨ Matching" w `/settings`
-- Acceptance: user zakłada profil → admin moderuje → ban auto-dezaktywuje istniejący profil i blokuje tworzenie nowego
+- Migracja `meetup_matching_declarations` (meetup_id, matching_profile_id, intent_level enum, looking_for jsonb, meetup_note)
+- API CRUD deklaracji + endpoint listy matchów z regułami R1–R8 (visibility, grupowanie, just_vibe asymetria, not_looking lockout)
+- Endpoint `GET /m/:meetup_slug/:profile_id` — event-scoped profil z lifecycle 48h (SPEC.md §R-Lifecycle.2), 404 po expiry
+- Frontend: E10 popup deklaracji (3 sekcje: intent, looking_for, meetup_note), E3/E4 inline lista matchów (2 grupy ✦ ta sama intencja / inni), E15 event-scoped profil, F' partial blurred dla Interested-without-declaration
+- Popup-based RSVP flow z deklaracją dla obu statusów (going + interested)
+- Acceptance: P2 klika RSVP → popup intencji → zapis → lista; P3 widzi grupy; profil matcha pokazuje meetup_note z konkretnego meetupu
