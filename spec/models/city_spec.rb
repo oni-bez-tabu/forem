@@ -12,7 +12,7 @@ RSpec.describe City do
       create(:city, name: "Warszawa")
       duplicate = build(:city, name: "Warszawa")
       expect(duplicate).not_to be_valid
-      expect(duplicate.errors[:slug]).to include("has already been taken")
+      expect(duplicate.errors.details[:slug].pluck(:error)).to include(:taken)
     end
   end
 

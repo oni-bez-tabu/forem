@@ -46,9 +46,10 @@
 
       <div class="mt-4">
         <% if @profile.is_active? %>
-          <%= link_to t("matching.show.edit_profile"), edit_matching_profile_path, class: "crayons-btn crayons-btn--outlined" %>
+          <%= link_to t("matching.show.manage_profile"), "/settings/matching", class: "crayons-btn crayons-btn--outlined" %>
         <% else %>
-          <p class="fs-s color-base-60"><%= t("matching.show.deactivated_explanation") %></p>
+          <p class="fs-s color-base-60 mb-3"><%= t("matching.show.deactivated_explanation") %></p>
+          <%= link_to t("matching.show.manage_profile"), "/settings/matching", class: "crayons-btn crayons-btn--outlined" %>
         <% end %>
       </div>
     </div>

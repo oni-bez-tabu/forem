@@ -309,6 +309,9 @@ Rails.application.routes.draw do
     post "/matching/profile", to: "matching/profiles#create", as: :matching_profile
     patch "/matching/profile", to: "matching/profiles#update"
     put "/matching/profile", to: "matching/profiles#update"
+    delete "/matching/profile", to: "matching/profiles#destroy"
+    post "/matching/profile/deactivate", to: "matching/profiles#deactivate", as: :deactivate_matching_profile
+    post "/matching/profile/reactivate", to: "matching/profiles#reactivate", as: :reactivate_matching_profile
     get "/notifications/:filter", to: "notifications#index", as: :notifications_filter
     get "/notifications/:filter/:org_id", to: "notifications#index", as: :notifications_filter_org
     get "/notification_subscriptions/:notifiable_type/:notifiable_id", to: "notification_subscriptions#show"

@@ -74,12 +74,57 @@ RSpec.describe "Matching::Profiles" do
     let!(:profile) { create(:matching_profile, :approved, user: user) }
     before { sign_in user }
 
-    it "updates the profile and sends it back to pending review" do
+    it "updates the profile and redirects to the settings tab" do
       patch matching_profile_path, params: { matching_profile: { bio: "Updated bio" } }
-      expect(response).to redirect_to(matching_path)
+      expect(response).to redirect_to("/settings/matching")
       profile.reload
       expect(profile.bio).to eq("Updated bio")
       expect(profile).to be_pending
+    end
+  end
+
+  describe "GET /matching/profile/edit" do
+    before do
+      create(:matching_profile, user: user)
+      sign_in user
+    end
+
+    it "redirects to the settings tab (canonical edit URL)" do
+      get edit_matching_profile_path
+      expect(response).to redirect_to("/settings/matching")
+    end
+  end
+
+  describe "POST /matching/profile/deactivate" do
+    let!(:profile) { create(:matching_profile, :approved, user: user) }
+    before { sign_in user }
+
+    it "deactivates the profile" do
+      post deactivate_matching_profile_path
+      expect(response).to redirect_to("/settings/matching")
+      expect(profile.reload.is_active).to be(false)
+    end
+  end
+
+  describe "POST /matching/profile/reactivate" do
+    let!(:profile) { create(:matching_profile, :approved, :inactive, user: user) }
+    before { sign_in user }
+
+    it "reactivates the profile" do
+      post reactivate_matching_profile_path
+      expect(response).to redirect_to("/settings/matching")
+      expect(profile.reload.is_active).to be(true)
+    end
+  end
+
+  describe "DELETE /matching/profile" do
+    let!(:profile) { create(:matching_profile, user: user) }
+    before { sign_in user }
+
+    it "destroys the profile and redirects back to the empty dashboard" do
+      expect { delete matching_profile_path }
+        .to change(MatchingProfile, :count).by(-1)
+      expect(response).to redirect_to(matching_path)
     end
   end
 end

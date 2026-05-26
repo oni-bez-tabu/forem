@@ -1,4 +1,76 @@
-<h2 class="crayons-subtitle-1 mb-3">✨ <%= t("matching.settings.title") %></h2>
-<p class="mb-4"><%= t("matching.settings.intro") %></p>
+<% profile = MatchingProfile.find_by(user_id: current_user.id) %>
 
-<%= link_to t("matching.settings.open_dashboard"), matching_path, class: "crayons-btn" %>
+<h2 class="crayons-subtitle-1 mb-3">✨ <%= t("matching.settings.title") %></h2>
+<p class="mb-4 color-base-70"><%= t("matching.settings.intro") %></p>
+
+<% if profile.nil? %>
+  <div class="crayons-card p-6">
+    <p class="mb-3"><%= t("matching.settings.no_profile_intro") %></p>
+    <% if current_user.suspended? %>
+      <p class="color-base-60 fs-s"><%= t("matching.profiles.suspended_blocked") %></p>
+    <% else %>
+      <%= link_to t("matching.show.create_profile"), matching_onboarding_path, class: "crayons-btn" %>
+    <% end %>
+  </div>
+
+<% else %>
+  <div class="crayons-card p-6 mb-4">
+    <div class="flex items-center gap-2 flex-wrap mb-3">
+      <%= render "matching/moderation_badge", profile: profile %>
+      <% unless profile.is_active? %>
+        <span class="crayons-indicator crayons-indicator--warning"><%= t("matching.show.deactivated") %></span>
+      <% end %>
+    </div>
+    <% if profile.moderation_reason.present? %>
+      <p class="fs-s color-base-60 mb-3"><strong><%= t("matching.show.rejection_reason") %>:</strong> <%= profile.moderation_reason %></p>
+    <% end %>
+
+    <p class="fs-s color-base-60 mb-4"><%= t("matching.settings.edit_help") %></p>
+
+    <%= render "matching/profiles/form", profile: (@profile || profile), submit_label: t("matching.profiles.update") %>
+  </div>
+
+  <div class="crayons-card p-6">
+    <h3 class="crayons-subtitle-2 mb-3"><%= t("matching.settings.danger_zone") %></h3>
+
+    <% if profile.is_active? %>
+      <div class="flex items-start justify-between gap-4 mb-3 flex-wrap">
+        <div class="flex-1">
+          <strong><%= t("matching.settings.deactivate_heading") %></strong>
+          <p class="fs-s color-base-60"><%= t("matching.settings.deactivate_help") %></p>
+        </div>
+        <%= button_to t("matching.settings.deactivate_button"),
+                      deactivate_matching_profile_path,
+                      method: :post,
+                      class: "crayons-btn crayons-btn--outlined",
+                      form: { class: "inline-block", data: { turbo_confirm: t("matching.settings.confirm_deactivate") } } %>
+      </div>
+    <% else %>
+      <div class="flex items-start justify-between gap-4 mb-3 flex-wrap">
+        <div class="flex-1">
+          <strong><%= t("matching.settings.reactivate_heading") %></strong>
+          <p class="fs-s color-base-60"><%= t("matching.settings.reactivate_help") %></p>
+        </div>
+        <%= button_to t("matching.settings.reactivate_button"),
+                      reactivate_matching_profile_path,
+                      method: :post,
+                      class: "crayons-btn",
+                      form: { class: "inline-block" } %>
+      </div>
+    <% end %>
+
+    <hr class="my-3 color-base-30">
+
+    <div class="flex items-start justify-between gap-4 flex-wrap">
+      <div class="flex-1">
+        <strong><%= t("matching.settings.destroy_heading") %></strong>
+        <p class="fs-s color-base-60"><%= t("matching.settings.destroy_help") %></p>
+      </div>
+      <%= button_to t("matching.settings.destroy_button"),
+                    matching_profile_path,
+                    method: :delete,
+                    class: "crayons-btn crayons-btn--danger",
+                    form: { class: "inline-block", data: { turbo_confirm: t("matching.settings.confirm_destroy") } } %>
+    </div>
+  </div>
+<% end %>
