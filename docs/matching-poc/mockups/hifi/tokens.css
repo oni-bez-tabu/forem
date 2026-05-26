@@ -1,0 +1,346 @@
+/* ============================================================
+   nie!tabu Design System — Colors & Type
+   Brand color sampled directly from logo (assets/logo-nietabu.png).
+   ============================================================ */
+
+/* ---------- Brand fonts (uploaded by user) ---------- */
+@font-face {
+  font-family: 'Roboto';
+  src: url('fonts/Roboto-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('fonts/Roboto-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('fonts/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('fonts/OpenDyslexic-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('fonts/OpenDyslexic-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('fonts/OpenDyslexic-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'icomoon';
+  src: url('fonts/icomoon.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+:root {
+  /* ---------- Color scales (RGB triples for use in rgb()/rgba()) ---------- */
+  --white: 255, 255, 255;
+  --black: 0, 0, 0;
+
+  --grey-50: 250, 250, 250;
+  --grey-100: 246, 246, 246;
+  --grey-200: 229, 229, 229;
+  --grey-300: 212, 212, 212;
+  --grey-400: 163, 163, 163;
+  --grey-500: 115, 115, 115;
+  --grey-600: 82, 82, 82;
+  --grey-700: 64, 64, 64;
+  --grey-800: 38, 38, 38;
+  --grey-900: 23, 23, 23;
+
+  --red-500: 239, 68, 68;
+  --red-600: 220, 38, 38;
+  --red-700: 185, 28, 28;
+
+  --yellow-400: 251, 191, 36;
+  --yellow-500: 245, 158, 11;
+  --yellow-600: 217, 119, 6;
+
+  --green-400: 52, 211, 153;
+  --green-500: 16, 185, 129;
+  --green-600: 5, 150, 105;
+  --green-700: 4, 120, 87;
+
+  --indigo-50: 238, 242, 255;
+  --indigo-100: 224, 231, 255;
+  --indigo-500: 99, 102, 241;
+  --indigo-600: 79, 70, 229;
+  --indigo-700: 67, 56, 202;
+
+  /* ---------- nie!tabu brand purple (official: #424174) ---------- */
+  --nietabu-purple-50:  240, 239, 246;
+  --nietabu-purple-100: 218, 217, 232;
+  --nietabu-purple-300: 138, 136, 174;
+  --nietabu-purple-500:  66,  65, 116;   /* PRIMARY — #424174 (official) */
+  --nietabu-purple-600:  53,  52,  93;
+  --nietabu-purple-700:  40,  39,  70;
+  --nietabu-magenta:    169,  31, 105;  /* logo outline / accent */
+
+  /* Brand: nie!tabu violet pulled from the logo bubble. */
+  --accent-brand-lighter-rgb: var(--nietabu-purple-300);
+  --accent-brand-rgb: var(--nietabu-purple-500);
+  --accent-brand-darker-rgb: var(--nietabu-purple-700);
+
+  --accent-brand-lighter: rgb(var(--accent-brand-lighter-rgb));
+  --accent-brand: rgb(var(--accent-brand-rgb));
+  --accent-brand-darker: rgb(var(--accent-brand-darker-rgb));
+
+  /* Base scale (warm-near-black to off-white) */
+  --base-100: #090909;
+  --base-90: #242424;
+  --base-80: #3d3d3d;
+  --base-70: #575757;
+  --base-60: #717171;
+  --base-50: #8a8a8a;
+  --base-40: #a3a3a3;
+  --base-30: #bdbdbd;
+  --base-20: #d6d6d7;
+  --base-10: #efefef;
+  --base-0:  #f9f9f9;
+
+  /* ---------- Semantic accents ---------- */
+  --accent-success:        rgb(var(--green-600));
+  --accent-success-darker: rgb(var(--green-700));
+  --accent-warning:        rgb(var(--yellow-500));
+  --accent-warning-darker: rgb(var(--yellow-600));
+  --accent-danger:         rgb(var(--red-600));
+  --accent-danger-darker:  rgb(var(--red-700));
+
+  /* ---------- Functional surfaces ---------- */
+  --body-bg:    rgb(var(--grey-100));
+  --body-color: rgb(var(--grey-900));
+
+  --card-bg:               rgb(var(--white));
+  --card-color:            rgb(var(--grey-900));
+  --card-color-secondary:  rgb(var(--grey-700));
+  --card-color-tertiary:   rgb(var(--grey-600));
+  --card-secondary-bg:     rgb(var(--grey-50));
+  --card-tertiary-bg:      rgb(var(--grey-100));
+  --card-border:           rgba(var(--grey-900), 0.1);
+  --card-secondary-border: rgba(var(--grey-900), 0.033);
+
+  --header-bg:     rgb(var(--white));
+  --header-shadow: rgba(var(--black), 0.066);
+  --footer-bg:     rgb(var(--grey-200));
+  --footer-color:  rgb(var(--grey-700));
+
+  /* ---------- Buttons ---------- */
+  --btn-primary-bg:         var(--accent-brand);
+  --btn-primary-bg-hover:   var(--accent-brand-darker);
+  --btn-primary-color:      rgb(var(--white));
+  --btn-secondary-bg:       rgba(var(--accent-brand-rgb), 0.1);
+  --btn-secondary-bg-hover: var(--accent-brand);
+  --btn-secondary-color:    var(--accent-brand);
+
+  /* ---------- Tags & pills ---------- */
+  --tag-color:        rgb(var(--grey-700));
+  --tag-color-hover:  rgb(var(--grey-900));
+  --tag-bg:           rgba(var(--grey-900), 0.05);
+  --tag-prefix:       rgba(var(--grey-900), 0.6);
+
+  /* ---------- Reactions ---------- */
+  --reaction-like-color: rgb(var(--nietabu-magenta) / 1);
+  --reaction-like-bg:    rgba(var(--nietabu-purple-500), 0.12);
+  --reaction-save-color: rgb(var(--nietabu-purple-600));
+  --reaction-save-bg:    rgba(var(--nietabu-purple-500), 0.12);
+
+  /* ---------- Sizing ---------- */
+  --header-height: 56px;
+  --site-width: 1380px;
+
+  /* Spacing units (4px base) */
+  --su-05: 0.125rem;  /* 2 */
+  --su-1:  0.25rem;   /* 4 */
+  --su-2:  0.5rem;    /* 8 */
+  --su-3:  0.75rem;   /* 12 */
+  --su-4:  1rem;      /* 16 */
+  --su-5:  1.25rem;   /* 20 */
+  --su-6:  1.5rem;    /* 24 */
+  --su-7:  2rem;      /* 32 */
+  --su-8:  3rem;      /* 48 */
+  --su-9:  4rem;      /* 64 */
+  --su-10: 8rem;      /* 128 */
+
+  /* Corner radii */
+  --radius:        0.375rem; /* 6px — cards, inputs */
+  --radius-large:  0.75rem;  /* 12px */
+  --radius-xl:     2rem;     /* 32px — capsule pills */
+
+  /* Transitions */
+  --transition-func: cubic-bezier(0.17, 0.67, 0.5, 0.71);
+  --transition-time: 100ms;
+  --transition-props: var(--transition-func) var(--transition-time);
+
+  --focus: var(--accent-brand);
+  --focus-ring: 0 0 0 2px rgb(var(--white)), 0 0 0 4px var(--focus);
+
+  /* Shadows */
+  --shadow-1: 0 10px 15px -3px rgba(var(--black), 0.1),
+              0 4px 6px -2px rgba(var(--black), 0.05),
+              0 0 0 1px rgba(var(--black), 0.1);
+  --shadow-2: 0 20px 25px -5px rgba(var(--black), 0.1),
+              0 10px 10px -5px rgba(var(--black), 0.05),
+              0 0 0 1px rgba(var(--black), 0.1);
+  --shadow-smooth: 0 8px 16px rgba(0, 0, 0, 0.05);
+
+  /* ---------- Typography ---------- */
+  /*
+   * Brand fonts (provided by user):
+   *   Roboto         — body & UI (weights 500, 700)
+   *   OpenDyslexic   — accessibility / dyslexia-friendly mode
+   *   icomoon        — custom icon font baked into the Forem fork
+   */
+  --ff-sans-serif: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                   Helvetica, Arial, sans-serif;
+  --ff-monospace:  'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono',
+                   Menlo, Courier, monospace;
+  --ff-serif:      Palatino, 'Palatino Linotype', Georgia, serif;
+  --ff-display:    'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ff-dyslexic:   'OpenDyslexic', 'Roboto', sans-serif;
+  --ff-icon:       'icomoon';
+
+  /* Font sizes */
+  --fs-2xs:  0.675rem; /* 11 */
+  --fs-xs:   0.75rem;  /* 12 */
+  --fs-s:    0.875rem; /* 14 */
+  --fs-base: 1rem;     /* 16 */
+  --fs-l:    1.125rem; /* 18 */
+  --fs-xl:   1.25rem;  /* 20 */
+  --fs-2xl:  1.5rem;   /* 24 */
+  --fs-3xl:  1.875rem; /* 30 */
+  --fs-4xl:  2.25rem;  /* 36 */
+  --fs-5xl:  3rem;     /* 48 */
+
+  /* Font weights */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-bold:   700;
+  --fw-heavy:  800;
+
+  /* Line heights */
+  --lh-tight: 1.25;
+  --lh-base:  1.5;
+}
+
+/* ============================================================
+   DARK THEME — opt-in via [data-theme="dark"] on <html> or <body>
+   Tokens are remapped so existing components inherit dark surfaces
+   without any per-component changes.
+   ============================================================ */
+:root[data-theme="dark"],
+[data-theme="dark"] {
+  /* Sampled directly from live nie!tabu dark mode (uploaded screenshot):
+       page bg     #000000
+       card bg     #141311  (warm near-black grafit)
+       brand cta   #4F46E5  (indigo-600, lifted from purple)
+   */
+
+  /* Re-map the grey scale so rgb(var(--grey-N)) flips automatically. */
+  --grey-50:  20, 19, 17;     /* near-black surfaces */
+  --grey-100:  0,  0,  0;     /* page bg = pure black */
+  --grey-200: 30, 30, 32;     /* hover / hairline-bg */
+  --grey-300: 50, 50, 54;
+  --grey-400: 110, 110, 118;
+  --grey-500: 150, 150, 158;
+  --grey-600: 175, 175, 183;  /* secondary text */
+  --grey-700: 205, 205, 212;
+  --grey-800: 228, 228, 232;
+  --grey-900: 245, 245, 248;  /* primary text */
+
+  /* Brand: dark mode lifts to indigo-600 #4F46E5 (sampled from CTA). */
+  --nietabu-purple-50:   30,  30,  60;
+  --nietabu-purple-100:  50,  50,  90;
+  --nietabu-purple-300: 138, 134, 232;
+  --nietabu-purple-500:  79,  70, 229;   /* dark-mode primary — #4F46E5 */
+  --nietabu-purple-600: 117, 110, 235;
+  --nietabu-purple-700: 165, 159, 245;
+  --nietabu-magenta:    232,  92, 156;
+
+  /* Functional surfaces */
+  --body-bg:    rgb(0, 0, 0);
+  --body-color: rgb(245, 245, 248);
+
+  --card-bg:               rgb(20, 19, 17);   /* warm grafit */
+  --card-color:            rgb(245, 245, 248);
+  --card-color-secondary:  rgb(205, 205, 212);
+  --card-color-tertiary:   rgb(175, 175, 183);
+  --card-secondary-bg:     rgb(28, 27, 25);
+  --card-tertiary-bg:      rgb(12, 12, 12);
+  --card-border:           rgba(255, 255, 255, 0.08);
+  --card-secondary-border: rgba(255, 255, 255, 0.04);
+
+  --header-bg:     rgb(20, 19, 17);
+  --header-shadow: rgba(0, 0, 0, 0.6);
+  --footer-bg:     rgb(20, 19, 17);
+  --footer-color:  rgb(205, 205, 212);
+
+  /* Tags & pills */
+  --tag-color:        rgb(215, 215, 222);
+  --tag-color-hover:  rgb(245, 245, 248);
+  --tag-bg:           rgba(255, 255, 255, 0.06);
+  --tag-prefix:       rgba(255, 255, 255, 0.5);
+
+  /* Reactions */
+  --reaction-like-color: rgb(232, 92, 156);
+  --reaction-like-bg:    rgba(79, 70, 229, 0.25);
+  --reaction-save-color: rgb(138, 134, 232);
+  --reaction-save-bg:    rgba(79, 70, 229, 0.25);
+
+  /* Shadows — softer on dark */
+  --shadow-1: 0 10px 15px -3px rgba(0,0,0,0.6),
+              0 4px 6px -2px rgba(0,0,0,0.5),
+              0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-2: 0 20px 25px -5px rgba(0,0,0,0.7),
+              0 10px 10px -5px rgba(0,0,0,0.5),
+              0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-smooth: 0 8px 16px rgba(0,0,0,0.55);
+}
+
+/* Make body honor the tokens automatically when present. */
+[data-theme="dark"] body { background: var(--body-bg); color: var(--body-color); }
+
+/* ============================================================
+   Semantic helpers — map meaning to tokens
+   ============================================================ */
+
+.h-display, h1.display {
+  font-family: var(--ff-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-4xl);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+}
+
+h1, .h1 { font-family: var(--ff-sans-serif); font-weight: var(--fw-bold); font-size: var(--fs-3xl); line-height: var(--lh-tight); }
+h2, .h2 { font-family: var(--ff-sans-serif); font-weight: var(--fw-bold); font-size: var(--fs-2xl); line-height: var(--lh-tight); }
+h3, .h3 { font-family: var(--ff-sans-serif); font-weight: var(--fw-bold); font-size: var(--fs-xl);  line-height: var(--lh-tight); }
+h4, .h4 { font-family: var(--ff-sans-serif); font-weight: var(--fw-bold); font-size: var(--fs-l);   line-height: var(--lh-tight); }
+
+p, .body  { font-family: var(--ff-sans-serif); font-size: var(--fs-base); line-height: var(--lh-base); color: var(--body-color); }
+.meta     { font-family: var(--ff-sans-serif); font-size: var(--fs-s);    line-height: 1.4; color: rgb(var(--grey-600)); }
+.caption  { font-family: var(--ff-sans-serif); font-size: var(--fs-xs);   line-height: 1.4; color: rgb(var(--grey-600)); }
+code, .mono { font-family: var(--ff-monospace); font-size: 0.95em; }
+
+/* dark-theme: v2 */
