@@ -1,0 +1,14 @@
+---
+fr:
+  views:
+    survey:
+      enter_response: Entrez votre réponse ici...
+      thank_you_response: Merci pour votre réponse.
+      thank_you_completing: Merci d'avoir complété le sondage !
+      previous: Précédent
+      next: Suivant
+      finish: Terminer
+      question_of: "Question %{current} sur %{total}"
+      completed: Sondage terminé
+      save_error: Un problème est survenu lors de l'enregistrement de vos réponses. Veuillez réessayer.
+      results_heading: Résultats

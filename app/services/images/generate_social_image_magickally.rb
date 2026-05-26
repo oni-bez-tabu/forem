@@ -11,13 +11,16 @@ module Images
 
     def initialize(resource)
       @resource = resource
-      @logo_url = Settings::General.logo_png
+      @cached_subforem_id = nil
+      @cached_logo_url = nil
+      @cached_user_id = nil
+      @cached_author_image_url = nil
     end
 
     def call
       if @resource.is_a?(Article)
         @user = @resource.user
-        read_files
+        read_files(@resource)
         url = generate_magickally(title: @resource.title,
                                   date: @resource.readable_publish_date,
                                   author_name: @user.name,
@@ -27,8 +30,8 @@ module Images
         EdgeCache::BustArticle.call(@resource)
       elsif @resource.is_a?(User)
         @user = @resource
-        read_files
         @resource.articles.published.where(organization_id: nil, main_image: nil).find_each do |article|
+          read_files(article)
           url = generate_magickally(title: article.title,
                                     date: article.readable_publish_date,
                                     author_name: @user.name,
@@ -37,8 +40,8 @@ module Images
         end
       else # Organization
         @user = @resource
-        read_files
         @resource.articles.published.where(main_image: nil).find_each do |article|
+          read_files(article)
           url = generate_magickally(title: article.title,
                                     date: article.readable_publish_date,
                                     author_name: @user.name,
@@ -54,6 +57,7 @@ module Images
     private
 
     def generate_magickally(title: nil, date: nil, author_name: nil, color: nil)
+      @background_image.resize "1200x627!"
       result = draw_stripe(color)
       result = add_logo(result)
       result = add_text(result, title, date, author_name)
@@ -65,7 +69,7 @@ module Images
       color = "#111212" if color == "#000000" # pure black has minimagick side effects
       @background_image.combine_options do |c|
         c.fill color
-        c.draw "rectangle 0,0 1000,24" # adjust width according to your image width
+        c.draw "rectangle 0,0 1200,30" # adjust width according to your image width
       end
     end
 
@@ -76,15 +80,15 @@ module Images
           c.stroke "white"
           c.strokewidth "4"
           c.fill "none"
-          c.draw "rectangle 0,0 1000,1000" # adjust as needed based on image size
+          c.draw "rectangle 0,0 1200,1200" # adjust as needed based on image size
         end
 
         # Resize the overlay image
-        @logo_image.resize "64x64"
+        @logo_image.resize "77x77"
 
         result = @background_image.composite(@logo_image) do |c|
           c.compose "Over" # OverCompositeOp
-          c.geometry "+850+372" # move the overlay to the top left
+          c.geometry "+1020+466" # move the overlay to the top left
         end
       end
       result
@@ -99,7 +103,7 @@ module Images
         escaped_title = title.gsub('"', '\\"')
         c.gravity "West" # Set the origin for the text at the top left corner
         c.pointsize font_size.to_s
-        c.draw "text 80,-39 \"#{escaped_title}\"" # Start drawing text 90 from the left and slightly north, with double quotes around the title
+        c.draw "text 96,-49 \"#{escaped_title}\"" # Start drawing text 90 from the left and slightly north, with double quotes around the title
         c.fill "black"
         c.font BOLD_FONT_PATH.to_s
       end
@@ -107,25 +111,31 @@ module Images
       result.combine_options do |c|
         escaped_name = author_name.gsub('"', '\\"')
         c.gravity "Southwest"
-        c.pointsize "32"
-        c.draw "text 156,88 \"#{escaped_name}\"" # adjust coordinates as needed
+        c.pointsize "40"
+        c.draw "text 187,110 \"#{escaped_name}\"" # adjust coordinates as needed
         c.fill "black"
         c.font MEDIUM_FONT_PATH.to_s
       end
 
       result.combine_options do |c|
         c.gravity "Southwest"
-        c.pointsize "26"
-        c.draw "text 156,60 \"#{date}\"" # adjust coordinates as needed
+        c.pointsize "32"
+        c.draw "text 187,75 \"#{date}\"" # adjust coordinates as needed
         c.fill "#525252"
       end
     end
 
     def add_profile_image(result)
-      profile_image_size = "64x64"
-      profile_image_location = "+80+63"
-      # Add subtext and author image
+      profile_image_size = "77x77"
+      profile_image_location = "+96+79"
+
+      # Flatten animated GIFs to a single frame and convert to PNG immediately to prevent 
+      # mogrify from attempting to resize hundreds of frames, sparking Timeout::Errors.
+      @author_image.collapse!
+      @author_image.format("png")
       @author_image.resize profile_image_size
+
+      # Add subtext and author image
       result = result.composite(@author_image) do |c|
         c.compose "Over"
         c.gravity "Southwest"
@@ -139,6 +149,11 @@ module Images
         c.gravity "Southwest"
         c.geometry profile_image_location
       end
+    rescue Timeout::Error, StandardError => e
+      Honeybadger.notify(e)
+      # If processing the profile picture triggers a mogrify lockup, 
+      # gracefully fall back to returning the social image without their avatar.
+      result
     end
 
     def upload_result(result)
@@ -161,15 +176,15 @@ module Images
       text_length = text.length
 
       if text_length < 18
-        88
+        110
       elsif text_length < 40
-        77
+        96
       elsif text_length < 55
-        65
+        81
       elsif text_length < 70
-        60
+        75
       else
-        50
+        62
       end
     end
 
@@ -186,13 +201,28 @@ module Images
       end * "\n"
     end
 
-    def read_files
-      # These are files we can open once for all the images we are generating within the loop.
+    def read_files(article)
+      # Get the subforem_id for this article
+      subforem_id = article.subforem_id || Subforem.cached_default_id
+      user_id = @user&.id
+
+      # Fetch logo URL only if subforem has changed
+      if @cached_subforem_id != subforem_id
+        @cached_logo_url = Settings::General.logo_png(subforem_id: subforem_id)
+        @cached_subforem_id = subforem_id
+      end
+
+      # Fetch author image URL only if user has changed
+      if @cached_user_id != user_id
+        image = @user&.profile_image_90.to_s
+        @cached_author_image_url = image.start_with?("http") ? image : Images::Profile::BACKUP_LINK
+        @cached_user_id = user_id
+      end
+
+      # Always create fresh image objects since MiniMagick modifies them in place
       @background_image = MiniMagick::Image.open(TEMPLATE_PATH)
-      @logo_image = MiniMagick::Image.open(@logo_url) if @logo_url.present?
-      image = @user&.profile_image_90.to_s
-      author_image_url = image.start_with?("http") ? image : Images::Profile::BACKUP_LINK
-      @author_image = MiniMagick::Image.open(author_image_url)
+      @logo_image = @cached_logo_url.present? ? MiniMagick::Image.open(@cached_logo_url) : nil
+      @author_image = MiniMagick::Image.open(@cached_author_image_url)
       @rounded_mask = MiniMagick::Image.open(ROUNDED_MASK_PATH)
     end
   end

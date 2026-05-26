@@ -1,3 +1,4 @@
+---
 pl:
   views:
     stories:
@@ -20,8 +21,34 @@ pl:
         year: Rok
         infinity: Nieskończoność
         latest: Najnowsze
-        signin_html: 👋 <a href="%{path}">Zaloguj się</a>, aby mieć możliwość sortowania postów według <strong>istotności</strong>, <strong>najnowszych</strong> lub <strong>najlepszych</strong>.
+        signin_html: "\U0001F44B <a href=\"%{path}\">Zaloguj się</a>, aby mieć możliwość sortowania postów według <strong>istotności</strong>, <strong>najnowszych</strong> lub <strong>najlepszych</strong>."
         top: Najlepsze
+        latest_less_filtered: Najnowsze (mniej filtrowane)
+        latest_following: Najnowsze (tylko obserwowani)
       status_placeholder: Co słychać?
       submit: Opublikuj
-      status_hint_html: <strong>Szybkie posty (beta)</strong> pojawiają się w aktualnościach, ale nie w powiadomieniach ani na Twoim profilu — <a href='/new'>Otwórz pełny edytor</a>
+      status_hint_html: "<strong>Szybkie posty (beta)</strong> pojawiają się w aktualnościach, ale nie w powiadomieniach ani na Twoim profilu — <a href='/new'>Otwórz pełny edytor</a>"
+      status_expanded_placeholder: Chcesz coś dodać?
+      feed:
+        discover: Odkrywaj
+        following: Obserwowani
+        top_this_week: Najlepsze w tym tygodniu
+        top_this_month: Najlepsze w tym miesiącu
+        top_this_year: Najlepsze w tym roku
+        top_this_infinity: Najlepsze wszech czasów
+        no_results:
+          discover:
+            title: Nie znaleziono postów
+            description: Sprawdź ponownie później lub opublikuj własny post!
+            action_text: Utwórz post
+            action_href: "/new"
+          following:
+            title: Brak postów od osób, które obserwujesz
+            description: Zacznij obserwować członków, aby zobaczyć ich najnowsze posty w swoim kanale.
+            action_text: Powrót do zakładki Odkrywaj
+            action_href: "/discover"
+          default:
+            title: Nie znaleziono postów
+            description: Sprawdź ponownie później lub opublikuj własny post!
+            action_text: Utwórz post
+            action_href: "/new"

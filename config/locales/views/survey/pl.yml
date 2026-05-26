@@ -1,0 +1,14 @@
+---
+pl:
+  views:
+    survey:
+      enter_response: Wpisz tutaj swoją odpowiedź...
+      thank_you_response: Dziękujemy za odpowiedź.
+      thank_you_completing: Dziękujemy za wypełnienie ankiety!
+      previous: Wstecz
+      next: Dalej
+      finish: Zakończ
+      question_of: "Pytanie %{current} z %{total}"
+      completed: Ankieta zakończona
+      save_error: Wystąpił problem z zapisem odpowiedzi. Spróbuj ponownie.
+      results_heading: Wyniki

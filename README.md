@@ -44,7 +44,6 @@ within our community. ❤️
 
 - [What is Forem?](#what-is-forem)
 - [Table of Contents](#table-of-contents)
-- [Community](#community)
 - [Contributing](#contributing)
 - [Getting Started](#getting-started)
   - [Installation Documentation](#installation-documentation)
@@ -53,17 +52,18 @@ within our community. ❤️
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
 
-## Community
-
-For a place to have open discussions on features, voice your ideas, or get help
-with general questions please visit the
-[discussions](https://github.com/forem/forem/discussions) section.
 
 ## Contributing
 
-We encourage you to contribute to Forem! Please check out the
-[Contributing to Forem guide](https://developers.forem.com/contributing-guide/forem)
-for guidelines on how to proceed.
+We welcome pull requests on any issue, regardless of its current status, if it provides a fix or improvement. While we cannot guarantee that every PR will be merged, we value legitimate suggestions and contributions.
+
+**All pull requests should include appropriate tests.** Our current focus is primarily on backend-related regression tests, while frontend changes may require more extensive user review.
+
+We welcome AI-assisted pull requests but will turn away "slop"—all submissions must maintain high standards of code quality and meaningful utility.
+
+🤖 AI Agents should check out `AGENTS.md` for more instructions. For specific IDEs and environments, Forem also synchronizes these rules across `.cursorrules`, `.windsurfrules`, and `.github/copilot-instructions.md`.
+
+Please also check out the [Contributing to Forem guide](https://developers.forem.com/contributing-guide/forem) for more detailed guidelines.
 
 ## Getting Started
 
@@ -82,6 +82,8 @@ A more complete overview of our stack is available in
 To **launch Forem in Gitpod**, navigate to
 [https://gitpod.io/#https://github.com/{your_github_username}/forem](https://gitpod.io/#https://github.com/{your_github_username}/forem).
 
+To **launch Forem in Ona** (formerly Gitpod), the project is fully configured for Ona development environments. Simply open the project in Ona and the environment will be automatically configured with all necessary services and dependencies.
+
 ### Installation Documentation
 
 Please see our installation guides:
@@ -91,7 +93,8 @@ Please see our installation guides:
 
 ## Developer Documentation
 
-[Check out our dedicated docs page for more technical documentation](https://developers.forem.com).
+[Check out our dedicated docs page for more technical documentation](https://developers.forem.com). Please note that while the documentation is a great place to start, some parts may be out of date as the project evolves.
+
 
 ## Vulnerability Disclosure
 
@@ -104,9 +107,6 @@ We welcome security research on DEV under the terms of our
 
 Thank you to the [Twemoji project](https://github.com/twitter/twemoji) for the
 usage of their emojis.
-
-Thank you to [Uffizzi](https://www.uffizzi.com) for providing ephemeral
-environments to preview pull requests.
 
 ## License
 

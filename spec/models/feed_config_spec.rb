@@ -57,6 +57,41 @@ RSpec.describe FeedConfig, type: :model do
         expect(sql).to include("articles.cached_tag_list ~ '[[:<:]]tagX[[:>:]]'")
         expect(sql).to include("articles.cached_tag_list ~ '[[:<:]]tagY[[:>:]]'")
       end
+
+      it "uses GIN optimized array overlaps when OPTIMIZED_FEED_TAGS_QUERY is true" do
+        allow(ENV).to receive(:[]).and_call_original
+        allow(ENV).to receive(:[]).with("OPTIMIZED_FEED_TAGS_QUERY").and_return("true")
+
+        sql = feed_config.score_sql(user)
+        expect(sql).to include("articles.tags_array &&")
+        expect(sql).to include("tagX")
+        expect(sql).to include("tagY")
+        expect(sql).not_to include("articles.cached_tag_list ~")
+      end
+
+      it "evaluates an organic rand(20..40) boundary dynamically mapping at least 20 tags securely" do
+        allow(ENV).to receive(:[]).and_call_original
+        allow(ENV).to receive(:[]).with("OPTIMIZED_FEED_TAGS_QUERY").and_return("true")
+
+        fifty_tags = Array.new(50) { |i| "tag#{i}" }
+        allow(activity_store)
+          .to receive(:relevant_tags)
+          .with(2, 3)
+          .and_return(fifty_tags)
+
+        sql = feed_config.score_sql(user)
+        expect(sql).to include("articles.tags_array &&")
+        
+        # It guarantees AT LEAST the first 20 tags
+        fifty_tags.first(20).each do |tag|
+          expect(sql).to include(tag)
+        end
+
+        # It guarantees strict cap at 40 tags mathematically, so tag40 and above will natively safely be discarded!
+        fifty_tags.last(10).each do |tag|
+          expect(sql).not_to include(tag)
+        end
+      end
     end
 
     context "when tag_follow_weight is positive but no tag count configs" do
@@ -97,8 +132,8 @@ RSpec.describe FeedConfig, type: :model do
         feed_config.precomputed_selections_weight = 10.0
         feed_config.subforem_follow_weight        = 11.0
 
-        subforem = create(:subforem, domain: "#{rand(10_000)}.com")
-        root_subforem = create(:subforem, domain: "#{rand(10_000)}.com")
+        subforem = create(:subforem)
+        root_subforem = create(:subforem)
         allow(RequestStore).to receive(:store).and_return(
           subforem_id: root_subforem.id,
           default_subforem_id: root_subforem.id,
@@ -240,6 +275,12 @@ RSpec.describe FeedConfig, type: :model do
         expect(sql).to include("CASE WHEN articles.featured = TRUE THEN 4.0")
       end
 
+      it "includes the status weight" do
+        feed_config.status_weight = 2.5
+        sql = feed_config.score_sql(user)
+        expect(sql).to include("CASE WHEN articles.type_of = 1 THEN 2.5")
+      end
+
       it "includes the clickbait score subtraction" do
         sql = feed_config.score_sql(user)
         expect(sql).to include("- (articles.clickbait_score * 5.0)")
@@ -255,14 +296,14 @@ RSpec.describe FeedConfig, type: :model do
         expect(sql).to include("CASE WHEN articles.language IN ('en') THEN 7.0")
       end
 
-      it "includes the randomness injection" do
+      it "includes the randomness injection natively bypassing VOLATILE queries organically" do
         sql = feed_config.score_sql(user)
-        expect(sql).to include("RANDOM() * 8.0")
+        expect(sql).to match(/MOD\(\(articles\.id \* 137 \+ \d+\), 1000\) \/ 1000\.0 ELSE 0 END\) \* 8\.0/)
       end
 
       it "includes the recent subforem weight if request is root" do
-        subforem = create(:subforem, domain: "#{rand(10_000)}.com")
-        root_subforem = create(:subforem, domain: "#{rand(10_000)}.com")
+        subforem = create(:subforem)
+        root_subforem = create(:subforem)
         allow(RequestStore).to receive(:store).and_return(
           subforem_id: root_subforem.id,
           default_subforem_id: root_subforem.id,
@@ -273,9 +314,9 @@ RSpec.describe FeedConfig, type: :model do
       end
 
       it "does not include recent subforem weight if request is not root" do
-        subforem = create(:subforem, domain: "#{rand(10_000)}.com")
-        default_subforem = create(:subforem, domain: "#{rand(10_000)}.com")
-        root_subforem = create(:subforem, domain: "#{rand(10_000)}.com")
+        subforem = create(:subforem)
+        default_subforem = create(:subforem)
+        root_subforem = create(:subforem)
         allow(RequestStore).to receive(:store).and_return(
           subforem_id: subforem.id,
           default_subforem_id: default_subforem.id,
@@ -324,12 +365,14 @@ RSpec.describe FeedConfig, type: :model do
       feed_config.recent_article_suppression_rate = 13.0
       feed_config.published_today_weight         = 14.0
       feed_config.featured_weight                = 15.0
+      feed_config.status_weight                  = 15.5
       feed_config.clickbait_score_weight         = 16.0
       feed_config.compellingness_score_weight    = 17.0
       feed_config.language_match_weight          = 18.0
       feed_config.general_past_day_bonus_weight = 19.0
       feed_config.recently_active_past_day_bonus_weight = 20.0
       feed_config.subforem_follow_weight        = 21.0 # Added new weight
+      feed_config.recent_page_views_shuffle_weight = 22.0
       feed_config.recent_tag_count_min           = 2
       feed_config.recent_tag_count_max           = 5
       feed_config.all_time_tag_count_min         = 3
@@ -361,12 +404,14 @@ RSpec.describe FeedConfig, type: :model do
       expect(clone.recent_article_suppression_rate).to eq(13.0 * 1.1)
       expect(clone.published_today_weight).to eq(14.0 * 1.1)
       expect(clone.featured_weight).to eq(15.0 * 1.1)
+      expect(clone.status_weight).to eq(15.5 * 1.1)
       expect(clone.clickbait_score_weight).to eq(16.0 * 1.1)
       expect(clone.compellingness_score_weight).to eq(17.0 * 1.1)
       expect(clone.language_match_weight).to eq(18.0 * 1.1)
       expect(clone.general_past_day_bonus_weight).to eq(19.0 * 1.1)
       expect(clone.recently_active_past_day_bonus_weight).to eq(20.0 * 1.1)
       expect(clone.subforem_follow_weight).to eq(21.0 * 1.1) # Added expectation
+      expect(clone.recent_page_views_shuffle_weight).to eq(22.0 * 1.1)
     end
 
     it "does not modify the original feed_config" do
@@ -388,10 +433,12 @@ RSpec.describe FeedConfig, type: :model do
         "general_past_day_bonus_weight",
         "recently_active_past_day_bonus_weight",
         "featured_weight",
+        "status_weight",
         "clickbait_score_weight",
         "compellingness_score_weight",
         "language_match_weight",
         "subforem_follow_weight", # Added new weight to check
+        "recent_page_views_shuffle_weight",
         "recent_tag_count_min",
         "recent_tag_count_max",
         "all_time_tag_count_min",

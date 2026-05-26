@@ -1,0 +1,32 @@
+---
+pl:
+  views:
+    search:
+      heading: Wyniki wyszukiwania%{for}
+      for: " dla %{query}"
+      placeholder: Szukaj...
+      find_related_posts: Znajdź powiązane posty...
+      icon:
+        aria_label: Szukaj
+        title: Szukaj
+      powered_by: Obsługiwane przez Algolia
+      suggestions:
+        submit_search: Zatwierdź wyszukiwanie, aby użyć zaawansowanych filtrów.
+        displaying_recommendations: Wyświetlane są rekomendacje Algolia — zacznij pisać, aby wyszukać
+      nav:
+        posts: Posty
+        podcasts: Podcasty
+        people: Osoby
+        comments: Komentarze
+        my_posts: Tylko moje posty
+        organizations: Organizacje
+        tags: Tagi
+      sort:
+        aria_label: Opcje sortowania wyników
+        relevance: Najbardziej trafne
+        newest: Najnowsze
+        oldest: Najstarsze
+      meta:
+        title: Wyniki wyszukiwania%{for}
+        for: " dla %{query}"
+        description: "%{site} => Wyniki wyszukiwania"

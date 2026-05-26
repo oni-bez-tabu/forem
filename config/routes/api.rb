@@ -40,6 +40,8 @@ get "/analytics/totals", to: "analytics#totals"
 get "/analytics/historical", to: "analytics#historical"
 get "/analytics/past_day", to: "analytics#past_day"
 get "/analytics/referrers", to: "analytics#referrers"
+get "/analytics/top_contributors", to: "analytics#top_contributors"
+get "/analytics/follower_engagement", to: "analytics#follower_engagement"
 
 resources :health_checks, only: [] do
   collection do
@@ -61,6 +63,14 @@ resources :organizations, only: [:show], param: :id_or_slug do
   resources :users, only: [:index], to: "organizations#users"
   resources :articles, only: [:index], to: "organizations#articles"
 end
+
+resources :surveys, only: %i[index show], param: :id_or_slug do
+  member do
+    get :poll_votes
+    get :poll_text_responses
+  end
+end
+
 
 resource :instance, only: %i[show]
 

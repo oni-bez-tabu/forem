@@ -1,9 +1,14 @@
 pl:
   liquid_tags:
+    invalid_url_scheme: "Nieprawidłowy URL dla '%{option}': dozwolone są tylko adresy http i https"
     asciinema_tag:
       invalid_asciinema_id: "Nieprawidłowe ID Asciinema: %{id}"
     blogcast_tag:
       invalid_blogcast_id: Nieprawidłowe ID Blogcast
+    bolt_tag:
+      invalid_url: Nieprawidłowy URL Bolt
+    cloud_run_tag:
+      invalid_cloud_run_url: Nieprawidłowy URL Cloud Run
     codepen_tag:
       invalid_codepen_url: Nieprawidłowy URL CodePen
       invalid_options: Nieprawidłowe opcje
@@ -13,6 +18,8 @@ pl:
       invalid_comment: Nieprawidłowe ID komentarza lub URL
     dotnet_fiddle_tag:
       invalid_dotnetfiddle_url: Nieprawidłowy URL DotnetFiddle
+    descript_tag:
+      invalid_descript_url: Nieprawidłowy URL Descript.
     gist_tag:
       invalid_filename: Nieprawidłowa nazwa pliku
       invalid_format: "Nieprawidłowy link Gist: %{link} Linki muszą mieć następujący format: https://gist.github.com/nazwa_użytkownika/id_gista"
@@ -112,3 +119,71 @@ pl:
       invalid_youtube_id: Nieprawidłowe ID lub URL YouTube
     tiktok_tag:
       invalid_tiktok_id: Nieprawidłowe Tiktok link
+    huggingface_tag:
+      invalid_url: Nieprawidłowy URL Hugging Face Space
+    lovable_tag:
+      invalid_url: Nieprawidłowy URL Lovable
+    mux_tag:
+      invalid_mux_url: Nieprawidłowy URL Mux.
+    netlify_tag:
+      invalid_url: "Nieprawidłowy URL Netlify. Musi to być URL https://*.netlify.app"
+    warp_tag:
+      invalid_url: Nieprawidłowy URL Warp
+    features_tag:
+      no_args: "Tag features nie akceptuje żadnych argumentów"
+    feature_tag:
+      missing_title: "Tag feature wymaga opcji title"
+    col_tag:
+      invalid_span: "Rozpiętość (span) musi być między 1 a 4"
+    agent_session_tag:
+      invalid: "Nieprawidłowa składnia agent_session. Użyj: {% agent_session ID %}, {% agent_session ID start..end %} lub {% agent_session ID slice_name %}"
+      not_found: Nie znaleziono sesji agenta
+      unpublished: Tylko właściciel sesji może osadzić tę sesję
+    feed_tag:
+      missing_source: "Tag feed wymaga co najmniej jednego źródła: org, tag lub tags"
+      invalid_option: "Nieprawidłowa opcja '%{option}' dla tagu feed"
+      invalid_org: "Nie znaleziono organizacji '%{slug}'"
+      invalid_tags: "Opcja tags wymaga co najmniej jednej nazwy tagu"
+      invalid_limit: "Limit musi być między 1 a 30"
+      invalid_sort: "Sortowanie musi być jednym z: recent, reactions, comments, score"
+      invalid_since: "Since musi być względnym czasem (np. 30d) lub datą (YYYY-MM-DD)"
+    row_tag:
+      no_args: "Tag row nie akceptuje żadnych argumentów"
+    org_posts_tag:
+      invalid_slug: Nieprawidłowy slug organizacji
+      invalid_option: "Nieprawidłowa opcja '%{option}' dla tagu org_posts"
+      invalid_limit: "Limit musi być między 1 a 30"
+      invalid_sort: "Sortowanie musi być jednym z: recent, reactions, comments, score"
+      invalid_since: "Since musi być względnym czasem (np. 30d) lub datą (YYYY-MM-DD)"
+    org_team_tag:
+      invalid_slug: Nieprawidłowy slug organizacji
+      invalid_option: "Nieprawidłowa opcja '%{option}' dla tagu org_team"
+      invalid_limit: "Limit musi być między 1 a 50"
+      invalid_role: "Rola musi być jedną z: all, admins, members"
+    offer_tag:
+      default_button: "Dowiedz się więcej"
+    quote_tag:
+      missing_author: "Tag quote wymaga opcji author"
+      invalid_rating: "Ocena musi być między 1 a 5"
+      learn_more: "Dowiedz się więcej"
+    slide_tag:
+      missing_image: "Tag slide wymaga opcji image"
+      missing_content: "Tag slide wymaga co najmniej jednego z: image, video lub link"
+    slides_tag:
+      invalid_mode: "Tryb slides musi być 'default' lub 'carousel'"
+    org_lead_form_tag:
+      not_found: Nie znaleziono formularza lead
+      inactive: Ten formularz lead nie jest już aktywny
+      invalid_id: "Nieprawidłowe ID formularza lead. Użyj: {% org_lead_form ID %}"
+      data_shared: "Udostępnia Twoje imię, e-mail, firmę i stanowisko tej organizacji."
+      submitting: Wysyłanie...
+      submitted: Wysłano
+      already_submitted: "Wysłano %{date}"
+      error: Coś poszło nie tak. Spróbuj ponownie.
+      sign_in_required: Zaloguj się, aby wysłać ten formularz.
+      field_name: Imię
+      field_email: E-mail
+      field_company: Firma
+      field_job_title: Stanowisko
+      name_email_required: Imię i e-mail są wymagane.
+      wrong_organization: Ten formularz lead nie należy do tej organizacji.

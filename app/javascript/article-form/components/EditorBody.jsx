@@ -19,6 +19,8 @@ export const EditorBody = ({
   defaultValue,
   switchHelpContext,
   version,
+  textAreaName = 'body_markdown',
+  textAreaId = 'article_body_markdown',
 }) => {
   const textAreaRef = useRef(null);
 
@@ -52,7 +54,7 @@ export const EditorBody = ({
       data-testid="article-form__body"
       className="crayons-article-form__body drop-area text-padding"
     >
-      <Toolbar version={version} textAreaId="article_body_markdown" />
+      <Toolbar version={version} textAreaId={textAreaId} />
       <AutocompleteTriggerTextArea
         triggerCharacter="@"
         maxSuggestions={6}
@@ -67,8 +69,8 @@ export const EditorBody = ({
         onChange={onChange}
         onFocus={switchHelpContext}
         aria-label="Post Content"
-        name="body_markdown"
-        id="article_body_markdown"
+        name={textAreaName}
+        id={textAreaId}
         defaultValue={defaultValue}
         placeholder="Napisz treść swojego postu tutaj..."
         className="crayons-textfield crayons-textfield--ghost crayons-article-form__body__field ff-monospace fs-l h-100"
@@ -80,8 +82,10 @@ export const EditorBody = ({
 EditorBody.propTypes = {
   onChange: PropTypes.func.isRequired,
   defaultValue: PropTypes.string.isRequired,
-  switchHelpContext: PropTypes.func.isRequired,
+  switchHelpContext: PropTypes.func,
   version: PropTypes.string.isRequired,
+  textAreaName: PropTypes.string,
+  textAreaId: PropTypes.string,
 };
 
 EditorBody.displayName = 'EditorBody';

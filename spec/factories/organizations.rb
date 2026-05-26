@@ -7,7 +7,6 @@ FactoryBot.define do
     profile_image      { Rails.root.join("app/assets/images/android-icon-36x36.png").open }
     url                { Faker::Internet.url }
     slug               { generate(:slug) }
-    github_username    { "org#{rand(10_000)}" }
     twitter_username   { "org#{rand(10_000)}" }
     bg_color_hex       { Faker::Color.hex_color }
     text_color_hex     { Faker::Color.hex_color }

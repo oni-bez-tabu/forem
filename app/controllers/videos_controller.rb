@@ -4,6 +4,7 @@ class VideosController < ApplicationController
 
   def index
     @video_articles = Article.with_video.from_subforem
+      .where.not(video_code: [nil, ""])
       .includes([:user])
       .select(:id, :video, :path, :title, :video_thumbnail_url, :user_id, :video_duration_in_seconds)
       .order(hotness_score: :desc)

@@ -1,6 +1,8 @@
 module CommentsHelper
   MAX_COMMENTS_TO_RENDER = 250
   MIN_COMMENTS_TO_RENDER = 8
+  MAX_TOP_LEVEL_COMMENTS_UNAUTHENTICATED = 75
+  MAX_DESCENDANT_COMMENTS_UNAUTHENTICATED = 5
 
   def any_negative_comments?(commentable)
     commentable.comments.where("score < 0").any?
@@ -91,7 +93,41 @@ module CommentsHelper
     URL.fragment_comment(comment, path: article&.path)
   end
 
+  def commenter_organization_membership(comment, commentable)
+    return unless commentable&.respond_to?(:organization)
+    return unless commentable.organization
+
+    # Use preloaded organization_memberships if available to avoid N+1 queries
+    if comment.user.organization_memberships.loaded?
+      if comment.user.organization_memberships.any? do |membership|
+        membership.organization_id == commentable.organization.id &&
+            %w[admin member].include?(membership.type_of_user)
+      end
+        commentable.organization.name
+      else
+        nil
+      end
+    else
+      # Fallback to the original method if not preloaded
+      comment.user.org_member?(commentable.organization) ? commentable.organization.name : nil
+    end
+  end
+
   private
+
+  def limit_descendants(sub_hash, limit)
+    count = 0
+    traverse = ->(hash) do
+      new_hash = {}
+      hash.each do |c, children|
+        break if count >= limit
+        count += 1
+        new_hash[c] = traverse.call(children)
+      end
+      new_hash
+    end
+    traverse.call(sub_hash)
+  end
 
   def nested_comments(tree:, commentable:, is_view_root: false, is_admin: false)
     comments = tree.filter_map do |comment, sub_comments|

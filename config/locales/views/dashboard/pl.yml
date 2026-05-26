@@ -1,3 +1,4 @@
+---
 pl:
   views:
     dashboard:
@@ -13,6 +14,8 @@ pl:
           following_orgs: Obserwowane organizacje (%{num})
           following_pods: Obserwowane podcasty (%{num})
           hidden_tags: Ukryte tagi (%{num})
+          agent_sessions: Sesje agenta (%{num})
+          feed_imports: Import kanałów RSS
         posts: Posty
         series: Serie
         followers: Obserwujący
@@ -25,6 +28,8 @@ pl:
         analytics: Analityka
         for_org: Analityka dla %{org}
         upload: Utwórz post z wideo
+        agent_sessions: Sesje agenta
+        feed_imports: Import kanałów RSS
       analytics:
         meta:
           title: Analityka
@@ -32,21 +37,24 @@ pl:
         back: Powrót do głównego Twojego panelu
         your: Twój panel kontrolny
         org: Twój panel analityki %{org}
+        readers: Czytelnicy
+        comments: Komentarze
+        reactions: Reakcje
       article:
         heading:
           text_html: "%{archived}%{title}"
           archived: "[Zarchiwizowane] "
         archived: Zarchiwizowane
-        published: "Opublikowane:"
-        published_html: "Opublikowane: %{date}"
-        edited: "Edytowane:"
-        edited_html: "Edytowane: %{date}"
-        series: "Seria:"
-        series_html: <strong>Seria:</strong> %{series}
+        published: 'Opublikowane:'
+        published_html: 'Opublikowane: %{date}'
+        edited: 'Edytowane:'
+        edited_html: 'Edytowane: %{date}'
+        series: 'Seria:'
+        series_html: "<strong>Seria:</strong> %{series}"
         draft: Szkic
         scheduled: Zaplanowane
-        scheduled_at: "Zaplanowane:"
-        language: "Język:"
+        scheduled_at: 'Zaplanowane:'
+        language: 'Język:'
         reactions:
           title: Reakcje
           icon: Reakcje
@@ -62,7 +70,7 @@ pl:
         views:
           title: Wyświetlenia
           icon: Wyświetlenia
-          lt_25: < 25
+          lt_25: "< 25"
           text_html:
             one: "%{scale} wyświetlenie"
             other: "%{scale} wyświetleń"
@@ -78,15 +86,15 @@ pl:
           button: Przypnij do profilu
           text: Przypnij
         manage:
-          aria_label: "Zarządzaj postem: %{title}"
+          aria_label: 'Zarządzaj postem: %{title}'
           text: Zarządzaj
         lock: Zablokuj dyskusję
         unlock: Odblokuj dyskusję
         edit:
-          aria_label: "Edytuj post: %{title}"
+          aria_label: 'Edytuj post: %{title}'
           text: Edytuj
         more:
-          title: "Więcej opcji dla posta: %{title}"
+          title: 'Więcej opcji dla posta: %{title}'
           icon: Więcej...
         stats: Statystyki
         archive: Archiwizuj post
@@ -95,7 +103,7 @@ pl:
         co_authors: Współautorzy
         series_author_change_warning: Zmiany autora nie są dozwolone dla postów w serii.
         icon: Szczegóły
-        author_is: "AUTOR: "
+        author_is: 'AUTOR: '
         save: Zapisz
         submit: Prześlij zmianę autora
       followers:
@@ -109,13 +117,13 @@ pl:
         empty: Jeszcze nie obserwujesz żadnych podcastów...
       following_tags:
         heading: Twój panel » Obserwowane tagi
-        empty_html: <span>Obserwuj tagi, aby spersonalizować swój kanał. Możesz eksplorować popularne tagi <a href=%{link}>tutaj</a></span>.
+        empty_html: "<span>Obserwuj tagi, aby spersonalizować swój kanał. Możesz eksplorować popularne tagi <a href=%{link}>tutaj</a></span>."
       following_users:
         heading: Twój panel » Obserwowani użytkownicy
         empty: Nie obserwujesz jeszcze żadnych użytkowników...
       hidden_tags:
         heading: Twój panel » Ukryte tagi
-        empty_html: <span>Nie masz jeszcze żadnych ukrytych tagów...</span>
+        empty_html: "<span>Nie masz jeszcze żadnych ukrytych tagów...</span>"
       tags:
         following_button: Obserwowane
         options:
@@ -157,4 +165,94 @@ pl:
         comments: Łączna liczba komentarzy do postów
         listings: Utworzone ogłoszenia
         credits: Dostępne kredyty
-        lt_500: < 500
+        lt_500: "< 500"
+      feed_imports:
+        heading: Panel » Import kanałów RSS
+        empty: Dodaj poniżej źródło RSS, aby zacząć importować posty jako wersje robocze.
+        no_history: Brak historii importu. Twój kanał będzie sprawdzany automatycznie.
+        no_notable_history: Wszystkie ostatnie sprawdzenia nie wykryły nowych postów.
+        history_heading: Historia importów
+        routine_checks:
+          one: Pokaż %{count} rutynowe sprawdzenie (brak nowych postów)
+          other: Pokaż %{count} rutynowych sprawdzeń (brak nowych postów)
+        source_filter: Filtruj wg źródła
+        all_sources: Wszystkie źródła
+        source_label: 'Źródło:'
+        overview:
+          status:
+            healthy: Sprawny
+            degraded: Z zakłóceniami
+            failing: Niesprawny
+            inactive: Nieaktywny
+          last_success: Ostatni udany import %{time} temu
+        summary:
+          total_imported: Zaimportowane artykuły
+          total_skipped: Pominięte elementy
+          total_failed: Nieudane elementy
+        health:
+          healthy: Twój kanał działa poprawnie.
+          degraded: Twój kanał miał ostatnio błędy. Niektóre importy mogły zostać pominięte.
+          failing: Twój kanał ciągle nie działa. Sprawdź adres URL kanału powyżej.
+        status:
+          pending: Oczekujący
+          fetching: Pobieranie
+          parsing: Analizowanie
+          importing: Importowanie
+          completed: Zakończone
+          no_new_posts: Brak nowych postów
+          failed: Nieudane
+        counts:
+          items_in_feed: Elementy w kanale
+          imported: Zaimportowane
+          skipped: Pominięte
+          failed: Nieudane
+          duration: 'Czas trwania: %{seconds}s'
+        items:
+          heading: Szczegóły importu
+          title: Tytuł
+          status: Status
+          article: Artykuł
+          statuses:
+            imported: Zaimportowany
+            skipped_duplicate: Pominięty (duplikat)
+            skipped_medium_reply: Pominięty (odpowiedź z Medium)
+            failed: Nieudany
+          show_duplicates:
+            one: Pokaż %{count} pominięty duplikat
+            other: Pokaż %{count} pominiętych duplikatów
+        sources:
+          your_sources: Twoje źródła kanałów
+          add_heading: Dodaj źródło kanału
+          welcome_heading: Publikowanie z RSS
+          welcome_desc1_html: Posty pojawią się w Twoim panelu <strong>jako wersje robocze</strong>, a następnie będziesz mógł je stamtąd publikować.
+          welcome_desc2: Formatowanie zazwyczaj wygląda dobrze, ale możesz musieć wprowadzić ręczne poprawki. W przypadku Medium może być konieczne ręczne poprawienie osadzonych treści.
+          welcome_desc3_html: Aby dowiedzieć się więcej o tym, jak tworzone są wersje robocze z Twojego kanału, przeczytaj ten %{guide}.
+          welcome_desc4: Twój kanał zostanie pobrany za każdym razem, gdy dodasz źródło, a aktualizacje będą następnie pobierane automatycznie w regularnych odstępach.
+          welcome_desc5_html: 'Uwaga: adresy URL kanałów RSS Medium mają postać <em>https://medium.com/feed/@twoja_nazwa_uzytkownika</em>'
+          welcome_desc6: Przesyłając adres URL swojego kanału RSS, oświadczasz, że jesteś właścicielem i/lub posiadasz uprawnienia do udostępniania powiązanych treści.
+          guide: przewodnik
+          url_label: Adres URL kanału RSS
+          url_placeholder: https://example.com/feed.xml
+          name_label: Nazwa (opcjonalnie)
+          name_placeholder: Mój blog
+          org_label: Organizacja (opcjonalnie)
+          org_description: Zaimportowane artykuły zostaną opublikowane w ramach tej organizacji.
+          org_none: Brak (konto osobiste)
+          org_no_orgs: Nie jesteś członkiem żadnej organizacji. Artykuły będą publikowane na Twoim koncie osobistym.
+          author_label: Domyślny autor
+          author_description: Gdy autor elementu RSS nie odpowiada istniejącemu kontu, zaimportowany artykuł zostanie przypisany temu użytkownikowi. Aby przypisać innego członka, wybierz organizację i upewnij się, że masz uprawnienia administratora organizacji.
+          author_self: Ja (domyślnie)
+          submit: Dodaj źródło kanału
+          edit: Edytuj
+          save: Zapisz zmiany
+          delete: Usuń
+          delete_confirm: Czy na pewno chcesz usunąć to źródło kanału?
+          mark_canonical_html: Domyślnie oznaczaj źródło RSS jako kanoniczny adres URL <p class='crayons-field__description'>Jeśli zaznaczysz tę opcję, post automatycznie oznaczy źródło kanału jako kanoniczny adres URL.</p>
+          referential_html: Zastąp linki wewnętrzne linkami specyficznymi dla %{community} <p class='crayons-field__description'>Jeśli zaznaczysz tę opcję, post automatycznie zmieni wszystkie adresy URL zawarte w poście, aby odwoływały się do wersji tego artykułu na %{community}, o ile są dostępne. Jest to głównie przeznaczone dla osób, które migrują cały swój blog na %{community}.</p>
+          status:
+            healthy: Sprawny
+            degraded: Z zakłóceniami
+            failing: Niesprawny
+            inactive: Nieaktywny
+          last_fetched: 'Ostatnio pobrany: %{time}'
+          never_fetched: Nigdy nie pobrany

@@ -16,7 +16,7 @@
       <th scope="col">ID</th>
       <th scope="col">Twitter</th>
       <th scope="col">Instagram</th>
-      <th scope="col">Tiktok</th>
+      <th scope="col">TikTok</th>
       <th scope="col">URL</th>
     </tr>
   </thead>
@@ -30,13 +30,13 @@
         <% else %>
           <td>N/A</td>
         <% end %>
-        <% if organization.instagram_username %>
-          <td><%= link_to organization.instagram_username, "https://instagram.com/#{organization.instagram_username}" %></td>
+        <% if (instagram_link = organization.social_link(:instagram)).present? %>
+          <td><%= link_to instagram_link, instagram_link %></td>
         <% else %>
           <td>N/A</td>
         <% end %>
-        <% if organization.tiktok_username %>
-          <td><%= link_to organization.tiktok_username, "https://tiktok.com/#{organization.tiktok_username}" %></td>
+        <% if (tiktok_link = organization.social_link(:tiktok)).present? %>
+          <td><%= link_to tiktok_link, tiktok_link %></td>
         <% else %>
           <td>N/A</td>
         <% end %>

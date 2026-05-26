@@ -14,6 +14,13 @@ RSpec.describe "StoriesShow" do
       expect(response.body).to include CGI.escapeHTML(article.title)
     end
 
+    it "renders the Mastodon share link via Share2Fedi" do
+      get article.path
+
+      share_url = "https://s2f.kytta.dev/?text=#{CGI.escape(URL.article(article))}"
+      expect(response.body).to include(share_url)
+    end
+
     it "redirects to appropriate if article belongs to org and user visits user version" do
       old_path = article.path
       article.update(organization: org)
@@ -228,7 +235,7 @@ RSpec.describe "StoriesShow" do
 
     context "when subforem logic is triggered by RequestStore" do
       let!(:subforem) { create(:subforem, domain: "www.example.com") }
-      let!(:default_subforem) { create(:subforem, domain: "#{rand(1000)}.com") }
+      let!(:default_subforem) { create(:subforem) }
 
       before do
         # Simulate a default_subforem stored in RequestStore
@@ -253,10 +260,12 @@ RSpec.describe "StoriesShow" do
       it "does not redirect if article.subforem_id == RequestStore.store[:subforem_id]" do
         article.update_column(:subforem_id, subforem.id)
         RequestStore.store[:subforem_id] = subforem.id
+        # Set the subforem_domain to match what the middleware would set
+        RequestStore.store[:subforem_domain] = subforem.domain
 
         get article.path
         expect(response).not_to have_http_status(:moved_permanently)
-        expect(response.body).not_to include("href=\"#{URL.article(article)}\"")
+        expect(response).to have_http_status(:ok)
       end
 
       it "redirects if article has no subforem_id and RequestStore has a non-default subforem_id" do

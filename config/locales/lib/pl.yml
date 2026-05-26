@@ -34,6 +34,14 @@ pl:
             description: The "Client ID" portion of the OAuth 2.0 page on the Google Cloud Platform portal
           google_secret:
             description: The "Client Secret" portion of the OAuth 2.0 page on the Google Cloud Platform portal
+          google_ios_key:
+            description: Natywny identyfikator klienta iOS skonfigurowany w portalu Google Cloud Platform
+          google_android_key:
+            description: Natywny identyfikator klienta Android skonfigurowany w portalu Google Cloud Platform
+          mlh_key:
+            description: Część "Application ID" portalu aplikacji MyMLH
+          mlh_secret:
+            description: Część "Secret" portalu aplikacji MyMLH
           invite_only:
             description: Only users invited by email can join this community.
           new_user_status:
@@ -173,6 +181,10 @@ pl:
           tags:
             description: Determines which tags are suggested to new users during onboarding (comma separated, letters only)
             placeholder: "List of valid tags: comma separated, letters only e.g. beginners,javascript,ruby,swift,kotlin"
+          display_sidebar_onboarding_checklist:
+            description: Wyświetla listę kroków onboardingu w prawym pasku bocznym dla nowych użytkowników, którzy nie ukończyli jeszcze wszystkich kroków.
+          enable_agent_sessions:
+            description: Włącza funkcję Sesji Agenta pozwalającą przesyłać i osadzać transkrypcje sesji agenta kodującego.
           video:
             description: Secret key used to allow AWS video encoding through the VideoStatesController
         rate_limit:
@@ -184,6 +196,14 @@ pl:
           content_spec:
             description: Wewnętrzny opis treści uznawanych ogólnie za „w temacie” — bądź bardzo opisowy, aby jak najlepiej odróżnić się od innych społeczności.
             placeholder: np. „Miejsce, gdzie deweloperzy dzielą się pracą, zadają pytania i uczą się od siebie nawzajem... Ale znacznie dłużej i bardziej konkretnie”
+          expanded_advisement_spec:
+            description: Szczegółowe wytyczne i porady przekazywane Edytorowi AI wspomagającemu użytkowników co do tego, jakie treści są wyjątkowo skuteczne lub pożądane.
+            placeholder: np. „Zachęcaj użytkowników do udostępniania fragmentów kodu, mówienia o swoich wyzwaniach inżynierskich i unikania ogólnych treści promocyjnych...”
+        talk:
+          anonymous_listening:
+            description: Zezwalaj niezalogowanym użytkownikom na słuchanie rozmów.
+          admin_creation:
+            description: Zezwalaj wyłącznie administratorom na tworzenie nowych rozmów.
         smtp:
           address:
             description: Address of the remote mail server

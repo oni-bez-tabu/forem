@@ -85,7 +85,7 @@ class NotifyMailer < ApplicationMailer
     @unread_notifications_count = @user.notifications.unread.count
     @unsubscribe = generate_unsubscribe_token(@user.id, :email_unread_notifications)
     subject = I18n.t("mailers.notify_mailer.unread_notifications", count: @unread_notifications_count,
-                                                                   community: Settings::Community.community_name)
+                                                                   community: Settings::Community.community_name(subforem_id: @subforem_id))
     mail(to: @user.email, subject: subject)
   end
 
@@ -107,7 +107,7 @@ class NotifyMailer < ApplicationMailer
   def feedback_response_email
     mail(to: params[:email_to],
          subject: I18n.t("mailers.notify_mailer.feedback",
-                         community: Settings::Community.community_name))
+                         community: Settings::Community.community_name(subforem_id: @subforem_id)))
   end
 
   def feedback_message_resolution_email
@@ -127,7 +127,7 @@ class NotifyMailer < ApplicationMailer
   def account_deleted_email
     @name = params[:name]
 
-    subject = I18n.t("mailers.notify_mailer.account_deleted", community: Settings::Community.community_name)
+    subject = I18n.t("mailers.notify_mailer.account_deleted", community: Settings::Community.community_name(subforem_id: @subforem_id))
     mail(to: params[:email], subject: subject)
   end
 
@@ -135,7 +135,7 @@ class NotifyMailer < ApplicationMailer
     @name = params[:name]
     @org_name = params[:org_name]
 
-    subject = I18n.t("mailers.notify_mailer.org_deleted", community: Settings::Community.community_name)
+    subject = I18n.t("mailers.notify_mailer.org_deleted", community: Settings::Community.community_name(subforem_id: @subforem_id))
     mail(to: params[:email], subject: subject)
   end
 
@@ -144,7 +144,7 @@ class NotifyMailer < ApplicationMailer
     @name = user.name
     @token = params[:token]
 
-    subject = I18n.t("mailers.notify_mailer.deletion_requested", community: Settings::Community.community_name)
+    subject = I18n.t("mailers.notify_mailer.deletion_requested", community: Settings::Community.community_name(subforem_id: @subforem_id))
     mail(to: user.email, subject: subject)
   end
 
@@ -177,7 +177,7 @@ class NotifyMailer < ApplicationMailer
     @user = params[:user]
 
     subject = I18n.t("mailers.notify_mailer.trusted",
-                     community: Settings::Community.community_name)
+                     community: Settings::Community.community_name(subforem_id: @subforem_id))
     mail(to: @user.email, subject: subject)
   end
 
@@ -185,14 +185,14 @@ class NotifyMailer < ApplicationMailer
     @user = params[:user]
 
     subject = I18n.t("mailers.notify_mailer.base_subscriber",
-                     community: Settings::Community.community_name)
+                     community: Settings::Community.community_name(subforem_id: @subforem_id))
     mail(to: @user.email, subject: subject)
   end
 
   def subjects
     {
       new_follower_email: I18n.t("mailers.notify_mailer.new_follower",
-                                 community: Settings::Community.community_name).freeze
+                                 community: Settings::Community.community_name(subforem_id: @subforem_id)).freeze
     }.freeze
   end
 end

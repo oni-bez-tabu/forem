@@ -31,7 +31,7 @@ module EdgeCache
 
       TIMEFRAMES.each do |timestamp, interval|
         next unless Article.published.where("published_at > ?", timestamp.call)
-          .order(public_reactions_count: :desc).limit(3).ids.include?(article.id)
+          .order(score: :desc).limit(3).ids.include?(article.id)
 
         cache_bust.call("/top/#{interval}")
       end
@@ -55,7 +55,7 @@ module EdgeCache
 
         TIMEFRAMES.each do |timestamp, interval|
           next unless Article.published.where("published_at > ?", timestamp.call).cached_tagged_with_any(tag)
-            .order(public_reactions_count: :desc).limit(3).ids.include?(article.id)
+            .order(score: :desc).limit(3).ids.include?(article.id)
 
           cache_bust.call("/top/#{interval}")
           12.times do |i|
@@ -64,7 +64,7 @@ module EdgeCache
         end
 
         next unless rand(2) == 1 &&
-          Article.published.tagged_with(tag)
+          Article.published.cached_tagged_with(tag)
             .order(hotness_score: :desc).limit(2).ids.include?(article.id)
 
         cache_bust.call("/t/#{tag}")

@@ -4,17 +4,22 @@
     other_nav_ids: NavigationLink.from_subforem.other_section.ordered.ids,
   }
 end %>
+<% section = local_assigns[:section] %>
+<% show_default = section.nil? || section == :default %>
+<% show_other = section.nil? || section == :other %>
 
-<nav class="mb-4 <% unless user_signed_in? %>mt-4<% end %>" data-testid="main-nav" aria-label="<%= community_name %>">
-  <ul class="default-navigation-links sidebar-navigation-links spec-sidebar-navigation-links">
-    <%= render partial: "layouts/sidebar_nav_link", collection: NavigationLink.where(id: navigation_links[:default_nav_ids]).ordered, as: :link %>
-  </ul>
-</nav>
+<% if show_default %>
+  <nav class="mb-4 <% unless user_signed_in? %>mt-4<% end %>" data-testid="main-nav" aria-label="<%= community_name %>">
+    <ul class="default-navigation-links sidebar-navigation-links spec-sidebar-navigation-links">
+      <%= render partial: "layouts/sidebar_nav_link", collection: NavigationLink.where(id: navigation_links[:default_nav_ids]).ordered, as: :link %>
+    </ul>
+  </nav>
+<% end %>
 
 <%# Reading Note: There's a faulty assumption that all "other_nav_links" are
     visible based on the current state (see
     ApplicationHelper#display_navigation_link? for details).  %>
-<% if navigation_links[:other_nav_ids].any? %>
+<% if show_other && navigation_links[:other_nav_ids].any? %>
   <nav class="mb-4" data-testid="other-nav" aria-labelledby="other-nav-heading-<%= context %>">
     <h2 id="other-nav-heading-<%= context %>" class="crayons-subtitle-3 py-2 pl-3">
       <%= t("views.main.nav.other") %>
@@ -25,6 +30,8 @@ end %>
   </nav>
 <% end %>
 
-<div class="mb-4">
-  <%= render partial: "layouts/social_media" %>
-</div>
+<% if show_other %>
+  <div class="mb-4">
+    <%= render partial: "layouts/social_media" %>
+  </div>
+<% end %>

@@ -7,12 +7,13 @@ import HelpIcon from '@images/help.svg';
 export const Toolbar = ({ version, textAreaId }) => {
   return (
     <div
-      className={`crayons-article-form__toolbar ${
-        version === 'v1' ? 'border-t-0' : ''
-      }`}
+      className={`crayons-article-form__toolbar ${version === 'v1' ? 'border-t-0' : ''
+        }`}
     >
       {version === 'v1' ? (
-        <ImageUploader editorVersion={version} />
+        <div className="flex items-center">
+          <ImageUploader editorVersion={version} />
+        </div>
       ) : (
         <MarkdownToolbar
           textAreaId={textAreaId}
@@ -20,11 +21,14 @@ export const Toolbar = ({ version, textAreaId }) => {
             <Link
               key="help-link"
               block
-              href="/p/editor_guide"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                document.dispatchEvent(new Event('toggle-editor-guide'));
+              }}
               icon={HelpIcon}
               aria-label="Help"
+              title="Help"
             />,
           ]}
         />

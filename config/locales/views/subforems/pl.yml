@@ -1,0 +1,260 @@
+---
+pl:
+  views:
+    subforems:
+      meta:
+        title: Subfora
+        description: Subfora, które warto obserwować w %{community}
+        og:
+          description: "%{community} jest świetne!"
+      heading:
+        default: Subfora
+        search_results: Wyniki wyszukiwania dla %{q}
+      search:
+        aria_labels:
+          search_input: Fraza wyszukiwania
+          submit: Szukaj subforów
+        placeholder: Szukaj subforum
+      edit:
+        meta:
+          title: Edytuj %{subforem}
+        heading: Zarządzaj %{subforem}
+        beta_badge: BETA
+        back_link: Powrót do subforów
+        admin: Admin
+        help: Pomoc
+        view: Zobacz
+        messages:
+          updated: Subforum zaktualizowane pomyślnie!
+        sections:
+          basic_information: Podstawowe informacje
+          discoverability: Widoczność
+          community_settings: Ustawienia społeczności
+          feed_settings: Ustawienia feedu i treści
+          branding: Branding
+        form:
+          community_name:
+            label: Nazwa społeczności
+            placeholder: Wprowadź nazwę społeczności
+            description: Nazwa Twojej społeczności wyświetlana w całej witrynie.
+          discoverable:
+            label: Widoczna w katalogu
+            description: Pozwól, aby ta społeczność pojawiała się w katalogu subforów.
+          community_description:
+            label: Opis społeczności
+            placeholder: Opisz swoją społeczność...
+            description: Krótki opis tego, o czym jest Twoja społeczność.
+          tagline:
+            label: Slogan
+            placeholder: Krótki slogan Twojej społeczności...
+            description: Chwytliwe jednozdaniowe podsumowanie społeczności.
+          member_label:
+            label: Nazwa członka
+            placeholder: użytkownik
+            description: Jak nazywasz członków swojej społeczności (np. "użytkownik", "członek", "programista").
+          feed_style:
+            label: Styl feedu
+            description: Wybierz sposób wyświetlania artykułów w feedzie.
+            options:
+              basic: Podstawowy
+              rich: Rozbudowany (z okładkami)
+              compact: Kompaktowy
+          feed_lookback_days:
+            label: Liczba dni feedu wstecz
+            placeholder: "10"
+            description: Liczba dni, o które feed ma cofać zapytania (1-365).
+          internal_content_spec:
+            label: Specyfikacja wewnętrznego opisu treści
+            placeholder: Opisz specyfikację opisu treści wewnętrznej...
+            description: Opisz rodzaj treści, która powinna być wyświetlana lub priorytetyzowana w feedzie. Pomaga to AI filtrować, co powinno, a co nie powinno pojawiać się w feedzie, aby radzić sobie ze spamem.
+          expanded_advisement_spec:
+            label: Rozszerzone wskazówki dotyczące treści
+            placeholder: Wprowadź rozszerzone wytyczne i wskazówki dla silnika AI...
+            description: Podaj bogate, całościowe wytyczne dotyczące tego, jak użytkownicy powinni publikować pod względem strukturalnym i kulturowym, jeśli AI jest pytana o głębsze porady dotyczące pisania udanego posta.
+          sidebar_tags:
+            label: Tagi w sidebarze
+            placeholder: "pomoc,dyskusja,meta"
+            description: Lista tagów oddzielonych przecinkami do wyświetlenia w sidebarze strony głównej (małe litery, bez spacji).
+          primary_color:
+            label: Główny kolor marki
+            placeholder: "#3b49df"
+            description: Główny kolor brandingu Twojej społeczności (format hex).
+          cover_image_aesthetic:
+            label: Instrukcje estetyki okładek
+            placeholder: "np. żywe i nowoczesne, minimalistyczne i czyste, ciepłe i przyjazne..."
+            description: Opcjonalne wskazówki dla okładek generowanych przez AI. Zostaną dodane do promptów użytkownika, aby utrzymać spójną estetykę Twojej społeczności.
+          main_logo:
+            label: Główne logo kwadratowe
+            description: Prześlij kwadratowe logo (128x128px) do głównego brandingu. PNG lub JPEG, maks. 8MB.
+          nav_logo:
+            label: Logo do paska nawigacji
+            description: Prześlij mniejsze logo (80x80px) do paska nawigacji. PNG lub JPEG, maks. 8MB.
+          social_card:
+            label: Obraz karty social media
+            description: Prześlij obraz karty do udostępniania w mediach społecznościowych (1200x630px). PNG lub JPEG, maks. 8MB.
+          submit_button: Zaktualizuj subforum
+          pretty_name:
+            label: Ładna nazwa
+            placeholder: To jest nazwa wyświetlana u góry strony.
+          bg_color_hex:
+            label: Kolor tagu
+          short_summary:
+            label: Krótkie podsumowanie
+            placeholder: Krótki opis tego, o czym jest to subforum.
+          wiki_body_markdown:
+            label: Treść wiki (markdown)
+            placeholder: To jest sekcja "o nas". Możesz dodać FAQ, dodatkowe zasoby itp.
+          rules_markdown:
+            label: Regulamin (markdown)
+            placeholder: Opcjonalne — może być używane np. do wytycznych zgłoszeń.
+          submit: Zapisz
+        tags:
+          supported_heading: Obsługiwane tagi
+          unsupported_heading: Najpopularniejsze nieobsługiwane tagi
+          posts_count:
+            one: "%{count} post"
+            few: "%{count} posty"
+            many: "%{count} postów"
+            other: "%{count} postów"
+          remove_button: Usuń
+          add_button: Dodaj
+          no_tags: Brak obsługiwanych tagów.
+          no_unsupported_tags: Nie znaleziono nieobsługiwanych tagów.
+        pages:
+          heading: Dedykowane strony
+          subheading_html: "Możesz tworzyć proste strony markdown dla tego subforum. <strong>Uwaga:</strong> Zaawansowane funkcje stron (HTML, niestandardowe szablony) mogą zostać dodane w przyszłości."
+          create_button: Utwórz stronę
+          view_button: Zobacz
+          edit_button: Edytuj
+          delete_button: Usuń
+          delete_confirm: Czy na pewno chcesz usunąć tę stronę?
+          top_level_badge: Strona główna
+          slug_label: Slug
+          path_label: Ścieżka
+          no_pages: Brak dedykowanych stron dla tego subforum.
+        navigation_links:
+          heading: Linki nawigacyjne
+          add_button: Dodaj link nawigacyjny
+          section_label: Sekcja
+          display_label: Wyświetlaj dla
+          position_label: Pozycja
+          edit_button: Edytuj
+          delete_button: Usuń
+          delete_confirm: Czy na pewno chcesz usunąć ten link nawigacyjny?
+          no_links: Brak linków nawigacyjnych dla tego subforum. Kliknij "Dodaj link nawigacyjny", aby utworzyć.
+          messages:
+            created: Link nawigacyjny utworzony pomyślnie!
+            updated: Link nawigacyjny zaktualizowany pomyślnie!
+            deleted: Link nawigacyjny usunięty pomyślnie!
+            not_found: Nie znaleziono linku nawigacyjnego
+          form:
+            name:
+              label: Nazwa
+              placeholder: Lista lektur
+            url:
+              label: Adres URL
+              placeholder: /readinglist
+            image:
+              label: Ikona (PNG, JPG, JPEG)
+              description: Prześlij plik obrazu ikony linku nawigacyjnego. Obraz zostanie automatycznie zoptymalizowany.
+              description_edit: Prześlij nowy obraz, aby zastąpić bieżącą ikonę.
+              current: Bieżący obraz
+            icon:
+              label: Ikona SVG
+              placeholder: '<svg ...>'
+              description: Wklej pełny kod SVG ikony.
+              alternative: Użyj ikony SVG zamiast obrazu
+            section:
+              label: Sekcja
+              options:
+                default: Domyślna
+                other: Inna
+            display_to:
+              label: Wyświetlaj dla
+              options:
+                all: Wszyscy
+                logged_in: Zalogowani
+                logged_out: Niezalogowani
+            position:
+              label: Pozycja
+            create_button: Utwórz link
+            update_button: Zaktualizuj link
+            cancel_button: Anuluj
+        community_bots:
+          heading: Boty społecznościowe
+          manage_button: Zarządzaj botami
+          moderator_notice_html: "<strong>Uwaga:</strong> Zarządzanie botami społeczności jest obecnie dostępne tylko dla administratorów. Ta funkcja wkrótce trafi do liderów społeczności."
+          created_label: Utworzono
+          api_secrets_label: Klucze API
+          view_button: Zobacz
+          no_bots: Brak botów społecznościowych dla tego subforum.
+      pages:
+        created: Strona utworzona pomyślnie!
+        updated: Strona zaktualizowana pomyślnie!
+        deleted: Strona usunięta pomyślnie!
+        not_found: Nie znaleziono strony
+        cannot_delete: Nie można usunąć tej strony
+        back: Powrót do ustawień subforum
+        new:
+          title: Nowa strona - %{subforem}
+          heading: Utwórz nową stronę dla %{subforem}
+          markdown_only_notice_html: "<strong>Uwaga:</strong> Możesz tworzyć tylko strony markdown. HTML i inne zaawansowane formaty nie są dostępne dla moderatorów subforów."
+        edit:
+          title: Edytuj %{page_title}
+          heading: Edytuj %{page_title}
+          top_level_notice_html: "<strong>Uwaga:</strong> To jest strona głównego poziomu. Możesz edytować tylko tytuł, opis i obraz social."
+          markdown_only_notice_html: "<strong>Uwaga:</strong> Możesz edytować tylko treść markdown. HTML i inne zaawansowane formaty nie są dostępne dla moderatorów subforów."
+        form:
+          title:
+            label: Tytuł
+            placeholder: O nas
+          slug:
+            label: Slug
+            placeholder: o-nas
+            description: Identyfikator przyjazny dla URL (tylko małe litery, cyfry i myślniki).
+            description_with_prefix_html: "Identyfikator przyjazny dla URL (tylko małe litery, cyfry i myślniki). Twoja strona będzie dostępna pod <code>/page/twoj-slug</code> (możliwość tworzenia stron głównego poziomu pojawi się w przyszłości)."
+          description:
+            label: Opis
+            placeholder: Krótki opis tej strony...
+            description: Do użytku wewnętrznego i SEO.
+          body_markdown:
+            label: Treść (Markdown)
+            placeholder: "# Witamy\n\nNapisz tu swoją treść używając Markdown..."
+            description: Użyj składni Markdown, aby sformatować treść.
+          social_image:
+            label: Obraz social media
+            description: "Opcjonalny obraz do udostępniania w mediach społecznościowych (zalecane: 1200x630px)."
+            current_image: Bieżący obraz social
+          create_button: Utwórz stronę
+          update_button: Zaktualizuj stronę
+          cancel_button: Anuluj
+      follow: Obserwuj
+      hide: Ukryj
+      aria_labels:
+        follow: "Obserwuj subforum: %{subforem_name}"
+        hide: "Ukryj subforum: %{subforem_name}"
+      following_subforems: Obserwowane subfora
+      hidden_subforems: Ukryte subfora
+      moderator:
+        text_html: "oddzielone przecinkami, spacja jest opcjonalna. Przykład: %{code}"
+        code: 123
+        placeholder: "oddzielone przecinkami, spacja jest opcjonalna. Przykład: 1,2,3"
+      published:
+        one: 1 post
+        few: "%{count} posty"
+        many: "%{count} postów"
+        other: "%{count} postów"
+      sidebar:
+        about: 'o #%{subforem}'
+        admin: Admin
+        edit: Edytuj
+        guidelines: wytyczne dotyczące zgłoszeń
+        moderate: Moderuj
+        mods: moderatorzy subforum
+        new: Utwórz post
+        older: 'Starsze posty #%{subforem}'
+        published:
+          one: 1 opublikowany post
+          few: "%{count} opublikowane posty"
+          many: "%{count} opublikowanych postów"
+          other: "%{count} opublikowanych postów"

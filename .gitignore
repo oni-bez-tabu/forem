@@ -129,5 +129,7 @@ doc/
 !/app/assets/builds/.keep
 .qodo
 
+# Local plan/design documents
+docs/plans/
 #upadter translations
 localeupdate/

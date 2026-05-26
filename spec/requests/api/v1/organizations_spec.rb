@@ -203,7 +203,7 @@ RSpec.describe "Api::V1::Organizations" do
       )
 
       %w[
-        id username name summary twitter_username github_username url location tech_stack tag_line story
+        id username name summary twitter_username url location tech_stack tag_line story
       ].each do |attr|
         expect(response_organization[attr]).to eq(organization.public_send(attr))
       end
@@ -236,7 +236,7 @@ RSpec.describe "Api::V1::Organizations" do
       )
 
       %w[
-        id username name summary twitter_username github_username url location tech_stack tag_line story
+        id username name summary twitter_username url location tech_stack tag_line story
       ].each do |attr|
         expect(response_organization[attr]).to eq(organization.public_send(attr))
       end

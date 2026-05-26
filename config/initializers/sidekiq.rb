@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require "sidekiq/honeycomb_middleware"
 require "sidekiq/worker_retries_exhausted_reporter"
 require "sidekiq/sidekiq_connection_cleanup"
 require "sidekiq/transaction_safe_rescue"
+require "sidekiq/throttled"
 
 module Sidekiq
   module Cron
@@ -29,20 +32,29 @@ Sidekiq.configure_server do |config|
   # every 30 seconds which the gem defaults to
   config[:poll_interval] = 10
 
-  sidekiq_url = ApplicationConfig["REDIS_SIDEKIQ_URL"] || ApplicationConfig["REDIS_URL"]
+  sidekiq_url = ApplicationConfig["REDIS_SIDEKIQ_URL"] || ApplicationConfig["REDIS_URL"] || "redis://localhost:6379"
+  if Rails.env.development?
+    begin
+      require "uri"
+      uri = URI.parse(sidekiq_url)
+      uri.path = "/3" if uri.path.nil? || uri.path == "" || uri.path == "/"
+      sidekiq_url = uri.to_s
+    rescue URI::InvalidURIError
+    end
+  end
   # On Heroku this configuration is overridden and Sidekiq will point at the redis
   # instance given by the ENV variable REDIS_PROVIDER
   config.redis = { url: sidekiq_url }
 
   config.server_middleware do |chain|
+    # sidekiq-throttled wires itself up when `require "sidekiq/throttled"` is loaded:
+    # it registers `Sidekiq::Throttled::Middlewares::Server` via its own
+    # `Sidekiq.configure_server` block (see the gem's `lib/sidekiq/throttled.rb`).
     chain.add Sidekiq::TransactionSafeRescue
     chain.add Sidekiq::HoneycombMiddleware
     chain.add SidekiqUniqueJobs::Middleware::Client
-    chain.add Sidekiq::SidekiqConnectionCleanup
-  end
-
-  config.server_middleware do |chain|
     chain.add SidekiqUniqueJobs::Middleware::Server
+    chain.add Sidekiq::SidekiqConnectionCleanup
   end
 
   SidekiqUniqueJobs::Server.configure(config)
@@ -52,9 +64,36 @@ Sidekiq.configure_server do |config|
   config.death_handlers << lambda do |job, _ex|
     Sidekiq::WorkerRetriesExhaustedReporter.report_final_failure(job)
   end
+
+  # Optional: clear Sidekiq queues on boot in development to avoid retry storms from stale jobs
+  if Rails.env.development? && ENV["SIDEKIQ_CLEAR_QUEUES_ON_BOOT"] == "1"
+    begin
+      Sidekiq::Queue.all.each(&:clear)
+      Sidekiq::RetrySet.new.clear
+      Sidekiq::DeadSet.new.clear
+      Rails.logger.warn("[dev] Cleared Sidekiq queues and retries at boot due to SIDEKIQ_CLEAR_QUEUES_ON_BOOT=1")
+    rescue StandardError => e
+      Rails.logger.warn("[dev] Failed to clear Sidekiq queues: #{e.message}")
+    end
+  end
+
+  # NOTE: sidekiq-throttled 1.5.x does not have `Sidekiq::Throttled.setup!`.
+  # Requiring it is enough for middleware + patches to be installed.
 end
 
 Sidekiq.configure_client do |config|
+  sidekiq_url = ApplicationConfig["REDIS_SIDEKIQ_URL"] || ApplicationConfig["REDIS_URL"] || "redis://localhost:6379"
+  if Rails.env.development?
+    begin
+      require "uri"
+      uri = URI.parse(sidekiq_url)
+      uri.path = "/3" if uri.path.nil? || uri.path == "" || uri.path == "/"
+      sidekiq_url = uri.to_s
+    rescue URI::InvalidURIError
+    end
+  end
+  config.redis = { url: sidekiq_url }
+
   config.client_middleware do |chain|
     chain.add SidekiqUniqueJobs::Middleware::Client
   end

@@ -1,6 +1,14 @@
 ---
 fr:
   views:
+    auth:
+      welcome_to_subforem: "Bienvenue sur %{community_name} — partie du réseau Forem !"
+      create:
+        text: Créer un compte
+        aria_label: Créer un nouveau compte
+      login:
+        text: Se connecter
+        aria_label: Se connecter
     badges:
       meta:
         title: Badges
@@ -74,30 +82,7 @@ fr:
         description: My saved posts.
         og:
           title: Reading List - %{community}
-    search:
-      heading: Search results%{for}
-      for: " for %{query}"
-      placeholder: Recherche...
-      icon:
-        aria_label: Search
-        title: Search
-      nav:
-        posts: Posts
-        podcasts: Podcasts
-        people: People
-        comments: Comments
-        my_posts: My posts only
-        organizations: Organizations
-        tags: Tags
-      sort:
-        aria_label: Search result sort options
-        relevance: Most Relevant
-        newest: Newest
-        oldest: Oldest
-      meta:
-        title: Search Results%{for}
-        for: " for %{query}"
-        description: "%{site} => Search Results"
+
     series:
       meta:
         description: View %{title} on %{site}
@@ -116,14 +101,19 @@ fr:
         week: Week
         month: Month
         infinity: Infinity
-      readers: Readers Summary
-      followers: New Followers Summary
-      reactions: "Reactions Summary ❤🦄🔖"
-      comments: "Comments Summary 💬"
+      readers: Lecteurs
+      readers_description: "Pages vues de tous les visiteurs (les vues anonymes sont estimées). Le temps de lecture est suivi uniquement pour les lecteurs connectés."
+      followers: Nouveaux abonnés
+      reactions: "Réactions"
+      comments: "Commentaires"
       traffic:
-        text: "Traffic Source Summary 🚦"
+        text: "Sources de trafic"
         source: Source
         views: Views
+      reactions_history: "Historique des réactions"
+      by: par
+      top_contributors:
+        heading: Meilleurs participants
     sticky:
       joined: Rejoint
       default_cta: Learn more

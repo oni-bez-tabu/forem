@@ -1,0 +1,35 @@
+---
+pt:
+  views:
+    editor:
+      meta:
+        title: Editar Post
+      heading:
+        new: Novo Post
+      create: Criar Post
+      close:
+        icon: Fechar
+        title: Fechar o editor
+      cover_image:
+        add: Adicionar uma imagem de capa
+        change: Alterar
+      cover_video_link:
+        add: Link de vídeo de capa
+        change: Alterar o link de vídeo
+      edit: Editar
+      modes: Visualizar modos de post
+      new_title: Novo título de post aqui...
+      preview: Visualizar
+      ai_helper:
+        sidecar_title: "Assistente do %{community_name}"
+        title: "Assistente do %{community_name}"
+        greeting: "Olá! Sou seu assistente de escrita. Conheço as diretrizes do editor do %{community_name}. Precisa de ajuda com markdown, incorporações, formatação ou conselhos sobre as diretrizes e expectativas da comunidade?"
+      video:
+        progress:
+          heading: "⏳ Transcodificação de Vídeo em Andamento ⏳"
+          notice_1: Você receberá um e-mail quando este processo terminar.
+          notice_2: Este é um post não publicado comum. Adicione título/tags/corpo/etc, e depois marque como publicado após o vídeo terminar de ser processado.
+        submit_image:
+          button: Enviar Alteração
+          text: 'URL da Imagem de Visualização: '
+          placeholder: Nova URL da Miniatura

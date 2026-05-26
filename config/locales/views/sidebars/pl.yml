@@ -1,0 +1,11 @@
+---
+pl:
+  views:
+    sidebars:
+      onboarding_progress:
+        heading: Lista kroków rejestracji
+        subheading: Ukończono %{completed} z %{total}
+        items:
+          fill_out_profile: Uzupełnij swój profil
+          comment_in_welcome: Przywitaj się w wątku powitalnym
+          made_first_post: Napisz swój pierwszy post

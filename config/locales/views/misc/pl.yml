@@ -1,3 +1,4 @@
+---
 pl:
   views:
     badges:
@@ -24,7 +25,7 @@ pl:
         install: Zainstaluj aplikację
     email_subscriptions:
       unsubscribe:
-        heading: Zostałeś wypisany z %{type}. 😔
+        heading: "Zostałeś wypisany z %{type}. \U0001F614"
         description_html: Nie będziesz już otrzymywać takich emaili. Jeśli chcesz ponownie się zapisać lub zarządzać swoimi preferencjami emailowymi, proszę %{link}.
         link: kliknij tutaj
       invalid:
@@ -45,7 +46,7 @@ pl:
         description_html: Używany do tekstów (zwykle nałożony na <em>Kolor marki 1</em>).
       preview:
         icon: Logo aplikacji
-        text: "Podgląd:"
+        text: 'Podgląd:'
     mailers:
       contact_mailto_html: Skontaktuj się z nami przez <a href="mailto:%{contact_email}">%{contact_email}</a>, jeśli możemy pomóc w czymś więcej.
     onboardings:
@@ -54,14 +55,14 @@ pl:
       heading: Jesteś teraz częścią społeczności!
       subtitle: SUGEROWANE RZECZY, KTÓRE MOŻESZ ZROBIĆ
       close: Zamknij wiadomość powitalną
-      settings_html: <span class="emoji">💅🏼</span>Dostosuj swój profil
-      welcome_html: <span class="emoji">😊</span>Dołącz do wątku powitalnego
-      write_html: <span class="emoji">✍🏾</span>Napisz swój pierwszy post w %{community}
-      join_subscription_html: <span class="emoji">🚀</span>Join DEV++
+      settings_html: "<span class=\"emoji\">\U0001F485\U0001F3FC</span>Dostosuj swój profil"
+      welcome_html: "<span class=\"emoji\">\U0001F60A</span>Dołącz do wątku powitalnego"
+      write_html: "<span class=\"emoji\">✍\U0001F3FE</span>Napisz swój pierwszy post w %{community}"
+      join_subscription_html: "<span class=\"emoji\">\U0001F680</span>Join DEV++"
     pins:
       article: Przypięty
-      pinned: 📌 Przypięto! (przypięte posty wyświetlane są chronologicznie, maksymalnie 5)
-      removed: 🗑 Przypięcie usunięte
+      pinned: "\U0001F4CC Przypięto! (przypięte posty wyświetlane są chronologicznie, maksymalnie 5)"
+      removed: "\U0001F5D1 Przypięcie usunięte"
       error: Możesz mieć tylko pięć przypięć
     profile:
       color:
@@ -124,6 +125,10 @@ pl:
         source: Źródło
         views: Wyświetlenia
       reactions_history: Historia reakcji
+      readers_description: Odsłony strony od wszystkich odwiedzających (wyświetlenia anonimowe są szacowane). Czas czytania jest śledzony tylko dla zalogowanych czytelników.
+      by: przez
+      top_contributors:
+        heading: Najbardziej aktywni
     sticky:
       joined: Dołączył
       default_cta: Dowiedz się więcej
@@ -140,4 +145,12 @@ pl:
           description: Wszystkie filmy na %{community}
       heading: "%{community} na filmie"
       beta_html: Wideo po ukończonym przesyłaniu będzie dostępne w <strong><a href="/dashboard">Twoim panelu</a></strong> w formie draftu.<br/><strong>Nie zamykaj tej strony podczas wgrywania pliku wideo</strong>.
-      upload: 🎥 Prześlij plik wideo 🙌
+      upload: "\U0001F3A5 Prześlij plik wideo \U0001F64C"
+    auth:
+      welcome_to_subforem: Witamy w %{community_name} — części sieci Forem!
+      create:
+        text: Utwórz konto
+        aria_label: Utwórz nowe konto
+      login:
+        text: Zaloguj się
+        aria_label: Zaloguj się

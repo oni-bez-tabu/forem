@@ -41,6 +41,7 @@ module Html
         next unless src
         # allow image to render as-is
         next if allowed_image_host?(src)
+        next if img["data-ignore-prefix"] == "true"
 
         if synchronous_detail_detection
           header = { "User-Agent" => "#{Settings::Community.community_name} (#{URL.url})" }
@@ -252,6 +253,28 @@ module Html
         emoji = Emoji.find_by_alias(Regexp.last_match(1)) # rubocop:disable Rails/DynamicFindBy
         emoji.present? ? emoji.raw : match
       end
+
+      self
+    end
+
+    def enforce_gif_like_videos
+      doc = Nokogiri::HTML.fragment(@html)
+
+      doc.css("video").each do |video|
+        # Mark as gif-like for JS to attach behavior
+        video["data-gif-video"] = "true"
+        # Default attributes to mimic GIF behavior, unless explicitly overridden
+        video["autoplay"] = video["autoplay"] || "autoplay"
+        video["loop"] = video["loop"] || "loop"
+        video["muted"] = video["muted"] || "muted"
+        video["playsinline"] = video["playsinline"] || "playsinline"
+        # Remove controls by default unless explicitly present
+        video.remove_attribute("controls") unless video["controls"]
+        # Avoid preloading to save bandwidth if not provided
+        video["preload"] = video["preload"] || "metadata"
+      end
+
+      @html = doc.to_html
 
       self
     end

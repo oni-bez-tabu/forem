@@ -1,4 +1,7 @@
 pl:
+  div: div
+  span: span
+  img: img
   contact_prompts:
     if_any_questions_html: <a href="/contact">Skontaktuj się z nami</a> jeśli masz jakiekolwiek pytania.
     if_continued_trouble_html: <a href="/contact">Skontaktuj się z nami</a> jeśli nadal masz problemy.
@@ -18,145 +21,318 @@ pl:
     report_abuse: Zgłoś nadużycie
     search: Szukaj
     success_settings: Pomyślnie zaktualizowano ustawienia.
+    search_placeholder: Szukaj...
+    search_find_related_posts: Znajdź powiązane posty...
+    search_powered_by: Obsługiwane przez Algolia
+    search_submit_search: Zatwierdź wyszukiwanie, aby zastosować zaawansowane filtry.
+    search_displaying_recommendations: Wyświetlane są rekomendacje Algolii — zacznij pisać, aby wyszukać
+    article_form_save_changes: Zapisz zmiany
+    article_form_schedule: Zaplanuj
+    article_form_publish: Opublikuj
+    article_form_loading_preview: Ładowanie podglądu
+    article_form_preview_loaded: Podgląd załadowany
+    article_form_co_authors: Współautorzy
+    article_form_co_authors_description: Dodaj maksymalnie 4 współautorów z %{org_name}.
+    article_form_co_authors_placeholder: Dodaj maksymalnie 4...
+    article_form_cover_video_button: Link do wideo w tle
+    article_form_cover_video_button_change: Zmień link do wideo
+    article_form_cover_video_modal_title: Dodaj link do wideo w tle
+    article_form_cover_video_modal_description: Podaj adres URL filmu z YouTube, Mux lub Twitch, aby użyć go jako wideo w tle artykułu.
+    article_form_cover_video_url_label: Adres URL wideo
+    article_form_cover_video_url_placeholder: https://www.youtube-or-mux-or-twitch.com/watch?v=...
+    article_form_cover_video_error_invalid: Podaj poprawny adres URL filmu z YouTube, Mux lub Twitch.
+    article_form_cover_video_supported_formats: "Obsługiwane formaty:"
+    article_form_cover_video_twitch_note: "*tylko bezpośrednie linki do filmów, nie transmisje z kanału"
+    article_form_cover_video_add_link: Dodaj link
+    article_form_cover_video_update_link: Zaktualizuj link
+    article_form_cover_video_cancel: Anuluj
+    article_form_cover_video_remove: Usuń
+    article_form_cover_video_close: Zamknij
+    comments_preview: Podgląd
+    comments_continue_editing: Kontynuuj edycję
+    survey_enter_response: Wpisz tutaj swoją odpowiedź...
+    survey_thank_you_response: Dziękujemy za Twoją odpowiedź.
+    survey_thank_you_completing: Dziękujemy za wypełnienie ankiety!
+    dashboard_analytics_readers: Czytelnicy
+    dashboard_analytics_avg_read_time: śr. czas czytania %{seconds} s
+    dashboard_analytics_comments: Komentarze
+    dashboard_analytics_reactions: Reakcje
+    dashboard_analytics_unique_reactors: od %{count} unikalnych użytkowników
+    dashboard_analytics_bookmarks: Zakładki
+    dashboard_analytics_followers: Nowi obserwujący
+    top_contributors_empty: Brak aktywnych osób w tym okresie.
+    top_contributors_reactions: reakcje
+    top_contributors_comments: komentarze
+    top_contributors_weight_note: Komentarze mają większą wagę
+    follower_engagement_ratio: "%{ratio}% obserwujących zaangażowanych"
+    follower_engagement_detail: "(%{engaged} z %{total})"
+    dashboard_analytics_no_data: Brak danych dla tego okresu
+    dashboard_analytics_no_referrers: Brak źródeł ruchu
+    stats_by: przez
+    editor_new_title: Tutaj tytuł nowego wpisu...
+    editor_body_placeholder: Wpisz tutaj treść swojego wpisu...
+    tags_field_label: Dodaj maksymalnie 4 tagi
+    tags_field_placeholder: Dodaj maksymalnie 4 tagi...
     counted_organization:
       one: "%{count} organizacja"
-      other: "%{count} organizacje"
+      few: "%{count} organizacje"
+      many: "%{count} organizacji"
+      other: "%{count} organizacji"
     counted_user:
-      one: "%{count} profil"
-      other: "%{count} profili"
+      one: "%{count} osoba"
+      few: "%{count} osoby"
+      many: "%{count} osób"
+      other: "%{count} osób"
     not_following: Nie obserwujesz nikogo
     following_everyone: Obserwujesz %{details}
     you_are_following: Obserwujesz
     and: i
   date:
+    order:
+      - :day
+      - :month
+      - :year
     abbr_month_names:
-      - brak
-      - sty.
-      - lut.
-      - mar.
-      - kwi.
-      - maj.
-      - cze.
-      - lip.
-      - sie.
-      - wrz.
-      - paź.
-      - lis.
-      - gru.
+      - ~
+      - sty
+      - lut
+      - mar
+      - kwi
+      - maj
+      - cze
+      - lip
+      - sie
+      - wrz
+      - paź
+      - lis
+      - gru
+    month_names:
+      - ~
+      - styczeń
+      - luty
+      - marzec
+      - kwiecień
+      - maj
+      - czerwiec
+      - lipiec
+      - sierpień
+      - wrzesień
+      - październik
+      - listopad
+      - grudzień
+    day_names:
+      - niedziela
+      - poniedziałek
+      - wtorek
+      - środa
+      - czwartek
+      - piątek
+      - sobota
+    abbr_day_names:
+      - nie
+      - pon
+      - wt
+      - śr
+      - czw
+      - pt
+      - sob
+    formats:
+      default: "%d.%m.%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
   datetime:
+    prompts:
+      year: Rok
+      month: Miesiąc
+      day: Dzień
+      hour: Godzina
+      minute: Minuta
+      second: Sekunda
     distance_in_words_ago:
       about_x_hours:
         one: około 1 godzinę temu
+        few: około %{count} godziny temu
+        many: około %{count} godzin temu
         other: około %{count} godzin temu
       about_x_months:
         one: około 1 miesiąc temu
+        few: około %{count} miesiące temu
+        many: około %{count} miesięcy temu
         other: około %{count} miesięcy temu
       about_x_years:
         one: około 1 rok temu
+        few: około %{count} lata temu
+        many: około %{count} lat temu
         other: około %{count} lat temu
       almost_x_years:
         one: prawie 1 rok temu
+        few: prawie %{count} lata temu
+        many: prawie %{count} lat temu
         other: prawie %{count} lat temu
       half_a_minute: pół minuty temu
       less_than_x_seconds:
         one: mniej niż 1 sekundę temu
+        few: mniej niż %{count} sekundy temu
+        many: mniej niż %{count} sekund temu
         other: mniej niż %{count} sekund temu
       less_than_x_minutes:
         one: mniej niż minutę temu
+        few: mniej niż %{count} minuty temu
+        many: mniej niż %{count} minut temu
         other: mniej niż %{count} minut temu
       over_x_years:
         one: ponad 1 rok temu
+        few: ponad %{count} lata temu
+        many: ponad %{count} lat temu
         other: ponad %{count} lat temu
       x_seconds:
         one: 1 sekundę temu
+        few: "%{count} sekundy temu"
+        many: "%{count} sekund temu"
         other: "%{count} sekund temu"
       x_minutes:
         one: 1 minutę temu
+        few: "%{count} minuty temu"
+        many: "%{count} minut temu"
         other: "%{count} minut temu"
       x_days:
         one: 1 dzień temu
+        few: "%{count} dni temu"
+        many: "%{count} dni temu"
         other: "%{count} dni temu"
       x_months:
         one: 1 miesiąc temu
+        few: "%{count} miesiące temu"
+        many: "%{count} miesięcy temu"
         other: "%{count} miesięcy temu"
       x_years:
         one: 1 rok temu
+        few: "%{count} lata temu"
+        many: "%{count} lat temu"
         other: "%{count} lat temu"
     expired_ago:
       about_x_hours:
         one: Wygasło około 1 godzinę temu
+        few: Wygasło około %{count} godziny temu
+        many: Wygasło około %{count} godzin temu
         other: Wygasło około %{count} godzin temu
       about_x_months:
         one: Wygasło około 1 miesiąc temu
+        few: Wygasło około %{count} miesiące temu
+        many: Wygasło około %{count} miesięcy temu
         other: Wygasło około %{count} miesięcy temu
       about_x_years:
         one: Wygasło około 1 rok temu
+        few: Wygasło około %{count} lata temu
+        many: Wygasło około %{count} lat temu
         other: Wygasło około %{count} lat temu
       almost_x_years:
         one: Wygasło prawie 1 rok temu
+        few: Wygasło prawie %{count} lata temu
+        many: Wygasło prawie %{count} lat temu
         other: Wygasło prawie %{count} lat temu
       half_a_minute: Wygasło pół minuty temu
       less_than_x_seconds:
         one: Wygasło mniej niż 1 sekundę temu
+        few: Wygasło mniej niż %{count} sekundy temu
+        many: Wygasło mniej niż %{count} sekund temu
         other: Wygasło mniej niż %{count} sekund temu
       less_than_x_minutes:
         one: Wygasło mniej niż minutę temu
+        few: Wygasło mniej niż %{count} minuty temu
+        many: Wygasło mniej niż %{count} minut temu
         other: Wygasło mniej niż %{count} minut temu
       over_x_years:
         one: Wygasło ponad 1 rok temu
+        few: Wygasło ponad %{count} lata temu
+        many: Wygasło ponad %{count} lat temu
         other: Wygasło ponad %{count} lat temu
       x_seconds:
         one: Wygasło 1 sekundę temu
+        few: Wygasło %{count} sekundy temu
+        many: Wygasło %{count} sekund temu
         other: Wygasło %{count} sekund temu
       x_minutes:
         one: Wygasło 1 minutę temu
+        few: Wygasło %{count} minuty temu
+        many: Wygasło %{count} minut temu
         other: Wygasło %{count} minut temu
       x_days:
         one: Wygasło 1 dzień temu
+        few: Wygasło %{count} dni temu
+        many: Wygasło %{count} dni temu
         other: Wygasło %{count} dni temu
       x_months:
         one: Wygasło 1 miesiąc temu
+        few: Wygasło %{count} miesiące temu
+        many: Wygasło %{count} miesięcy temu
         other: Wygasło %{count} miesięcy temu
       x_years:
         one: Wygasło 1 rok temu
+        few: Wygasło %{count} lata temu
+        many: Wygasło %{count} lat temu
         other: Wygasło %{count} lat temu
     expires_in:
       about_x_hours:
         one: Wygasa za około 1 godzinę
+        few: Wygasa za około %{count} godziny
+        many: Wygasa za około %{count} godzin
         other: Wygasa za około %{count} godzin
       about_x_months:
         one: Wygasa za około 1 miesiąc
+        few: Wygasa za około %{count} miesiące
+        many: Wygasa za około %{count} miesięcy
         other: Wygasa za około %{count} miesięcy
       about_x_years:
         one: Wygasa za około 1 rok
+        few: Wygasa za około %{count} lata
+        many: Wygasa za około %{count} lat
         other: Wygasa za około %{count} lat
       almost_x_years:
         one: Wygasa za prawie 1 rok
+        few: Wygasa za prawie %{count} lata
+        many: Wygasa za prawie %{count} lat
         other: Wygasa za prawie %{count} lat
       half_a_minute: Wygasa za pół minuty
       less_than_x_seconds:
         one: Wygasa za mniej niż 1 sekundę
+        few: Wygasa za mniej niż %{count} sekundy
+        many: Wygasa za mniej niż %{count} sekund
         other: Wygasa za mniej niż %{count} sekund
       less_than_x_minutes:
         one: Wygasa za mniej niż minutę
+        few: Wygasa za mniej niż %{count} minuty
+        many: Wygasa za mniej niż %{count} minut
         other: Wygasa za mniej niż %{count} minut
       over_x_years:
         one: Wygasa za ponad 1 rok
+        few: Wygasa za ponad %{count} lata
+        many: Wygasa za ponad %{count} lat
         other: Wygasa za ponad %{count} lat
       x_seconds:
         one: Wygasa za 1 sekundę
+        few: Wygasa za %{count} sekundy
+        many: Wygasa za %{count} sekund
         other: Wygasa za %{count} sekund
       x_minutes:
         one: Wygasa za 1 minutę
+        few: Wygasa za %{count} minuty
+        many: Wygasa za %{count} minut
         other: Wygasa za %{count} minut
       x_days:
         one: Wygasa za 1 dzień
+        few: Wygasa za %{count} dni
+        many: Wygasa za %{count} dni
         other: Wygasa za %{count} dni
       x_months:
         one: Wygasa za 1 miesiąc
+        few: Wygasa za %{count} miesiące
+        many: Wygasa za %{count} miesięcy
         other: Wygasa za %{count} miesięcy
       x_years:
         one: Wygasa za 1 rok
+        few: Wygasa za %{count} lata
+        many: Wygasa za %{count} lat
         other: Wygasa za %{count} lat
   billboard:
     promoted: Promowane
@@ -195,15 +371,26 @@ pl:
       present: musi być puste
       required: musi istnieć
       taken: jest już zajęte
+      not_saved:
+        one: 1 błąd uniemożliwił zapisanie tego %{resource}
+        few: "%{count} błędy uniemożliwiły zapisanie tego %{resource}"
+        many: "%{count} błędów uniemożliwiło zapisanie tego %{resource}"
+        other: "%{count} błędów uniemożliwiło zapisanie tego %{resource}"
       too_long:
         one: jest za długie (maksimum to 1 znak)
+        few: jest za długie (maksimum to %{count} znaki)
+        many: jest za długie (maksimum to %{count} znaków)
         other: jest za długie (maksimum to %{count} znaków)
       too_short:
         one: jest za krótkie (minimum to 1 znak)
+        few: jest za krótkie (minimum to %{count} znaki)
+        many: jest za krótkie (minimum to %{count} znaków)
         other: jest za krótkie (minimum to %{count} znaków)
       try_again_email: "Wystąpił błąd. Spróbuj ponownie lub wyślij e-mail na adres: %{email}"
       wrong_length:
         one: ma niewłaściwą długość (powinno być 1 znak)
+        few: ma niewłaściwą długość (powinno być %{count} znaki)
+        many: ma niewłaściwą długość (powinno być %{count} znaków)
         other: ma niewłaściwą długość (powinno być %{count} znaków)
   time:
     formats:
@@ -221,3 +408,7 @@ pl:
       short_with_year: "%b %-e, %Y"
       stackexchange: "%e %b '%y"
       long: "%b %e %y, %H:%M"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "Znaleziono błędy: %{errors}"

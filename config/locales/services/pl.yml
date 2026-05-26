@@ -19,10 +19,14 @@ pl:
         longest: 16 tygodni! Osiągnąłeś najdłuższy możliwy okres pisania. Kontynuuj niesamowity wkład w naszą społeczność!
         message:
           one: Gratulacje z powodu osiągnięcia tego okresu! Regularne pisanie jest trudne. Następną odznaką za okres, którą możesz otrzymać, jest Odznaka %{count} Tygodnia. 😉
+          few: Gratulacje z powodu osiągnięcia tego okresu! Regularne pisanie jest trudne. Następną odznaką za okres, którą możesz otrzymać, jest Odznaka %{count} Tygodni. 😉
+          many: Gratulacje z powodu osiągnięcia tego okresu! Regularne pisanie jest trudne. Następną odznaką za okres, którą możesz otrzymać, jest Odznaka %{count} Tygodni. 😉
           other: Gratulacje z powodu osiągnięcia tego okresu! Regularne pisanie jest trudne. Następną odznaką za okres, którą możesz otrzymać, jest Odznaka %{count} Tygodnia. 😉
       award_yearly_club:
         message:
           one: Szczęśliwe urodziny %{community}! Czy możesz uwierzyć, że to już %{count} rok?!
+          few: Szczęśliwe urodziny %{community}! Czy możesz uwierzyć, że to już %{count} lata?!
+          many: Szczęśliwe urodziny %{community}! Czy możesz uwierzyć, że to już %{count} lat?!
           other: Szczęśliwe urodziny %{community}! Czy możesz uwierzyć, że to już %{count} lat?!
       congrats: Gratulacje z powodu osiągnięcia! 🎉 I dziękuję za bycie tak istotną częścią %{community}!
       thank_you: Dziękujemy za Twoje wkłady!
@@ -69,12 +73,16 @@ pl:
         select_payment_method: Proszę wybrać metodę płatności
       process_credit_purchase:
         charge:
-          one: Zakup %{count} kredytów.
+          one: Zakup %{count} kredytu.
+          few: Zakup %{count} kredytów.
+          many: Zakup %{count} kredytów.
           other: Zakup %{count} kredytów.
     rate_limit_checker:
       invalid_key: "Nieprawidłowy Klucz Cache: brak unikalnej składowej"
       limit_reached:
-        one: Osiągnięto limit szybkości, spróbuj ponownie za %{count} sekund
+        one: Osiągnięto limit szybkości, spróbuj ponownie za %{count} sekundę
+        few: Osiągnięto limit szybkości, spróbuj ponownie za %{count} sekundy
+        many: Osiągnięto limit szybkości, spróbuj ponownie za %{count} sekund
         other: Osiągnięto limit szybkości, spróbuj ponownie za %{count} sekund
     slack:
       messengers:

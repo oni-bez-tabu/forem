@@ -85,6 +85,10 @@ fr:
           article: your article
           comment: your comment
           unknown: you
+      organization:
+        deverification_heading: Vérification révoquée
+        deverification_html: "La vérification de %{org} a été révoquée car nous n'avons plus trouvé de lien vers votre page d'organisation sur l'URL précédemment vérifiée."
+        reverify: Re-vérifier votre organisation
       settings: Settings
       tag:
         heading: "Hey there 👋"
@@ -94,3 +98,10 @@ fr:
         reason: 'Reason for action:'
         remove_html: Moderators removed the <strong>%{tag}</strong> tag from your post %{title}. Certain tags have special submission guidelines, and mods need to adjust tags to best fit the community.
         support_html: "Thanks for being part of %{community}! %{email} 🤗"
+      subforem:
+        heading: "Votre article a été déplacé 👋"
+        change_html: Votre article %{title} a été automatiquement déplacé de %{old_community_link} vers %{new_community_link}.
+        reason: 'Raison du déplacement :'
+        misc_explanation: Il s'agit de notre espace de discussion ouverte où tous les types de contenu sont les bienvenus pour les conversations générales et l'interaction communautaire.
+        explanation_html: Cela aide à s'assurer que votre contenu atteigne le public le plus approprié et maintient la qualité de chaque communauté.
+        support_html: "Merci de faire partie de %{community} ! %{email} 🤗"

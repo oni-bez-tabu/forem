@@ -4,6 +4,7 @@ pl:
     revoked: Twój klucz API został unieważniony.
   application_controller:
     bad_request: "Błąd: Nieprawidłowe żądanie"
+    invalid_authenticity_token: "Błąd: Nieprawidłowy token uwierzytelniający"
     not_authorized: "Błąd: brak autoryzacji"
     please_sign_in: Proszę zaloguj się
   articles_controller:
@@ -23,7 +24,9 @@ pl:
     email_sent: Email został wysłany! Jeśli masz problemy z otrzymywaniem instrukcji potwierdzających, skontaktuj się z pomocą techniczną pod adresem %{email}.
   credits_controller:
     done:
-      one: "%{count} nowych kredytów zakupionych!"
+      one: "%{count} nowy kredyt zakupiony!"
+      few: "%{count} nowe kredyty zakupione!"
+      many: "%{count} nowych kredytów zakupionych!"
       other: "%{count} nowych kredytów zakupionych!"
   devices_controller:
     not_found: Nie znaleziono
@@ -51,6 +54,22 @@ pl:
   github_repos_controller:
     repo_not_found: Repozytorium GitHub nie znalezione
     github_unauthorized: "Nieautoryzowany dostęp do GitHuba: %{e_message}"
+  ai_image_generations_controller:
+    prompt_required: Podpowiedź obrazu jest wymagana
+    generation_failed: Nie udało się wygenerować obrazu. Spróbuj ponownie.
+    timeout: Generowanie obrazu przekroczyło limit czasu. Spróbuj ponownie.
+    unexpected_error: Wystąpił nieoczekiwany błąd podczas generowania obrazu.
+  feeds:
+    sources:
+      created: Twoje źródło kanału zostało dodane i rozpoczęto import.
+      updated: Twoje źródło kanału zostało zaktualizowane.
+      deleted: Twoje źródło kanału zostało usunięte.
+  lead_submissions:
+    inactive_form: Ten formularz lead nie przyjmuje już zgłoszeń.
+    not_found: Nie znaleziono formularza lead.
+    already_submitted: Ten formularz został już przez Ciebie wysłany.
+    name_and_email_required: Imię i e-mail są wymagane.
+    recaptcha_failed: Proszę ukończyć weryfikację CAPTCHA.
   image_uploads_controller:
     server_error: Wystąpił błąd serwera!
   listings_controller:
@@ -65,6 +84,21 @@ pl:
     not_deleted: Twoja organizacja nie została usunięta; musisz być administratorem, jedynym członkiem organizacji i nie mieć żadnych artykułów powiązanych z organizacją.
     created: Twoja organizacja została pomyślnie utworzona, a Ty jesteś administratorem.
     updated: Twoja organizacja została pomyślnie zaktualizowana.
+    page_save_error: "Nie udało się zapisać strony: %{message}"
+    invite:
+      user_not_found: Nie znaleziono użytkownika o nazwie "%{username}".
+      already_member: Ten użytkownik jest już członkiem organizacji.
+      already_pending: Ten użytkownik ma już oczekujące zaproszenie.
+      success: Pomyślnie zaproszono użytkownika %{username} do organizacji.
+      added_success: Pomyślnie dodano użytkownika %{username} do organizacji.
+      rate_limit_exceeded: Osiągnąłeś dzienny limit zaproszeń wynoszący %{limit}. Spróbuj ponownie jutro.
+      max_outstanding_exceeded: Osiągnąłeś maksymalny limit oczekujących zaproszeń wynoszący %{limit}. Poczekaj, aż niektóre zaproszenia zostaną zaakceptowane lub anulowane, zanim wyślesz kolejne.
+    confirm_invitation:
+      invalid_token: Nieprawidłowy lub wygasły token zaproszenia.
+      already_confirmed: To zaproszenie zostało już potwierdzone.
+      wrong_user: Musisz być zalogowany jako zaproszony użytkownik, aby potwierdzić to zaproszenie.
+      sign_in_required: Zaloguj się, aby potwierdzić członkostwo w organizacji.
+      success: Pomyślnie dołączono do %{organization_name}!
   podcasts_controller:
     podcast_suggested: Sugerowany podcast
   profiles_controller:

@@ -45,6 +45,11 @@ pl:
       updated: Twoje hasło zostało pomyślnie zmienione. Jesteś teraz zalogowany.
       updated_not_active: Twoje hasło zostało pomyślnie zmienione.
     registrations:
+      age_gate:
+        heading: Zanim założysz konto
+        description: nie!tabu to platforma dla osób pełnoletnich. Potwierdź, że masz ukończone 18 lat, aby kontynuować.
+        checkbox: Mam ukończone 18 lat
+        continue: Dalej
       agreement:
         sign_in_html: ""
         sign_up_html: Rejestrując się, zgadzasz się z naszą <a href="%{privacy_path}">polityką prywatności</a>, <a href="%{terms_path}">regulaminem</a> oraz <a href="%{code_of_conduct_path}">kodeksem postępowania</a>.

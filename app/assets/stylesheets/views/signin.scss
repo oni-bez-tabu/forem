@@ -187,4 +187,95 @@
       width: $breakpoint-s;
     }
   }
+
+  &__age-gate-wrapper {
+    position: relative;
+  }
+
+  &__age-gate-blurred {
+    filter: blur(4px);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &__age-gate {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-elevate);
+    background-color: color-mix(in srgb, var(--body-bg) 80%, transparent);
+  }
+
+  &__age-gate-card {
+    width: 100%;
+    max-width: 360px;
+    padding: var(--su-6);
+    background-color: var(--card-bg);
+    color: var(--card-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-2);
+  }
+
+  &__age-gate-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--su-3);
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--fs-l);
+    font-weight: var(--fw-medium);
+  }
+
+  &__age-gate-checkbox {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__age-gate-checkbox-mark {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--form-border);
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 10px;
+      width: 8px;
+      height: 16px;
+      border: solid #fff;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg) scale(0);
+      transition: transform 0.15s ease;
+    }
+  }
+
+  &__age-gate-checkbox:checked + &__age-gate-checkbox-mark {
+    border-color: var(--accent-brand);
+    background-color: var(--accent-brand);
+
+    &::after {
+      transform: rotate(45deg) scale(1);
+    }
+  }
+
+  &__age-gate-checkbox:focus-visible + &__age-gate-checkbox-mark {
+    box-shadow: var(--focus-ring);
+    outline: 0;
+  }
+
+  &__age-gate-checkbox-text {
+    flex: 1;
+  }
 }
