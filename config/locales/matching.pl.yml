@@ -1,0 +1,100 @@
+pl:
+  views:
+    settings:
+      tab:
+        Matching: "Matching"
+  matching:
+    nav:
+      title: "Matching"
+      aria_label: "Otwórz Matching"
+    show:
+      title: "Twój Matching"
+      subtitle: "Twój profil i status w module Matching."
+      no_profile_title: "Nie masz jeszcze profilu Matching"
+      no_profile_body: "Stwórz profil, żeby uczestniczyć w deklaracjach intencji na wydarzeniach i wymieniać się powitalnymi wiadomościami."
+      create_profile: "Stwórz profil Matching"
+      edit_profile: "Edytuj profil"
+      deactivated: "Profil nieaktywny"
+      deactivated_explanation: "Twój profil jest dezaktywowany. Skontaktuj się z administracją jeśli to nieporozumienie."
+      rejection_reason: "Powód"
+    onboarding:
+      title: "Stwórz profil Matching"
+      subtitle: "Cztery pola, kilka sekund. Profil trafia do akceptacji administratora."
+      submit: "Wyślij do akceptacji"
+    profiles:
+      created: "Profil utworzony. Czeka na akceptację administratora."
+      updated: "Profil zaktualizowany."
+      updated_pending_review: "Profil zaktualizowany. Po zmianach treści trafia ponownie do akceptacji."
+      suspended_blocked: "Konto zostało zawieszone — nie możesz utworzyć profilu Matching."
+      edit_title: "Edytuj profil Matching"
+      edit_subtitle: "Każda zmiana zdjęcia, identyfikacji, miasta lub bio cofa profil do akceptacji."
+      edit_resets_moderation: "Uwaga: zmiana treści cofnie profil do akceptacji administratora."
+      update: "Zapisz zmiany"
+      cancel: "Anuluj"
+      fields:
+        photo: "Zdjęcie"
+        photo_help: "Wybierz zdjęcie profilowe (jpg/png, do 8 MB)."
+        identity_type: "Identyfikacja"
+        city: "Miasto"
+        bio: "Bio"
+        bio_help: "Krótki opis siebie. Maksymalnie %{max} znaków."
+    identity_types:
+      woman: "Kobieta"
+      man: "Mężczyzna"
+      couple: "Para"
+      non_binary: "Osoba niebinarna"
+    moderation:
+      approved: "Zatwierdzony"
+      pending: "Oczekuje na akceptację"
+      rejected: "Odrzucony"
+    settings:
+      title: "Matching"
+      intro: "Sub-profil do deklaracji intencji na wydarzeniach. Otwórz panel Matching żeby zarządzać profilem i preferencjami."
+      open_dashboard: "Otwórz panel Matching"
+
+  admin:
+    matching_profiles:
+      title: "Profile Matching"
+      empty_state: "Brak profili w tej grupie."
+      banned: "Zawieszony"
+      inactive_marker: "Nieaktywny"
+      approved: "Profil zatwierdzony."
+      rejected: "Profil odrzucony."
+      deactivated: "Profil dezaktywowany."
+      reactivated: "Profil reaktywowany."
+      destroyed: "Profil usunięty."
+      scope:
+        pending: "Do akceptacji"
+        approved: "Zatwierdzone"
+        rejected: "Odrzucone"
+        inactive: "Nieaktywne"
+        all: "Wszystkie"
+      fields:
+        photo: "Zdjęcie"
+        user: "Użytkownik"
+        identity: "Identyfikacja"
+        city: "Miasto"
+        state: "Status"
+      actions:
+        approve: "Zatwierdź"
+        reject: "Odrzuć"
+        deactivate: "Dezaktywuj"
+        reactivate: "Reaktywuj"
+        delete: "Usuń"
+        confirm_reject: "Odrzucić ten profil?"
+        confirm_delete: "Trwale usunąć ten profil?"
+
+  matching_mailer:
+    approved:
+      subject: "Twój profil Matching został zatwierdzony"
+      heading: "Profil zatwierdzony ✨"
+      body_html: "Cześć %{username}! Twój profil Matching przeszedł moderację. %{link}"
+      body_text: "Cześć %{username}! Twój profil Matching przeszedł moderację. Otwórz: %{url}"
+      cta: "Otwórz panel Matching"
+    rejected:
+      subject: "Twój profil Matching wymaga poprawek"
+      heading: "Profil wymaga poprawek"
+      body_html: "Cześć %{username}, Twój profil Matching nie został zatwierdzony. %{link}"
+      body_text: "Cześć %{username}, Twój profil Matching nie został zatwierdzony. Edytuj: %{url}"
+      cta: "Edytuj profil"
+      reason_label: "Powód"

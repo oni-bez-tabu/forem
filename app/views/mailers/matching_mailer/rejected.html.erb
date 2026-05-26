@@ -1,0 +1,5 @@
+<h1><%= t("matching_mailer.rejected.heading") %></h1>
+<p><%= t("matching_mailer.rejected.body_html", username: @user.username, link: link_to(t("matching_mailer.rejected.cta"), edit_matching_profile_url)).html_safe %></p>
+<% if @profile.moderation_reason.present? %>
+  <p><strong><%= t("matching_mailer.rejected.reason_label") %>:</strong> <%= @profile.moderation_reason %></p>
+<% end %>

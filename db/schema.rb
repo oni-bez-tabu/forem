@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_05_26_190001) do
+ActiveRecord::Schema[7.0].define(version: 2026_05_26_200000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "ltree"
@@ -979,6 +979,23 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_26_190001) do
     t.index ["record_type", "record_id"], name: "index_liquid_embed_references_on_record"
     t.index ["referenced_type", "referenced_id"], name: "index_liquid_embed_references_on_referenced"
     t.index ["tag_name", "url"], name: "index_liquid_embed_references_on_tag_name_and_url"
+  end
+
+  create_table "matching_profiles", force: :cascade do |t|
+    t.string "bio"
+    t.bigint "city_id", null: false
+    t.datetime "created_at", null: false
+    t.string "identity_type", null: false
+    t.boolean "is_active", default: true, null: false
+    t.string "moderation_reason"
+    t.string "moderation_state", default: "pending", null: false
+    t.string "photo"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["city_id"], name: "index_matching_profiles_on_city_id"
+    t.index ["is_active"], name: "index_matching_profiles_on_is_active"
+    t.index ["moderation_state"], name: "index_matching_profiles_on_moderation_state"
+    t.index ["user_id"], name: "index_matching_profiles_on_user_id", unique: true
   end
 
   create_table "media_stores", force: :cascade do |t|
@@ -2130,6 +2147,8 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_26_190001) do
   add_foreign_key "identities", "users", on_delete: :cascade
   add_foreign_key "lead_submissions", "organization_lead_forms", on_delete: :cascade
   add_foreign_key "lead_submissions", "users", on_delete: :cascade
+  add_foreign_key "matching_profiles", "cities"
+  add_foreign_key "matching_profiles", "users", on_delete: :cascade
   add_foreign_key "meetup_rsvps", "meetups", on_delete: :cascade
   add_foreign_key "meetup_rsvps", "users", on_delete: :cascade
   add_foreign_key "meetups", "articles", column: "description_internal_post_id"

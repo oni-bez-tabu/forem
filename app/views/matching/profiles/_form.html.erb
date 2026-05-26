@@ -1,0 +1,52 @@
+<%= form_with model: profile, url: profile.persisted? ? matching_profile_path : matching_profile_path,
+                method: profile.persisted? ? :patch : :post,
+                local: true, html: { multipart: true } do |form| %>
+  <% if profile.errors.any? %>
+    <div class="crayons-notice p-0 mb-4" aria-live="polite">
+      <strong><%= pluralize(profile.errors.count, "error") %>:</strong>
+      <ul class="list-disc list-inside mt-2">
+        <% profile.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="crayons-field">
+    <%= form.label :photo, t("matching.profiles.fields.photo"), class: "crayons-field__label" %>
+    <p class="crayons-field__description"><%= t("matching.profiles.fields.photo_help") %></p>
+    <% if profile.photo.present? %>
+      <img src="<%= profile.photo.url %>" alt="<%= current_user.username %>" class="mt-2 mb-2" style="max-width: 160px; max-height: 200px; object-fit: cover; border-radius: 8px;">
+    <% end %>
+    <%= form.file_field :photo, accept: "image/*", required: profile.new_record? %>
+  </div>
+
+  <div class="crayons-field mt-3">
+    <%= form.label :identity_type, t("matching.profiles.fields.identity_type"), class: "crayons-field__label" %>
+    <%= form.select :identity_type,
+                    MatchingProfile::IDENTITY_TYPES.map { |t| [I18n.t("matching.identity_types.#{t}"), t] },
+                    { include_blank: true },
+                    class: "crayons-select", required: true %>
+  </div>
+
+  <div class="crayons-field mt-3">
+    <%= form.label :city_id, t("matching.profiles.fields.city"), class: "crayons-field__label" %>
+    <%= form.collection_select :city_id,
+                                City.order(is_special: :desc, population_hint: :desc),
+                                :id,
+                                ->(c) { c.is_special ? c.name : "#{c.name}#{c.voivodeship.present? ? " (#{c.voivodeship})" : ''}" },
+                                { include_blank: true },
+                                class: "crayons-select", required: true %>
+  </div>
+
+  <div class="crayons-field mt-3">
+    <%= form.label :bio, t("matching.profiles.fields.bio"), class: "crayons-field__label" %>
+    <p class="crayons-field__description"><%= t("matching.profiles.fields.bio_help", max: MatchingProfile::BIO_MAX_LENGTH) %></p>
+    <%= form.text_area :bio, maxlength: MatchingProfile::BIO_MAX_LENGTH, rows: 4, class: "crayons-textfield" %>
+  </div>
+
+  <div class="mt-4">
+    <%= form.submit submit_label, class: "crayons-btn" %>
+    <%= link_to t("matching.profiles.cancel"), matching_path, class: "crayons-btn crayons-btn--outlined" %>
+  </div>
+<% end %>

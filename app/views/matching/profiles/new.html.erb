@@ -1,0 +1,11 @@
+<% title t("matching.onboarding.title") %>
+
+<div class="crayons-layout crayons-layout--limited-width">
+  <header class="mb-4">
+    <h1 class="crayons-title">✨ <%= t("matching.onboarding.title") %></h1>
+    <p class="crayons-subtitle"><%= t("matching.onboarding.subtitle") %></p>
+  </header>
+  <div class="crayons-card p-6">
+    <%= render "matching/profiles/form", profile: @profile, submit_label: t("matching.onboarding.submit") %>
+  </div>
+</div>

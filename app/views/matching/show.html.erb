@@ -1,0 +1,56 @@
+<% title t("matching.show.title") %>
+
+<div class="crayons-layout crayons-layout--limited-width">
+  <header class="mb-6">
+    <h1 class="crayons-title">✨ <%= t("matching.show.title") %></h1>
+    <p class="crayons-subtitle"><%= t("matching.show.subtitle") %></p>
+  </header>
+
+  <% if @profile.nil? %>
+    <div class="crayons-card p-6 text-center">
+      <h2 class="crayons-subtitle mb-3"><%= t("matching.show.no_profile_title") %></h2>
+      <p class="mb-4"><%= t("matching.show.no_profile_body") %></p>
+      <% if current_user.suspended? %>
+        <p class="color-base-60 fs-s"><%= t("matching.profiles.suspended_blocked") %></p>
+      <% else %>
+        <%= link_to t("matching.show.create_profile"), matching_onboarding_path, class: "crayons-btn" %>
+      <% end %>
+    </div>
+
+  <% else %>
+    <div class="crayons-card p-6 mb-4">
+      <div class="flex gap-4 items-start">
+        <% if @profile.photo.present? %>
+          <img src="<%= @profile.photo.url %>" alt="<%= current_user.username %>" style="width: 120px; height: 150px; object-fit: cover; border-radius: 8px;">
+        <% end %>
+        <div class="flex-1">
+          <h2 class="crayons-subtitle"><%= t("matching.identity_types.#{@profile.identity_type}") %></h2>
+          <p class="color-base-60">📍 <%= @profile.city.name %></p>
+          <% if @profile.bio.present? %>
+            <p class="mt-2"><%= @profile.bio %></p>
+          <% end %>
+        </div>
+      </div>
+
+      <hr class="my-4 color-base-30">
+
+      <div class="flex items-center gap-2 flex-wrap">
+        <%= render "matching/moderation_badge", profile: @profile %>
+        <% unless @profile.is_active? %>
+          <span class="crayons-indicator crayons-indicator--warning"><%= t("matching.show.deactivated") %></span>
+        <% end %>
+        <% if @profile.moderation_reason.present? %>
+          <p class="fs-s color-base-60 w-full mt-2"><%= t("matching.show.rejection_reason") %>: <%= @profile.moderation_reason %></p>
+        <% end %>
+      </div>
+
+      <div class="mt-4">
+        <% if @profile.is_active? %>
+          <%= link_to t("matching.show.edit_profile"), edit_matching_profile_path, class: "crayons-btn crayons-btn--outlined" %>
+        <% else %>
+          <p class="fs-s color-base-60"><%= t("matching.show.deactivated_explanation") %></p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

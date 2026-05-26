@@ -1,0 +1,2 @@
+<h1><%= t("matching_mailer.approved.heading") %></h1>
+<p><%= t("matching_mailer.approved.body_html", username: @user.username, link: link_to(t("matching_mailer.approved.cta"), matching_url)).html_safe %></p>

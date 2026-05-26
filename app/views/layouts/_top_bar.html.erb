@@ -86,6 +86,9 @@
           <%= crayons_icon_tag(:bell, title: t("views.main.header.notifications.icon")) %>
           <span class="c-indicator c-indicator--danger hidden" id="notifications-number"></span>
         </a>
+        <a href="<%= matching_path %>" id="matching-link" class="c-link c-link--icon-alone c-link--block mx-1" aria-label="<%= t("matching.nav.aria_label") %>" title="<%= t("matching.nav.title") %>">
+          <span aria-hidden="true" style="font-size: 1.25rem; line-height: 1;">✨</span>
+        </a>
 
         <div class="crayons-header__menu mx-1" id="crayons-header__menu">
           <button type="button" class="c-btn c-btn--icon-alone radius-full p-1" id="member-menu-button" aria-label="<%= t("views.main.header.nav.aria_label") %>" aria-expanded="false">

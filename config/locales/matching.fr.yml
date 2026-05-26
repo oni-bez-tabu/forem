@@ -1,0 +1,100 @@
+fr:
+  views:
+    settings:
+      tab:
+        Matching: "Matching"
+  matching:
+    nav:
+      title: "Matching"
+      aria_label: "Ouvrir Matching"
+    show:
+      title: "Votre Matching"
+      subtitle: "Votre profil et statut dans le module Matching."
+      no_profile_title: "Vous n'avez pas encore de profil Matching"
+      no_profile_body: "Créez-en un pour déclarer votre intention sur les événements et envoyer des messages de bienvenue."
+      create_profile: "Créer un profil Matching"
+      edit_profile: "Modifier le profil"
+      deactivated: "Profil inactif"
+      deactivated_explanation: "Votre profil est désactivé. Contactez l'administration si c'est une erreur."
+      rejection_reason: "Raison"
+    onboarding:
+      title: "Créer votre profil Matching"
+      subtitle: "Quatre champs, quelques secondes. Le profil passe par la modération."
+      submit: "Soumettre pour révision"
+    profiles:
+      created: "Profil créé. En attente de modération."
+      updated: "Profil mis à jour."
+      updated_pending_review: "Profil mis à jour. Les changements de contenu repassent par la modération."
+      suspended_blocked: "Compte suspendu — vous ne pouvez pas créer de profil Matching."
+      edit_title: "Modifier le profil Matching"
+      edit_subtitle: "Modifier photo, identité, ville ou bio renvoie le profil en modération."
+      edit_resets_moderation: "Note : les changements de contenu renverront le profil en modération."
+      update: "Enregistrer"
+      cancel: "Annuler"
+      fields:
+        photo: "Photo"
+        photo_help: "Choisissez une photo de profil (jpg/png, jusqu'à 8 Mo)."
+        identity_type: "Identité"
+        city: "Ville"
+        bio: "Bio"
+        bio_help: "Courte description. Jusqu'à %{max} caractères."
+    identity_types:
+      woman: "Femme"
+      man: "Homme"
+      couple: "Couple"
+      non_binary: "Non binaire"
+    moderation:
+      approved: "Approuvé"
+      pending: "En attente"
+      rejected: "Rejeté"
+    settings:
+      title: "Matching"
+      intro: "Sous-profil pour déclarer une intention sur les événements. Ouvrez le panneau Matching pour gérer le profil."
+      open_dashboard: "Ouvrir le panneau Matching"
+
+  admin:
+    matching_profiles:
+      title: "Profils Matching"
+      empty_state: "Aucun profil dans cette vue."
+      banned: "Suspendu"
+      inactive_marker: "Inactif"
+      approved: "Profil approuvé."
+      rejected: "Profil rejeté."
+      deactivated: "Profil désactivé."
+      reactivated: "Profil réactivé."
+      destroyed: "Profil supprimé."
+      scope:
+        pending: "À modérer"
+        approved: "Approuvés"
+        rejected: "Rejetés"
+        inactive: "Inactifs"
+        all: "Tous"
+      fields:
+        photo: "Photo"
+        user: "Utilisateur"
+        identity: "Identité"
+        city: "Ville"
+        state: "Statut"
+      actions:
+        approve: "Approuver"
+        reject: "Rejeter"
+        deactivate: "Désactiver"
+        reactivate: "Réactiver"
+        delete: "Supprimer"
+        confirm_reject: "Rejeter ce profil ?"
+        confirm_delete: "Supprimer ce profil définitivement ?"
+
+  matching_mailer:
+    approved:
+      subject: "Votre profil Matching est approuvé"
+      heading: "Profil approuvé ✨"
+      body_html: "Bonjour %{username} ! Votre profil Matching a passé la modération. %{link}"
+      body_text: "Bonjour %{username} ! Votre profil Matching a passé la modération. Ouvrir : %{url}"
+      cta: "Ouvrir le panneau Matching"
+    rejected:
+      subject: "Votre profil Matching nécessite des modifications"
+      heading: "Profil à modifier"
+      body_html: "Bonjour %{username}, votre profil Matching n'a pas été approuvé. %{link}"
+      body_text: "Bonjour %{username}, votre profil Matching n'a pas été approuvé. Modifier : %{url}"
+      cta: "Modifier le profil"
+      reason_label: "Raison"

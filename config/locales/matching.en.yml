@@ -1,0 +1,100 @@
+en:
+  views:
+    settings:
+      tab:
+        Matching: "Matching"
+  matching:
+    nav:
+      title: "Matching"
+      aria_label: "Open Matching"
+    show:
+      title: "Your Matching"
+      subtitle: "Your profile and status in the Matching module."
+      no_profile_title: "You don't have a Matching profile yet"
+      no_profile_body: "Create one to declare intent on events and send welcome messages."
+      create_profile: "Create Matching profile"
+      edit_profile: "Edit profile"
+      deactivated: "Profile inactive"
+      deactivated_explanation: "Your profile is deactivated. Contact admins if this looks wrong."
+      rejection_reason: "Reason"
+    onboarding:
+      title: "Create your Matching profile"
+      subtitle: "Four fields, a few seconds. Profile goes to admin review."
+      submit: "Submit for review"
+    profiles:
+      created: "Profile created. Awaiting admin review."
+      updated: "Profile updated."
+      updated_pending_review: "Profile updated. Content changes go back to admin review."
+      suspended_blocked: "Account suspended — you cannot create a Matching profile."
+      edit_title: "Edit Matching profile"
+      edit_subtitle: "Changing photo, identity, city or bio sends the profile back to review."
+      edit_resets_moderation: "Note: content changes will send the profile back to admin review."
+      update: "Save changes"
+      cancel: "Cancel"
+      fields:
+        photo: "Photo"
+        photo_help: "Pick a profile photo (jpg/png, up to 8 MB)."
+        identity_type: "Identity"
+        city: "City"
+        bio: "Bio"
+        bio_help: "A short description. Up to %{max} characters."
+    identity_types:
+      woman: "Woman"
+      man: "Man"
+      couple: "Couple"
+      non_binary: "Non-binary"
+    moderation:
+      approved: "Approved"
+      pending: "Awaiting review"
+      rejected: "Rejected"
+    settings:
+      title: "Matching"
+      intro: "Sub-profile for declaring intent on events. Open the Matching panel to manage your profile and preferences."
+      open_dashboard: "Open Matching panel"
+
+  admin:
+    matching_profiles:
+      title: "Matching profiles"
+      empty_state: "No profiles in this scope."
+      banned: "Suspended"
+      inactive_marker: "Inactive"
+      approved: "Profile approved."
+      rejected: "Profile rejected."
+      deactivated: "Profile deactivated."
+      reactivated: "Profile reactivated."
+      destroyed: "Profile deleted."
+      scope:
+        pending: "Pending review"
+        approved: "Approved"
+        rejected: "Rejected"
+        inactive: "Inactive"
+        all: "All"
+      fields:
+        photo: "Photo"
+        user: "User"
+        identity: "Identity"
+        city: "City"
+        state: "Status"
+      actions:
+        approve: "Approve"
+        reject: "Reject"
+        deactivate: "Deactivate"
+        reactivate: "Reactivate"
+        delete: "Delete"
+        confirm_reject: "Reject this profile?"
+        confirm_delete: "Delete this profile permanently?"
+
+  matching_mailer:
+    approved:
+      subject: "Your Matching profile has been approved"
+      heading: "Profile approved ✨"
+      body_html: "Hi %{username}! Your Matching profile passed moderation. %{link}"
+      body_text: "Hi %{username}! Your Matching profile passed moderation. Open: %{url}"
+      cta: "Open Matching panel"
+    rejected:
+      subject: "Your Matching profile needs changes"
+      heading: "Profile needs changes"
+      body_html: "Hi %{username}, your Matching profile was not approved. %{link}"
+      body_text: "Hi %{username}, your Matching profile was not approved. Edit: %{url}"
+      cta: "Edit profile"
+      reason_label: "Reason"

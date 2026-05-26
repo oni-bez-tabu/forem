@@ -26,6 +26,7 @@ class AdminMenu
       item(name: "surveys"),
       item(name: "events"),
       item(name: "meetups"),
+      item(name: "matching profiles", controller: "matching_profiles"),
       item(name: "talks"),
     ]
 

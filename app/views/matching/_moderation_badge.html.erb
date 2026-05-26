@@ -1,0 +1,8 @@
+<% case profile.moderation_state %>
+<% when "approved" %>
+  <span class="crayons-indicator crayons-indicator--positive">✓ <%= t("matching.moderation.approved") %></span>
+<% when "pending" %>
+  <span class="crayons-indicator crayons-indicator--accent">⏳ <%= t("matching.moderation.pending") %></span>
+<% when "rejected" %>
+  <span class="crayons-indicator crayons-indicator--danger"><%= t("matching.moderation.rejected") %></span>
+<% end %>

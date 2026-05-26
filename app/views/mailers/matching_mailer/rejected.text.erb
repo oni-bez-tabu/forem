@@ -1,0 +1,7 @@
+<%= t("matching_mailer.rejected.heading") %>
+
+<%= t("matching_mailer.rejected.body_text", username: @user.username, url: edit_matching_profile_url) %>
+<% if @profile.moderation_reason.present? %>
+
+<%= t("matching_mailer.rejected.reason_label") %>: <%= @profile.moderation_reason %>
+<% end %>

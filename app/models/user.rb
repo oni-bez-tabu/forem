@@ -971,5 +971,7 @@ class User < ApplicationRecord
     end
 
     sync_base_email_eligible! if role.name == "suspended" || role.name == "spam"
+
+    Matching::DeactivateProfileOnBanWorker.perform_async(id) if role.name == "suspended"
   end
 end

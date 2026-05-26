@@ -1,0 +1,16 @@
+<% title t("matching.profiles.edit_title") %>
+
+<div class="crayons-layout crayons-layout--limited-width">
+  <header class="mb-4">
+    <h1 class="crayons-title">✨ <%= t("matching.profiles.edit_title") %></h1>
+    <p class="crayons-subtitle"><%= t("matching.profiles.edit_subtitle") %></p>
+  </header>
+  <div class="crayons-card p-6">
+    <% unless @profile.pending? %>
+      <div class="crayons-notice p-3 mb-4" aria-live="polite">
+        <%= t("matching.profiles.edit_resets_moderation") %>
+      </div>
+    <% end %>
+    <%= render "matching/profiles/form", profile: @profile, submit_label: t("matching.profiles.update") %>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<h1 class="crayons-title mb-3"><%= t("admin.matching_profiles.title") %></h1>
+
+<div class="flex items-center mb-6">
+  <div class="crayons-tabs">
+    <% Admin::MatchingProfilesController::SCOPES.each do |scope| %>
+      <div>
+        <%= link_to t("admin.matching_profiles.scope.#{scope}"),
+                    admin_matching_profiles_path(scope: scope),
+                    class: "crayons-tabs__item #{'crayons-tabs__item--current' if @scope == scope}",
+                    data: { text: t("admin.matching_profiles.scope.#{scope}") } %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if @profiles.empty? %>
+  <div class="crayons-notice p-0 mt-1 mb-5" aria-live="polite">
+    <%= t("admin.matching_profiles.empty_state") %>
+  </div>
+<% else %>
+  <table class="crayons-table" width="100%">
+    <thead>
+      <tr>
+        <th scope="col"><%= t("admin.matching_profiles.fields.photo") %></th>
+        <th scope="col"><%= t("admin.matching_profiles.fields.user") %></th>
+        <th scope="col"><%= t("admin.matching_profiles.fields.identity") %></th>
+        <th scope="col"><%= t("admin.matching_profiles.fields.city") %></th>
+        <th scope="col"><%= t("admin.matching_profiles.fields.state") %></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody class="crayons-card">
+      <% @profiles.each do |profile| %>
+        <tr>
+          <td>
+            <% if profile.photo.present? %>
+              <img src="<%= profile.photo.url %>" alt="<%= profile.user.username %>" style="width: 48px; height: 60px; object-fit: cover; border-radius: 4px;">
+            <% end %>
+          </td>
+          <td>
+            <strong>@<%= profile.user.username %></strong>
+            <% if profile.user.suspended? %>
+              <span class="crayons-indicator crayons-indicator--danger fs-xs"><%= t("admin.matching_profiles.banned") %></span>
+            <% end %>
+            <div class="fs-xs color-base-60"><%= profile.user.email %></div>
+          </td>
+          <td><%= t("matching.identity_types.#{profile.identity_type}") %></td>
+          <td><%= profile.city.name %></td>
+          <td>
+            <%= render "matching/moderation_badge", profile: profile %>
+            <% unless profile.is_active? %>
+              <div class="fs-xs color-base-60 mt-1"><%= t("admin.matching_profiles.inactive_marker") %></div>
+            <% end %>
+            <% if profile.bio.present? %>
+              <p class="fs-xs color-base-60 mt-1"><%= truncate(profile.bio, length: 120) %></p>
+            <% end %>
+            <% if profile.moderation_reason.present? %>
+              <p class="fs-xs color-base-60 mt-1"><em><%= profile.moderation_reason %></em></p>
+            <% end %>
+          </td>
+          <td class="text-right">
+            <% if profile.pending? %>
+              <%= button_to t("admin.matching_profiles.actions.approve"),
+                            approve_admin_matching_profile_path(profile, scope: @scope),
+                            method: :post,
+                            class: "crayons-btn crayons-btn--s",
+                            form: { class: "inline-block" } %>
+              <%= button_to t("admin.matching_profiles.actions.reject"),
+                            reject_admin_matching_profile_path(profile, scope: @scope),
+                            method: :post,
+                            class: "crayons-btn crayons-btn--danger crayons-btn--s",
+                            form: { class: "inline-block", data: { turbo_confirm: t("admin.matching_profiles.actions.confirm_reject") } } %>
+            <% elsif profile.approved? && profile.is_active? %>
+              <%= button_to t("admin.matching_profiles.actions.deactivate"),
+                            deactivate_admin_matching_profile_path(profile, scope: @scope),
+                            method: :post,
+                            class: "crayons-btn crayons-btn--outlined crayons-btn--s",
+                            form: { class: "inline-block" } %>
+            <% elsif !profile.is_active? %>
+              <%= button_to t("admin.matching_profiles.actions.reactivate"),
+                            reactivate_admin_matching_profile_path(profile, scope: @scope),
+                            method: :post,
+                            class: "crayons-btn crayons-btn--s",
+                            form: { class: "inline-block" } %>
+            <% end %>
+            <%= button_to t("admin.matching_profiles.actions.delete"),
+                          admin_matching_profile_path(profile, scope: @scope),
+                          method: :delete,
+                          class: "crayons-btn crayons-btn--danger crayons-btn--s",
+                          form: { class: "inline-block", data: { turbo_confirm: t("admin.matching_profiles.actions.confirm_delete") } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -145,6 +145,14 @@ namespace :admin do
     resources :surveys
     resources :events
     resources :meetups, except: %i[show]
+    resources :matching_profiles, only: %i[index destroy] do
+      member do
+        post :approve
+        post :reject
+        post :deactivate
+        post :reactivate
+      end
+    end
   end
 
   scope :customization do
