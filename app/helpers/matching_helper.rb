@@ -15,6 +15,16 @@ module MatchingHelper
     TIMELINE_DOT_HEX[event_type] || "#9ca3af"
   end
 
+  INTENT_EMOJI = {
+    "open_to_meet" => "💬",
+    "just_vibe"    => "🌙",
+    "not_looking"  => "🌑",
+  }.freeze
+
+  def intent_emoji(intent_level)
+    INTENT_EMOJI[intent_level.to_s] || "✨"
+  end
+
   def dot_color_for(event_type)
     case event_type
     when :match_found then "dark"
