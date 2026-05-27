@@ -346,13 +346,62 @@ Pełny Matching POC suite: **234/234 ✓** (74 Etap 0–1, +37 Etap 2, +36 Etap 
 
 ---
 
+## Etap 6 fala 1 — UI polish 1:1 z hifi mockup E8 + meetup hub hero
+
+- **Status:** ✅ done
+- **Commit:** `dcd5b00a5`
+- **Data:** 2026-05-27
+
+### Zaimplementowane
+
+**TimelineFeed (refaktor + nowy event type):**
+- `Matching::TimelineFeed.match_found_events` zmienione: agregacja PER MEETUP zamiast osobne event'y per joiner. Payload: `{ count, joiners: [top 3 MatchingProfile records] }`. Pokrywa mockup E8 "3 nowe dopasowania" wiersz z grid 3 mini-cards.
+- Nowy typ event'a `:needs_intent` — fires gdy user ma RSVP ale brak deklaracji na visible meetupie (i ma aktywny profil). Mockup E8 "Czeka na intencję" magenta dashed card.
+
+**MeetupRecommendations (refaktor z 'why'):**
+- Service zwraca `Recommendation` struct: `{ meetup, active_count, identity_breakdown, open_to_meet_count }`. Pozwala renderować "Bo: X osób zadeklarowało intencję" + breakdown po identity ("7 kobiet · 4 pary") + "✨ 5 chce się poznać".
+
+**E8 dashboard UI (`/matching`):**
+- Profile header card 1:1 z mockupem: foto 96×120, h2 "Twój profil Matching" + status pill + identity/city/"X nowych dopasowań" badges, italic bio quote, mute privacy hint, manage button outline po prawej.
+- Dot timeline (helper `MatchingHelper#dot_hex_for`): kolorowe kropki per typ event + linia łącząca.
+- Kind label per event ("Nowe dopasowanie" / "Zadeklarowano intencję" / "Zapisano się") + czas relatywny po prawej.
+- `match_found` z mini-cards grid (3 kolumny 1:1, foto + identity pill + city + bio teaser), klik → event-scoped profile. "Zobacz wszystkich (X)" gdy count > preview.
+- `needs_intent` magenta dashed card z "Dodaj intencję" button → declaration form.
+- Recommendation full card: banner 140px po lewej (lub gradient fallback), dashed brand border, "✨ Polecane dla ciebie" pill, "Bo: X osób zadeklarowało intencję" + breakdown italic, 2 buttony.
+
+**Meetup hub UI (`/wydarzenia/<slug>`):**
+- Hero 380px z banner cover + linear gradient overlay i biały text overlay: eyebrow "📅 Sobota · za 12 dni" (relative date z helpera `meetup_hero_eyebrow`), h1 32px, full date + godziny + venue/city.
+- Meta row z avatar organizatora 44px (round) + label "Organizator" + name + duży primary button "Zobacz pełen opis →".
+- RSVP section z h2 "Wybierz swój udział", caveat, large buttony, inline counts, going confirmation card.
+- Divider'y między sekcjami.
+
+**Helpers:**
+- `MatchingHelper#dot_hex_for(event_type)` + `dot_color_for(event_type)` dla dot timeline.
+- `MeetupsHelper#meetup_hero_eyebrow(meetup)` — relatywna data "Sobota · za 12 dni" / "jutro" / "X dni temu".
+
+**i18n (4 locales, ~40 nowych kluczy):** `matching.show.{profile_title, matches_count, privacy_hint}`, `matching.timeline.{subheading, match_found_caption, see_all, needs_intent_caption, declare_intent_button, kind_labels.*, events.rsvp_*_pill}`, `matching.recommendations.{reason_lead, reason_pool_count, open_to_meet_count, view_meetup, declare_intent}`, `matching.identity_types_plural.*`, `meetups.show.{back_to_list, counts_caveat, going_short, interested_short, going_confirmation, going_confirmation_tail, relative.*}`.
+
+**Testy:** TimelineFeed (14, +3 nowe asercje), MeetupRecommendations (11, +1 spec), matching_show_spec (8, zaktualizowany RSVP assert). Pełny suite **240/240 ✓**.
+
+### Uwagi / odstępstwa / długi techniczne
+
+- **To jest pierwsza fala UI polish** — backlogowane: Preact pack dla 3 popupów (boost/welcome/share, wciąż inline JS), multi-step onboarding E5→E6→E7, real Crayons tokens zamiast inline styles, hifi gradient palette, sparkles SVG, weights w rekomendacjach, frequency capping.
+- **Matching_section w meetup hub** nie tknięty w tej fali — bez polish 1:1 z mockupem (gradient P1 card, "Zmień deklarację" dla P3, sparkle h2 icon). Fala 2.
+- **Dot timeline** używa inline-styled `<span>` zamiast Crayons CSS class. Do polish.
+- **`needs_intent` bez aggregation** — jeśli user ma 5 RSVP bez deklaracji, dostanie 5 wierszy w timeline. Aggregation per grupę meetupów — TODO.
+- **Hero gradient overlay (0→0.55 black)** — na bardzo jasnych zdjęciach (śnieg/niebo) text staje się trudny do przeczytania. Polish dług: backdrop-filter blur lub dynamic overlay detection.
+- **Relative date helper** — pluralizacja pl/en działa przez yaml count: pluralized hash. Helper bierze `count: delta` literal — Rails I18n.t obsługuje pluralization automatycznie po `count:`. Sprawdzone w 4 locales (pl ma one/few/many/other, en/fr/pt mają one/other).
+
+---
+
 ## Następny etap
 
-**Etap 6 — Rekomendacje + polishing** (SPEC.md §11, 1-1.5 tyg)
+**Etap 6 fala 2 + backlog** (niewymagane do POC acceptance, ale do podjęcia gdy będzie czas):
 
-Zakres:
-- Rozbudowanie `Matching::MeetupRecommendations` — np. weights za "similar vibe" (identity-aware jeśli przywrócimy `looking_for`), repeat-organizer bonus, frequency capping ("nie polecaj tego samego meetupu dwa razy w tym samym tygodniu")
-- Polish UX długów z poprzednich etapów: real Crayons tokens dla widget styles (zamiast inline), hifi gradient palette dla banner_gradient, sparkles SVG zamiast fire.svg jako matching tab icon, multi-step onboarding E5→E6→E7
+- Matching_section w meetup hub: polish 1:1 z mockupem (h2 + sparkle icon, P1 gradient card, "Zmień deklarację" button dla P3)
+- Polish UX długów z poprzednich etapów: real Crayons tokens dla widget styles, hifi gradient palette dla banner_gradient, sparkles SVG zamiast fire.svg jako matching tab icon, multi-step onboarding E5→E6→E7
 - Frontend polishing: Preact pack dla 3 popupów (boost / E18 welcome / share) zamiast inline JS w ERB
 - Performance: indeksy + EXPLAIN dla `TimelineFeed` SQL przy realistic data volume
-- Optional: native i18n review (FR/PT) — wszystkie POC tłumaczenia "machinalne"
+- `MeetupRecommendations` weights: "similar vibe" (identity-aware jeśli przywrócimy `looking_for`), repeat-organizer bonus, frequency capping
+- Native i18n review (FR/PT) — wszystkie POC tłumaczenia "machinalne"
+- Cloud Function dla welcome message → chat Firebase (Etap 4 dług, wymaga external sprintu)
