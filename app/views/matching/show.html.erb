@@ -1,11 +1,6 @@
 <% title t("matching.show.title") %>
 
 <div class="crayons-layout crayons-layout--limited-width">
-  <header class="mb-6">
-    <h1 class="crayons-title">✨ <%= t("matching.show.title") %></h1>
-    <p class="crayons-subtitle"><%= t("matching.show.subtitle") %></p>
-  </header>
-
   <% if @profile.nil? %>
     <div class="crayons-card p-6 text-center">
       <h2 class="crayons-subtitle mb-3"><%= t("matching.show.no_profile_title") %></h2>
