@@ -183,7 +183,7 @@
 ## Etap 4 — Welcome + Boost + Widget meetupu
 
 - **Status:** ✅ done
-- **Commit:** _(do dodania)_
+- **Commit:** `fd74df313`
 - **Data:** 2026-05-27
 
 ### Zaimplementowane
