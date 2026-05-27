@@ -28,11 +28,11 @@
       </h3>
       <% case event[:type]
          when :rsvp_created, :needs_intent %>
-        <span class="crayons-indicator <%= event[:payload][:status] == 'going' ? 'crayons-indicator--success' : '' %>">
+        <span style="<%= pill_style(event[:payload][:status] == 'going' ? :success : :outline) %>">
           ✓ <%= t("matching.timeline.events.rsvp_#{event[:payload][:status]}_pill", default: event[:payload][:status]) %>
         </span>
       <% when :declaration_created, :declaration_updated %>
-        <span class="crayons-indicator crayons-indicator--accent">
+        <span style="<%= pill_style(:magenta) %>">
           <%= t("matching.declarations.intents.#{event[:payload][:intent]}.label") %>
         </span>
       <% end %>
@@ -62,9 +62,9 @@
         <% end %>
         <div class="flex-1" style="min-width: 200px;">
           <div class="flex gap-2 flex-wrap mb-2">
-            <span class="crayons-indicator crayons-indicator--accent"><%= t("matching.identity_types.#{jp.identity_type}") %></span>
-            <span class="crayons-indicator">📍 <%= jp.city.name %></span>
-            <span class="crayons-indicator"><%= t("matching.declarations.intents.#{single_dec.intent_level}.label") %></span>
+            <span style="<%= pill_style(:solid) %>"><%= t("matching.identity_types.#{jp.identity_type}") %></span>
+            <span style="<%= pill_style(:outline) %>">📍 <%= jp.city.name %></span>
+            <span style="<%= pill_style(:magenta) %>"><%= t("matching.declarations.intents.#{single_dec.intent_level}.label") %></span>
           </div>
           <% if single_dec.meetup_note.present? %>
             <p class="fs-s color-base-80" style="font-style: italic; margin: 0;">"<%= single_dec.meetup_note %>"</p>

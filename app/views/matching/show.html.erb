@@ -23,21 +23,19 @@
           <div class="flex items-baseline gap-3 flex-wrap mb-2">
             <h1 class="crayons-title" style="margin: 0; font-size: 24px;"><%= t("matching.show.profile_title") %></h1>
             <% if @profile.visible_to_others? %>
-              <span class="crayons-indicator" style="background: var(--accent-brand, #6366f1); color: #fff; font-weight: 700; padding: 4px 12px; font-size: 12px; border-radius: 100px; display: inline-flex; align-items: center;">
-                <%= t("matching.show.profile_active_pill") %>
-              </span>
+              <span style="<%= pill_style(:brand) %>"><%= t("matching.show.profile_active_pill") %></span>
             <% elsif @profile.pending? %>
-              <span class="crayons-indicator crayons-indicator--warning"><%= t("matching.moderation.pending") %></span>
+              <span style="<%= pill_style(:warning) %>"><%= t("matching.moderation.pending") %></span>
             <% elsif @profile.rejected? %>
-              <span class="crayons-indicator crayons-indicator--danger"><%= t("matching.moderation.rejected") %></span>
+              <span style="<%= pill_style(:danger) %>"><%= t("matching.moderation.rejected") %></span>
             <% end %>
             <% unless @profile.is_active? %>
-              <span class="crayons-indicator crayons-indicator--warning"><%= t("matching.show.deactivated") %></span>
+              <span style="<%= pill_style(:warning) %>"><%= t("matching.show.deactivated") %></span>
             <% end %>
           </div>
           <div class="flex gap-2 flex-wrap mb-2">
-            <span class="crayons-indicator crayons-indicator--accent"><%= t("matching.identity_types.#{@profile.identity_type}") %></span>
-            <span class="crayons-indicator">📍 <%= @profile.city.name %></span>
+            <span style="<%= pill_style(:solid) %>"><%= t("matching.identity_types.#{@profile.identity_type}") %></span>
+            <span style="<%= pill_style(:outline) %>">📍 <%= @profile.city.name %></span>
           </div>
           <% if @profile.bio.present? %>
             <p class="fs-base color-base-80 mb-1" style="font-style: italic;">"<%= @profile.bio %>"</p>
