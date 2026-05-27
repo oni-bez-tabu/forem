@@ -249,7 +249,7 @@ Pełny Matching POC suite: **185/185 ✓** (74 Etap 0–1, +37 Etap 2, +36 Etap 
 - ✅ `{% embed https://host/meetups/<slug> %}` (canonical Forem pattern) routuje do MeetupTag — zarejestrowane w UnifiedEmbed::Registry z `skip_validation: true` i pozycją FRONT (unshift) żeby wygrać priorytetem z catch-all ForemTag
 - ⚠️ **Dostarczenie welcome do chatu Firebase: stubbed w POC** — service tworzy rekord i woła CF, ale sama CF nie jest jeszcze deployowana. Wymaga osobnego sprintu na Firebase side. Endpoint Rails gotowy.
 
-### Etap 4 — Polish po sesji (commit `<TBD>`)
+### Etap 4 — Polish po sesji (commit `e3f727d52`)
 
 Post-review fixes po pierwszym wglądzie w wyrenderowany widget:
 - **Layout widgetu z mockupu E1** — 3-kolumnowy grid (data 72px / tytuł+venue+org fluid / banner 144×81 16:9). Wcześniej był banner 140px na górze a poniżej cała reszta (rozjeżdżało się przy długich tytułach + thumbnail 96×96 ucinał 16:9 do kwadratu).
