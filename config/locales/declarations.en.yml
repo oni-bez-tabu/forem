@@ -64,6 +64,13 @@ en:
         other: "%{count} matches"
       your_intent: "Your intent"
       empty_state: "Nobody compatible has declared yet. Check back later."
+      pool_count:
+        one: "1 person"
+        other: "%{count} people"
+      pool_count_tail: "from nietabu match your filter"
+      intent_groups:
+        open_to_meet: "Open to meet"
+        just_vibe: "Just here for the vibe"
       same_intent_heading: "Match your intent"
       other_intent_heading: "Others who declared"
       blurred_teaser: "Full list unlocks after you declare intent."

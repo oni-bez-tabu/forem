@@ -64,6 +64,13 @@ fr:
         other: "%{count} correspondances"
       your_intent: "Votre intention"
       empty_state: "Personne de compatible n'a encore déclaré. Revenez plus tard."
+      pool_count:
+        one: "1 personne"
+        other: "%{count} personnes"
+      pool_count_tail: "de nietabu correspondent à votre filtre"
+      intent_groups:
+        open_to_meet: "Ouvert à rencontrer"
+        just_vibe: "Juste pour l'ambiance"
       same_intent_heading: "Correspondent à votre intention"
       other_intent_heading: "Autres qui ont déclaré"
       blurred_teaser: "La liste complète s'affichera après votre déclaration."

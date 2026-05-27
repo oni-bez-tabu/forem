@@ -60,6 +60,15 @@ pl:
           label: "Otwarty na poznanie"
           help: "Aktywnie szukam kogoś do rozmowy lub spotkania."
     matches:
+      pool_count:
+        one: "1 osoba"
+        few: "%{count} osoby"
+        many: "%{count} osób"
+        other: "%{count} osób"
+      pool_count_tail: "z nietabu pasuje do twojego filtra"
+      intent_groups:
+        open_to_meet: "Otwarci na poznanie"
+        just_vibe: "Tylko klimat"
       count:
         zero: "Brak dopasowań"
         one: "1 dopasowanie"

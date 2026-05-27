@@ -64,6 +64,13 @@ pt:
         other: "%{count} correspondências"
       your_intent: "Sua intenção"
       empty_state: "Ninguém compatível declarou ainda. Volte mais tarde."
+      pool_count:
+        one: "1 pessoa"
+        other: "%{count} pessoas"
+      pool_count_tail: "do nietabu corresponde ao seu filtro"
+      intent_groups:
+        open_to_meet: "Abertos a conhecer"
+        just_vibe: "Só pelo clima"
       same_intent_heading: "Combinam com sua intenção"
       other_intent_heading: "Outros que declararam"
       blurred_teaser: "A lista completa abre depois que você declarar intenção."

@@ -1,43 +1,43 @@
-<header class="flex items-center justify-between flex-wrap gap-2 mb-3">
-  <div>
-    <p class="fs-base">
-      <strong><%= t("matching.matches.count", count: pool.total_count) %></strong>
-      ·
-      <%= t("matching.matches.your_intent") %>:
-      <%= t("matching.declarations.intents.#{current_declaration.intent_level}.label") %>
-    </p>
-    <% if current_declaration.meetup_note.present? %>
-      <p class="fs-s color-base-60 mt-1">📝 "<%= current_declaration.meetup_note %>"</p>
-    <% end %>
-  </div>
-  <%= link_to t("matching.section.change_declaration"),
-              edit_meetup_declaration_path(meetup.slug),
-              class: "crayons-btn crayons-btn--outlined crayons-btn--s" %>
-</header>
-
+<%# Matches list grouped per intent (mockup E11_Inline: screens.jsx:561-590).
+    "X osób z nietabu pasuje do twojego filtra" header, then per-intent
+    overline + count + grid of MatchCards with hideIntent (since the
+    intent is the group). %>
 <% same_intent = pool.same_intent_group %>
 <% other_intent = pool.other_intent_group %>
+<% total = same_intent.length + other_intent.length %>
 
-<% if same_intent.empty? && other_intent.empty? %>
-  <div class="crayons-notice p-3 mt-3" aria-live="polite">
-    <%= t("matching.matches.empty_state") %>
+<% if total.zero? %>
+  <div class="crayons-card" style="padding: 16px; background: var(--card-secondary-bg, #f9f9f9);">
+    <p class="fs-s color-base-60" style="margin: 0;"><%= t("matching.matches.empty_state") %></p>
   </div>
 <% else %>
-  <% if same_intent.any? %>
-    <h3 class="crayons-subtitle-2 mt-4 mb-2">✦ <%= t("matching.matches.same_intent_heading") %></h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-      <% same_intent.each do |dec| %>
-        <%= render "matching/match_card", declaration: dec, meetup: meetup %>
-      <% end %>
-    </div>
-  <% end %>
+  <%# All visible declarations regrouped by intent_level for display. %>
+  <% all = (same_intent + other_intent) %>
+  <% by_intent = all.group_by(&:intent_level) %>
 
-  <% if other_intent.any? %>
-    <h3 class="crayons-subtitle-2 mt-4 mb-2"><%= t("matching.matches.other_intent_heading") %></h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-      <% other_intent.each do |dec| %>
-        <%= render "matching/match_card", declaration: dec, meetup: meetup %>
-      <% end %>
+  <div class="flex items-baseline mb-3" style="justify-content: space-between;">
+    <p class="fs-base" style="margin: 0;">
+      <strong><%= t("matching.matches.pool_count", count: total) %></strong>
+      <%= t("matching.matches.pool_count_tail") %>
+    </p>
+  </div>
+
+  <% %w[open_to_meet just_vibe].each do |intent_key| %>
+    <% group_decs = by_intent[intent_key] || [] %>
+    <% next if group_decs.empty? %>
+    <div class="mb-4">
+      <div class="flex items-baseline gap-2 mb-2">
+        <span class="fs-xs" style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--base-90, #171717);">
+          <%= intent_emoji(intent_key) %>
+          <%= t("matching.matches.intent_groups.#{intent_key}") %>
+        </span>
+        <span class="fs-xs color-base-60">— <%= group_decs.length %></span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;">
+        <% group_decs.each do |dec| %>
+          <%= render "matching/match_card", declaration: dec, meetup: meetup, hide_intent: true %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 <% end %>
