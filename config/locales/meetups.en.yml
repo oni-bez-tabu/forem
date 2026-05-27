@@ -36,9 +36,6 @@ en:
         upcoming: "Upcoming event"
         active: "Happening now"
         expired: "Ended"
-      author_rsvp:
-        going: "✓ Author is going"
-        interested: "✓ Author is interested"
       cta: "View event"
 
   admin:

@@ -243,10 +243,25 @@ Pełny Matching POC suite: **185/185 ✓** (74 Etap 0–1, +37 Etap 2, +36 Etap 
 - ✅ "Raz na osobę nigdy więcej" — unique index na (sender_profile_id, receiver_profile_id), kontroler zwraca 409 (test pokrywa duplicate w tym samym meetupie i across meetups)
 - ✅ R4 lockout: not_looking nie może wysłać ani otrzymać welcome (422)
 - ✅ Widget meetupu w 3 stanach: upcoming / active / expired po 24h (R-Lifecycle.1)
-- ✅ Klik widgetu w stanie expired → standardowy 404 (link wraca do `/wydarzenia/{slug}`, hub serwuje 404 dla expired)
-- ✅ Boost flow: pusty textarea, widget meetupu osadzony pod polem (preview + `{% meetup %}` tag w body), bez prefilla
-- ✅ Boost tworzy zwykły post nietabu (`Article` type_of full_post), redirect do `article.path`
+- ✅ Klik widgetu w stanie expired → standardowy 404 (link prowadzi do `meetup_path(meetup)` = `/meetups/{slug}`, hub serwuje 404 dla expired)
+- ✅ Boost flow: pusty textarea, widget meetupu osadzony pod polem (preview + `{% embed <url> %}` tag w body, routuje do MeetupTag przez UnifiedEmbed), bez prefilla
+- ✅ Boost tworzy zwykły post nietabu (`Article` type_of full_post, tytuł derive'owany z 1. linii), redirect do `article.path`
+- ✅ `{% embed https://host/meetups/<slug> %}` (canonical Forem pattern) routuje do MeetupTag — zarejestrowane w UnifiedEmbed::Registry z `skip_validation: true` i pozycją FRONT (unshift) żeby wygrać priorytetem z catch-all ForemTag
 - ⚠️ **Dostarczenie welcome do chatu Firebase: stubbed w POC** — service tworzy rekord i woła CF, ale sama CF nie jest jeszcze deployowana. Wymaga osobnego sprintu na Firebase side. Endpoint Rails gotowy.
+
+### Etap 4 — Polish po sesji (commit `<TBD>`)
+
+Post-review fixes po pierwszym wglądzie w wyrenderowany widget:
+- **Layout widgetu z mockupu E1** — 3-kolumnowy grid (data 72px / tytuł+venue+org fluid / banner 144×81 16:9). Wcześniej był banner 140px na górze a poniżej cała reszta (rozjeżdżało się przy długich tytułach + thumbnail 96×96 ucinał 16:9 do kwadratu).
+- **Banner jako `<img>` (nie `<div background-image>`)** — Redcarpet auto-zamykał `<a>` przed `<div>` w body markdownu (HTML4 reguła "no block in a"), thumbnail wypadał poza link. `<img>` jest inline → bezpiecznie w `<a>`.
+- **Wszystkie kontenery tekstu na `<span style="display: block">`** — z tego samego powodu (spany są inline, prawidłowe w `<a>`).
+- **`<a>` opakowuje cały kafel** (100% width + cały klikalny) zamiast `<div>` z buttonem CTA "Zobacz wydarzenie →".
+- **Link `meetup_path(meetup)` zamiast hardcoded `/wydarzenia/<slug>`** — SPEC §10 mówił `/wydarzenia/<slug>` ale routy są pod `/meetups/<slug>`; nie dodajemy aliasu, używamy istniejącego helpera.
+- **Usunięte z widgetu:** label stanu na górze (`NADCHODZĄCE WYDARZENIE`), label "✓ Autor idzie/zainteresowany" (czytanie po stanie autora w embedzie posta to za dużo zaszumiania).
+- **MeetupTag w UnifiedEmbed::Registry** — `{% embed http://host/meetups/<slug> %}` działa jak inne Forem embedy lokalnego contentu (artykuły, komentarze). Boost flow generuje teraz `{% embed <url> %}` zamiast `{% meetup <slug> %}` dla spójności.
+- **Krytyczna pułapka:** ForemTag rejestruje catch-all regex `URL.url/[\w-]+?` matchujący każdy lokalny URL i siedział pierwszy w `@registry` array. `detect` wybierał ForemTag zanim doszło do MeetupTag → próbował HEAD walidować `localhost` → `private_ip?` blokował → "invalid_url" error. Fix: `unshift` MeetupTag NA POCZĄTEK array (nie `append`), plus dedupe po `klass.name == "MeetupTag"` (nie po `== klass`) żeby przeżyć Zeitwerk autoreload.
+- **`skip_validation: true`** dla MeetupTag w UnifiedEmbed — lokalne URL'e nie potrzebują HEAD round-trip, MeetupTag robi własny `Meetup.find_by(slug:)` lookup i raise jeśli brak.
+- **Boost używa `type_of: "full_post"`** (nie `"status"`) — status type wymusza puste `body_markdown` (treść idzie w tytule + auto-embed z URL'a w tytule). To nie pasuje do liquid tagu `{% embed %}` w body. Full_post pasuje semantycznie do SPEC §8.5 ("zwykły post nietabu z treścią + osadzonym widgetem"). Tytuł derive'owany z 1. linii body (truncate 120).
 
 ---
 

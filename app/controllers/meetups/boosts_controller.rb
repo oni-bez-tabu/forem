@@ -15,7 +15,11 @@ module Meetups
                       status: :unprocessable_entity
       end
 
-      body_with_widget = "#{body}\n\n{% meetup #{@meetup.slug} %}\n"
+      # Uses {% embed <url> %} (UnifiedEmbed) instead of {% meetup <slug> %}
+      # so the embedded widget mirrors the convention Forem uses for any other
+      # local content link (articles, comments, etc.). UnifiedEmbed::Registry
+      # routes the URL to MeetupTag via REGISTRY_REGEXP.
+      body_with_widget = "#{body}\n\n{% embed #{meetup_url(@meetup)} %}\n"
       title = derive_title(body)
 
       article = Articles::Creator.call(current_user, {

@@ -36,9 +36,6 @@ pl:
         upcoming: "Nadchodzące wydarzenie"
         active: "Trwa teraz"
         expired: "Zakończone"
-      author_rsvp:
-        going: "✓ Autor idzie"
-        interested: "✓ Autor jest zainteresowany"
       cta: "Zobacz wydarzenie"
 
   admin:

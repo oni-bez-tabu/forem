@@ -27,7 +27,7 @@ RSpec.describe "POST /meetups/:slug/boost" do
     expect(article.type_of).to eq("full_post")
     expect(article.title).to include("Wybieram")
     expect(article.body_markdown).to include("Wybieram się, kto chętny?")
-    expect(article.body_markdown).to include("{% meetup #{meetup.slug} %}")
+    expect(article.body_markdown).to match(%r{\{% embed https?://[^/]+/meetups/#{meetup.slug} %\}})
 
     json = response.parsed_body
     expect(json["path"]).to eq(article.path)

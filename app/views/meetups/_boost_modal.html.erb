@@ -3,7 +3,7 @@
   class="meetup-boost-modal"
   data-meetup-boost-modal
   data-meetup-slug="<%= meetup.slug %>"
-  data-boost-url="<%= meetup_boost_path(meetup) %>"
+  data-boost-url="<%= boost_meetup_path(meetup) %>"
   style="display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.55); align-items: center; justify-content: center;"
 >
   <div class="crayons-card p-6" style="max-width: 560px; width: calc(100% - 32px); max-height: 90vh; overflow-y: auto;">
@@ -22,7 +22,7 @@
       <div class="mt-4">
         <p class="fs-xs color-base-60 mb-1"><%= t("meetups.boost.preview_label") %></p>
         <div style="border: 1px dashed var(--card-border, #ddd); border-radius: 8px; padding: 8px;">
-          <%= render "meetups/liquid", meetup: meetup, widget_state: :upcoming, author_rsvp_status: nil %>
+          <%= render "meetups/liquid", meetup: meetup, widget_state: :upcoming %>
         </div>
       </div>
 

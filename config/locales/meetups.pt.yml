@@ -36,9 +36,6 @@ pt:
         upcoming: "Próximo evento"
         active: "Acontecendo agora"
         expired: "Encerrado"
-      author_rsvp:
-        going: "✓ Autor vai participar"
-        interested: "✓ Autor está interessado"
       cta: "Ver evento"
 
   admin:
