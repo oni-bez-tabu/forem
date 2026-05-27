@@ -106,24 +106,44 @@ module Matching
         end
     end
 
-    # "Match found" = someone new joined a pool the viewer is part of.
-    # Sourced from Notification records (NewPoolMember service writes these).
-    # Using Notification means we get one row per (viewer, joiner, meetup) and
-    # respect the user's notification setting at the time of the event.
+    # "Match found" = someone joined a pool I'm in, *after* I declared.
+    # Computed on demand from the declarations themselves — no parallel
+    # event-store. For each of the viewer's active declarations, find every
+    # other active declaration on the same meetup with a later `created_at`.
     def match_found_events
-      Notification
-        .where(user_id: user.id,
-               notifiable_type: "Meetup",
-               action: Notifications::Matching::NewPoolMember::Send::ACTION)
-        .includes(:notifiable)
-        .map do |n|
-          {
-            type: :match_found,
-            at: n.notified_at || n.created_at,
-            meetup: n.notifiable,
-            payload: n.json_data.with_indifferent_access["new_profile"] || {},
-          }
-        end
+      return [] unless profile
+
+      viewer_decs = MeetupMatchingDeclaration
+        .where(matching_profile_id: profile.id)
+        .where.not(intent_level: "not_looking")
+        .pluck(:meetup_id, :created_at)
+      return [] if viewer_decs.empty?
+
+      meetup_to_viewer_decl_at = viewer_decs.to_h
+      meetup_ids = meetup_to_viewer_decl_at.keys
+
+      joiner_decs = MeetupMatchingDeclaration
+        .includes(:meetup, matching_profile: :user)
+        .where(meetup_id: meetup_ids)
+        .where.not(intent_level: "not_looking")
+        .where.not(matching_profile_id: profile.id)
+        .joins(:matching_profile)
+        .where(matching_profile: { is_active: true, moderation_state: "approved" })
+
+      joiner_decs.filter_map do |jd|
+        viewer_at = meetup_to_viewer_decl_at[jd.meetup_id]
+        next unless viewer_at && jd.created_at > viewer_at
+
+        {
+          type: :match_found,
+          at: jd.created_at,
+          meetup: jd.meetup,
+          payload: {
+            new_profile_id: jd.matching_profile_id,
+            new_username: jd.matching_profile.user.username,
+          },
+        }
+      end
     end
   end
 end

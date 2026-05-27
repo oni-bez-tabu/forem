@@ -149,7 +149,7 @@ module Meetups
     TimelineResult = Struct.new(
       :rsvps_created, :declarations_created,
       :welcomes_sent, :welcomes_received,
-      :match_notifications, :extra_meetups,
+      :extra_meetups, :stale_notifications_purged,
       keyword_init: true,
     )
 
@@ -172,20 +172,31 @@ module Meetups
       counters = {
         rsvps: 0, declarations: 0,
         welcomes_sent: 0, welcomes_received: 0,
-        match_notifications: 0, extra_meetups: 0
+        extra_meetups: 0, stale_notifications_purged: 0
       }
 
+      # Purge stale matching_pool_member / new_city_meetup notification rows
+      # left behind by older seed runs (we no longer write to the Notification
+      # table — TimelineFeed derives match_found events from declarations).
+      counters[:stale_notifications_purged] = Notification
+        .where(user_id: user.id, action: %w[matching_pool_member new_city_meetup])
+        .delete_all
+
       # Seed 5 extra upcoming meetups so the recommendations panel has
-      # content even after the user RSVPs on the two demo meetups. Spread
-      # across 1–6 weeks out, in the user's city, with sample declarations
-      # from demo profiles so the activity-based sort ordering is meaningful.
+      # content even after the user RSVPs on the two demo meetups.
       counters[:extra_meetups] = seed_extra_upcoming_meetups(in_city: profile.city)
 
+      # Backdate the user's RSVPs + declarations a few days so the *demo*
+      # declarations (created earlier in clock time but pushed in via
+      # seed_demo_data BEFORE this user existed) read as "joined the pool
+      # after me" — that's what surfaces the match_found timeline rows.
+      backdate = 3.days.ago
       meetups.each_with_index do |meetup, idx|
         rsvp = MeetupRsvp.find_or_initialize_by(meetup: meetup, user: user)
         if rsvp.new_record?
           rsvp.status = idx.zero? ? "going" : "interested"
           rsvp.save!
+          rsvp.update_columns(created_at: backdate, updated_at: backdate)
           counters[:rsvps] += 1
         end
 
@@ -194,6 +205,7 @@ module Meetups
           dec.intent_level = idx.zero? ? "open_to_meet" : "just_vibe"
           dec.meetup_note = note_for(dec.intent_level, meetup)
           dec.save!
+          dec.update_columns(created_at: backdate, updated_at: backdate)
           counters[:declarations] += 1
         end
       end
@@ -236,43 +248,17 @@ module Meetups
         counters[:welcomes_received] += 1
       end
 
-      # Match-found notifications — one per meetup (Forem's Notification model
-      # enforces unique (user_id, notifiable_id, notifiable_type, action), so
-      # multiple joiners on the same meetup collapse to a single record per
-      # SPEC §7.1's aggregation intent).
-      meetups.each_with_index do |meetup, idx|
-        joiner = candidate_receivers(profile, meetup, count: 1).first
-        next unless joiner
-
-        already = Notification.exists?(
-          user_id: user.id,
-          notifiable_id: meetup.id,
-          notifiable_type: "Meetup",
-          action: "matching_pool_member",
-        )
-        next if already
-
-        Notification.create!(
-          user_id: user.id,
-          notifiable_id: meetup.id,
-          notifiable_type: "Meetup",
-          action: "matching_pool_member",
-          json_data: {
-            meetup: { id: meetup.id, slug: meetup.slug, name: meetup.name },
-            new_profile: { id: joiner.id, username: joiner.user.username },
-          },
-          notified_at: (idx + 1).hours.ago + 30.minutes,
-        )
-        counters[:match_notifications] += 1
-      end
+      # match_found rows are derived on demand by Matching::TimelineFeed from
+      # the demo declarations (whose created_at is now > the backdated viewer
+      # declaration's created_at). Nothing to write here.
 
       TimelineResult.new(
         rsvps_created: counters[:rsvps],
         declarations_created: counters[:declarations],
         welcomes_sent: counters[:welcomes_sent],
         welcomes_received: counters[:welcomes_received],
-        match_notifications: counters[:match_notifications],
         extra_meetups: counters[:extra_meetups],
+        stale_notifications_purged: counters[:stale_notifications_purged],
       )
     end
 

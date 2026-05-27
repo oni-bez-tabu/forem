@@ -17,13 +17,6 @@ class Notification < ApplicationRecord
   scope :for_comments, -> { where(notifiable_type: "Comment", action: nil) } # nil action means "not a reaction"
   scope :for_mentions, -> { where(notifiable_type: "Mention") }
 
-  # Matching POC notifications (matching_pool_member, new_city_meetup) live in
-  # this table so Matching::TimelineFeed can read them, but they should NOT
-  # show up in Forem's global /notifications page or its badge — they have
-  # their own surface in /matching.
-  MATCHING_ACTIONS = %w[matching_pool_member new_city_meetup].freeze
-  scope :excluding_matching, -> { where.not(action: MATCHING_ACTIONS) }
-
   scope :for_organization, ->(org_id) { where(organization_id: org_id, user_id: nil) }
   scope :for_organization_comments, lambda { |org_id|
     # nil action means "not a reaction"

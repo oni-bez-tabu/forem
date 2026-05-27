@@ -24,7 +24,7 @@ namespace :matching do
     puts "  declarations created: #{result.declarations_created}"
     puts "  welcomes sent       : #{result.welcomes_sent}"
     puts "  welcomes received   : #{result.welcomes_received}"
-    puts "  match notifications : #{result.match_notifications}"
     puts "  extra meetups       : #{result.extra_meetups}"
+    puts "  stale notif. purged : #{result.stale_notifications_purged}"
   end
 end

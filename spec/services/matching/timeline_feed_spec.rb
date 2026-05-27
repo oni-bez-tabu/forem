@@ -61,23 +61,74 @@ RSpec.describe Matching::TimelineFeed do
       expect(wr[:payload][:other_profile_id]).to eq(sender.id)
     end
 
-    it "returns match_found events sourced from NewPoolMember notifications" do
+    it "derives match_found from declarations created after the viewer's own" do
+      profile
       meetup = create(:meetup)
+      create(:meetup_rsvp, meetup: meetup, user: user, status: "going")
+      viewer_dec = create(:meetup_matching_declaration,
+                          meetup: meetup,
+                          matching_profile: profile,
+                          intent_level: "open_to_meet")
+      viewer_dec.update_columns(created_at: 2.days.ago)
+
       joiner = create(:matching_profile, :approved)
-      Notification.create!(
-        user_id: user.id,
-        notifiable_id: meetup.id,
-        notifiable_type: "Meetup",
-        action: "matching_pool_member",
-        json_data: { meetup: { id: meetup.id, slug: meetup.slug, name: meetup.name },
-                     new_profile: { id: joiner.id, username: joiner.user.username } },
-        notified_at: Time.current,
-      )
+      create(:meetup_rsvp, meetup: meetup, user: joiner.user, status: "going")
+      joiner_dec = create(:meetup_matching_declaration,
+                          meetup: meetup,
+                          matching_profile: joiner,
+                          intent_level: "open_to_meet")
+      joiner_dec.update_columns(created_at: 1.hour.ago)
+
       events = described_class.new(user: user).call
       mf = events.find { |e| e[:type] == :match_found }
       expect(mf).to be_present
       expect(mf[:meetup]).to eq(meetup)
-      expect(mf[:payload]["id"]).to eq(joiner.id)
+      expect(mf[:payload][:new_profile_id]).to eq(joiner.id)
+      expect(mf[:payload][:new_username]).to eq(joiner.user.username)
+    end
+
+    it "skips match_found rows for declarations older than the viewer's" do
+      profile
+      meetup = create(:meetup)
+      create(:meetup_rsvp, meetup: meetup, user: user, status: "going")
+      viewer_dec = create(:meetup_matching_declaration,
+                          meetup: meetup,
+                          matching_profile: profile,
+                          intent_level: "open_to_meet")
+      viewer_dec.update_columns(created_at: 1.hour.ago)
+
+      older = create(:matching_profile, :approved)
+      create(:meetup_rsvp, meetup: meetup, user: older.user, status: "going")
+      older_dec = create(:meetup_matching_declaration,
+                         meetup: meetup,
+                         matching_profile: older,
+                         intent_level: "open_to_meet")
+      older_dec.update_columns(created_at: 2.days.ago)
+
+      events = described_class.new(user: user).call
+      expect(events.map { |e| e[:type] }).not_to include(:match_found)
+    end
+
+    it "skips match_found from not_looking joiners" do
+      profile
+      meetup = create(:meetup)
+      create(:meetup_rsvp, meetup: meetup, user: user, status: "going")
+      viewer_dec = create(:meetup_matching_declaration,
+                          meetup: meetup,
+                          matching_profile: profile,
+                          intent_level: "open_to_meet")
+      viewer_dec.update_columns(created_at: 2.days.ago)
+
+      nl = create(:matching_profile, :approved)
+      create(:meetup_rsvp, meetup: meetup, user: nl.user, status: "going")
+      nl_dec = create(:meetup_matching_declaration,
+                      meetup: meetup,
+                      matching_profile: nl,
+                      intent_level: "not_looking")
+      nl_dec.update_columns(created_at: 1.hour.ago)
+
+      events = described_class.new(user: user).call
+      expect(events.map { |e| e[:type] }).not_to include(:match_found)
     end
 
     it "filters out events for meetups older than 24h past end_at (R-Lifecycle.1)" do

@@ -12,63 +12,64 @@ RSpec.describe Notifications::Meetups::NewCityMeetup::Send do
 
   let(:meetup) { create(:meetup, venue_city: warsaw, is_published: true) }
 
+  let(:captured) { { args: nil, calls: 0 } }
+
   before do
     warsaw_profile
     krakow_profile
     everywhere_profile
     pending_warsaw_profile
-    allow(PushNotifications::Send).to receive(:call)
+
+    allow(PushNotifications::Send).to receive(:call) do |**args|
+      captured[:args] = args
+      captured[:calls] += 1
+    end
   end
 
-  it "notifies users in the meetup's city" do
-    described_class.call(meetup.id)
-    user_ids = Notification.where(action: "new_city_meetup").pluck(:user_id)
-    expect(user_ids).to include(warsaw_profile.user_id)
+  it "does not write to the Notification table" do
+    expect { described_class.call(meetup.id) }.not_to change(Notification, :count)
   end
 
-  it "notifies users with the 'everywhere' special city" do
+  it "pushes to users in the meetup's city" do
     described_class.call(meetup.id)
-    user_ids = Notification.where(action: "new_city_meetup").pluck(:user_id)
-    expect(user_ids).to include(everywhere_profile.user_id)
+    expect(captured[:args][:user_ids]).to include(warsaw_profile.user_id)
+  end
+
+  it "pushes to users with the 'everywhere' special city" do
+    described_class.call(meetup.id)
+    expect(captured[:args][:user_ids]).to include(everywhere_profile.user_id)
   end
 
   it "skips users in other cities" do
     described_class.call(meetup.id)
-    user_ids = Notification.where(action: "new_city_meetup").pluck(:user_id)
-    expect(user_ids).not_to include(krakow_profile.user_id)
+    expect(captured[:args][:user_ids]).not_to include(krakow_profile.user_id)
   end
 
   it "skips pending/inactive matching profiles" do
     described_class.call(meetup.id)
-    user_ids = Notification.where(action: "new_city_meetup").pluck(:user_id)
-    expect(user_ids).not_to include(pending_warsaw_profile.user_id)
+    expect(captured[:args][:user_ids]).not_to include(pending_warsaw_profile.user_id)
   end
 
   it "respects notify_on_new_city_meetups=false" do
     Users::NotificationSetting.find_by(user_id: warsaw_profile.user_id).update!(notify_on_new_city_meetups: false)
     described_class.call(meetup.id)
-    user_ids = Notification.where(action: "new_city_meetup").pluck(:user_id)
-    expect(user_ids).not_to include(warsaw_profile.user_id)
-    expect(user_ids).to include(everywhere_profile.user_id)
+    expect(captured[:args][:user_ids]).not_to include(warsaw_profile.user_id)
+    expect(captured[:args][:user_ids]).to include(everywhere_profile.user_id)
   end
 
-  it "calls PushNotifications::Send with localized title containing the city name" do
+  it "pushes with localized title containing the city name" do
     described_class.call(meetup.id)
-    expect(PushNotifications::Send).to have_received(:call).with(
-      hash_including(title: include(warsaw.name)),
-    )
+    expect(captured[:args][:title]).to include(warsaw.name)
   end
 
   it "no-ops on unpublished meetups" do
     draft = create(:meetup, :unpublished, venue_city: warsaw)
-    expect {
-      described_class.call(draft.id)
-    }.not_to change(Notification, :count)
+    described_class.call(draft.id)
+    expect(captured[:calls]).to eq(0)
   end
 
   it "no-ops when the meetup id is unknown" do
-    expect {
-      described_class.call(9_999_999)
-    }.not_to change(Notification, :count)
+    described_class.call(9_999_999)
+    expect(captured[:calls]).to eq(0)
   end
 end
