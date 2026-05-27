@@ -3,7 +3,9 @@ module Notifications
     before_action :current_user_by_token, only: [:show]
 
     def index
-      notifications = current_user ? current_user.notifications.from_subforem : Notification.none
+      # Matching POC events have their own surface on /matching, exclude
+      # them from the global bell counter (same filter as NotificationsController#index).
+      notifications = current_user ? current_user.notifications.excluding_matching.from_subforem : Notification.none
       count = current_user ? notifications.unread.count : 0
 
       if params[:mode] == "detailed"
