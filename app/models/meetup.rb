@@ -30,6 +30,7 @@ class Meetup < ApplicationRecord
   validate :description_link_xor
 
   before_validation :assign_slug, on: :create
+  after_commit :notify_city_profiles_on_publish, on: %i[create update]
 
   scope :published, -> { where(is_published: true) }
   scope :visible_in_lists, lambda {
@@ -50,6 +51,14 @@ class Meetup < ApplicationRecord
   end
 
   private
+
+  def notify_city_profiles_on_publish
+    # Fires once when is_published flips from false → true (covers both
+    # admin "Create + published" and "Edit toggle publish on" flows).
+    return unless saved_change_to_is_published? && is_published?
+
+    Notifications::Meetups::NewCityMeetupWorker.perform_async(id)
+  end
 
   def assign_slug
     return if slug.present? || name.blank? || start_at.blank?

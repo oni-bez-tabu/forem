@@ -1,0 +1,31 @@
+<%# events: Array of event hashes from Matching::TimelineFeed.
+    recommendations: Meetup records from Matching::MeetupRecommendations.
+    UX: insert one recommendation card every 5 events (max 3 rec slots).
+%>
+
+<% if events.empty? && recommendations.empty? %>
+  <div class="crayons-card p-6 text-center">
+    <p class="color-base-60"><%= t("matching.timeline.empty_state") %></p>
+  </div>
+<% else %>
+  <ol class="crayons-card p-0" style="list-style: none; margin: 0;">
+    <% rec_queue = recommendations.dup %>
+    <% events.each_with_index do |event, idx| %>
+      <li style="border-bottom: 1px solid var(--card-border, #e5e5e5);">
+        <%= render "timeline_event", event: event %>
+      </li>
+      <% if (idx + 1) % 5 == 0 && rec_queue.any? %>
+        <li style="border-bottom: 1px solid var(--card-border, #e5e5e5); background: var(--card-secondary-bg, #f9f9f9);">
+          <%= render "timeline_recommendation", meetup: rec_queue.shift %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <%# Spill remaining recommendations at the tail (when timeline is short). %>
+    <% rec_queue.each do |meetup| %>
+      <li style="border-bottom: 1px solid var(--card-border, #e5e5e5); background: var(--card-secondary-bg, #f9f9f9);">
+        <%= render "timeline_recommendation", meetup: meetup %>
+      </li>
+    <% end %>
+  </ol>
+<% end %>

@@ -73,4 +73,25 @@
                     form: { class: "inline-block", data: { turbo_confirm: t("matching.settings.confirm_destroy") } } %>
     </div>
   </div>
+
+  <%= form_for @users_notification_setting, url: users_notification_settings_path, html: { class: "mt-4" } do |f| %>
+    <%= hidden_field_tag :return_to, "matching" %>
+    <div class="crayons-card crayons-card--content-rows">
+      <header>
+        <h2 class="crayons-subtitle-1"><%= t("matching.settings.notifications_heading") %></h2>
+        <p class="color-base-70"><%= t("matching.settings.notifications_intro") %></p>
+      </header>
+      <div class="crayons-field crayons-field--checkbox">
+        <%= f.check_box :notify_on_new_matches, class: "crayons-checkbox" %>
+        <%= f.label :notify_on_new_matches, t("helpers.label.users_notification_setting.notify_on_new_matches"), class: "crayons-field__label" %>
+      </div>
+      <div class="crayons-field crayons-field--checkbox">
+        <%= f.check_box :notify_on_new_city_meetups, class: "crayons-checkbox" %>
+        <%= f.label :notify_on_new_city_meetups, t("helpers.label.users_notification_setting.notify_on_new_city_meetups"), class: "crayons-field__label" %>
+      </div>
+      <div class="crayons-field">
+        <%= f.submit t("matching.settings.notifications_save"), class: "crayons-btn" %>
+      </div>
+    </div>
+  <% end %>
 <% end %>

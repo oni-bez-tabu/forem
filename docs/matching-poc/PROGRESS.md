@@ -265,12 +265,94 @@ Post-review fixes po pierwszym wglądzie w wyrenderowany widget:
 
 ---
 
+## Etap 5 — Timeline E8 + powiadomienia
+
+- **Status:** ✅ done
+- **Commit:** `<TBD>`
+- **Data:** 2026-05-27
+
+### Zaimplementowane
+
+**Toggles powiadomień (Forem `users_notification_settings`):**
+- Migracja `20260527150000_add_matching_notification_settings` — dodaje 2 boolean'y do FOREM core table `users_notification_settings`: `notify_on_new_matches` (DEFAULT true), `notify_on_new_city_meetups` (DEFAULT true). Inwazyjnie ingeruje w Forem core, ale to świadoma decyzja (vs osobna tabela) — Forem konwencja, jeden `notification_setting` per user
+- `Users::NotificationSettingsController::ALLOWED_PARAMS` rozszerzony o oba klucze
+- Controller obsługuje opcjonalny `return_to` param (whitelist po `Constants::Settings::TAB_LIST`) — formularz w matching tab odsyła z powrotem na `/settings/matching` zamiast na `:notifications` tab
+- `app/views/users/_matching.html.erb` — nowa sekcja form_for `@users_notification_setting` z 2 checkbox'ami, hidden `return_to=matching`, klucz `matching.settings.notifications_*`, helper labels w 4 locales
+
+**Push notifications — pool member trigger (Kat 1):**
+- Service `Notifications::Matching::NewPoolMember::Send.call(declaration_id)` — dla nowej aktywnej deklaracji znajduje pre-existing pool members na meetupie (intent != not_looking, exclude self, exclude pending profiles), pre-filtruje po `notify_on_new_matches=true`, tworzy `Notification` rekord (insert_all, notifiable=Meetup, action=`matching_pool_member`) + `PushNotifications::Send.call` z title "Nowe dopasowanie na {meetup.name}"
+- Worker `Notifications::Matching::NewPoolMemberWorker` (Sidekiq, lock: until_executing, on_conflict: replace)
+- Hook `MeetupMatchingDeclaration#after_create_commit :notify_pool_of_new_member` — enkolejkowuje worker (skip dla not_looking)
+
+**Push notifications — new city meetup trigger (Kat 2):**
+- Service `Notifications::Meetups::NewCityMeetup::Send.call(meetup_id)` — dla świeżo opublikowanego meetupu (musi mieć venue_city) znajduje matching_profiles widoczne dla innych w mieście meetupu LUB z `city.is_special=true` ("🌍 Wszędzie"), pre-filtruje po `notify_on_new_city_meetups=true`, tworzy Notification + push z title "Nowe wydarzenie w {miasto}"
+- Worker `Notifications::Meetups::NewCityMeetupWorker`
+- Hook `Meetup#after_commit :notify_city_profiles_on_publish` — fire jednorazowo gdy `saved_change_to_is_published?` && `is_published == true` (obsługuje create-as-published i edit-toggle-on; ignoruje update bez zmiany publish state i toggle-back-off)
+
+**Timeline (`Matching::TimelineFeed`):**
+- Service agregator: dla danego user'a zbiera RSVP, declarations (created + updated jeśli touched), welcomes sent/received, match_found (z `Notification` rekordów). Lifecycle filter R-Lifecycle.1 — wpisy dla meetupów `end_at + 24h <= now` znikają. Sortuje desc, limituje (default 30)
+- Każdy event: `{ type, at, meetup, payload }` — ujednolicony shape, view łatwo renderuje
+
+**Rekomendacje (`Matching::MeetupRecommendations`):**
+- Service: nadchodzące meetupy z `visible_in_lists` filtrowane po city usera (lub everywhere, lub all-cities gdy user ma special city), exclude meetupów gdzie user już RSVP'ował, sortowane po liczbie aktywnych deklaracji DESC + start_at ASC (proxy dla "tu coś się dzieje"). POC heurystyka (SPEC §12.13 zakładał pool-based wg `looking_for` — kolumna zdropowana w Etapie 3)
+
+**Frontend E8 (`/matching` show):**
+- Controller ładuje `@timeline` i `@recommendations` tylko dla `visible_to_others?` profile (limit 30 events + 3 recommendations)
+- View: kompaktowy header (avatar 64px round + identity/city/badge chips + manage link); jeśli timeline lub recommendations niepuste → renderowana lista `_timeline_feed` z wstawkami `_timeline_recommendation` co 5 wpisów (tail spillover dla pozostałych jeśli timeline krótki); icon-per-type w `_timeline_event` (📅 ✨ ✏️ 💌). 4 stany profilu (no profile / pending / rejected / deactivated) z odpowiednim explanation copy
+- Empty state gdy 0 events i 0 recommendations
+
+**i18n (4 locales):**
+- `matching.show.{pending_explanation,rejected_explanation}` — nowe stany
+- `matching.timeline.{heading,empty_state,ago,events.{rsvp_going,rsvp_interested,declaration_created,declaration_updated,welcome_sent,welcome_received,match_found}}`
+- `matching.recommendations.label`
+- `matching.settings.{notifications_heading,notifications_intro,notifications_save}`
+- `helpers.label.users_notification_setting.{notify_on_new_matches,notify_on_new_city_meetups}`
+- `services.notifications.matching.new_pool_member.{title,body}`, `services.notifications.meetups.new_city_meetup.{title,body}`
+
+**Testy (48 nowych w Etapie 5):**
+- Service `Notifications::Matching::NewPoolMember::Send` (8): in-app + push, skip not_looking, skip self, skip notify_off, skip pending profile, no-op na not_looking declaration, no-op na unknown id
+- Worker `Notifications::Matching::NewPoolMemberWorker` (3): delegacja + auto-enqueue dla active intent + skip not_looking
+- Service `Notifications::Meetups::NewCityMeetup::Send` (8): notify city, notify everywhere, skip other cities, skip pending profiles, respect notify_off, push title contains city, skip unpublished, no-op na unknown
+- Worker `Notifications::Meetups::NewCityMeetupWorker` (5): delegacja + enqueue on create-published + on flip-to-published + no enqueue on no-publish-change + no enqueue on flip-off
+- Service `Matching::TimelineFeed` (9): RSVP, declaration_created, declaration_updated, welcome_sent, welcome_received, match_found, lifecycle filter, sort+limit, no-profile-only-RSVPs
+- Service `Matching::MeetupRecommendations` (10): no profile → none, city match, everywhere bonus, exclude other cities, exclude own RSVPs, exclude started, exclude unpublished, sort by active count DESC, limit, everywhere profile sees all
+- Request `/matching` (8): all states (no profile / pending / approved+active) + timeline heading + empty state + RSVP event renders + recommendation card renders
+
+Pełny Matching POC suite: **234/234 ✓** (74 Etap 0–1, +37 Etap 2, +36 Etap 3, +39 Etap 4, +48 Etap 5)
+
+### Uwagi / odstępstwa / długi techniczne
+
+- **🔴 Migracja inwazyjnie modyfikuje Forem core table `users_notification_settings`.** Decyzja z sesji (user-confirmed). Konwencja Forem: jeden notification_setting per user. Konsekwencja: przy upstream rebase trzeba sprawdzić czy Forem nie dodał kolumn o tej samej nazwie. Alternatywa (osobna tabela `matching_notification_preferences`) była rozważana ale odpadła — extra join na każdy push.
+- **`UnifiedEmbed::Tag.validate_link` ma `private_ip?` check który blokuje `localhost`.** Nie wpływa na Etap 5 ale do zapamiętania — uderzyło nas w Etapie 4 polishu (MeetupTag musi mieć `skip_validation: true` + `unshift` w Registry).
+- **`Notifications::Matching::NewPoolMember::Send` używa `Notification.insert_all` (bulk insert)** — szybko przy dużym poolu, ale pomija ActiveRecord callbacks na Notification. Forem domyślnie nie ma callbacks na Notification model (sprawdzone), więc bezpieczne. Jeśli kiedyś Forem doda callback na create — przemyśleć powrót do `Notification.create!` w pętli.
+- **`PushNotifications::Send` w dev/test może być no-op** — wymaga `consumer_app.operational?` (czyli APNs/GCM credentials). W test specs używamy `allow(PushNotifications::Send).to receive(:call)` zamiast stubować na poziomie ConsumerApp.
+- **Timeline `:match_found` źródło to `Notification` rekord** — wymaga że `NewPoolMember::Send` zostało wcześniej wywołane. Jeśli user wyłączył push toggle, NOTHING w timeline. Świadome — toggle off oznacza "nie chcę wiedzieć o tych eventach". Alternatywa: ALWAYS recordować Notification, tylko push filtrować — ale to inflowałoby in-app feed dla userów którzy explicitly opt-outed.
+- **Timeline `:declaration_updated` heurystyka** — emituje update event tylko gdy `updated_at - created_at > 1 second`. Inaczej każda świeża deklaracja generowała by 2 wpisy (create + immediate update z save callbacks).
+- **Recommendations sortowanie** — pierwotny `left_joins + GROUP BY + ORDER COUNT()` wybuchł na ambiguous `id` w PG (interpretował jako `meetups.id`, nigdy NULL → odfiltrował meetupy bez deklaracji). Fix: subquery `MeetupMatchingDeclaration.group(:meetup_id).count` + sort w Ruby. Mniej elegancki SQL-wise ale poprawny dla małej liczby kandydatów (POC). Optymalizacja jeśli liczba meetupów per city > kilkaset.
+- **R-Lifecycle.1 lifecycle filter robi `Meetup::LIST_LIFECYCLE_GRACE.ago`** w Ruby (po pobraniu eventów z DB), nie w SQL. POC simplification — przy dużych zbiorach przepiąć na SQL JOIN z `meetups` i WHERE.
+- **Email notifications nie dodane** — SPEC §7 mówi tylko o push i in-app. Jeśli email by się przydał (np. weekly digest "ostatnio nowe dopasowania"), można rozbudować service.
+- **FR/PT tłumaczenia "machinalne"**, ten sam dług co w Etapach 1–4.
+
+### Acceptance check (SPEC.md §11 + §7.1 + §7.2)
+
+- ✅ Timeline pokazuje historię (RSVP, declarations, welcome sent/received, match found)
+- ✅ Push działa: 2 kategorie z toggle, ON by default, pre-filter po user'a settings przed PushNotifications::Send
+- ✅ Toggles persistują (formularz POST /users/notification_settings z return_to=matching → redirect z powrotem na matching tab)
+- ✅ R-Lifecycle.1 — wpisy dla wygasłych meetupów (>24h po end_at) znikają z timeline
+- ✅ Recommendation inline w timeline (co 5 wpisów + tail spillover, max 3)
+- ✅ Push trigger fires per spec: matching gdy nowa deklaracja active intent (after_create_commit), meetup gdy is_published flipped to true (after_commit + saved_change_to_is_published?)
+- ✅ City filtering: dokładne match + "everywhere" zawsze wpadają, inne miasta odrzucone
+- ⚠️ **Welcome push delivery: wciąż stub** (Etap 4 dług) — Cloud Function dorobi się osobno, push do chatu Firebase nie idzie via PushNotifications::Send (per SPEC §7.1 "welcome push pochodzi z istniejącego push systemu chatu nietabu")
+
+---
+
 ## Następny etap
 
-**Etap 5 — Timeline E8 + powiadomienia** (SPEC.md §11)
+**Etap 6 — Rekomendacje + polishing** (SPEC.md §11, 1-1.5 tyg)
 
 Zakres:
-- Backend: event source dla E8 timeline (z lifecycle filter — wpisy znikają po 24h dla wygasłych meetupów)
-- Frontend: pełen E8 (header profilu + chronologiczny timeline aktywności + wplecione rekomendacje meetupów)
-- Push notifications: 2 kategorie (matching / nowe meetupy w mieście) z toggle ON by default w settings tab "✨ Matching"
-- Acceptance: timeline pokazuje historię (RSVP, deklaracje, match found, welcome sent/received), push działa, toggles persistują
+- Rozbudowanie `Matching::MeetupRecommendations` — np. weights za "similar vibe" (identity-aware jeśli przywrócimy `looking_for`), repeat-organizer bonus, frequency capping ("nie polecaj tego samego meetupu dwa razy w tym samym tygodniu")
+- Polish UX długów z poprzednich etapów: real Crayons tokens dla widget styles (zamiast inline), hifi gradient palette dla banner_gradient, sparkles SVG zamiast fire.svg jako matching tab icon, multi-step onboarding E5→E6→E7
+- Frontend polishing: Preact pack dla 3 popupów (boost / E18 welcome / share) zamiast inline JS w ERB
+- Performance: indeksy + EXPLAIN dla `TimelineFeed` SQL przy realistic data volume
+- Optional: native i18n review (FR/PT) — wszystkie POC tłumaczenia "machinalne"

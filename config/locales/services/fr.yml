@@ -56,6 +56,14 @@ fr:
         multiple: L'utilisateur à supprimer possède déjà deux méthodes d'authentification ou plus. Êtes-vous sûr qu'il s'agit du bon utilisateur à supprimer ? Si oui, un super administrateur devra le faire à partir de la console pour être sûr.
         same_user: Vous ne pouvez pas fusionner les deux mêmes identifiants d'utilisateur.
     notifications:
+      matching:
+        new_pool_member:
+          title: "Nouveau match sur %{meetup}"
+          body: "Quelqu'un a rejoint le groupe. Découvrez qui."
+      meetups:
+        new_city_meetup:
+          title: "Nouvel événement à %{city}"
+          body: "%{name} — %{date}"
       new_comment:
         new: "💬 Nouveau commentaire"
       new_mention:

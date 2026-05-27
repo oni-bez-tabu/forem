@@ -1,0 +1,25 @@
+<% icon, label = case event[:type]
+                 when :rsvp_created
+                   ["📅", t("matching.timeline.events.rsvp_#{event[:payload][:status]}")]
+                 when :declaration_created
+                   ["✨", t("matching.timeline.events.declaration_created", intent: t("matching.declarations.intents.#{event[:payload][:intent]}.label"))]
+                 when :declaration_updated
+                   ["✏️", t("matching.timeline.events.declaration_updated", intent: t("matching.declarations.intents.#{event[:payload][:intent]}.label"))]
+                 when :welcome_sent
+                   ["💌", t("matching.timeline.events.welcome_sent", username: event[:payload][:other_username])]
+                 when :welcome_received
+                   ["💌", t("matching.timeline.events.welcome_received", username: event[:payload][:other_username])]
+                 when :match_found
+                   ["✨", t("matching.timeline.events.match_found")]
+                 end %>
+
+<div class="flex gap-3 items-start p-3">
+  <span style="font-size: 20px; flex: 0 0 24px;"><%= icon %></span>
+  <div class="flex-1 min-w-0">
+    <div class="fs-s"><%= label %></div>
+    <% if event[:meetup] %>
+      <%= link_to event[:meetup].name, meetup_path(event[:meetup]), class: "c-link fs-s color-base-70" %>
+    <% end %>
+    <div class="fs-xs color-base-50 mt-1"><%= time_ago_in_words(event[:at]) %> <%= t("matching.timeline.ago") %></div>
+  </div>
+</div>

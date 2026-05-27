@@ -17,7 +17,23 @@ en:
       manage_profile: "Manage profile"
       deactivated: "Profile inactive"
       deactivated_explanation: "Your profile is deactivated — it's hidden from others. You can reactivate it in settings."
+      pending_explanation: "Your profile is awaiting admin review. We'll email you as soon as it's approved."
+      rejected_explanation: "Profile was not approved. Check the reason and edit in settings."
       rejection_reason: "Reason"
+    timeline:
+      heading: "Your activity"
+      empty_state: "Nothing in Matching yet. RSVP and declare intent on an event to see entries here."
+      ago: "ago"
+      events:
+        rsvp_going: "You RSVP'd as „going”"
+        rsvp_interested: "You marked „interested”"
+        declaration_created: "You declared intent: %{intent}"
+        declaration_updated: "You updated intent: %{intent}"
+        welcome_sent: "You sent a welcome to %{username}"
+        welcome_received: "You received a welcome from %{username}"
+        match_found: "Someone new joined your pool"
+    recommendations:
+      label: "Recommended event"
     onboarding:
       title: "Create your Matching profile"
       subtitle: "Four fields, a few seconds. Profile goes to admin review."
@@ -71,6 +87,9 @@ en:
       destroy_help: "Profile and photo will be deleted. Your declarations on events will also be removed. Welcome messages already sent stay in chat. This is irreversible."
       destroy_button: "Delete profile"
       confirm_destroy: "Permanently delete the Matching profile? This cannot be undone."
+      notifications_heading: "Notifications"
+      notifications_intro: "Choose when to get a push about Matching activity."
+      notifications_save: "Save notifications"
 
   admin:
     matching_profiles:

@@ -59,6 +59,14 @@ pl:
         multiple: Użytkownik, który zostanie usunięty, ma już dwie lub więcej metod uwierzytelniania. Czy na pewno to jest właściwy użytkownik do usunięcia? Jeśli tak, super administrator będzie musiał to zrobić z poziomu konsoli, aby było bezpieczne.
         same_user: Nie możesz scalic tych samych dwóch identyfikatorów użytkownika
     notifications:
+      matching:
+        new_pool_member:
+          title: "Nowe dopasowanie na %{meetup}"
+          body: "Ktoś dołączył do grupy. Zobacz kto."
+      meetups:
+        new_city_meetup:
+          title: "Nowe wydarzenie w %{city}"
+          body: "%{name} — %{date}"
       new_comment:
         new: 💬 Nowy Komentarz
       new_mention:

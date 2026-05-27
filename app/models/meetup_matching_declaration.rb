@@ -11,6 +11,8 @@ class MeetupMatchingDeclaration < ApplicationRecord
   validates :matching_profile_id, uniqueness: { scope: :meetup_id }
   validate :rsvp_exists_for_profile
 
+  after_create_commit :notify_pool_of_new_member
+
   scope :active_intents, -> { where(intent_level: ACTIVE_INTENTS) }
   scope :for_meetup, ->(meetup) { where(meetup_id: meetup.id) }
 
@@ -25,6 +27,12 @@ class MeetupMatchingDeclaration < ApplicationRecord
   end
 
   private
+
+  def notify_pool_of_new_member
+    return if not_looking?
+
+    Notifications::Matching::NewPoolMemberWorker.perform_async(id)
+  end
 
   def rsvp_exists_for_profile
     return if meetup_id.blank? || matching_profile.nil?

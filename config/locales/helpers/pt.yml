@@ -50,6 +50,8 @@ pt:
         username: Nome de usuário
         profile_image: Imagem do perfil
       users_notification_setting:
+        notify_on_new_matches: Envie-me uma notificação push quando alguém entrar em um pool Matching do qual faço parte
+        notify_on_new_city_meetups: Envie-me uma notificação push quando um novo evento Matching for publicado na minha cidade
         email_newsletter: Envie-me e-mails de newsletter semanais
         email_digest_periodic: Envie-me um resumo periódico dos principais posts das
           minhas tags

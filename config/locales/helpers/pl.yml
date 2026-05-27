@@ -49,6 +49,8 @@ pl:
         username: Nazwa użytkownika
         profile_image: Obraz profilowy
       users_notification_setting:
+        notify_on_new_matches: Wysyłaj mi push'a, gdy ktoś nowy dołączy do mojej grupy Matching
+        notify_on_new_city_meetups: Wysyłaj mi push'a, gdy w moim mieście pojawi się nowe wydarzenie Matching
         email_newsletter: Wyślij mi cotygodniowe wiadomości e-mailowe z biuletynem
         email_digest_periodic: Wyślij mi okresowy przegląd najlepszych postów z moich tagów
         email_tag_mod_newsletter: Wyślij mi cotygodniowe wiadomości e-mailowe dla moderatorów tagów

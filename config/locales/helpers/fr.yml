@@ -50,6 +50,8 @@ fr:
         username: Nom d'utilisateur
         profile_image: Image de profil
       users_notification_setting:
+        notify_on_new_matches: Envoyez-moi une notification push quand quelqu'un rejoint un groupe Matching dans lequel je suis
+        notify_on_new_city_meetups: Envoyez-moi une notification push quand un nouvel événement Matching est publié dans ma ville
         email_newsletter: Envoyez-moi une newsletter hebdomadaire
         email_digest_periodic: Envoyez-moi un condensé périodique des meilleurs messages
           de mes tags

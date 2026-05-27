@@ -19,6 +19,8 @@ module Users
                         mobile_comment_notifications
                         mobile_mention_notifications
                         mod_roundrobin_notifications
+                        notify_on_new_city_meetups
+                        notify_on_new_matches
                         reaction_notifications
                         welcome_notifications].freeze
     ONBOARDING_ALLOWED_PARAMS = %i[email_newsletter email_digest_periodic].freeze
@@ -33,7 +35,17 @@ module Users
         Honeycomb.add_field("errored", true)
         flash[:error] = current_user.notification_setting.errors_as_sentence
       end
-      redirect_to user_settings_path(:notifications)
+      redirect_to user_settings_path(redirect_tab)
+    end
+
+    # Allow the form to roundtrip back to a non-default settings tab (e.g.,
+    # the Matching tab uses this to keep the user on /settings/matching after
+    # saving the matching-specific toggles). Whitelisted against TAB_LIST so
+    # it can't be turned into an open-tab redirect.
+    def redirect_tab
+      requested = params[:return_to].to_s.downcase
+      allowed = Constants::Settings::TAB_LIST.map { |t| t.downcase.tr(" ", "-") }
+      allowed.include?(requested) ? requested : :notifications
     end
 
     private

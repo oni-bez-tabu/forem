@@ -17,7 +17,23 @@ pt:
       manage_profile: "Gerenciar perfil"
       deactivated: "Perfil inativo"
       deactivated_explanation: "Seu perfil está desativado — está oculto dos outros. Você pode reativá-lo nas configurações."
+      pending_explanation: "Seu perfil aguarda revisão do administrador. Enviaremos um e-mail assim que for aprovado."
+      rejected_explanation: "O perfil não foi aprovado. Veja o motivo e edite nas configurações."
       rejection_reason: "Motivo"
+    timeline:
+      heading: "Sua atividade"
+      empty_state: "Ainda nada no Matching. Faça RSVP e declare sua intenção em um evento para ver entradas aqui."
+      ago: "atrás"
+      events:
+        rsvp_going: "Você confirmou „vou”"
+        rsvp_interested: "Você marcou „interessado”"
+        declaration_created: "Você declarou sua intenção: %{intent}"
+        declaration_updated: "Você atualizou sua intenção: %{intent}"
+        welcome_sent: "Você enviou uma mensagem de boas-vindas para %{username}"
+        welcome_received: "Você recebeu uma mensagem de boas-vindas de %{username}"
+        match_found: "Alguém novo entrou no seu pool"
+    recommendations:
+      label: "Evento recomendado"
     onboarding:
       title: "Crie seu perfil Matching"
       subtitle: "Quatro campos, alguns segundos. O perfil vai para revisão do administrador."
@@ -71,6 +87,9 @@ pt:
       destroy_help: "O perfil e a foto serão excluídos. Suas declarações em eventos também serão removidas. Mensagens de boas-vindas já enviadas permanecem no chat. Irreversível."
       destroy_button: "Excluir perfil"
       confirm_destroy: "Excluir permanentemente o perfil Matching? Esta ação não pode ser desfeita."
+      notifications_heading: "Notificações"
+      notifications_intro: "Escolha quando receber notificações push sobre Matching."
+      notifications_save: "Salvar notificações"
 
   admin:
     matching_profiles:

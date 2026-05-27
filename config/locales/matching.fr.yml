@@ -17,7 +17,23 @@ fr:
       manage_profile: "Gérer le profil"
       deactivated: "Profil inactif"
       deactivated_explanation: "Votre profil est désactivé — il est caché aux autres. Vous pouvez le réactiver dans les paramètres."
+      pending_explanation: "Votre profil attend la modération. Nous vous enverrons un e-mail dès qu'il sera approuvé."
+      rejected_explanation: "Le profil n'a pas été approuvé. Consultez la raison et modifiez-le dans les paramètres."
       rejection_reason: "Raison"
+    timeline:
+      heading: "Votre activité"
+      empty_state: "Rien dans Matching pour le moment. Faites un RSVP et déclarez votre intention pour voir des entrées ici."
+      ago: "il y a"
+      events:
+        rsvp_going: "Vous avez confirmé „j'y vais”"
+        rsvp_interested: "Vous avez marqué „intéressé”"
+        declaration_created: "Vous avez déclaré votre intention : %{intent}"
+        declaration_updated: "Vous avez modifié votre intention : %{intent}"
+        welcome_sent: "Vous avez envoyé un message de bienvenue à %{username}"
+        welcome_received: "Vous avez reçu un message de bienvenue de %{username}"
+        match_found: "Quelqu'un de nouveau a rejoint votre groupe"
+    recommendations:
+      label: "Événement recommandé"
     onboarding:
       title: "Créer votre profil Matching"
       subtitle: "Quatre champs, quelques secondes. Le profil passe par la modération."
@@ -71,6 +87,9 @@ fr:
       destroy_help: "Le profil et la photo seront supprimés. Vos déclarations sur les événements seront aussi retirées. Les messages de bienvenue déjà envoyés restent dans le chat. Irréversible."
       destroy_button: "Supprimer le profil"
       confirm_destroy: "Supprimer définitivement le profil Matching ? Cette action est irréversible."
+      notifications_heading: "Notifications"
+      notifications_intro: "Choisissez quand recevoir des notifications push concernant Matching."
+      notifications_save: "Enregistrer les notifications"
 
   admin:
     matching_profiles:

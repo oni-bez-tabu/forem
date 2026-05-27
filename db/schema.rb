@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_05_27_100000) do
+ActiveRecord::Schema[7.0].define(version: 2026_05_27_150000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "ltree"
@@ -2062,6 +2062,8 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_27_100000) do
     t.boolean "mobile_comment_notifications", default: true, null: false
     t.boolean "mobile_mention_notifications", default: true, null: false
     t.boolean "mod_roundrobin_notifications", default: true, null: false
+    t.boolean "notify_on_new_city_meetups", default: true, null: false
+    t.boolean "notify_on_new_matches", default: true, null: false
     t.boolean "reaction_notifications", default: true, null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false

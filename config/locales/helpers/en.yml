@@ -50,6 +50,8 @@ en:
         username: Username
         profile_image: Profile image
       users_notification_setting:
+        notify_on_new_matches: Send me a push when someone new joins a Matching pool I'm in
+        notify_on_new_city_meetups: Send me a push when a new Matching event is published in my city
         email_newsletter: Send me weekly newsletter emails
         email_digest_periodic: Send me a periodic digest of top posts from my tags
         email_tag_mod_newsletter: Send me tag moderator newsletter emails

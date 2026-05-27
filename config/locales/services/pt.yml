@@ -56,6 +56,14 @@ pt:
         multiple: O usuário sendo excluído já tem dois ou mais métodos de autenticação. Tem certeza de que este é o usuário correto a ser excluído? Se sim, um super admin precisará fazer isso do console para ser seguro.
         same_user: Você não pode mesclar os mesmos dois IDs de usuário
     notifications:
+      matching:
+        new_pool_member:
+          title: "Novo match em %{meetup}"
+          body: "Alguém se juntou ao grupo. Veja quem."
+      meetups:
+        new_city_meetup:
+          title: "Novo evento em %{city}"
+          body: "%{name} — %{date}"
       new_comment:
         new: "💬 Novo Comentário"
       new_mention:
