@@ -13,6 +13,24 @@ pl:
       declare_now: "Zadeklaruj intencję"
       not_looking_explanation: "Zadeklarowałeś brak zainteresowania — nie widzisz listy. Możesz zmienić deklarację."
       change_declaration: "Zmień deklarację"
+      p1:
+        headline_html: "Na tym wydarzeniu %{pool_html} szuka kogoś poznać"
+        headline_empty: "Bądź pierwszą osobą, która szuka tu kogoś poznać"
+        pool_count:
+          one: "1 osoba z nietabu"
+          few: "%{count} osoby z nietabu"
+          many: "%{count} osób z nietabu"
+          other: "%{count} osób z nietabu"
+        body: "Załóż profil Matching żeby zobaczyć szczegóły i dołączyć. To osobny profil — bez powiązania z twoim głównym kontem."
+        cta: "Załóż profil Matching"
+      p2:
+        headline: "Zadeklaruj swoją intencję"
+        body: "Wybierz kogo chcesz poznać na tym evencie. Twoja deklaracja będzie widoczna tylko dla osób, które do ciebie pasują."
+        cta: "Zadeklaruj intencję"
+        need_going_hint_html: "Najpierw zaznacz że <strong>idziesz</strong>, żeby zadeklarować intencję."
+      p3:
+        active_declaration_label: "Twoja aktywna deklaracja"
+        note_label: "Notatka"
     declarations:
       saved: "Deklaracja zapisana."
       deleted: "Deklaracja usunięta."

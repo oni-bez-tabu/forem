@@ -1,34 +1,114 @@
-<section class="crayons-card p-6 mb-6">
-  <h2 class="crayons-subtitle mb-3">✨ <%= t("matching.section.heading") %></h2>
+<section>
+  <%# Section heading — sparkle icon + h2, "Zmień deklarację" link for P3 %>
+  <div class="flex between items-baseline gap-3 flex-wrap mb-3">
+    <h2 class="crayons-subtitle-1" style="margin: 0; display: inline-flex; align-items: center; gap: 8px;">
+      <span style="color: var(--accent-brand, #6366f1);">✨</span>
+      <%= t("matching.section.heading") %>
+    </h2>
+    <% if current_profile&.visible_to_others? && current_declaration && !current_declaration.not_looking? %>
+      <%= link_to "✏ #{t('matching.section.change_declaration')}",
+                  edit_meetup_declaration_path(meetup.slug),
+                  class: "c-btn c-btn--secondary c-btn--s" %>
+    <% end %>
+  </div>
 
   <% if current_profile.nil? %>
-    <p class="mb-3"><%= t("matching.section.no_profile_intro") %></p>
-    <%= link_to t("matching.section.create_profile"), matching_onboarding_path, class: "crayons-btn" %>
+    <%# P1 — no profile yet → gradient card with pool count + big CTA %>
+    <div class="crayons-card" style="padding: 24px; background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(169,31,105,0.06)); border-color: rgba(99,102,241,0.18);">
+      <div class="flex between gap-4 items-start flex-wrap">
+        <div style="flex: 1 1 auto; min-width: 260px;">
+          <% if @match_pool_count.to_i.positive? %>
+            <p class="fs-l" style="margin: 0 0 6px; font-weight: 700;">
+              <%= t("matching.section.p1.headline_html",
+                    pool_html: "<span style=\"color: var(--accent-brand, #6366f1);\">#{t('matching.section.p1.pool_count', count: @match_pool_count)}</span>".html_safe) %>
+            </p>
+          <% else %>
+            <p class="fs-l" style="margin: 0 0 6px; font-weight: 700;">
+              <%= t("matching.section.p1.headline_empty") %>
+            </p>
+          <% end %>
+          <p class="fs-s color-base-70" style="margin: 0;">
+            <%= t("matching.section.p1.body") %>
+          </p>
+        </div>
+        <%= link_to "#{t('matching.section.p1.cta')} →",
+                    matching_onboarding_path,
+                    class: "c-btn c-btn--primary c-btn--l" %>
+      </div>
+    </div>
 
   <% elsif !current_profile.visible_to_others? %>
-    <p class="fs-s color-base-60"><%= t("matching.section.profile_not_visible") %></p>
-    <p class="mt-1"><%= link_to t("matching.show.manage_profile"), "/settings/matching", class: "c-link" %></p>
-
-  <% elsif current_rsvp.nil? %>
-    <p class="fs-s color-base-60"><%= t("matching.section.need_rsvp_first") %></p>
+    <%# Profile exists but not visible (pending / rejected / inactive) %>
+    <div class="crayons-card" style="padding: 20px;">
+      <p class="fs-s color-base-70" style="margin: 0 0 8px;">
+        <%= t("matching.section.profile_not_visible") %>
+      </p>
+      <%= link_to t("matching.show.manage_profile"), "/settings/matching", class: "c-link" %>
+    </div>
 
   <% elsif current_declaration.nil? %>
-    <p class="mb-3"><%= t("matching.section.no_declaration_intro") %></p>
-    <%= link_to t("matching.section.declare_now"),
-                new_meetup_declaration_path(meetup.slug),
-                class: "crayons-btn" %>
-
-    <% if current_rsvp.status == "interested" %>
-      <%= render "matching/matches_blurred_teaser", meetup: meetup %>
-    <% end %>
+    <%# P2 — has profile, no declaration on this meetup → prompt + (disabled until going) %>
+    <div class="crayons-card" style="padding: 20px;">
+      <div class="flex between gap-4 items-start flex-wrap">
+        <div style="flex: 1 1 auto; min-width: 260px;">
+          <p class="fs-l" style="margin: 0 0 6px; font-weight: 700;">
+            <%= t("matching.section.p2.headline") %>
+          </p>
+          <p class="fs-s color-base-70" style="margin: 0;">
+            <%= t("matching.section.p2.body") %>
+          </p>
+        </div>
+        <% if current_rsvp&.status == "going" %>
+          <%= link_to "#{t('matching.section.p2.cta')} →",
+                      new_meetup_declaration_path(meetup.slug),
+                      class: "c-btn c-btn--primary c-btn--l" %>
+        <% else %>
+          <span class="c-btn c-btn--secondary c-btn--l" style="opacity: 0.5; cursor: not-allowed;">
+            <%= t("matching.section.p2.cta") %> →
+          </span>
+        <% end %>
+      </div>
+      <% if current_rsvp&.status != "going" %>
+        <p class="fs-xs color-base-60" style="margin: 10px 0 0;">
+          🔒 <%= t("matching.section.p2.need_going_hint_html").html_safe %>
+        </p>
+      <% end %>
+      <% if current_rsvp&.status == "interested" %>
+        <%= render "matching/matches_blurred_teaser", meetup: meetup %>
+      <% end %>
+    </div>
 
   <% elsif current_declaration.not_looking? %>
-    <p class="fs-s color-base-60"><%= t("matching.section.not_looking_explanation") %></p>
-    <%= link_to t("matching.section.change_declaration"),
-                edit_meetup_declaration_path(meetup.slug),
-                class: "crayons-btn crayons-btn--outlined" %>
+    <%# User declared not_looking — explanation + change CTA %>
+    <div class="crayons-card" style="padding: 20px;">
+      <p class="fs-s color-base-70" style="margin: 0 0 12px;">
+        <%= t("matching.section.not_looking_explanation") %>
+      </p>
+      <%= link_to t("matching.section.change_declaration"),
+                  edit_meetup_declaration_path(meetup.slug),
+                  class: "c-btn c-btn--secondary" %>
+    </div>
 
   <% else %>
+    <%# P3 — has active declaration → active declaration card + matches list %>
+    <div class="crayons-card mb-3" style="padding: 20px; border-color: rgba(99,102,241,0.2);">
+      <div class="flex between gap-3 items-baseline flex-wrap">
+        <div>
+          <div class="fs-xs color-base-60" style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 4px;">
+            <%= t("matching.section.p3.active_declaration_label") %>
+          </div>
+          <div class="fs-l" style="font-weight: 700;">
+            <%= t("matching.declarations.intents.#{current_declaration.intent_level}.label") %>
+          </div>
+        </div>
+        <% if current_declaration.meetup_note.present? %>
+          <div class="fs-s color-base-70">
+            <%= t("matching.section.p3.note_label") %>: <em>"<%= current_declaration.meetup_note %>"</em>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
     <%= render "matching/matches_list",
                meetup: meetup,
                current_declaration: current_declaration,

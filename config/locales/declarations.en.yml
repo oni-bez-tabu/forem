@@ -13,6 +13,22 @@ en:
       declare_now: "Declare intent"
       not_looking_explanation: "You declared not looking — list is hidden. You can change your declaration."
       change_declaration: "Change declaration"
+      p1:
+        headline_html: "%{pool_html} are looking to meet someone at this event"
+        headline_empty: "Be the first one looking to meet someone here"
+        pool_count:
+          one: "1 person from nietabu"
+          other: "%{count} people from nietabu"
+        body: "Create a Matching profile to see details and join. It's a separate profile — not linked to your main account."
+        cta: "Create Matching profile"
+      p2:
+        headline: "Declare your intent"
+        body: "Pick who you want to meet at this event. Your declaration is only visible to people who match you."
+        cta: "Declare intent"
+        need_going_hint_html: "First mark that you're <strong>going</strong> to declare intent."
+      p3:
+        active_declaration_label: "Your active declaration"
+        note_label: "Note"
     declarations:
       saved: "Declaration saved."
       deleted: "Declaration removed."

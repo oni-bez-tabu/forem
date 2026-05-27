@@ -13,6 +13,22 @@ fr:
       declare_now: "Déclarer une intention"
       not_looking_explanation: "Vous avez déclaré ne pas chercher — la liste est masquée. Vous pouvez modifier."
       change_declaration: "Modifier la déclaration"
+      p1:
+        headline_html: "%{pool_html} cherchent à rencontrer quelqu'un sur cet événement"
+        headline_empty: "Soyez le premier à chercher à rencontrer quelqu'un ici"
+        pool_count:
+          one: "1 personne de nietabu"
+          other: "%{count} personnes de nietabu"
+        body: "Créez un profil Matching pour voir les détails et rejoindre. C'est un profil séparé — sans lien avec votre compte principal."
+        cta: "Créer un profil Matching"
+      p2:
+        headline: "Déclarez votre intention"
+        body: "Choisissez qui vous voulez rencontrer sur cet événement. Votre déclaration n'est visible qu'aux personnes qui vous correspondent."
+        cta: "Déclarer une intention"
+        need_going_hint_html: "Marquez d'abord que vous <strong>y allez</strong> pour déclarer une intention."
+      p3:
+        active_declaration_label: "Votre déclaration active"
+        note_label: "Note"
     declarations:
       saved: "Déclaration enregistrée."
       deleted: "Déclaration supprimée."

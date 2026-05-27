@@ -13,6 +13,22 @@ pt:
       declare_now: "Declarar intenção"
       not_looking_explanation: "Você declarou não estar procurando — a lista está oculta. Você pode mudar."
       change_declaration: "Mudar declaração"
+      p1:
+        headline_html: "%{pool_html} estão procurando conhecer alguém neste evento"
+        headline_empty: "Seja a primeira pessoa a procurar conhecer alguém aqui"
+        pool_count:
+          one: "1 pessoa do nietabu"
+          other: "%{count} pessoas do nietabu"
+        body: "Crie um perfil Matching para ver detalhes e participar. É um perfil separado — não vinculado à sua conta principal."
+        cta: "Criar perfil Matching"
+      p2:
+        headline: "Declare sua intenção"
+        body: "Escolha quem você quer conhecer neste evento. Sua declaração só é visível para pessoas que combinam com você."
+        cta: "Declarar intenção"
+        need_going_hint_html: "Marque primeiro que você <strong>vai</strong> para declarar intenção."
+      p3:
+        active_declaration_label: "Sua declaração ativa"
+        note_label: "Nota"
     declarations:
       saved: "Declaração salva."
       deleted: "Declaração removida."
