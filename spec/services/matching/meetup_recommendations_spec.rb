@@ -46,7 +46,8 @@ RSpec.describe Matching::MeetupRecommendations do
     end
 
     it "excludes unpublished meetups" do
-      m = create(:meetup, :unpublished, venue_city: warsaw, start_at: 2.days.from_now, end_at: 2.days.from_now + 2.hours)
+      m = create(:meetup, :unpublished, venue_city: warsaw, start_at: 2.days.from_now,
+                                        end_at: 2.days.from_now + 2.hours)
       expect(meetup_ids(described_class.new(user: user).call)).not_to include(m.id)
     end
 
@@ -88,6 +89,86 @@ RSpec.describe Matching::MeetupRecommendations do
       expect(rec.active_count).to eq(3)
       expect(rec.identity_breakdown).to eq("woman" => 2, "couple" => 1)
       expect(rec.open_to_meet_count).to eq(2)
+    end
+
+    describe "repeat-organizer bonus" do
+      let!(:organizer) { create(:user) }
+      let!(:past_meetup) do
+        create(:meetup,
+               organizer_user: organizer,
+               venue_city: warsaw,
+               start_at: 2.days.ago,
+               end_at: 2.days.ago + 2.hours)
+      end
+
+      before { create(:meetup_rsvp, meetup: past_meetup, user: user, status: "going") }
+
+      it "boosts a candidate sharing the user's past organizer over an equally quiet stranger" do
+        repeat = create(:meetup, organizer_user: organizer, venue_city: warsaw,
+                                 start_at: 2.days.from_now, end_at: 2.days.from_now + 2.hours)
+        other = create(:meetup, venue_city: warsaw,
+                                start_at: 1.day.from_now, end_at: 1.day.from_now + 2.hours)
+
+        results = described_class.new(user: user).call
+        expect(results.first.meetup).to eq(repeat)
+        expect(results.first.reasons).to include(:repeat_organizer)
+        expect(results.first.score).to be > results.last.score
+        other_rec = results.find { |r| r.meetup.id == other.id }
+        expect(other_rec.reasons).to be_empty
+      end
+
+      it "does not flag repeat_organizer for unrelated organizers" do
+        other_organizer = create(:user)
+        m = create(:meetup, organizer_user: other_organizer, venue_city: warsaw,
+                            start_at: 1.day.from_now, end_at: 1.day.from_now + 2.hours)
+
+        rec = described_class.new(user: user).call.find { |r| r.meetup.id == m.id }
+        expect(rec.reasons).to be_empty
+      end
+    end
+
+    describe "frequency capping (twice per 7 days)" do
+      it "skips meetups already surfaced to this user twice within the last 7 days" do
+        capped = create(:meetup, venue_city: warsaw,
+                                 start_at: 2.days.from_now, end_at: 2.days.from_now + 2.hours)
+        fresh  = create(:meetup, venue_city: warsaw,
+                                 start_at: 3.days.from_now, end_at: 3.days.from_now + 2.hours)
+        2.times do
+          MatchingRecommendationImpression.create!(user: user, meetup: capped, shown_at: 1.day.ago)
+        end
+
+        ids = described_class.new(user: user).call.map { |r| r.meetup.id }
+        expect(ids).not_to include(capped.id)
+        expect(ids).to include(fresh.id)
+      end
+
+      it "ignores impressions older than the recency window" do
+        old_capped = create(:meetup, venue_city: warsaw,
+                                     start_at: 2.days.from_now, end_at: 2.days.from_now + 2.hours)
+        2.times do
+          MatchingRecommendationImpression.create!(user: user, meetup: old_capped, shown_at: 10.days.ago)
+        end
+
+        ids = described_class.new(user: user).call.map { |r| r.meetup.id }
+        expect(ids).to include(old_capped.id)
+      end
+    end
+
+    describe "record_impressions: true" do
+      it "persists one impression row per surfaced recommendation" do
+        m = create(:meetup, venue_city: warsaw, start_at: 2.days.from_now, end_at: 2.days.from_now + 2.hours)
+        expect do
+          described_class.new(user: user, record_impressions: true).call
+        end.to change(MatchingRecommendationImpression, :count).by(1)
+        expect(MatchingRecommendationImpression.last.meetup).to eq(m)
+      end
+
+      it "does not persist impressions by default" do
+        create(:meetup, venue_city: warsaw, start_at: 2.days.from_now, end_at: 2.days.from_now + 2.hours)
+        expect do
+          described_class.new(user: user).call
+        end.not_to change(MatchingRecommendationImpression, :count)
+      end
     end
   end
 

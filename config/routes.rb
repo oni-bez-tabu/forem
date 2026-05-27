@@ -313,6 +313,7 @@ Rails.application.routes.draw do
     get "/matching", to: "matching#show", as: :matching
     get "/matching/onboarding", to: "matching/profiles#intro", as: :matching_onboarding
     get "/matching/onboarding/form", to: "matching/profiles#new", as: :matching_onboarding_form
+    get "/matching/onboarding/success", to: "matching/profiles#success", as: :matching_onboarding_success
     get "/matching/profile/edit", to: "matching/profiles#edit", as: :edit_matching_profile
     post "/matching/profile", to: "matching/profiles#create", as: :matching_profile
     patch "/matching/profile", to: "matching/profiles#update"

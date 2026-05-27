@@ -484,27 +484,84 @@ Pełny Matching POC suite: **234/234 ✓** (74 Etap 0–1, +37 Etap 2, +36 Etap 
 - ✅ E5 onboarding intro (gradient hero + 3 benefits + privacy + CTAs)
 - ✅ E8 timeline dashboard (header + dot timeline + match_found single/aggregated + recommendations + needs_intent)
 - ✅ E15 event-scoped profile (2-col + photo 4:5 + about card + note card + write CTA)
-- ⚠️ E6 form (TODO fala 3 — overline "Krok 2 z 3", photo upload widget, większy h1)
-- ⚠️ E7 success (TODO fala 3 — dedicated screen po `POST /matching/profile`)
+- ✅ E6 form (Etap 6 fala 3 — overline + photo widget + chip-group identity + bio counter)
+- ✅ E7 success (Etap 6 fala 3 — dedicated screen po `POST /matching/profile`)
+
+---
+
+## Etap 6 fala 3 — onboarding form/success + recommendations weights
+
+- **Status:** ✅ done
+- **Data:** 2026-05-27
+
+### Zaimplementowane
+
+**E6 form polish (`/matching/onboarding/form`) — 1:1 z hifi mockup (`screens.jsx:661`):**
+- `new.html.erb` przepisany: `max-width: 580px`, overline "Krok 2 z 3" (`matching.onboarding.form_overline`), h1 36px "Twój profil Matching", 17px tagline "3 pola. Możesz to zmienić w każdej chwili."
+- `_form.html.erb` przepisany w 4 sekcjach (zgodne z mockupem):
+  - **Photo widget**: 140×175 (`aspect-ratio: 4 / 5`) dashed brand border placeholder z "+ Dodaj zdjęcie" labelem, klik otwiera ukryty `<input type="file">` (FileReader → live preview, placeholder znika, "Zmień zdjęcie" link). Helper text po prawej "Pojawi się tylko przed osobami…". `required` attr usunięty (HTML5 nie waliduje ukrytych inputów), model `validates :photo, presence: true` łapie braki.
+  - **Identity chip-group**: 4 chipsy (Kobieta / Mężczyzna / Para / Osoba niebinarna) renderowane jako `<button type="button">`, klik ustawia hidden `:identity_type` field, selected = brand fill + ✓ ikona, unselected = pill z borderem. Style centralnie przez `MatchingHelper#matching_chip_style(selected)` (string przekazany do JS jako `to_json.html_safe` żeby toggle re-aplikował style po zmianie chipsa).
+  - **City** — istniejący autocomplete partial (`/cities/search` debounced).
+  - **Bio** — textarea z live counter `XX/200` (inline JS).
+- Primary submit `Zapisz profil` (większy: 48px height, 14px 28px padding, 16px font, 200px min-width). Cancel button tylko gdy `persisted?` (mockup nie ma cancel w nowym formie).
+
+**E7 success screen (`/matching/onboarding/success`) — 1:1 z hifi mockup (`screens.jsx:754`):**
+- Nowa akcja `Matching::ProfilesController#success` z gardą `require_profile_for_success` (brak profilu → redirect na intro, więc strona dostępna tylko po stworzeniu profilu)
+- View: gradient circle 96px (brand → magenta) z ✓ centered, h1 40px "Gotowe ✨", 17px body "Twój profil Matching trafił do akceptacji…", caption 14px o spodziewanej długości moderacji ("kilka godzin, email"), 2 CTA: primary "Przejdź do wydarzeń" (`meetups_path`) + outline "Zobacz mój profil" (`matching_path`)
+- `Matching::ProfilesController#create` po `@profile.save` → `redirect_to matching_onboarding_success_path` (zamiast wcześniejszego `matching_path, notice: created`). I18n key `matching.profiles.created` zostaje w yaml jako gotowy do reuse (np. dla admin notice'ów), ale nie używany w success flow
+
+**MeetupRecommendations weights + frequency capping:**
+- Migracja `20260527180000_create_matching_recommendation_impressions` (user_id FK on_delete cascade, meetup_id FK on_delete cascade, shown_at, timestamps) + 2 indeksy: `(user_id, meetup_id, shown_at)` lookup, `(user_id, shown_at)` recency
+- Model `MatchingRecommendationImpression` ze stałymi `RECENCY_WINDOW = 7.days` i `WEEKLY_CAP = 2`, scope `recent_for(user)` (`shown_at > 7.days.ago`)
+- Service rozbudowany:
+  - `Recommendation` struct dostaje 2 nowe pola: `score` (Integer), `reasons` (Array<Symbol>, np. `[:repeat_organizer]`)
+  - Nowy parametr `record_impressions: false` — gdy `true`, po zwróceniu rekomendacji bulk `MatchingRecommendationImpression.insert_all` (jeden rekord per surfaced meetup_id)
+  - **Repeat-organizer bonus** (`REPEAT_ORGANIZER_BONUS = 5`): zbiera `past_organizer_ids` z RSVP usera (organizer_user_id LUB organizer_organization_id), candidate z matchingującym organizerem → +5 do score, dorzuca `:repeat_organizer` do reasons
+  - **Frequency cap**: `frequency_capped_meetup_ids` znajduje meetupy z `COUNT(impressions) >= 2 WHERE shown_at > 7.days.ago AND user_id = current` → wykluczone z base scope. Po 7 dniach impressions wypadają z okna i meetup może wrócić.
+  - Sortowanie: `[-score, start_at]` (score = active_count + organizer_bonus; tie-break po dacie)
+- Controller `MatchingController#show` woła service z `record_impressions: true` — każde otwarcie dashboardu zostawia ślad
+
+**Testy (17 nowych w fali 3):**
+- Request `Matching::Profiles` (5 nowych): E6 form (overline + submit), E7 success (renders / requires auth / no profile → redirect / no profile by auth required), create → redirect to success
+- Service `MeetupRecommendations` (6 nowych): repeat-organizer boosts over equal-quiet stranger + reasons, no flag for unrelated organizers, frequency cap skips 2+ impressions, ignores >7d old impressions, `record_impressions: true` persists 1 row per rec, default no persistence
+
+Pełny Matching POC suite: **251/251 ✓** (74 Etap 0–1, +37 Etap 2, +36 Etap 3, +39 Etap 4, +48 Etap 5, +17 Etap 6 fala 3)
+
+### Uwagi / odstępstwa / długi techniczne
+
+- **Chip-group identity przez inline JS w ERB** — działa, ale jest 3-ci komponent (po welcome modal i boost modal) który dorobi się jako Preact pack. Konwencja spójna z resztą POC.
+- **`matching_chip_style` helper inlinowany do JS jako `to_json.html_safe`** — toggle chipsa potrzebuje pełnego string'a CSS żeby re-aplikować przy reselect. Idealnie: CSS class `.matching-chip[data-selected="true"]` + przełączanie atrybutu. Polish dług razem z `pill_style` i `flex between`.
+- **Photo file input ukryty przez `position: absolute; opacity: 0`** zamiast `display: none` — HTML5 click event na `<label for>` propaguje do ukrytego inputu tylko gdy nie ma `display: none`. Trick z absolute + tiny size jest powszechny. `required` attr usunięty bo HTML5 nie waliduje hidden inputów — model `validates :photo, presence: true` łapie błąd.
+- **`MatchingProfile.created` i18n nie wyświetlany po success** (przekierowanie na success screen zamiast flash notice) — ale klucz zostawiony w yaml, useable np. dla admin notice po `admin/matching_profiles#create` (hypothetical).
+- **`require_profile_for_success` redirect → onboarding intro** — chronologia naturalna (user który zobaczył success → ma profil; user bez profilu na URL'u success → kierujemy na intro). Alternatywa: 404. Wybór UX: nie wystraszyć nowego usera.
+- **Repeat-organizer bonus = stały `+5`** — magic number. Active counts in POC rzędu 0–10, więc bonus przesuwa zwykle 1 pozycję. Jeśli rośnie aktywność → albo skalować bonus, albo wprowadzić multiplikatywny score. Zostawione jako proste.
+- **`record_impressions` opt-in** zamiast default true — bo nie chcemy impression'ów z testów ani od background workers (np. push notification trigger). Tylko canonical "user otworzył dashboard" → controller flaga ustawia.
+- **`MatchingRecommendationImpression.insert_all` pomija callbacks** — model jest leaf (brak callbacks, brak counter cache), więc bezpiecznie.
+- **Frequency cap nie wykryje "soft refresh"** — jeśli user otworzy dashboard 3 razy w 5 sekund, dostanie 3 impressions, dlatego >=2 w 7 dni capuje od razu. Świadome: nie polecaj tego samego meetupu drugi raz w tym samym tygodniu, niezależnie od częstotliwości otwarcia.
+- **Brak "similar vibe" weight** (SPEC §12.13) — wymaga `looking_for`, kolumna zdropowana w Etapie 3. Wraca razem z `looking_for`.
+- **FR/PT tłumaczenia "machinalne"**, ten sam dług co w Etapach 1–6 fali 2.
+
+### Acceptance check vs mockup
+
+- ✅ E6 form: overline "Krok 2 z 3" + h1 36px + tagline 17px + photo widget z live preview + identity chip-group + bio counter + duży primary submit (1:1 z `screens.jsx:661`)
+- ✅ E7 success: gradient circle 96px + ✓ ikona + h1 40px "Gotowe ✨" + 17px body + duration caption + 2 CTA (1:1 z `screens.jsx:754`)
+- ✅ Acceptance funkcjonalny: POST /matching/profile → redirect 302 na /matching/onboarding/success → user widzi success screen → klika CTA → meetups lub matching panel
+- ✅ Recommendations: repeat-organizer bonus surfaces meetup od organizera u którego user był wcześniej; frequency cap (2× per 7d) wycina powtarzające się polecenia; service recordIs impressions gdy controller go tak woła
 
 ---
 
 ## Następny etap
 
-**Etap 6 fala 3 — onboarding flow polish + ostatnie funkcjonalne braki**
+**Etap 6 fala 4 — backlog polish + external sprint (poza obecny scope POC)**
 
-Funkcjonalne (nadal w SPEC.md scope):
-- **E6 form polish** — overline "Krok 2 z 3", photo upload widget z preview, h1 "Twój profil Matching" + 17px body, większy submit button
-- **E7 success screen** — po `POST /matching/profile` redirect na dedicated screen z "Profil wysłany do akceptacji" + duża ikona ✓ + duration estimate + button "Zobacz Matching panel"
-- **MeetupRecommendations weights** — "similar vibe" (identity-aware jeśli przywrócimy `looking_for`), repeat-organizer bonus, frequency capping ("nie polecaj tego samego meetupu dwa razy w tym samym tygodniu")
-
-Polish/techdebt (poza SPEC scope):
-- Frontend: Preact pack dla 3 popupów (boost / E18 welcome / share) zamiast inline JS w ERB
-- Crayons tokens replace inline styles (widget meetupu, timeline, recommendation card)
+Polish/techdebt (poza SPEC scope, opcjonalne na produkcję):
+- Frontend: Preact pack dla 4 popupów (boost / E18 welcome / share / E6 chip-group + photo upload) zamiast inline JS w ERB
+- Crayons tokens replace inline styles (widget meetupu, timeline, recommendation card, photo widget, chip-group, pill_style helper, `flex between` workaround w 10 miejscach)
 - Hifi gradient palette dla `MeetupsHelper::BANNER_GRADIENTS` (obecnie placeholder)
 - Sparkles SVG zamiast fire.svg jako matching tab icon
-- Performance: indeksy + EXPLAIN dla `TimelineFeed` SQL przy realistic data volume
+- Performance: indeksy + EXPLAIN dla `TimelineFeed` SQL i `MeetupRecommendations` przy realistic data volume (>100 meetupów per city, >1000 profili)
 - Native i18n review (FR/PT) — wszystkie POC tłumaczenia "machinalne"
+- Recommendations: skalowalny scoring (multiplicative zamiast additive bonus); diversity weight (nie pokazuj 3 meetupów tego samego organizatora); reason copy translation per locale
 
 External sprint (poza Forem repo):
 - **Cloud Function dla welcome message → chat Firebase** (Etap 4 dług) — Rails service `Matching::DeliverWelcomeViaCloudFunction` POST'uje do `ENV["MATCHING_WELCOME_CLOUD_FUNCTION_URL"]` ale CF nie deployowane. Bez CF: welcome rekord powstaje + UI pokazuje "wysłano", ale wiadomość do Firestore nie trafia.

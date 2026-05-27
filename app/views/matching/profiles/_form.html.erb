@@ -1,10 +1,18 @@
-<%= form_with model: profile, url: profile.persisted? ? matching_profile_path : matching_profile_path,
-                method: profile.persisted? ? :patch : :post,
-                local: true, html: { multipart: true } do |form| %>
+<%# E6 onboarding form 1:1 with hifi mockup (`screens.jsx:661`).
+    Single-column 580px max-width, large h1, overline "Krok 2 z 3"
+    rendered by `new.html.erb` (above this partial). Photo widget with
+    inline preview, identity as chip-group, city autocomplete +
+    "🌍 Wszędzie" chip, bio textarea with live counter.
+%>
+<%= form_with model: profile,
+              url: profile.persisted? ? matching_profile_path : matching_profile_path,
+              method: profile.persisted? ? :patch : :post,
+              local: true,
+              html: { multipart: true, class: "js-matching-profile-form" } do |form| %>
   <% if profile.errors.any? %>
-    <div class="crayons-notice p-0 mb-4" aria-live="polite">
+    <div class="crayons-notice crayons-notice--danger mb-4" aria-live="polite" style="padding: 14px 18px;">
       <strong><%= pluralize(profile.errors.count, "error") %>:</strong>
-      <ul class="list-disc list-inside mt-2">
+      <ul style="margin: 6px 0 0 18px;">
         <% profile.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
@@ -12,37 +20,177 @@
     </div>
   <% end %>
 
-  <div class="crayons-field">
-    <%= form.label :photo, t("matching.profiles.fields.photo"), class: "crayons-field__label" %>
-    <p class="crayons-field__description"><%= t("matching.profiles.fields.photo_help") %></p>
-    <% if profile.photo.present? %>
-      <img src="<%= profile.photo.url %>" alt="<%= current_user.username %>" class="mt-2 mb-2" style="max-width: 160px; max-height: 200px; object-fit: cover; border-radius: 8px;">
-    <% end %>
-    <%= form.file_field :photo, accept: "image/*", required: profile.new_record? %>
-  </div>
+  <div class="flex flex-col" style="gap: 24px;">
+    <%# Photo field %>
+    <div class="flex flex-col" style="gap: 8px;">
+      <label class="crayons-field__label" for="matching_profile_photo" style="font-size: 14px; font-weight: 700;">
+        <%= t("matching.profiles.fields.photo") %>
+        <span style="color: rgb(169,31,105);">*</span>
+      </label>
+      <div class="flex items-start" style="gap: 16px; flex-wrap: wrap;">
+        <label for="matching_profile_photo" class="js-matching-photo-trigger"
+               style="cursor: pointer; flex: 0 0 140px; width: 140px; aspect-ratio: 4 / 5; border-radius: 12px; border: 2px dashed rgba(99,102,241,0.4); background: rgba(99,102,241,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--accent-brand, #6366f1); text-align: center; overflow: hidden; position: relative;">
+          <img class="js-matching-photo-preview"
+               src="<%= profile.photo.url if profile.photo.present? %>"
+               alt=""
+               style="<%= 'display: none;' unless profile.photo.present? %> width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;">
+          <div class="js-matching-photo-placeholder" style="<%= 'display: none;' if profile.photo.present? %> display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <span style="font-size: 28px; line-height: 1;">+</span>
+            <span style="font-size: 12px; font-weight: 600;"><%= t("matching.profiles.photo_widget.add") %></span>
+          </div>
+        </label>
+        <div class="flex flex-col flex-1" style="gap: 8px; min-width: 220px;">
+          <p style="margin: 0; color: rgb(var(--grey-600, 107 114 128)); font-size: 13px; line-height: 1.55;">
+            <%= t("matching.profiles.fields.photo_help_long") %>
+          </p>
+          <% if profile.photo.present? %>
+            <button type="button" class="js-matching-photo-replace c-link" style="background: none; border: 0; padding: 0; color: var(--accent-brand, #6366f1); font-size: 13px; font-weight: 600; text-align: left; cursor: pointer; align-self: flex-start;">
+              <%= t("matching.profiles.photo_widget.replace") %>
+            </button>
+          <% end %>
+        </div>
+      </div>
+      <%= form.file_field :photo, accept: "image/*",
+                          class: "js-matching-photo-input",
+                          style: "position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px;" %>
+    </div>
 
-  <div class="crayons-field mt-3">
-    <%= form.label :identity_type, t("matching.profiles.fields.identity_type"), class: "crayons-field__label" %>
-    <%= form.select :identity_type,
-                    MatchingProfile::IDENTITY_TYPES.map { |t| [I18n.t("matching.identity_types.#{t}"), t] },
-                    { include_blank: true },
-                    class: "crayons-select", required: true %>
-  </div>
+    <%# Identity field %>
+    <div class="flex flex-col" style="gap: 8px;">
+      <label class="crayons-field__label" style="font-size: 14px; font-weight: 700;">
+        <%= t("matching.profiles.fields.identity_type") %>
+        <span style="color: rgb(169,31,105);">*</span>
+      </label>
+      <div class="js-identity-chip-group flex" style="gap: 8px; flex-wrap: wrap;">
+        <% MatchingProfile::IDENTITY_TYPES.each do |type| %>
+          <% selected = profile.identity_type == type %>
+          <button type="button"
+                  class="js-identity-chip"
+                  data-value="<%= type %>"
+                  data-selected="<%= selected %>"
+                  style="<%= matching_chip_style(selected) %>">
+            <% if selected %>
+              <span style="font-size: 12px; line-height: 1;">✓</span>
+            <% end %>
+            <%= t("matching.identity_types.#{type}") %>
+          </button>
+        <% end %>
+      </div>
+      <%= form.hidden_field :identity_type, class: "js-identity-value" %>
+      <p style="margin: 0; color: rgb(var(--grey-600, 107 114 128)); font-size: 13px; line-height: 1.55;">
+        <%= t("matching.profiles.fields.identity_help_long") %>
+      </p>
+    </div>
 
-  <div class="crayons-field mt-3">
-    <%= form.label :city_id, t("matching.profiles.fields.city"), class: "crayons-field__label" %>
-    <p class="crayons-field__description"><%= t("matching.profiles.fields.city_help") %></p>
-    <%= render "matching/profiles/city_autocomplete", form: form, profile: profile %>
-  </div>
+    <%# City field %>
+    <div class="flex flex-col" style="gap: 8px;">
+      <label class="crayons-field__label" for="matching_profile_city_autocomplete" style="font-size: 14px; font-weight: 700;">
+        <%= t("matching.profiles.fields.city") %>
+        <span style="color: rgb(169,31,105);">*</span>
+      </label>
+      <%= render "matching/profiles/city_autocomplete", form: form, profile: profile %>
+      <p style="margin: 0; color: rgb(var(--grey-600, 107 114 128)); font-size: 13px; line-height: 1.55;">
+        <%= t("matching.profiles.fields.city_help") %>
+      </p>
+    </div>
 
-  <div class="crayons-field mt-3">
-    <%= form.label :bio, t("matching.profiles.fields.bio"), class: "crayons-field__label" %>
-    <p class="crayons-field__description"><%= t("matching.profiles.fields.bio_help", max: MatchingProfile::BIO_MAX_LENGTH) %></p>
-    <%= form.text_area :bio, maxlength: MatchingProfile::BIO_MAX_LENGTH, rows: 4, class: "crayons-textfield" %>
-  </div>
+    <%# Bio field %>
+    <div class="flex flex-col" style="gap: 8px;">
+      <label class="crayons-field__label" for="matching_profile_bio" style="font-size: 14px; font-weight: 700;">
+        <%= t("matching.profiles.fields.bio") %>
+      </label>
+      <%= form.text_area :bio,
+                         maxlength: MatchingProfile::BIO_MAX_LENGTH,
+                         rows: 4,
+                         class: "crayons-textfield js-matching-bio",
+                         placeholder: t("matching.profiles.fields.bio_placeholder") %>
+      <div class="flex" style="justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+        <span style="margin: 0; color: rgb(var(--grey-600, 107 114 128)); font-size: 13px;">
+          <%= t("matching.profiles.fields.bio_help_long") %>
+        </span>
+        <span class="js-matching-bio-counter" style="font-size: 12px; color: rgb(var(--grey-600, 107 114 128)); font-variant-numeric: tabular-nums;">
+          <%= profile.bio.to_s.length %>/<%= MatchingProfile::BIO_MAX_LENGTH %>
+        </span>
+      </div>
+    </div>
 
-  <div class="mt-4">
-    <%= form.submit submit_label, class: "crayons-btn" %>
-    <%= link_to t("matching.profiles.cancel"), matching_path, class: "crayons-btn crayons-btn--outlined" %>
+    <div class="flex" style="gap: 12px; margin-top: 8px; flex-wrap: wrap;">
+      <%= form.submit submit_label, class: "c-btn c-btn--primary",
+                      style: "padding: 14px 28px; font-size: 16px; font-weight: 700; min-height: 48px; min-width: 200px;" %>
+      <% if profile.persisted? %>
+        <%= link_to t("matching.profiles.cancel"), "/settings/matching",
+                    class: "c-btn",
+                    style: "padding: 14px 28px; font-size: 16px; font-weight: 600; min-height: 48px;" %>
+      <% end %>
+    </div>
   </div>
 <% end %>
+
+<script>
+  (function() {
+    var form = document.currentScript.previousElementSibling;
+    while (form && (!form.classList || !form.classList.contains("js-matching-profile-form"))) {
+      form = form.previousElementSibling;
+    }
+    if (!form) return;
+
+    // Photo upload: click trigger opens file dialog; on change, preview.
+    var input = form.querySelector(".js-matching-photo-input");
+    var preview = form.querySelector(".js-matching-photo-preview");
+    var placeholder = form.querySelector(".js-matching-photo-placeholder");
+    var replaceBtn = form.querySelector(".js-matching-photo-replace");
+
+    function openPicker() { if (input) input.click(); }
+    if (replaceBtn) replaceBtn.addEventListener("click", openPicker);
+
+    if (input && preview && placeholder) {
+      input.addEventListener("change", function() {
+        var file = input.files && input.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = "block";
+          placeholder.style.display = "none";
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Identity chip group.
+    var chips = form.querySelectorAll(".js-identity-chip");
+    var identityHidden = form.querySelector(".js-identity-value");
+    var selectedStyle = <%= matching_chip_style(true).to_json.html_safe %>;
+    var unselectedStyle = <%= matching_chip_style(false).to_json.html_safe %>;
+    chips.forEach(function(chip) {
+      chip.addEventListener("click", function() {
+        var value = chip.dataset.value;
+        chips.forEach(function(c) {
+          var isMe = c === chip;
+          c.dataset.selected = isMe ? "true" : "false";
+          c.style.cssText = isMe ? selectedStyle : unselectedStyle;
+          var check = c.querySelector(".js-identity-check");
+          if (check) check.remove();
+          if (isMe) {
+            var span = document.createElement("span");
+            span.className = "js-identity-check";
+            span.style.cssText = "font-size: 12px; line-height: 1;";
+            span.textContent = "✓";
+            c.insertBefore(span, c.firstChild);
+          }
+        });
+        if (identityHidden) identityHidden.value = value;
+      });
+    });
+
+    // Bio counter.
+    var bio = form.querySelector(".js-matching-bio");
+    var counter = form.querySelector(".js-matching-bio-counter");
+    var maxLen = <%= MatchingProfile::BIO_MAX_LENGTH %>;
+    if (bio && counter) {
+      bio.addEventListener("input", function() {
+        counter.textContent = bio.value.length + "/" + maxLen;
+      });
+    }
+  })();
+</script>

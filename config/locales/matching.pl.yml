@@ -81,7 +81,18 @@ pl:
     onboarding:
       title: "Stwórz profil Matching"
       subtitle: "Cztery pola, kilka sekund. Profil trafia do akceptacji administratora."
-      submit: "Wyślij do akceptacji"
+      submit: "Zapisz profil"
+      form_title: "Twój profil Matching"
+      form_overline: "Krok 2 z 3"
+      form_heading: "Twój profil Matching"
+      form_tagline: "3 pola. Możesz to zmienić w każdej chwili."
+      success:
+        title: "Profil wysłany do akceptacji"
+        heading: "Gotowe ✨"
+        body: "Twój profil Matching trafił do akceptacji administratora. Po zatwierdzeniu wybierz wydarzenie i zadeklaruj intencję, żeby zacząć dostawać dopasowania."
+        duration: "Akceptacja trwa zazwyczaj kilka godzin. Damy znać mailem."
+        cta_primary: "Przejdź do wydarzeń"
+        cta_secondary: "Zobacz mój profil"
       intro:
         title: "Poznaj kogoś na wydarzeniu"
         headline: "Poznaj kogoś na wydarzeniu"
@@ -113,14 +124,21 @@ pl:
       update: "Zapisz zmiany"
       cancel: "Anuluj"
       city_autocomplete_placeholder: "Zacznij pisać nazwę miasta..."
+      photo_widget:
+        add: "Dodaj zdjęcie"
+        replace: "Zmień zdjęcie"
       fields:
         photo: "Zdjęcie"
         photo_help: "Wybierz zdjęcie profilowe (jpg/png, do 8 MB)."
-        identity_type: "Identyfikacja"
+        photo_help_long: "Pojawi się tylko przed osobami, z którymi masz wzajemne dopasowanie. Nie musi pokazywać twarzy — może być sylwetka, plecy, cokolwiek czujesz, że cię reprezentuje."
+        identity_type: "Kim jesteś?"
+        identity_help_long: "Możesz to zmienić w każdej chwili. Dla par: zakładacie wspólne konto Matching."
         city: "Miasto"
         city_help: "Zacznij pisać nazwę miasta — wybierz z listy. Wybierz \"🌍 Wszędzie\" jeśli nie chcesz ograniczać do jednego miasta."
-        bio: "Bio"
+        bio: "O tobie"
         bio_help: "Krótki opis siebie. Maksymalnie %{max} znaków."
+        bio_help_long: "Bio jest globalne. Na wydarzeniu możesz dodać dodatkowy kontekst."
+        bio_placeholder: "Krótko: czego ludzie powinni się o tobie spodziewać"
     identity_types:
       woman: "Kobieta"
       man: "Mężczyzna"

@@ -75,7 +75,18 @@ pt:
     onboarding:
       title: "Crie seu perfil Matching"
       subtitle: "Quatro campos, alguns segundos. O perfil vai para revisão do administrador."
-      submit: "Enviar para revisão"
+      submit: "Salvar perfil"
+      form_title: "Seu perfil Matching"
+      form_overline: "Passo 2 de 3"
+      form_heading: "Seu perfil Matching"
+      form_tagline: "3 campos. Você pode mudar a qualquer momento."
+      success:
+        title: "Perfil enviado para revisão"
+        heading: "Pronto ✨"
+        body: "Seu perfil Matching está em revisão. Após aprovação, escolha um evento e declare sua intenção para começar a receber matches."
+        duration: "A revisão geralmente leva algumas horas. Avisaremos por e-mail."
+        cta_primary: "Ver eventos"
+        cta_secondary: "Ver meu perfil"
       intro:
         title: "Conheça alguém em um evento"
         headline: "Conheça alguém em um evento"
@@ -107,14 +118,21 @@ pt:
       update: "Salvar alterações"
       cancel: "Cancelar"
       city_autocomplete_placeholder: "Comece a digitar o nome de uma cidade..."
+      photo_widget:
+        add: "Adicionar foto"
+        replace: "Trocar foto"
       fields:
         photo: "Foto"
         photo_help: "Escolha uma foto de perfil (jpg/png, até 8 MB)."
-        identity_type: "Identidade"
+        photo_help_long: "Visível apenas para pessoas com quem você tem match mútuo. Não precisa mostrar o rosto — silhueta, costas, qualquer coisa que represente você."
+        identity_type: "Quem você é?"
+        identity_help_long: "Você pode mudar a qualquer momento. Para casais: vocês compartilham uma única conta Matching."
         city: "Cidade"
         city_help: "Comece a digitar o nome de uma cidade — escolha da lista. Selecione \"🌍 Wszędzie\" se não quiser limitar a uma cidade."
-        bio: "Bio"
+        bio: "Sobre você"
         bio_help: "Descrição curta. Até %{max} caracteres."
+        bio_help_long: "A bio é global. Em um evento você pode adicionar contexto extra."
+        bio_placeholder: "Brevemente: o que as pessoas devem esperar de você"
     identity_types:
       woman: "Mulher"
       man: "Homem"

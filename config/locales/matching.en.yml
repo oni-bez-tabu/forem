@@ -75,7 +75,18 @@ en:
     onboarding:
       title: "Create your Matching profile"
       subtitle: "Four fields, a few seconds. Profile goes to admin review."
-      submit: "Submit for review"
+      submit: "Save profile"
+      form_title: "Your Matching profile"
+      form_overline: "Step 2 of 3"
+      form_heading: "Your Matching profile"
+      form_tagline: "3 fields. You can change everything later."
+      success:
+        title: "Profile submitted for review"
+        heading: "All set ✨"
+        body: "Your Matching profile is now in admin review. Once approved, pick an event and declare your intent to start getting matches."
+        duration: "Review usually takes a few hours. We'll email you when it's done."
+        cta_primary: "Browse events"
+        cta_secondary: "See my profile"
       intro:
         title: "Meet someone at an event"
         headline: "Meet someone at an event"
@@ -107,14 +118,21 @@ en:
       update: "Save changes"
       cancel: "Cancel"
       city_autocomplete_placeholder: "Start typing a city name..."
+      photo_widget:
+        add: "Add photo"
+        replace: "Replace photo"
       fields:
         photo: "Photo"
         photo_help: "Pick a profile photo (jpg/png, up to 8 MB)."
-        identity_type: "Identity"
+        photo_help_long: "Only shown to people you have a mutual match with. It doesn't have to show your face — silhouette, back, anything you feel represents you."
+        identity_type: "Who are you?"
+        identity_help_long: "You can change this any time. For couples: you share one Matching account."
         city: "City"
         city_help: "Start typing a city name — pick from the list. Choose \"🌍 Wszędzie\" if you don't want to limit to one city."
-        bio: "Bio"
+        bio: "About you"
         bio_help: "A short description. Up to %{max} characters."
+        bio_help_long: "Bio is global. On an event you can add extra context."
+        bio_placeholder: "Briefly: what people should expect of you"
     identity_types:
       woman: "Woman"
       man: "Man"

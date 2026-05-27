@@ -1,11 +1,23 @@
-<% title t("matching.onboarding.title") %>
+<% title t("matching.onboarding.form_title") %>
 
-<div class="crayons-layout crayons-layout--limited-width">
-  <header class="mb-4">
-    <h1 class="crayons-title">✨ <%= t("matching.onboarding.title") %></h1>
-    <p class="crayons-subtitle"><%= t("matching.onboarding.subtitle") %></p>
-  </header>
-  <div class="crayons-card p-6">
-    <%= render "matching/profiles/form", profile: @profile, submit_label: t("matching.onboarding.submit") %>
+<%# E6 onboarding form 1:1 with hifi mockup (`screens.jsx:661`).
+    Overline "Krok 2 z 3" → h1 "Twój profil Matching" → 17px tagline → form. %>
+<div class="crayons-layout crayons-layout--limited-width" style="max-width: 580px;">
+  <div style="margin: 20px auto 60px;">
+    <div style="margin-bottom: 8px;">
+      <span style="display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(var(--grey-500, 156 163 175));">
+        <%= t("matching.onboarding.form_overline") %>
+      </span>
+    </div>
+    <h1 style="font-size: 36px; font-weight: 800; line-height: 1.15; margin: 0;">
+      <%= t("matching.onboarding.form_heading") %>
+    </h1>
+    <p style="margin: 10px 0 0; font-size: 17px; line-height: 1.5; color: rgb(var(--grey-600, 107 114 128));">
+      <%= t("matching.onboarding.form_tagline") %>
+    </p>
+
+    <div style="margin-top: 32px;">
+      <%= render "matching/profiles/form", profile: @profile, submit_label: t("matching.onboarding.submit") %>
+    </div>
   </div>
 </div>

@@ -24,10 +24,10 @@ RSpec.describe "Matching::Profiles" do
     context "as a signed-in user" do
       before { sign_in user }
 
-      it "renders the onboarding form" do
+      it "renders the E5 intro screen with the form CTA" do
         get matching_onboarding_path
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include(I18n.t("matching.onboarding.submit"))
+        expect(response.body).to include(I18n.t("matching.onboarding.intro.cta_primary"))
       end
 
       it "redirects to /matching if a profile already exists" do
@@ -50,6 +50,48 @@ RSpec.describe "Matching::Profiles" do
     end
   end
 
+  describe "GET /matching/onboarding/form" do
+    before { sign_in user }
+
+    it "renders the E6 form with the Krok 2 z 3 overline and submit label" do
+      get matching_onboarding_form_path
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(I18n.t("matching.onboarding.form_overline"))
+      expect(response.body).to include(I18n.t("matching.onboarding.submit"))
+    end
+  end
+
+  describe "GET /matching/onboarding/success" do
+    context "without a profile" do
+      before { sign_in user }
+
+      it "redirects to the onboarding intro" do
+        get matching_onboarding_success_path
+        expect(response).to redirect_to(matching_onboarding_path)
+      end
+    end
+
+    context "with a profile" do
+      before do
+        create(:matching_profile, user: user)
+        sign_in user
+      end
+
+      it "renders the E7 success screen" do
+        get matching_onboarding_success_path
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(I18n.t("matching.onboarding.success.heading"))
+        expect(response.body).to include(I18n.t("matching.onboarding.success.cta_primary"))
+        expect(response.body).to include(I18n.t("matching.onboarding.success.cta_secondary"))
+      end
+    end
+
+    it "requires authentication" do
+      get matching_onboarding_success_path
+      expect(response).to have_http_status(:redirect)
+    end
+  end
+
   describe "POST /matching/profile" do
     before { sign_in user }
 
@@ -59,6 +101,11 @@ RSpec.describe "Matching::Profiles" do
       profile = MatchingProfile.last
       expect(profile.user).to eq(user)
       expect(profile).to be_pending
+    end
+
+    it "redirects to the E7 success screen" do
+      post matching_profile_path, params: valid_params
+      expect(response).to redirect_to(matching_onboarding_success_path)
     end
 
     it "rejects invalid data" do
@@ -72,6 +119,7 @@ RSpec.describe "Matching::Profiles" do
 
   describe "PATCH /matching/profile" do
     let!(:profile) { create(:matching_profile, :approved, user: user) }
+
     before { sign_in user }
 
     it "updates the profile and redirects to the settings tab" do
@@ -97,6 +145,7 @@ RSpec.describe "Matching::Profiles" do
 
   describe "POST /matching/profile/deactivate" do
     let!(:profile) { create(:matching_profile, :approved, user: user) }
+
     before { sign_in user }
 
     it "deactivates the profile" do
@@ -108,6 +157,7 @@ RSpec.describe "Matching::Profiles" do
 
   describe "POST /matching/profile/reactivate" do
     let!(:profile) { create(:matching_profile, :approved, :inactive, user: user) }
+
     before { sign_in user }
 
     it "reactivates the profile" do
@@ -119,6 +169,7 @@ RSpec.describe "Matching::Profiles" do
 
   describe "DELETE /matching/profile" do
     let!(:profile) { create(:matching_profile, user: user) }
+
     before { sign_in user }
 
     it "destroys the profile and redirects back to the empty dashboard" do

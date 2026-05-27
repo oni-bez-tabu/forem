@@ -3,6 +3,7 @@ module Matching
     before_action :authenticate_user!
     before_action :block_suspended_users, only: %i[intro new create]
     before_action :redirect_if_profile_exists, only: %i[intro new create]
+    before_action :require_profile_for_success, only: :success
     before_action :set_profile, only: %i[edit update deactivate reactivate destroy]
 
     def intro
@@ -15,18 +16,24 @@ module Matching
       @profile = MatchingProfile.new(user: current_user)
     end
 
+    def edit
+      # Canonical edit URL lives in the settings tab now.
+      redirect_to "/settings/matching"
+    end
+
     def create
       @profile = MatchingProfile.new(profile_params.merge(user: current_user))
       if @profile.save
-        redirect_to matching_path, notice: I18n.t("matching.profiles.created")
+        redirect_to matching_onboarding_success_path
       else
         render :new, status: :unprocessable_entity
       end
     end
 
-    def edit
-      # Canonical edit URL lives in the settings tab now.
-      redirect_to "/settings/matching"
+    def success
+      # E7 from the mockup — confirmation screen rendered after the
+      # profile is created (POST /matching/profile). Stand-alone route
+      # so a refresh after onboarding stays on the success screen.
     end
 
     def update
@@ -64,6 +71,12 @@ module Matching
       return unless MatchingProfile.exists?(user_id: current_user.id)
 
       redirect_to matching_path
+    end
+
+    def require_profile_for_success
+      return if MatchingProfile.exists?(user_id: current_user.id)
+
+      redirect_to matching_onboarding_path
     end
 
     def block_suspended_users

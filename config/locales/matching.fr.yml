@@ -75,7 +75,18 @@ fr:
     onboarding:
       title: "Créer votre profil Matching"
       subtitle: "Quatre champs, quelques secondes. Le profil passe par la modération."
-      submit: "Soumettre pour révision"
+      submit: "Enregistrer le profil"
+      form_title: "Votre profil Matching"
+      form_overline: "Étape 2 sur 3"
+      form_heading: "Votre profil Matching"
+      form_tagline: "3 champs. Vous pouvez tout modifier à tout moment."
+      success:
+        title: "Profil envoyé en modération"
+        heading: "C'est fait ✨"
+        body: "Votre profil Matching est en cours de modération. Une fois approuvé, choisissez un événement et déclarez votre intention pour commencer à recevoir des correspondances."
+        duration: "La modération prend généralement quelques heures. Nous vous enverrons un e-mail."
+        cta_primary: "Voir les événements"
+        cta_secondary: "Voir mon profil"
       intro:
         title: "Rencontrer quelqu'un à un événement"
         headline: "Rencontrer quelqu'un à un événement"
@@ -107,14 +118,21 @@ fr:
       update: "Enregistrer"
       cancel: "Annuler"
       city_autocomplete_placeholder: "Commencez à taper le nom d'une ville..."
+      photo_widget:
+        add: "Ajouter une photo"
+        replace: "Changer la photo"
       fields:
         photo: "Photo"
         photo_help: "Choisissez une photo de profil (jpg/png, jusqu'à 8 Mo)."
-        identity_type: "Identité"
+        photo_help_long: "Visible uniquement par les personnes avec qui vous avez une correspondance mutuelle. Pas besoin de montrer le visage — silhouette, dos, tout ce qui vous représente."
+        identity_type: "Qui êtes-vous ?"
+        identity_help_long: "Vous pouvez changer à tout moment. Pour les couples : vous partagez un seul compte Matching."
         city: "Ville"
         city_help: "Commencez à taper le nom d'une ville — choisissez dans la liste. Sélectionnez \"🌍 Wszędzie\" pour ne pas vous limiter à une ville."
-        bio: "Bio"
+        bio: "À propos de vous"
         bio_help: "Courte description. Jusqu'à %{max} caractères."
+        bio_help_long: "La bio est globale. Sur un événement vous pouvez ajouter un contexte supplémentaire."
+        bio_placeholder: "Brièvement : à quoi les gens devraient s'attendre de vous"
     identity_types:
       woman: "Femme"
       man: "Homme"
