@@ -21,6 +21,7 @@ fr:
       rejected_explanation: "Le profil n'a pas été approuvé. Consultez la raison et modifiez-le dans les paramètres."
       rejection_reason: "Raison"
       profile_title: "Votre profil Matching"
+      profile_active_pill: "Actif"
       matches_count:
         one: "1 nouveau match"
         other: "%{count} nouveaux matchs"
@@ -37,6 +38,7 @@ fr:
         other: "Voir tout (%{count})"
       needs_intent_caption: "Déclarez votre intention pour apparaître dans les matchs."
       declare_intent_button: "Ajouter intention"
+      see_profile: "Voir le profil"
       kind_labels:
         rsvp_created: "RSVP confirmé"
         declaration_created: "Intention déclarée"

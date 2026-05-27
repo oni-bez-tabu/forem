@@ -144,14 +144,15 @@ module Matching
         next if recent.empty?
 
         latest = recent.max_by(&:created_at)
-        preview = recent.sort_by(&:created_at).reverse.first(JOINERS_PREVIEW).map(&:matching_profile)
+        sorted = recent.sort_by(&:created_at).reverse.first(JOINERS_PREVIEW)
         {
           type: :match_found,
           at: latest.created_at,
           meetup: latest.meetup,
           payload: {
             count: recent.length,
-            joiners: preview,
+            joiners: sorted.map(&:matching_profile),
+            declarations: sorted,
           },
         }
       end

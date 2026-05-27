@@ -21,6 +21,7 @@ pl:
       rejected_explanation: "Profil nie został zatwierdzony. Sprawdź powód w panelu i edytuj go w ustawieniach."
       rejection_reason: "Powód"
       profile_title: "Twój profil Matching"
+      profile_active_pill: "Aktywny"
       matches_count:
         one: "1 nowe dopasowanie"
         few: "%{count} nowe dopasowania"
@@ -41,6 +42,7 @@ pl:
         other: "Zobacz wszystkich (%{count})"
       needs_intent_caption: "Uzupełnij intencję, żeby pojawić się w dopasowaniach."
       declare_intent_button: "Dodaj intencję"
+      see_profile: "Zobacz profil"
       kind_labels:
         rsvp_created: "Zapisano się"
         declaration_created: "Zadeklarowano intencję"

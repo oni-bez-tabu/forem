@@ -24,10 +24,11 @@ RSpec.describe "GET /matching" do
     let!(:profile) { create(:matching_profile, :approved, user: user) }
     before { sign_in user }
 
-    it "renders the compact header and the manage-profile link" do
+    it "renders the header and the manage-profile link" do
       get matching_path
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include(I18n.t("matching.moderation.approved"))
+      expect(response.body).to include(I18n.t("matching.show.profile_title"))
+      expect(response.body).to include(I18n.t("matching.show.profile_active_pill"))
       expect(response.body).to include(I18n.t("matching.show.manage_profile"))
     end
 

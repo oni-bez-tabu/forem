@@ -21,6 +21,7 @@ pt:
       rejected_explanation: "O perfil não foi aprovado. Veja o motivo e edite nas configurações."
       rejection_reason: "Motivo"
       profile_title: "Seu perfil Matching"
+      profile_active_pill: "Ativo"
       matches_count:
         one: "1 novo match"
         other: "%{count} novos matches"
@@ -37,6 +38,7 @@ pt:
         other: "Ver todos (%{count})"
       needs_intent_caption: "Declare sua intenção para aparecer nas combinações."
       declare_intent_button: "Adicionar intenção"
+      see_profile: "Ver perfil"
       kind_labels:
         rsvp_created: "RSVP feito"
         declaration_created: "Intenção declarada"
