@@ -127,14 +127,66 @@
 
 ---
 
+## Etap 3 — Deklaracje + visibility + lista matchów inline + event-scoped profil
+
+- **Status:** ✅ done
+- **Commit:** `15c10ca5d`
+- **Data:** 2026-05-26
+
+### Zaimplementowane
+- Migracja `meetup_matching_declarations` (meetup_id FK, matching_profile_id FK, intent_level, looking_for jsonb array, meetup_note) z unique index (meetup_id, matching_profile_id) i index na (meetup_id, intent_level)
+- Model `MeetupMatchingDeclaration`: walidacje (intent inclusion, looking_for subset of identities, RSVP-required na tym samym meetupie), scopes `active_intents`/`for_meetup`, methods `intent_active?`/`not_looking?`/`effective_looking_for` (R3 just_vibe wildcard)
+- Relacje: `Meetup has_many :matching_declarations`, `MatchingProfile has_many :matching_declarations` (oba `dependent: :destroy`)
+- Worker `DeactivateProfileOnBanWorker` rozszerzony — po banie kasuje wszystkie deklaracje usera (Q6: "intencje i deklaracje znikają, welcomes zostają")
+- Service `Matching::PoolFinder(viewer_profile:, meetup:)` implementuje R1–R6:
+  - `viewer_visible?` — R4 lockout dla not_looking i braku aktywnego profilu/deklaracji
+  - `compatible_declarations` — bidirectional filter A.identity ∈ B.looking_for AND B.identity ∈ A.looking_for (R1), z R3 just_vibe wildcard
+  - `same_intent_group` / `other_intent_group` — R2/R5 grupowanie
+  - Wyklucza moderowane `pending`/`rejected` i nieaktywne profile
+- Controllers:
+  - `Matching::DeclarationsController` (new/create/edit/update/destroy) z gardami: zalogowany + aktywny profil + RSVP na meetupie
+  - `Matching::EventScopedProfilesController#show` z 48h lifecycle (404 po `end_at + 48h`, 404 dla not_looking, 404 dla nieaktywnego profilu)
+- Routes:
+  - `resource :declaration` zagnieżdżony pod `resources :meetups` (URL: `/meetups/:slug/declaration/new|edit`, POST/PATCH/DELETE `/meetups/:slug/declaration`)
+  - `get "/m/:meetup_slug/:profile_id"` z constraint `profile_id: /\d+/` (event-scoped profile)
+- Update `Meetups::RsvpsController#create` — Flow C.2: po zapisie RSVP, jeśli user ma aktywny profil ale brak deklaracji na tym meetupie → redirect na `new_meetup_declaration_path` z dedykowanym notice
+- Views:
+  - `matching/declarations/form` (3 sekcje: intent radio, looking_for checkboxes, meetup_note textarea) — single-page form zamiast modal popupa (POC simplification)
+  - `matching/event_scoped_profiles/show` (E15: hero, identity/city/intent pills, bio, meetup_note z kontekstu, placeholder dla welcome message — Etap 4)
+  - `meetups/_matching_section` w hub: 5 stanów (brak profilu / niewidoczny / brak RSVP / brak deklaracji + opcjonalnie blurred teaser / not_looking explanation / pełna lista matchów)
+  - `matching/_matches_list` (2 grupy ✦ pasują do intencji / inni którzy się zadeklarowali) + `_match_card` z thumbnail, intent label, identity pill, city pill, bio teaser, meetup_note teaser, klik → event-scoped profil
+  - `matching/_matches_blurred_teaser` (F': blurred placeholder dla Interested z profilem ale bez deklaracji)
+- Locale files `declarations.{pl,en,fr,pt}.yml` z kluczami `matching.section.*`, `matching.declarations.*`, `matching.matches.*`, `matching.event_scoped.*` plus `meetups.rsvp.prompt_for_declaration`
+- Specs: model `MeetupMatchingDeclaration` (10), service `PoolFinder` (8), request `Matching::Declarations` (7), request `EventScopedProfiles` (5), update worker spec (1 nowy) — łącznie **36/36 ✓** w Etapie 3; pełny suite Matching POC **147/147 ✓**
+
+### Uwagi / odstępstwa / długi techniczne
+- **E10 popup zaimplementowany jako oddzielna strona** (`/meetups/:slug/declaration/new`), nie modal w meetup hub. Powód: w POC redirect-after-action jest prostszy niż modal z Preact + form. Modal można dodać przy polishingu — flow logiczny (RSVP → declaration → hub) jest identyczny.
+- **Welcome message button w E15 jest zdisabled placeholder** (`title="Welcome coming soon"`). To Etap 4 — endpoint i Cloud Function jeszcze nie istnieją. Klik nic nie robi.
+- **Brak debounce dla deklaracji "live"** — każdy zapis to round-trip. To OK dla POC, ale dla UX warto rozważyć inline editing w Etapie 5/6.
+- **looking_for w formie to lista checkboxów wszystkich 4 identity types** — UI dla `just_vibe` powinien wg SPEC.md wyszarzać (grayed out) checkboxy bo expand-to-all. POC: zostawiam aktywne, model i tak treatuje pusty + just_vibe = wildcard. Polish UX dług.
+- **Brak warunkowego ukrywania pól per intent** — SPEC.md §5 Flow E mówi że `meetup_note` ukrywa się dla `not_looking`. POC: pole zawsze widoczne, ale model zachowuje wartość niezależnie. Polish UX dług.
+- **`pool_finder` nie ma sortowania per relevance** — kolejność zależy od kolejności `MeetupMatchingDeclaration.order(:id)` (domyślna). Sorting per "recently active" / "compatibility score" — backlog.
+- **Constraint na route `profile_id: /\d+/`** — wymusza integer FK. To OK bo MatchingProfile używa Rails default integer id. Jeśli kiedyś migrujemy na UUID, ta linia musi pójść w odstawkę.
+- **R7/R8 (welcome lockout, pary) nie zaimplementowane** — R7 to Etap 4 (welcome), R8 (couple jako jedno konto) na razie obsługiwane jako standardowy identity_type bez specjalnej logiki.
+
+### Acceptance check (SPEC.md §11)
+- ✅ P2 klika RSVP → popup intencji → zapis → lista (Flow C.2 + `Meetups::RsvpsController#needs_declaration_prompt?` + `matching/declarations#new`)
+- ✅ P3 widzi grupy (`PoolFinder#same_intent_group` + `other_intent_group` rendered w `_matches_list`)
+- ✅ Profil matcha pokazuje meetup_note z konkretnego meetupu (`event_scoped_profiles#show` ładuje declaration na pair (meetup, profile))
+- ✅ 404 po 48h od `end_at` (`EVENT_SCOPED_LIFETIME` check)
+- ✅ Worker after-ban kasuje deklaracje (Q6)
+
+---
+
 ## Następny etap
 
-**Etap 3 — Deklaracje + visibility + lista matchów inline + event-scoped profil** (SPEC.md §11)
+**Etap 4 — Welcome + Boost + Widget meetupu** (SPEC.md §11)
 
 Zakres:
-- Migracja `meetup_matching_declarations` (meetup_id, matching_profile_id, intent_level enum, looking_for jsonb, meetup_note)
-- API CRUD deklaracji + endpoint listy matchów z regułami R1–R8 (visibility, grupowanie, just_vibe asymetria, not_looking lockout)
-- Endpoint `GET /m/:meetup_slug/:profile_id` — event-scoped profil z lifecycle 48h (SPEC.md §R-Lifecycle.2), 404 po expiry
-- Frontend: E10 popup deklaracji (3 sekcje: intent, looking_for, meetup_note), E3/E4 inline lista matchów (2 grupy ✦ ta sama intencja / inni), E15 event-scoped profil, F' partial blurred dla Interested-without-declaration
-- Popup-based RSVP flow z deklaracją dla obu statusów (going + interested)
-- Acceptance: P2 klika RSVP → popup intencji → zapis → lista; P3 widzi grupy; profil matcha pokazuje meetup_note z konkretnego meetupu
+- Migracja `matching_welcomes` (sender_profile_id, receiver_profile_id, meetup_id, sent_at) z unique constraint na (sender, receiver) — "raz na osobę nigdy więcej"
+- API `POST /matching/welcomes` z walidacją R1 + R7 (48h lockout post-meetup)
+- Frontend E18 modal: compose → sending (loader) → success
+- Welcome integration interface (stub w POC — Firebase Cloud Function dorobi się w Etapie 6)
+- Widget meetupu jako Forem LiquidTag (`{% meetup {slug} %}`) — szablon w 3 stanach (active, upcoming, expired po 24h)
+- Boost popup: tworzy Article z osadzonym `{% meetup %}` tagiem, pole tekstowe bez prefill
+- Acceptance: user wysyła welcome z linkiem do event-scoped profilu, druga strona widzi w chacie, link działa do 48h, po → 404; user boost'uje RSVP z osadzonym widgetem
