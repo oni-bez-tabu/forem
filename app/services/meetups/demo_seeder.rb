@@ -138,5 +138,153 @@ module Meetups
       else nil
       end
     end
+
+    public
+
+    # ------------------------------------------------------------------
+    # Per-user timeline seeder: gives a real (logged-in) user enough
+    # activity so the E8 timeline has visible content. Idempotent —
+    # finds_or_creates everything keyed by username.
+    # ------------------------------------------------------------------
+    TimelineResult = Struct.new(
+      :rsvps_created, :declarations_created,
+      :welcomes_sent, :welcomes_received, :match_notifications,
+      keyword_init: true,
+    )
+
+    def self.seed_timeline_for(username)
+      new.seed_timeline_for(username)
+    end
+
+    def seed_timeline_for(username)
+      user = User.find_by(username: username) || raise("User '#{username}' not found")
+      profile = MatchingProfile.find_by(user_id: user.id)
+      raise "User '#{username}' has no MatchingProfile yet — create one via /matching/onboarding first" unless profile
+      raise "User '#{username}' profile is not approved+active (state=#{profile.moderation_state}, active=#{profile.is_active?})" unless profile.visible_to_others?
+
+      meetups = [
+        Meetup.find_by(slug: "czerwony-wieczor-2026-06-14"),
+        Meetup.find_by(slug: "noc-tabu-2026-06-20"),
+      ].compact
+      raise "No demo meetups found — run matching:seed_demo_data first" if meetups.empty?
+
+      counters = { rsvps: 0, declarations: 0, welcomes_sent: 0, welcomes_received: 0, match_notifications: 0 }
+
+      meetups.each_with_index do |meetup, idx|
+        rsvp = MeetupRsvp.find_or_initialize_by(meetup: meetup, user: user)
+        if rsvp.new_record?
+          rsvp.status = idx.zero? ? "going" : "interested"
+          rsvp.save!
+          counters[:rsvps] += 1
+        end
+
+        dec = MeetupMatchingDeclaration.find_or_initialize_by(meetup: meetup, matching_profile: profile)
+        if dec.new_record?
+          dec.intent_level = idx.zero? ? "open_to_meet" : "just_vibe"
+          dec.meetup_note = note_for(dec.intent_level, meetup)
+          dec.save!
+          counters[:declarations] += 1
+        end
+      end
+
+      # Welcomes sent by the user → 2 demo profiles (different meetups)
+      czerwony = meetups.find { |m| m.slug == "czerwony-wieczor-2026-06-14" }
+      noc      = meetups.find { |m| m.slug == "noc-tabu-2026-06-20" }
+      receivers = candidate_receivers(profile, czerwony || noc, count: 2)
+      receivers.each_with_index do |rec, i|
+        meetup_for_welcome = (czerwony && i.even?) ? czerwony : (noc || czerwony)
+        next unless meetup_for_welcome
+
+        if MatchingWelcome.exists_between?(profile, rec)
+          # already there from a prior seed run — skip
+          next
+        end
+
+        MatchingWelcome.create!(
+          sender_profile: profile,
+          receiver_profile: rec,
+          meetup: meetup_for_welcome,
+          sent_at: (i + 1).hours.ago,
+        )
+        counters[:welcomes_sent] += 1
+      end
+
+      # Welcomes received from 2 other demo profiles
+      senders = candidate_senders(profile, czerwony || noc, count: 2)
+      senders.each_with_index do |sender, i|
+        meetup_for_welcome = (czerwony && i.even?) ? czerwony : (noc || czerwony)
+        next unless meetup_for_welcome
+        next if MatchingWelcome.exists_between?(sender, profile)
+
+        MatchingWelcome.create!(
+          sender_profile: sender,
+          receiver_profile: profile,
+          meetup: meetup_for_welcome,
+          sent_at: (i + 3).hours.ago,
+        )
+        counters[:welcomes_received] += 1
+      end
+
+      # Match-found notifications — one per meetup (Forem's Notification model
+      # enforces unique (user_id, notifiable_id, notifiable_type, action), so
+      # multiple joiners on the same meetup collapse to a single record per
+      # SPEC §7.1's aggregation intent).
+      meetups.each_with_index do |meetup, idx|
+        joiner = candidate_receivers(profile, meetup, count: 1).first
+        next unless joiner
+
+        already = Notification.exists?(
+          user_id: user.id,
+          notifiable_id: meetup.id,
+          notifiable_type: "Meetup",
+          action: "matching_pool_member",
+        )
+        next if already
+
+        Notification.create!(
+          user_id: user.id,
+          notifiable_id: meetup.id,
+          notifiable_type: "Meetup",
+          action: "matching_pool_member",
+          json_data: {
+            meetup: { id: meetup.id, slug: meetup.slug, name: meetup.name },
+            new_profile: { id: joiner.id, username: joiner.user.username },
+          },
+          notified_at: (idx + 1).hours.ago + 30.minutes,
+        )
+        counters[:match_notifications] += 1
+      end
+
+      TimelineResult.new(
+        rsvps_created: counters[:rsvps],
+        declarations_created: counters[:declarations],
+        welcomes_sent: counters[:welcomes_sent],
+        welcomes_received: counters[:welcomes_received],
+        match_notifications: counters[:match_notifications],
+      )
+    end
+
+    def candidate_receivers(viewer_profile, meetup, count:)
+      MatchingProfile
+        .visible_to_others
+        .where.not(id: viewer_profile.id)
+        .joins(:matching_declarations)
+        .where(meetup_matching_declarations: { meetup_id: meetup.id })
+        .where.not(meetup_matching_declarations: { intent_level: "not_looking" })
+        .limit(count)
+        .to_a
+    end
+
+    def candidate_senders(viewer_profile, meetup, count:)
+      MatchingProfile
+        .visible_to_others
+        .where.not(id: viewer_profile.id)
+        .joins(:matching_declarations)
+        .where(meetup_matching_declarations: { meetup_id: meetup.id })
+        .where.not(meetup_matching_declarations: { intent_level: "not_looking" })
+        .order(id: :desc)
+        .limit(count)
+        .to_a
+    end
   end
 end

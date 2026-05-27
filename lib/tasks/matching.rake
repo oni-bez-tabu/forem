@@ -10,4 +10,20 @@ namespace :matching do
     puts "  rsvps created    : #{result.rsvps_created}"
     puts "  declarations     : #{result.declarations_created}"
   end
+
+  desc "Seed timeline activity (RSVPs/declarations/welcomes/match notifications) for USER=<username>. Idempotent."
+  task seed_timeline_for_user: :environment do
+    abort "Refusing to run in production." if Rails.env.production?
+
+    username = ENV["USER"] || ENV["USERNAME"]
+    abort "Usage: dip rails matching:seed_timeline_for_user USER=<username>" if username.blank?
+
+    result = Meetups::DemoSeeder.seed_timeline_for(username)
+    puts "Timeline seed for '#{username}' finished:"
+    puts "  rsvps created       : #{result.rsvps_created}"
+    puts "  declarations created: #{result.declarations_created}"
+    puts "  welcomes sent       : #{result.welcomes_sent}"
+    puts "  welcomes received   : #{result.welcomes_received}"
+    puts "  match notifications : #{result.match_notifications}"
+  end
 end
