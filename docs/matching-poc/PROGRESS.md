@@ -394,14 +394,117 @@ Pełny Matching POC suite: **234/234 ✓** (74 Etap 0–1, +37 Etap 2, +36 Etap 
 
 ---
 
+## Etap 6 fala 2 — UI polish 1:1 z mockupem dla każdego ekranu
+
+- **Status:** ✅ done (UI alignment dla wszystkich ekranów z mockupu poza E6 form + E7 success)
+- **Commits:** `2be9f07e3` → `89f88c5a9` (16 commits)
+- **Data:** 2026-05-27
+
+### Zaimplementowane
+
+**E1 lista wydarzeń (`/wydarzenia`):**
+- Day header 1:1: duży `day.day` po lewej (40px bold), weekday + month UPPERCASE caps, horizontal rule, "X wydarzenia" count
+- EventCard 3-col grid (88px time / 1fr title+venue+counts / 156px banner 16:9). Time column z border-right. "X z nietabu idzie · Y zainteresowanych", magenta "Bądź pierwszą osobą z nietabu" przy mini-pool
+- ✨ Match-pool flag w EventCard (`X szuka kogoś`, brand color)
+- RSVP overlay flag na bannerze top-left ("✓ Idziesz" zielony, "★ Interesuje cię" white blur)
+- Matching banner u góry: P1 → "Załóż profil Matching" CTA, P2/P3 → "Twój profil Matching jest aktywny" link. Hidden po pierwszej stronie
+- Submit-event banner mid-list (po drugim dniu) z mailto do `Settings::Community.email_address`
+- "Pokaż kolejne wydarzenia" pagination button (PAGE_SIZE=20, offset-based)
+- Controller pre-computuje counts maps: `@rsvp_status_by_meetup`, `@match_pool_by_meetup` (oba single query per page)
+
+**E2 meetup hub (`/wydarzenia/<slug>`):**
+- Hero 380px refactor: title 40px/800 weight, eyebrow "📅 SOBOTA · ZA 12 DNI" (relative date helper)
+- Data format `%A, %-d %B %Y` ("sobota, 14 czerwca 2026") zamiast wcześniejszego dziwnego `:long`
+- Meta row: avatar organizatora 44px round (fallback z initials) + "ORGANIZATOR" caps label + nazwa, button "Zobacz pełen opis na nietabu →" po prawej (`justify-content: space-between`)
+- RSVP section "Wybierz swój udział" h2 + caption "Liczby dotyczą tylko deklaracji z platformy" po prawej, large buttons, counts row `28 z nietabu idzie · 17 zainteresowanych` z bold tokenami, sub-caption "Na evencie mogą być też osoby z innych kanałów."
+- Going confirmation card (zielony tint z ✓ icon) gdy `rsvp=going`
+- Divider'y między sekcjami (border-top zamiast crayons-card wrappers)
+- Matching section 1:1 z mockupem (P1/P2/P3 stany): P1 gradient card z `X osób z nietabu szuka kogoś poznać` + body + duży CTA, P2 prompt + button (disabled-look + lock hint jeśli brak `going`), P3 active declaration card z label/intent/note + matches list inline
+- `@match_pool_count` w controllerze (active declarations count dla P1 gradient card)
+- h2 sekcji matching ma sparkle ✨ + "✏ Zmień deklarację" ghost button po prawej dla P3
+
+**E3 match cards (w meetup hub):**
+- `_match_card` przepisany na **vertical layout 1:1 z mockup** MatchCard (`components.jsx:342-365`): foto 1:1 z overlay'ami (identity pill top-left white blur, intent emoji circle top-right), body pod spodem z `identity · 📍 city` bold + intent line (opcjonalnie) + bio 2-line clamp + italic meetup_note 2-line clamp
+- `_matches_list` regroupowany per `intent_level` (`open_to_meet` → "💬 Otwarci na poznanie", `just_vibe` → "🌙 Tylko klimat"). Każda grupa: overline + count + grid 3 cols (`auto-fill minmax(180px, 1fr)`)
+- Header "X osób z nietabu pasuje do twojego filtra" (zamiast wcześniejszego "your_intent")
+- `MatchingHelper#intent_emoji(level)` mapping: open_to_meet→💬, just_vibe→🌙, not_looking→🌑
+
+**E15 event-scoped profile (`/m/<slug>/<id>`):**
+- 2-col grid `minmax(280px, 360px) 1fr` z `gap: 32px`
+- Left: photo 4:5 (`aspect-ratio: 4/5; border-radius: 12px`) z identity pill top-left + intent emoji circle top-right (white blur)
+- Right column: back link "Wróć do dopasowań" + "DOPASOWANIE Z WYDARZENIA" overline + meetup name h2 brand color (klikalne) + meta date+venue+city + pill row (brand intent + outline city) + "O sobie" card + "Notatka na tym wydarzeniu" magenta-tinted card (conditional) + Welcome gradient card "Chcesz coś napisać?" + "✉ Napisz" button (handles eligible/already-sent/not-eligible)
+
+**E8 dashboard (/matching) — dodatkowy polish:**
+- Usunięte: header "✨ Twój Matching" + subtitle, timeline subheading caption, matches-count pill ("3 nowych dopasowań" w header)
+- Profile header: foto 120×150 (było 96×120), h1 24px, status pill "Aktywny" brand color (zamiast moderation badge), italic bio, privacy hint
+- Match_found z `count == 1` renderuje "single match" layout (portret 80×100 + pills row + meetup_note italic quote + "Zobacz profil →" button) zamiast grid
+- Match_found z `count > 1` używa grid `auto-fill 160px` (cap 160px na tile — wcześniej blew up gdy joiners.length=1)
+- Match_found payload rozszerzony o `:declarations` (poza `:joiners`) — pozwala single-layout pokazać `intent_level` + `meetup_note` z deklaracji joiner'a
+- `needs_intent` event ma teraz pill po prawej obok meetup name (✓ Idę / ✓ Interesuje mnie z payload[:status])
+- Wszystkie pille przez `MatchingHelper#pill_style(variant)` helper (solid/brand/brand_soft/magenta/success/warning/danger/outline) — bo `crayons-indicator` class w tym Forem buildzie nie ma `border-radius`
+
+**Pile helper + flex between fix:**
+- `MatchingHelper#pill_style(:variant)` zwraca inline style string z border-radius 100px + padding + background per variant
+- 10 wystąpień `class="flex between..."` zamienione przez sed na `class="flex..." style="justify-content: space-between;"` — Crayons w tym Forem nie ma `between` class (Tailwind-style), więc h2+button rows były left-aligned z elementami stykającymi się zamiast space-between
+
+**E5 onboarding intro (`/matching/onboarding`):**
+- Nowa akcja `Matching::ProfilesController#intro` (`/matching/onboarding`)
+- Formularz przeniesiony na `/matching/onboarding/form` (`#new` action, route helper `matching_onboarding_form_path`)
+- View: gradient circle 96px z ✨ ikoną, h1 36px "Poznaj kogoś na wydarzeniu", tagline, 3 benefit cards (🔒 Pełna prywatność / 📅 Per wydarzenie / 💬 Bez nacisku) z icon w brand-soft background, privacy info-box (rozszerzona informacja o widoczności), CTAs: "Załóż profil Matching" → form + "Może później" → /wydarzenia
+- `redirect_if_profile_exists` chroni intro (user z profilem → /matching dashboard)
+
+**i18n (4 locales, ~70 nowych kluczy w sumie przez całą falę 2):**
+- `matching.show.{profile_title, profile_active_pill, privacy_hint}` (header polish)
+- `matching.timeline.{see_profile, kind_labels.*, events.rsvp_*_pill, match_found_caption, needs_intent_caption, declare_intent_button}` (timeline polish)
+- `matching.matches.{pool_count, pool_count_tail, intent_groups.{open_to_meet, just_vibe}}` (matches list)
+- `matching.event_scoped.{back, overline, about_section_label, write_card_title, write_card_body, write_button}` (E15)
+- `matching.section.{p1.headline_html, p1.pool_count, p1.body, p1.cta, p2.*, p3.*}` (meetup hub matching section)
+- `matching.onboarding.intro.{title, headline, tagline, benefits.{privacy, per_event, no_pressure}, privacy_html, cta_primary, cta_skip}` (E5 intro)
+- `meetups.show.{back_to_list, counts_caveat, going_short, interested_short, going_verb, going_from_nietabu [pluralized], other_channels_hint, going_confirmation, going_confirmation_tail, relative.*}` (hero + RSVP section)
+- `meetups.{day_count [pluralized], until, be_first_pill, match_pool [pluralized], load_more, rsvp_flag.{going, interested}, banner.{cta_*, active_*}, submit_event.*}` (E1 list)
+
+### Uwagi / odstępstwa / długi techniczne
+
+- **Brakuje E6 form polish + E7 success screen** — intro już wprowadzony (mockup E5), ale formularz nadal jest jednoekranowy bez "Krok 2 z 3" overline ani photo upload widget, a po `POST /matching/profile` redirect leci na `/matching` (zamiast dedicated E7 sukces "Profil wysłany do akceptacji"). To naturalna kontynuacja Etapu 6 fali 3.
+- **Pille przez inline `pill_style` helper** — działa niezawodnie, ale jest workaround na brak Crayons indicator stylów w tym Forem. Idealnie: dodać CSS rules do `app/assets/stylesheets` matching tokens. Łatwo zmienić później bo helper centralnie zwraca string.
+- **`flex between` → inline style** — to samo: workaround na brak Tailwind-style `between` w Forem Crayons. 10 miejsc; przy refaktorze CSS można usunąć `style="justify-content: space-between"` jak Crayons dorośnie do utility classes.
+- **`config/routes.rb` wymaga restartu Rails dev server** — dodanie route na `intro` + `matching_onboarding_form_path` nie zostało zaciągnięte przez autoreload. Standardowa Rails konwencja, nie nasz bug. Restart wykonany w sesji.
+- **Match cards grid `auto-fill 160px` (max-width 160px)** — gdy joinerów >= 4, mogą się nie zmieścić w 3 kolumnach na węższych desktopach. Action item: dorzucić "Zobacz wszystkich" footer link gdy joinerów > 3 (już jest dla `count > preview`).
+- **Date format `%A, %-d %B %Y`** wymaga lokalizacji dla `%A` (dni tygodnia) i `%B` (miesiące) w yaml — działa po polsku ("sobota, 14 czerwca 2026"), po angielsku ("Saturday, 14 June 2026"). Sprawdzone w 4 locales.
+- **Hero gradient overlay (rgba 0→0.55 black)** — przy jasnych zdjęciach (śnieg/niebo) text staje się trudny do przeczytania. Polish dług: backdrop-filter blur lub dynamiczny overlay.
+- **`@new_matches_count` w MatchingController zostało usunięte** — pill "X nowych dopasowań" w profile header wyłączony per user request ("gdzie indziej zrobimy"). i18n key `matching.show.matches_count` zostawiony w yaml jako gotowy do reuse.
+- **Boost flow + Welcome modal + Share popup wciąż na inline JS w ERB** — Preact packi to dalej dług polish.
+- **Wszystkie ekrany czerpią styling z inline styles** zamiast Crayons tokenów. Powód: szybsze iterowanie podczas POC, no breakage w Forem CSS pipeline. Polish dług na produkcję.
+
+### Acceptance check vs mockup
+
+- ✅ E1 lista wydarzeń (DayHeader + EventCard 3-col + banners + RSVP overlay + match-pool flag + pagination)
+- ✅ E2 meetup hub (hero 380px + meta + RSVP + matching P1/P2/P3 + share)
+- ✅ E3 match cards (vertical tile + photo overlays + per-intent grouping)
+- ✅ E5 onboarding intro (gradient hero + 3 benefits + privacy + CTAs)
+- ✅ E8 timeline dashboard (header + dot timeline + match_found single/aggregated + recommendations + needs_intent)
+- ✅ E15 event-scoped profile (2-col + photo 4:5 + about card + note card + write CTA)
+- ⚠️ E6 form (TODO fala 3 — overline "Krok 2 z 3", photo upload widget, większy h1)
+- ⚠️ E7 success (TODO fala 3 — dedicated screen po `POST /matching/profile`)
+
+---
+
 ## Następny etap
 
-**Etap 6 fala 2 + backlog** (niewymagane do POC acceptance, ale do podjęcia gdy będzie czas):
+**Etap 6 fala 3 — onboarding flow polish + ostatnie funkcjonalne braki**
 
-- Matching_section w meetup hub: polish 1:1 z mockupem (h2 + sparkle icon, P1 gradient card, "Zmień deklarację" button dla P3)
-- Polish UX długów z poprzednich etapów: real Crayons tokens dla widget styles, hifi gradient palette dla banner_gradient, sparkles SVG zamiast fire.svg jako matching tab icon, multi-step onboarding E5→E6→E7
-- Frontend polishing: Preact pack dla 3 popupów (boost / E18 welcome / share) zamiast inline JS w ERB
+Funkcjonalne (nadal w SPEC.md scope):
+- **E6 form polish** — overline "Krok 2 z 3", photo upload widget z preview, h1 "Twój profil Matching" + 17px body, większy submit button
+- **E7 success screen** — po `POST /matching/profile` redirect na dedicated screen z "Profil wysłany do akceptacji" + duża ikona ✓ + duration estimate + button "Zobacz Matching panel"
+- **MeetupRecommendations weights** — "similar vibe" (identity-aware jeśli przywrócimy `looking_for`), repeat-organizer bonus, frequency capping ("nie polecaj tego samego meetupu dwa razy w tym samym tygodniu")
+
+Polish/techdebt (poza SPEC scope):
+- Frontend: Preact pack dla 3 popupów (boost / E18 welcome / share) zamiast inline JS w ERB
+- Crayons tokens replace inline styles (widget meetupu, timeline, recommendation card)
+- Hifi gradient palette dla `MeetupsHelper::BANNER_GRADIENTS` (obecnie placeholder)
+- Sparkles SVG zamiast fire.svg jako matching tab icon
 - Performance: indeksy + EXPLAIN dla `TimelineFeed` SQL przy realistic data volume
-- `MeetupRecommendations` weights: "similar vibe" (identity-aware jeśli przywrócimy `looking_for`), repeat-organizer bonus, frequency capping
 - Native i18n review (FR/PT) — wszystkie POC tłumaczenia "machinalne"
-- Cloud Function dla welcome message → chat Firebase (Etap 4 dług, wymaga external sprintu)
+
+External sprint (poza Forem repo):
+- **Cloud Function dla welcome message → chat Firebase** (Etap 4 dług) — Rails service `Matching::DeliverWelcomeViaCloudFunction` POST'uje do `ENV["MATCHING_WELCOME_CLOUD_FUNCTION_URL"]` ale CF nie deployowane. Bez CF: welcome rekord powstaje + UI pokazuje "wysłano", ale wiadomość do Firestore nie trafia.

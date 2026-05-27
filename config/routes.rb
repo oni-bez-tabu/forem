@@ -311,7 +311,8 @@ Rails.application.routes.draw do
         constraints: { profile_id: /\d+/ }
 
     get "/matching", to: "matching#show", as: :matching
-    get "/matching/onboarding", to: "matching/profiles#new", as: :matching_onboarding
+    get "/matching/onboarding", to: "matching/profiles#intro", as: :matching_onboarding
+    get "/matching/onboarding/form", to: "matching/profiles#new", as: :matching_onboarding_form
     get "/matching/profile/edit", to: "matching/profiles#edit", as: :edit_matching_profile
     post "/matching/profile", to: "matching/profiles#create", as: :matching_profile
     patch "/matching/profile", to: "matching/profiles#update"
