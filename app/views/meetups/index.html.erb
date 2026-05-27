@@ -2,8 +2,8 @@
 
 <div class="crayons-layout crayons-layout--limited-width">
   <header class="mb-6">
-    <h1 class="crayons-title"><%= t("meetups.title") %></h1>
-    <p class="crayons-subtitle"><%= t("meetups.subtitle") %></p>
+    <h1 class="crayons-title" style="font-size: 36px; margin-bottom: 8px;"><%= t("meetups.title") %></h1>
+    <p class="fs-base color-base-70" style="max-width: 580px;"><%= t("meetups.subtitle") %></p>
   </header>
 
   <% if @meetups.empty? %>
@@ -13,23 +13,71 @@
   <% else %>
     <% @meetups.group_by { |m| m.start_at.to_date }.each do |day, day_meetups| %>
       <section class="mb-6">
-        <h2 class="crayons-subtitle mb-3"><%= I18n.l(day, format: :long) %></h2>
-        <ul class="flex flex-col gap-4">
+        <%# Day header: large day number, weekday + month, rule, count %>
+        <div class="flex items-baseline gap-4 mb-3" style="padding-bottom: 8px;">
+          <div style="font-size: 40px; font-weight: 800; line-height: 1; color: var(--base-90, #171717); min-width: 56px;">
+            <%= day.day %>
+          </div>
+          <div class="flex flex-col" style="line-height: 1.1;">
+            <span class="fs-s" style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+              <%= I18n.l(day, format: "%A") %>
+            </span>
+            <span class="fs-xs color-base-60" style="text-transform: uppercase; letter-spacing: 0.05em;">
+              <%= I18n.l(day, format: "%B").downcase %>
+            </span>
+          </div>
+          <div style="flex: 1 1 auto; border-bottom: 1px solid var(--card-border, #e5e5e5); margin-bottom: 6px;"></div>
+          <div class="fs-xs color-base-60" style="text-transform: uppercase; letter-spacing: 0.05em;">
+            <%= t("meetups.day_count", count: day_meetups.length) %>
+          </div>
+        </div>
+
+        <ul class="flex flex-col gap-2" style="list-style: none; padding: 0; margin: 0;">
           <% day_meetups.each do |meetup| %>
             <li>
-              <%= link_to meetup_path(meetup), class: "crayons-card crayons-card--secondary p-0 overflow-hidden block hover:shadow-md transition" do %>
-                <div class="flex flex-col md:flex-row">
-                  <div class="md:w-48 h-32 md:h-auto" style="<%= meetup_banner_style(meetup) %> background-size: cover; background-position: center;"></div>
-                  <div class="flex-1 p-4">
-                    <h3 class="crayons-title fs-l mb-1"><%= meetup.name %></h3>
-                    <p class="text-sm fs-s color-base-70">
-                      <%= I18n.l(meetup.start_at, format: :short) %> · <%= meetup.venue_name %>, <%= meetup.venue_city.name %>
-                    </p>
-                    <p class="text-sm fs-s color-base-60 mt-2">
-                      <%= t("meetups.going_count", count: meetup.going_count) %> ·
-                      <%= t("meetups.interested_count", count: meetup.interested_count) %>
-                    </p>
+              <%= link_to meetup_path(meetup), class: "crayons-card block hover:shadow-md transition", style: "display: grid; grid-template-columns: 88px 1fr 156px; gap: 20px; padding: 16px; align-items: stretch; text-decoration: none; color: inherit;" do %>
+                <%# Time column with right border %>
+                <div style="display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--card-border, #e5e5e5); padding-right: 16px;">
+                  <div style="font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1;">
+                    <%= I18n.l(meetup.start_at, format: "%H:%M") %>
                   </div>
+                  <div class="fs-xs color-base-60" style="margin-top: 4px;">
+                    <%= t("meetups.until") %> <%= I18n.l(meetup.end_at, format: "%H:%M") %>
+                  </div>
+                </div>
+
+                <%# Center: title + venue + counts %>
+                <div style="display: flex; flex-direction: column; justify-content: center; gap: 4px; min-width: 0;">
+                  <h3 class="fs-l" style="margin: 0; font-weight: 700; letter-spacing: -0.01em; overflow: hidden; text-overflow: ellipsis;">
+                    <%= meetup.name %>
+                  </h3>
+                  <div class="fs-s color-base-70">
+                    <%= meetup.venue_name %> · <span class="color-base-60"><%= meetup.venue_city.name %></span>
+                  </div>
+                  <div class="fs-s color-base-60 flex gap-2 flex-wrap items-center">
+                    <% total = meetup.going_count + meetup.interested_count %>
+                    <% if total <= 2 %>
+                      <em style="color: rgb(169,31,105); font-weight: 700; font-style: normal;">
+                        <%= t("meetups.be_first_pill") %>
+                      </em>
+                    <% else %>
+                      <span>
+                        <strong style="color: var(--base-90, #171717);"><%= meetup.going_count %></strong> <%= t("meetups.show.going_short") %>
+                        <span class="color-base-40" style="margin: 0 4px;">·</span>
+                        <strong style="color: var(--base-90, #171717);"><%= meetup.interested_count %></strong> <%= t("meetups.show.interested_short") %>
+                      </span>
+                    <% end %>
+                  </div>
+                </div>
+
+                <%# Right: 16:9 banner thumbnail %>
+                <div style="position: relative; border-radius: 6px; overflow: hidden;">
+                  <% if meetup.banner.present? %>
+                    <img src="<%= meetup.banner.url %>" alt="" style="display: block; width: 100%; height: 90px; object-fit: cover;">
+                  <% else %>
+                    <% gradient = MeetupsHelper::BANNER_GRADIENTS[meetup.banner_gradient] || MeetupsHelper::BANNER_GRADIENTS.fetch("dusk") %>
+                    <div style="width: 100%; height: 90px; background: <%= gradient %>;"></div>
+                  <% end %>
                 </div>
               <% end %>
             </li>

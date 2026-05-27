@@ -1,11 +1,18 @@
 pl:
   meetups:
     title: "Wydarzenia"
-    subtitle: "Spotkania, imprezy i sceny otwarte dla społeczności."
+    subtitle: "Sprawdź co się dzieje w polskiej scenie i zadeklaruj swoje zainteresowanie."
     empty_state: "Na razie nic w kalendarzu. Wróć niedługo."
     unknown_organizer: "—"
     going_count: "Idących: %{count}"
     interested_count: "Zainteresowanych: %{count}"
+    until: "do"
+    day_count:
+      one: "1 wydarzenie"
+      few: "%{count} wydarzenia"
+      many: "%{count} wydarzeń"
+      other: "%{count} wydarzeń"
+    be_first_pill: "Bądź pierwszą osobą z nietabu"
     show:
       organizer: "Organizator"
       venue: "Miejsce"

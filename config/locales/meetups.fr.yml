@@ -6,6 +6,11 @@ fr:
     unknown_organizer: "—"
     going_count: "Participants : %{count}"
     interested_count: "Intéressé·e·s : %{count}"
+    until: "jusqu'à"
+    day_count:
+      one: "1 événement"
+      other: "%{count} événements"
+    be_first_pill: "Soyez le premier de nietabu"
     show:
       organizer: "Organisateur"
       venue: "Lieu"
