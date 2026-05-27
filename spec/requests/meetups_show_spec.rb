@@ -36,20 +36,22 @@ RSpec.describe "GET /meetups/:slug" do
 
       it "renders the modal markup when ?declare=1 is set" do
         get meetup_path(meetup, declare: 1)
-        expect(response.body).to include("declaration-modal-backdrop")
+        expect(response.body).to include(%(id="declaration-modal-backdrop"))
         expect(response.body).to include(I18n.t("matching.declarations.modal.title"))
       end
 
       it "does not render the modal without the query param" do
         get meetup_path(meetup)
-        expect(response.body).not_to include("declaration-modal-backdrop")
+        expect(response.body).not_to include(%(id="declaration-modal-backdrop"))
+        expect(response.body).not_to include(I18n.t("matching.declarations.modal.title"))
       end
     end
 
     context "without a visible profile" do
       it "does not render the modal even when ?declare=1 is set" do
         get meetup_path(meetup, declare: 1)
-        expect(response.body).not_to include("declaration-modal-backdrop")
+        expect(response.body).not_to include(%(id="declaration-modal-backdrop"))
+        expect(response.body).not_to include(I18n.t("matching.declarations.modal.title"))
       end
     end
   end

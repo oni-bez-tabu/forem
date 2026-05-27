@@ -8,6 +8,7 @@
 
 <div id="declaration-modal-backdrop"
      class="js-declaration-modal-backdrop"
+     data-meetup-slug="<%= meetup.slug %>"
      style="position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: <%= modal_open ? 'flex' : 'none' %>; align-items: center; justify-content: center; z-index: 1000; padding: 24px;">
   <div class="js-declaration-modal-card"
        style="background: var(--card-bg, #fff); border-radius: 16px; max-width: 560px; width: 100%; max-height: calc(100vh - 48px); overflow-y: auto; box-shadow: 0 24px 48px rgba(0,0,0,0.25);">
@@ -111,78 +112,6 @@
   </div>
 </div>
 
-<script>
-  (function() {
-    var backdrop = document.getElementById("declaration-modal-backdrop");
-    if (!backdrop) return;
-
-    // Drop ?declare=1 from URL when closing (so refresh doesn't reopen).
-    function clearQuery() {
-      try {
-        var url = new URL(window.location.href);
-        url.searchParams.delete("declare");
-        window.history.replaceState({}, "", url.pathname + (url.searchParams.toString() ? "?" + url.searchParams : "") + url.hash);
-      } catch (_e) { /* no-op */ }
-    }
-
-    // Escape closes the modal.
-    function onKeydown(e) {
-      if (e.key === "Escape" && backdrop.style.display !== "none") {
-        e.preventDefault();
-        closeModal();
-      }
-    }
-
-    function closeModal() {
-      backdrop.style.display = "none";
-      clearQuery();
-      document.removeEventListener("keydown", onKeydown);
-    }
-
-    // Click on backdrop (but not card) closes the modal.
-    backdrop.addEventListener("mousedown", function(e) {
-      if (e.target === backdrop) closeModal();
-    });
-
-    if (backdrop.style.display !== "none") {
-      document.addEventListener("keydown", onKeydown);
-    }
-
-    // Intent cards: selected state mirrors the hidden radio.
-    var cards = backdrop.querySelectorAll(".js-intent-card");
-    cards.forEach(function(card) {
-      var radio = card.querySelector(".js-intent-radio");
-      function repaint() {
-        var selected = radio.checked;
-        card.style.borderColor = selected ? "var(--accent-brand, #6366f1)" : "var(--card-border, #e5e5e5)";
-        card.style.background = selected ? "rgba(99,102,241,0.06)" : "transparent";
-      }
-      radio.addEventListener("change", function() {
-        cards.forEach(function(c) {
-          var r = c.querySelector(".js-intent-radio");
-          c.style.borderColor = r.checked ? "var(--accent-brand, #6366f1)" : "var(--card-border, #e5e5e5)";
-          c.style.background = r.checked ? "rgba(99,102,241,0.06)" : "transparent";
-        });
-      });
-      // Make whole card clickable (label already does this for the radio, but
-      // we also need to re-paint siblings).
-      card.addEventListener("click", function() {
-        if (!radio.checked) {
-          radio.checked = true;
-          radio.dispatchEvent(new Event("change", { bubbles: true }));
-        }
-      });
-      repaint();
-    });
-
-    // Meetup note counter.
-    var note = backdrop.querySelector(".js-meetup-note-input");
-    var counter = backdrop.querySelector(".js-meetup-note-counter");
-    var max = <%= MeetupMatchingDeclaration::NOTE_MAX_LENGTH %>;
-    if (note && counter) {
-      note.addEventListener("input", function() {
-        counter.textContent = note.value.length + "/" + max;
-      });
-    }
-  })();
-</script>
+<%# All interactivity (open/close/intent toggle/counter) lives in
+    meetups/_declaration_modal_loader so the same handlers work when the
+    modal is rendered server-side AND when it's injected via fetch. %>

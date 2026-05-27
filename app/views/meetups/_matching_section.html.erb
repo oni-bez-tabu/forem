@@ -8,7 +8,8 @@
     <% if current_profile&.visible_to_others? && current_declaration && !current_declaration.not_looking? %>
       <%= link_to "✏ #{t('matching.section.change_declaration')}",
                   meetup_path(meetup, declare: 1),
-                  class: "c-btn c-btn--secondary c-btn--s" %>
+                  class: "c-btn c-btn--secondary c-btn--s",
+                  data: { declaration_modal_trigger: true, meetup_slug: meetup.slug } %>
     <% end %>
   </div>
 
@@ -61,7 +62,8 @@
         <% if current_rsvp&.status == "going" %>
           <%= link_to "#{t('matching.section.p2.cta')} →",
                       meetup_path(meetup, declare: 1),
-                      class: "c-btn c-btn--primary c-btn--l" %>
+                      class: "c-btn c-btn--primary c-btn--l",
+                      data: { declaration_modal_trigger: true, meetup_slug: meetup.slug } %>
         <% else %>
           <span class="c-btn c-btn--secondary c-btn--l" style="opacity: 0.5; cursor: not-allowed;">
             <%= t("matching.section.p2.cta") %> →
@@ -86,7 +88,8 @@
       </p>
       <%= link_to t("matching.section.change_declaration"),
                   meetup_path(meetup, declare: 1),
-                  class: "c-btn c-btn--secondary" %>
+                  class: "c-btn c-btn--secondary",
+                  data: { declaration_modal_trigger: true, meetup_slug: meetup.slug } %>
     </div>
 
   <% else %>

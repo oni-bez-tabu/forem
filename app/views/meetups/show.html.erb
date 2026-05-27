@@ -79,6 +79,7 @@
   <%= render "share_section", meetup: @meetup %>
 </div>
 
+<%= render "meetups/declaration_modal_loader" %>
 <% if @show_declaration_modal && @declaration_for_modal %>
   <%= render "declaration_modal",
              meetup: @meetup,

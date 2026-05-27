@@ -16,13 +16,28 @@ module Matching
       render :form
     end
 
+    # Renders just the modal partial (no layout). Used by inline JS on
+    # /matching and /meetups/:slug to inject the E10 popup without
+    # navigating away from the current page.
+    def modal
+      declaration = MeetupMatchingDeclaration.find_or_initialize_by(
+        meetup: @meetup,
+        matching_profile: @current_profile,
+      )
+      declaration.intent_level ||= "open_to_meet"
+      render partial: "meetups/declaration_modal",
+             locals: { meetup: @meetup, declaration: declaration, open: true },
+             layout: false
+    end
+
     def create
       @declaration = MeetupMatchingDeclaration.new(declaration_params.merge(
                                                      meetup: @meetup,
                                                      matching_profile: @current_profile,
                                                    ))
       if @declaration.save
-        redirect_to meetup_path(@meetup), notice: I18n.t("matching.declarations.saved")
+        redirect_back fallback_location: meetup_path(@meetup),
+                      notice: I18n.t("matching.declarations.saved")
       else
         render :form, status: :unprocessable_entity
       end
@@ -34,7 +49,8 @@ module Matching
 
     def update
       if @declaration.update(declaration_params)
-        redirect_to meetup_path(@meetup), notice: I18n.t("matching.declarations.saved")
+        redirect_back fallback_location: meetup_path(@meetup),
+                      notice: I18n.t("matching.declarations.saved")
       else
         render :form, status: :unprocessable_entity
       end
@@ -48,7 +64,8 @@ module Matching
     private
 
     def set_meetup
-      @meetup = Meetup.visible_in_lists.find_by(slug: params[:meetup_slug])
+      slug = params[:meetup_slug] || params[:slug]
+      @meetup = Meetup.visible_in_lists.find_by(slug: slug)
       raise ActiveRecord::RecordNotFound unless @meetup
     end
 
