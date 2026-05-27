@@ -82,8 +82,14 @@ pl:
       blurred_teaser: "Pełna lista odkryje się po zadeklarowaniu intencji."
     event_scoped:
       context_label: "Dopasowanie z"
-      meetup_note_label: "Notatka do tego wydarzenia"
+      meetup_note_label: "Notatka na tym wydarzeniu"
       send_welcome: "Wyślij powitalną wiadomość"
+      back: "Wróć do dopasowań"
+      overline: "Dopasowanie z wydarzenia"
+      about_section_label: "O sobie"
+      write_card_title: "Chcesz coś napisać?"
+      write_card_body: "Konwersacja zacznie się w twoim chacie nietabu. Druga strona widzi tylko twój profil Matching."
+      write_button: "Napisz"
     welcomes:
       send_button: "Wyślij powitalną wiadomość"
       already_sent_button: "Wysłałeś już zaproszenie do rozmowy"

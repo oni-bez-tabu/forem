@@ -78,6 +78,12 @@ en:
       context_label: "Match from"
       meetup_note_label: "Note for this event"
       send_welcome: "Send welcome message"
+      back: "Back to matches"
+      overline: "Match from the event"
+      about_section_label: "About"
+      write_card_title: "Want to write?"
+      write_card_body: "The conversation will start in your nietabu chat. The other side only sees your Matching profile."
+      write_button: "Message"
     welcomes:
       send_button: "Send welcome message"
       already_sent_button: "You already sent an invitation to chat"

@@ -1,49 +1,120 @@
 <% title @profile.user.username %>
 
 <div class="crayons-layout crayons-layout--limited-width">
-  <header class="mb-4">
-    <p class="fs-s color-base-60"><%= t("matching.event_scoped.context_label") %>: <%= link_to @meetup.name, meetup_path(@meetup), class: "c-link" %> · <%= I18n.l(@meetup.start_at, format: :short) %></p>
-  </header>
-
-  <div class="crayons-card overflow-hidden">
-    <% if @profile.photo.present? %>
-      <img src="<%= @profile.photo.url %>" alt="@<%= @profile.user.username %>" style="width: 100%; max-height: 480px; object-fit: cover;">
+  <%# Back to meetup hub %>
+  <div class="mb-3">
+    <%= link_to meetup_path(@meetup), class: "c-link fs-s color-base-60", style: "display: inline-flex; align-items: center; gap: 6px;" do %>
+      ← <%= t("matching.event_scoped.back") %>
     <% end %>
-    <div class="p-6">
-      <div class="flex flex-wrap gap-2 items-center mb-3">
-        <span class="crayons-indicator crayons-indicator--accent"><%= t("matching.identity_types.#{@profile.identity_type}") %></span>
-        <span class="crayons-indicator">📍 <%= @profile.city.name %></span>
-        <span class="crayons-indicator"><%= t("matching.declarations.intents.#{@declaration.intent_level}.label") %></span>
+  </div>
+
+  <%# Two-column grid: 360px photo + flexible content %>
+  <div style="display: grid; grid-template-columns: minmax(280px, 360px) 1fr; gap: 32px; align-items: start;">
+    <%# Left: photo 4:5 with overlays %>
+    <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; background: var(--base-20, #e5e7eb);">
+      <% if @profile.photo.present? %>
+        <img src="<%= @profile.photo.url %>" alt="@<%= @profile.user.username %>" style="display: block; width: 100%; height: 100%; object-fit: cover;">
+      <% end %>
+      <%# Identity pill top-left %>
+      <span style="position: absolute; top: 16px; left: 16px; padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 700; background: rgba(255,255,255,0.95); color: var(--base-90, #171717); backdrop-filter: blur(8px);">
+        <%= t("matching.identity_types.#{@profile.identity_type}") %>
+      </span>
+      <%# Intent emoji circle top-right %>
+      <span title="<%= t("matching.declarations.intents.#{@declaration.intent_level}.label") %>"
+            style="position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.95); display: inline-flex; align-items: center; justify-content: center; font-size: 18px; backdrop-filter: blur(8px);">
+        <%= intent_emoji(@declaration.intent_level) %>
+      </span>
+    </div>
+
+    <%# Right: meetup context + pills + bio + note + write CTA %>
+    <div class="flex flex-col" style="gap: 20px;">
+      <div>
+        <div class="fs-xs color-base-60" style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 4px;">
+          <%= t("matching.event_scoped.overline") %>
+        </div>
+        <h2 class="crayons-title" style="margin: 0; font-size: 22px; font-weight: 700;">
+          <%= link_to @meetup.name, meetup_path(@meetup), style: "color: var(--accent-brand, #6366f1); text-decoration: none;" %>
+        </h2>
+        <div class="fs-s color-base-70" style="margin-top: 4px;">
+          <%= I18n.l(@meetup.start_at, format: "%A, %-d %B %Y") %>
+          <% if @meetup.venue_name.present? %> · <%= @meetup.venue_name %><% end %>
+          <% if @meetup.venue_city %>, <%= @meetup.venue_city.name %><% end %>
+        </div>
+      </div>
+
+      <div class="flex gap-2 flex-wrap">
+        <span style="<%= pill_style(:brand) %> padding: 6px 14px; font-size: 13px;">
+          <%= intent_emoji(@declaration.intent_level) %>
+          <%= t("matching.declarations.intents.#{@declaration.intent_level}.label") %>
+        </span>
+        <span style="<%= pill_style(:outline) %> padding: 6px 14px; font-size: 13px;">
+          📍 <%= @profile.city.name %>
+        </span>
       </div>
 
       <% if @profile.bio.present? %>
-        <p class="mt-2"><%= @profile.bio %></p>
+        <div class="crayons-card" style="padding: 20px;">
+          <div class="fs-xs color-base-60" style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 8px;">
+            <%= t("matching.event_scoped.about_section_label") %>
+          </div>
+          <p class="fs-base" style="margin: 0; color: var(--base-90, #171717); line-height: 1.55;">
+            <%= @profile.bio %>
+          </p>
+        </div>
       <% end %>
 
       <% if @declaration.meetup_note.present? %>
-        <div class="mt-4 p-3" style="background: var(--card-secondary-bg, #f5f5f5); border-radius: 6px;">
-          <p class="fs-xs color-base-60 mb-1"><%= t("matching.event_scoped.meetup_note_label") %></p>
-          <p style="font-style: italic;">"<%= @declaration.meetup_note %>"</p>
+        <div class="crayons-card" style="padding: 20px; background: rgba(169,31,105,0.05); border-color: rgba(169,31,105,0.25);">
+          <div class="fs-xs" style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 8px; color: rgb(169,31,105);">
+            <%= t("matching.event_scoped.meetup_note_label") %>
+          </div>
+          <p class="fs-base" style="margin: 0; font-style: italic; color: var(--base-90, #171717); line-height: 1.55;">
+            "<%= @declaration.meetup_note %>"
+          </p>
         </div>
       <% end %>
 
       <% if current_user && current_user.id != @profile.user_id %>
-        <div class="mt-6">
-          <% if @welcome_already_sent %>
-            <button type="button" class="c-btn" disabled>
-              <%= t("matching.welcomes.already_sent_button") %>
-            </button>
-            <p class="fs-xs color-base-60 mt-1"><%= t("matching.welcomes.already_sent_hint") %></p>
-          <% elsif @welcome_eligible %>
-            <button type="button" class="c-btn c-btn--primary" data-welcome-open data-target="#welcome-modal-<%= @profile.id %>">
-              <%= t("matching.welcomes.send_button") %>
-            </button>
-          <% else %>
-            <button type="button" class="c-btn" disabled>
-              <%= t("matching.welcomes.send_button") %>
-            </button>
-            <p class="fs-xs color-base-60 mt-1"><%= t("matching.welcomes.not_eligible_hint") %></p>
-          <% end %>
+        <div class="crayons-card" style="padding: 24px; background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(169,31,105,0.04)); border-color: rgba(99,102,241,0.18);">
+          <div class="flex gap-4 flex-wrap items-start" style="justify-content: space-between;">
+            <div style="flex: 1 1 auto; min-width: 240px;">
+              <% if @welcome_already_sent %>
+                <p class="fs-l" style="margin: 0 0 4px; font-weight: 700;">
+                  <%= t("matching.welcomes.already_sent_button") %>
+                </p>
+                <p class="fs-s color-base-70" style="margin: 0;">
+                  <%= t("matching.welcomes.already_sent_hint") %>
+                </p>
+              <% elsif @welcome_eligible %>
+                <p class="fs-l" style="margin: 0 0 4px; font-weight: 700;">
+                  <%= t("matching.event_scoped.write_card_title") %>
+                </p>
+                <p class="fs-s color-base-70" style="margin: 0;">
+                  <%= t("matching.event_scoped.write_card_body") %>
+                </p>
+              <% else %>
+                <p class="fs-l" style="margin: 0 0 4px; font-weight: 700;">
+                  <%= t("matching.event_scoped.write_card_title") %>
+                </p>
+                <p class="fs-s color-base-70" style="margin: 0;">
+                  <%= t("matching.welcomes.not_eligible_hint") %>
+                </p>
+              <% end %>
+            </div>
+            <% if @welcome_already_sent %>
+              <span class="c-btn" style="opacity: 0.6; cursor: not-allowed;">
+                ✓ <%= t("matching.event_scoped.write_button") %>
+              </span>
+            <% elsif @welcome_eligible %>
+              <button type="button" class="c-btn c-btn--primary c-btn--l" data-welcome-open data-target="#welcome-modal-<%= @profile.id %>">
+                ✉ <%= t("matching.event_scoped.write_button") %>
+              </button>
+            <% else %>
+              <span class="c-btn c-btn--secondary c-btn--l" style="opacity: 0.5; cursor: not-allowed;">
+                ✉ <%= t("matching.event_scoped.write_button") %>
+              </span>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>
