@@ -130,7 +130,7 @@
 ## Etap 3 — Deklaracje + visibility + lista matchów inline + event-scoped profil
 
 - **Status:** ✅ done
-- **Commit:** `15c10ca5d`
+- **Commit:** `15c10ca5d` (kod) + `c6fe856ac` (demo seed) + `6ba3df00d`/`77fecbcca` (polish: drop identity filter + drop column)
 - **Data:** 2026-05-26
 
 ### Zaimplementowane
@@ -160,14 +160,16 @@
 - Specs: model `MeetupMatchingDeclaration` (10), service `PoolFinder` (8), request `Matching::Declarations` (7), request `EventScopedProfiles` (5), update worker spec (1 nowy) — łącznie **36/36 ✓** w Etapie 3; pełny suite Matching POC **147/147 ✓**
 
 ### Uwagi / odstępstwa / długi techniczne
+- **🔴 Filter po identity wyłączony (decyzja sesji #2, 2026-05-26).** SPEC.md §6 R1 mówił o bidirectional `looking_for` filter; po decyzji produktowej "zawsze zestawiamy wszystkie płcie" `PoolFinder#compatible_with_viewer?` zawsze zwraca `true`, kolumna `looking_for` zdropowana z DB i z migracji `20260526210000`. Forma deklaracji ma teraz tylko 2 sekcje (intent + notatka). Jeśli kiedyś wracamy do filtrowania per identity — przywróć migrację `t.jsonb :looking_for`, walidację w modelu, sekcję w formie i bidirectional check w `PoolFinder`. Wszystkie pozostałe reguły (R2 grupowanie, R3 just_vibe, R4 not_looking lockout, R5 grupowanie) działają bez zmian.
 - **E10 popup zaimplementowany jako oddzielna strona** (`/meetups/:slug/declaration/new`), nie modal w meetup hub. Powód: w POC redirect-after-action jest prostszy niż modal z Preact + form. Modal można dodać przy polishingu — flow logiczny (RSVP → declaration → hub) jest identyczny.
 - **Welcome message button w E15 jest zdisabled placeholder** (`title="Welcome coming soon"`). To Etap 4 — endpoint i Cloud Function jeszcze nie istnieją. Klik nic nie robi.
 - **Brak debounce dla deklaracji "live"** — każdy zapis to round-trip. To OK dla POC, ale dla UX warto rozważyć inline editing w Etapie 5/6.
-- **looking_for w formie to lista checkboxów wszystkich 4 identity types** — UI dla `just_vibe` powinien wg SPEC.md wyszarzać (grayed out) checkboxy bo expand-to-all. POC: zostawiam aktywne, model i tak treatuje pusty + just_vibe = wildcard. Polish UX dług.
 - **Brak warunkowego ukrywania pól per intent** — SPEC.md §5 Flow E mówi że `meetup_note` ukrywa się dla `not_looking`. POC: pole zawsze widoczne, ale model zachowuje wartość niezależnie. Polish UX dług.
 - **`pool_finder` nie ma sortowania per relevance** — kolejność zależy od kolejności `MeetupMatchingDeclaration.order(:id)` (domyślna). Sorting per "recently active" / "compatibility score" — backlog.
 - **Constraint na route `profile_id: /\d+/`** — wymusza integer FK. To OK bo MatchingProfile używa Rails default integer id. Jeśli kiedyś migrujemy na UUID, ta linia musi pójść w odstawkę.
 - **R7/R8 (welcome lockout, pary) nie zaimplementowane** — R7 to Etap 4 (welcome), R8 (couple jako jedno konto) na razie obsługiwane jako standardowy identity_type bez specjalnej logiki.
+- **Demo data:** `dip rails matching:seed_demo_data` (idempotentny) tworzy 18 demo userów (hasło `password`), 18 profili (16 approved + 1 pending + 1 rejected), 25 RSVPs, 24 deklaracji rozłożonych na 2 demo meetupy.
+- **Stale dev containers** — po długiej sesji (~12h) Docker container `forem-web-run-*` trzymał template cache mimo dev autoreload. Przy podobnych objawach: `docker rm -f forem-web-run-*` + `dip rails s` ponownie. Sprawdzone 2 razy podczas Etapu 2 i 3.
 
 ### Acceptance check (SPEC.md §11)
 - ✅ P2 klika RSVP → popup intencji → zapis → lista (Flow C.2 + `Meetups::RsvpsController#needs_declaration_prompt?` + `matching/declarations#new`)
