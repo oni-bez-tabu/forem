@@ -42,6 +42,14 @@ fr:
       cancel: "Annuler"
       delete: "Supprimer la déclaration"
       confirm_delete: "Supprimer votre déclaration de cet événement ?"
+      modal:
+        title: "Votre intention"
+        context: "pour :"
+        body: "Chaque événement est une déclaration séparée. Seules les personnes correspondant à votre filtre la verront."
+        intent_label: "Intention"
+        note_placeholder: 'p. ex. "Première fois dans ce club, ravi de discuter"'
+        note_helper: "Visible uniquement par vos correspondances de cet événement."
+        save: "Enregistrer la déclaration"
       fields:
         intent_level: "Votre intention"
         intent_help: "Définit qui vous voyez et qui peut vous voir sur cet événement."

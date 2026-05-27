@@ -42,6 +42,14 @@ en:
       cancel: "Cancel"
       delete: "Remove declaration"
       confirm_delete: "Remove your declaration from this event?"
+      modal:
+        title: "Your intent"
+        context: "for:"
+        body: "Each event is a separate declaration. Only people matching your filter will see it."
+        intent_label: "Intent"
+        note_placeholder: 'e.g. "First time at this club, happy to chat"'
+        note_helper: "Only shown to your matches from this event."
+        save: "Save declaration"
       fields:
         intent_level: "Your intent"
         intent_help: "Controls who you see and who can see you on this event."

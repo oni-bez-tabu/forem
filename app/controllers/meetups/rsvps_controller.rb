@@ -17,7 +17,7 @@ module Meetups
       if rsvp.save
         notice_key = new_status == "going" ? "meetups.rsvp.saved_going" : "meetups.rsvp.saved_interested"
         if needs_declaration_prompt?
-          redirect_to new_meetup_declaration_path(@meetup.slug),
+          redirect_to meetup_path(@meetup, declare: 1),
                       notice: I18n.t("meetups.rsvp.prompt_for_declaration")
         else
           redirect_to meetup_path(@meetup), notice: I18n.t(notice_key)

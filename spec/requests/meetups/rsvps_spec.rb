@@ -45,6 +45,15 @@ RSpec.describe "Meetup RSVPs" do
         expect { post meetup_rsvp_path(expired), params: { status: "going" } }
           .to raise_error(ActiveRecord::RecordNotFound)
       end
+
+      context "when the user has an active profile but no declaration yet" do
+        before { create(:matching_profile, :approved, user: user) }
+
+        it "redirects to the meetup hub with declare=1 so the E10 modal opens inline" do
+          post meetup_rsvp_path(meetup), params: { status: "going" }
+          expect(response).to redirect_to(meetup_path(meetup, declare: 1))
+        end
+      end
     end
   end
 

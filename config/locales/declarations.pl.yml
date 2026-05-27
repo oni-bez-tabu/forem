@@ -44,6 +44,14 @@ pl:
       cancel: "Anuluj"
       delete: "Usuń deklarację"
       confirm_delete: "Usunąć deklarację z tego wydarzenia?"
+      modal:
+        title: "Twoja intencja"
+        context: "na:"
+        body: "Każde wydarzenie to osobna deklaracja. Nikt jej nie zobaczy poza osobami, które pasują do twojego filtra."
+        intent_label: "Intencja"
+        note_placeholder: 'np. "Pierwszy raz w tym klubie, chętnie pogadam"'
+        note_helper: "Pojawi się tylko przed twoimi dopasowaniami z tego wydarzenia."
+        save: "Zapisz deklarację"
       fields:
         intent_level: "Twoja intencja"
         intent_help: "Określa kogo zobaczysz i kto zobaczy ciebie na tym wydarzeniu."

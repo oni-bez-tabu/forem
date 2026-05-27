@@ -134,7 +134,7 @@
       </p>
       <% if event[:meetup] %>
         <%= link_to t("matching.timeline.declare_intent_button"),
-                    new_meetup_declaration_path(event[:meetup]),
+                    meetup_path(event[:meetup], declare: 1),
                     class: "c-btn c-btn--primary c-btn--s" %>
       <% end %>
     </div>

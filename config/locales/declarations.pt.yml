@@ -42,6 +42,14 @@ pt:
       cancel: "Cancelar"
       delete: "Remover declaração"
       confirm_delete: "Remover sua declaração deste evento?"
+      modal:
+        title: "Sua intenção"
+        context: "para:"
+        body: "Cada evento é uma declaração separada. Apenas pessoas que combinam com seu filtro a verão."
+        intent_label: "Intenção"
+        note_placeholder: 'ex.: "Primeira vez neste clube, gosto de conversar"'
+        note_helper: "Visível apenas para seus matches deste evento."
+        save: "Salvar declaração"
       fields:
         intent_level: "Sua intenção"
         intent_help: "Controla quem você vê e quem pode te ver neste evento."

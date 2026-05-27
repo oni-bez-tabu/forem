@@ -7,7 +7,7 @@
     </h2>
     <% if current_profile&.visible_to_others? && current_declaration && !current_declaration.not_looking? %>
       <%= link_to "✏ #{t('matching.section.change_declaration')}",
-                  edit_meetup_declaration_path(meetup.slug),
+                  meetup_path(meetup, declare: 1),
                   class: "c-btn c-btn--secondary c-btn--s" %>
     <% end %>
   </div>
@@ -60,7 +60,7 @@
         </div>
         <% if current_rsvp&.status == "going" %>
           <%= link_to "#{t('matching.section.p2.cta')} →",
-                      new_meetup_declaration_path(meetup.slug),
+                      meetup_path(meetup, declare: 1),
                       class: "c-btn c-btn--primary c-btn--l" %>
         <% else %>
           <span class="c-btn c-btn--secondary c-btn--l" style="opacity: 0.5; cursor: not-allowed;">
@@ -85,7 +85,7 @@
         <%= t("matching.section.not_looking_explanation") %>
       </p>
       <%= link_to t("matching.section.change_declaration"),
-                  edit_meetup_declaration_path(meetup.slug),
+                  meetup_path(meetup, declare: 1),
                   class: "c-btn c-btn--secondary" %>
     </div>
 

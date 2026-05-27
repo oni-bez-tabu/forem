@@ -78,3 +78,10 @@
   <hr style="border: 0; border-top: 1px solid var(--card-border, #e5e5e5); margin: 24px 0;">
   <%= render "share_section", meetup: @meetup %>
 </div>
+
+<% if @show_declaration_modal && @declaration_for_modal %>
+  <%= render "declaration_modal",
+             meetup: @meetup,
+             declaration: @declaration_for_modal,
+             open: true %>
+<% end %>
