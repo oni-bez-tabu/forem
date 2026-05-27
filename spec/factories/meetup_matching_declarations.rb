@@ -3,7 +3,6 @@ FactoryBot.define do
     association :meetup
     association :matching_profile
     intent_level { "open_to_meet" }
-    looking_for { %w[woman man non_binary couple] }
 
     # SPEC.md §4.4 — a declaration requires the user to have an RSVP on the
     # same meetup. Auto-create one when the factory is used.
@@ -20,7 +19,6 @@ FactoryBot.define do
 
     trait :not_looking do
       intent_level { "not_looking" }
-      looking_for { [] }
     end
   end
 end

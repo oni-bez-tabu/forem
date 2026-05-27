@@ -11,8 +11,7 @@ module Matching
       @declaration = MeetupMatchingDeclaration.new(
         meetup: @meetup,
         matching_profile: @current_profile,
-        intent_level: "open_to_meet",
-        looking_for: []
+        intent_level: "open_to_meet"
       )
       render :form
     end
@@ -75,7 +74,7 @@ module Matching
     end
 
     def declaration_params
-      params.require(:meetup_matching_declaration).permit(:intent_level, :meetup_note, looking_for: [])
+      params.require(:meetup_matching_declaration).permit(:intent_level, :meetup_note)
     end
   end
 end

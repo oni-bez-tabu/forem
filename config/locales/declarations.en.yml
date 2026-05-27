@@ -29,8 +29,6 @@ en:
       fields:
         intent_level: "Your intent"
         intent_help: "Controls who you see and who can see you on this event."
-        looking_for: "Looking for"
-        looking_for_help: "Multi-select. Leave empty on \"just vibe\" to be open to everyone active."
         meetup_note: "Note for this event"
         meetup_note_help: "Up to %{max} characters. Visible on your Matching profile in this event's context."
       intents:

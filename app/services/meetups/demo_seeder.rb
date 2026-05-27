@@ -6,32 +6,32 @@ module Meetups
   class DemoSeeder
     PHOTO_FIXTURE = Rails.root.join("spec/fixtures/files/800x600.png").freeze
 
-    # Each row: [username, identity, city_slug, bio, intent, looking_for, meetups, moderation]
+    # Each row: [username, identity, city_slug, bio, intent, meetups, moderation]
     # meetups: :both | :czerwony | :noc
     # moderation: :approved | :pending | :rejected
     PEOPLE = [
-      ["anna_demo",   "woman",      "warszawa", "Sztuka, taneczne wieczory, dobre wino. Dam znać kiedy ci powiem coś niespodziewanego.", "open_to_meet", %w[man non_binary], :both, :approved],
-      ["kasia_demo",  "woman",      "warszawa", "Otwarta, lubię konwersacje na poważnie.",                                                  "open_to_meet", %w[woman man],     :both, :approved],
-      ["magda_demo",  "woman",      "krakow",   "Introwertyk ale potrafię się rozkręcić.",                                                  "just_vibe",    [],                  :czerwony, :approved],
-      ["ola_demo",    "woman",      "wroclaw",  "Energia plus dobra kawa = ja.",                                                            "open_to_meet", %w[man couple],    :both, :approved],
-      ["maja_demo",   "woman",      "warszawa", "Lubię nieoczywiste miejsca i dziwne pytania.",                                             "open_to_meet", %w[woman non_binary], :noc, :approved],
+      ["anna_demo",   "woman",      "warszawa", "Sztuka, taneczne wieczory, dobre wino. Dam znać kiedy ci powiem coś niespodziewanego.", "open_to_meet", :both,     :approved],
+      ["kasia_demo",  "woman",      "warszawa", "Otwarta, lubię konwersacje na poważnie.",                                                  "open_to_meet", :both,     :approved],
+      ["magda_demo",  "woman",      "krakow",   "Introwertyk ale potrafię się rozkręcić.",                                                  "just_vibe",    :czerwony, :approved],
+      ["ola_demo",    "woman",      "wroclaw",  "Energia plus dobra kawa = ja.",                                                            "open_to_meet", :both,     :approved],
+      ["maja_demo",   "woman",      "warszawa", "Lubię nieoczywiste miejsca i dziwne pytania.",                                             "open_to_meet", :noc,      :approved],
 
-      ["tomek_demo",  "man",        "warszawa", "Architekt, miłośnik miasta. Mogę cię oprowadzić.",                                         "open_to_meet", %w[woman couple],  :both, :approved],
-      ["piotr_demo",  "man",        "warszawa", "Lubię niespodzianki i osoby z dystansem.",                                                 "open_to_meet", %w[woman],         :czerwony, :approved],
-      ["kuba_demo",   "man",        "gdansk",   "Słońce, morze, dobrze gadam o niczym.",                                                    "just_vibe",    [],                  :both, :approved],
-      ["marcin_demo", "man",        "krakow",   "Trochę psycholog, trochę filozof.",                                                        "open_to_meet", %w[woman non_binary], :czerwony, :approved],
-      ["bartek_demo", "man",        "warszawa", "Programista. Lubię gry planszowe i głębokie rozmowy.",                                     "open_to_meet", %w[woman man],     :noc, :approved],
+      ["tomek_demo",  "man",        "warszawa", "Architekt, miłośnik miasta. Mogę cię oprowadzić.",                                         "open_to_meet", :both,     :approved],
+      ["piotr_demo",  "man",        "warszawa", "Lubię niespodzianki i osoby z dystansem.",                                                 "open_to_meet", :czerwony, :approved],
+      ["kuba_demo",   "man",        "gdansk",   "Słońce, morze, dobrze gadam o niczym.",                                                    "just_vibe",    :both,     :approved],
+      ["marcin_demo", "man",        "krakow",   "Trochę psycholog, trochę filozof.",                                                        "open_to_meet", :czerwony, :approved],
+      ["bartek_demo", "man",        "warszawa", "Programista. Lubię gry planszowe i głębokie rozmowy.",                                     "open_to_meet", :noc,      :approved],
 
-      ["para_a_demo", "couple",     "warszawa", "Dziesięć lat razem, otwarci na nowych ludzi.",                                             "open_to_meet", %w[woman man],     :both, :approved],
-      ["para_b_demo", "couple",     "poznan",   "Lubimy się bawić w grupie. Nie naciskamy.",                                                "just_vibe",    [],                  :noc, :approved],
-      ["para_c_demo", "couple",     "warszawa", "Świeżo otwarci. Małe kroki.",                                                              "open_to_meet", %w[couple woman],  :czerwony, :approved],
+      ["para_a_demo", "couple",     "warszawa", "Dziesięć lat razem, otwarci na nowych ludzi.",                                             "open_to_meet", :both,     :approved],
+      ["para_b_demo", "couple",     "poznan",   "Lubimy się bawić w grupie. Nie naciskamy.",                                                "just_vibe",    :noc,      :approved],
+      ["para_c_demo", "couple",     "warszawa", "Świeżo otwarci. Małe kroki.",                                                              "open_to_meet", :czerwony, :approved],
 
-      ["alex_demo",   "non_binary", "everywhere", "Pisz do mnie, sprawdzimy chemię. Dystans nie problem.",                                  "open_to_meet", %w[woman man non_binary], :both, :approved],
-      ["mika_demo",   "non_binary", "wroclaw",  "Trochę nerd, trochę queer.",                                                               "open_to_meet", %w[non_binary woman], :czerwony, :approved],
-      ["sam_demo",    "non_binary", "warszawa", "Lubię ciszę i głośne koncerty na zmianę.",                                                 "just_vibe",    [],                  :both, :approved],
+      ["alex_demo",   "non_binary", "everywhere", "Pisz do mnie, sprawdzimy chemię. Dystans nie problem.",                                  "open_to_meet", :both,     :approved],
+      ["mika_demo",   "non_binary", "wroclaw",  "Trochę nerd, trochę queer.",                                                               "open_to_meet", :czerwony, :approved],
+      ["sam_demo",    "non_binary", "warszawa", "Lubię ciszę i głośne koncerty na zmianę.",                                                 "just_vibe",    :both,     :approved],
 
-      ["zofia_demo",  "woman",      "warszawa", "Świeżo na nietabu, czekam na akceptację.",                                                 "open_to_meet", %w[man],           :czerwony, :pending],
-      ["rafal_demo",  "man",        "warszawa", "Hej. Brak bio.",                                                                            "open_to_meet", %w[woman],         nil,      :rejected]
+      ["zofia_demo",  "woman",      "warszawa", "Świeżo na nietabu, czekam na akceptację.",                                                 "open_to_meet", :czerwony, :pending],
+      ["rafal_demo",  "man",        "warszawa", "Hej. Brak bio.",                                                                            "open_to_meet", nil,       :rejected]
     ].freeze
 
     Result = Struct.new(:users_created, :profiles_created, :rsvps_created, :declarations_created, keyword_init: true)
@@ -47,7 +47,7 @@ module Meetups
       counters = { users: 0, profiles: 0, rsvps: 0, declarations: 0 }
 
       PEOPLE.each do |row|
-        username, identity, city_slug, bio, intent, looking_for, meetups_key, moderation = row
+        username, identity, city_slug, bio, intent, meetups_key, moderation = row
         next if MatchingProfile.joins(:user).exists?(users: { username: username })
 
         city = City.find_by(slug: city_slug) || raise("City '#{city_slug}' missing — run cities:seed first")
@@ -65,7 +65,7 @@ module Meetups
                   end
 
         meetups.each do |meetup|
-          attend(meetup: meetup, user: user, profile: profile, intent: intent, looking_for: looking_for, counters: counters)
+          attend(meetup: meetup, user: user, profile: profile, intent: intent, counters: counters)
         end
       end
 
@@ -112,10 +112,10 @@ module Meetups
       end
     end
 
-    def attend(meetup:, user:, profile:, intent:, looking_for:, counters:)
+    def attend(meetup:, user:, profile:, intent:, counters:)
       rsvp = MeetupRsvp.find_or_initialize_by(meetup: meetup, user: user)
       if rsvp.new_record?
-        rsvp.status = looking_for.empty? ? "going" : "going"
+        rsvp.status = "going"
         rsvp.save!
         counters[:rsvps] += 1
       end
@@ -125,7 +125,6 @@ module Meetups
       dec = MeetupMatchingDeclaration.find_or_initialize_by(meetup: meetup, matching_profile: profile)
       if dec.new_record?
         dec.intent_level = intent
-        dec.looking_for = looking_for
         dec.meetup_note = note_for(intent, meetup)
         dec.save!
         counters[:declarations] += 1

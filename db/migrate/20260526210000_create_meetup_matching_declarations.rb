@@ -4,7 +4,6 @@ class CreateMeetupMatchingDeclarations < ActiveRecord::Migration[7.0]
       t.references :meetup, null: false, foreign_key: { on_delete: :cascade }
       t.references :matching_profile, null: false, foreign_key: { on_delete: :cascade }
       t.string :intent_level, null: false
-      t.jsonb :looking_for, null: false, default: []
       t.string :meetup_note
       t.timestamps
     end

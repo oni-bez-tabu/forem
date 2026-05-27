@@ -9,7 +9,6 @@ class MeetupMatchingDeclaration < ApplicationRecord
   validates :intent_level, inclusion: { in: INTENT_LEVELS }
   validates :meetup_note, length: { maximum: NOTE_MAX_LENGTH }
   validates :matching_profile_id, uniqueness: { scope: :meetup_id }
-  validate :looking_for_subset_of_identities
   validate :rsvp_exists_for_profile
 
   scope :active_intents, -> { where(intent_level: ACTIVE_INTENTS) }
@@ -25,22 +24,7 @@ class MeetupMatchingDeclaration < ApplicationRecord
     intent_level == "not_looking"
   end
 
-  # Per R3 — just_vibe with empty looking_for is treated as "everyone".
-  def effective_looking_for
-    raw = Array(looking_for).compact_blank
-    return MatchingProfile::IDENTITY_TYPES if intent_level == "just_vibe" && raw.empty?
-
-    raw
-  end
-
   private
-
-  def looking_for_subset_of_identities
-    invalid = Array(looking_for) - MatchingProfile::IDENTITY_TYPES
-    return if invalid.empty?
-
-    errors.add(:looking_for, "contains invalid identity types: #{invalid.join(', ')}")
-  end
 
   def rsvp_exists_for_profile
     return if meetup_id.blank? || matching_profile.nil?

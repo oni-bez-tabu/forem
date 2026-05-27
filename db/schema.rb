@@ -1010,7 +1010,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_26_210000) do
   create_table "meetup_matching_declarations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "intent_level", null: false
-    t.jsonb "looking_for", default: [], null: false
     t.bigint "matching_profile_id", null: false
     t.bigint "meetup_id", null: false
     t.string "meetup_note"

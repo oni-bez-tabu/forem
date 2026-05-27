@@ -29,8 +29,6 @@ pl:
       fields:
         intent_level: "Twoja intencja"
         intent_help: "Określa kogo zobaczysz i kto zobaczy ciebie na tym wydarzeniu."
-        looking_for: "Kogo szukasz"
-        looking_for_help: 'Multi-select. Zostaw puste przy „just vibe” żeby zobaczyć wszystkich aktywnych.'
         meetup_note: "Notatka do tego wydarzenia"
         meetup_note_help: "Maksymalnie %{max} znaków. Widoczna na twoim profilu Matching w kontekście tego wydarzenia."
       intents:

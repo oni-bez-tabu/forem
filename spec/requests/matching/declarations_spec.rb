@@ -10,7 +10,6 @@ RSpec.describe "Matching::Declarations" do
     {
       meetup_matching_declaration: {
         intent_level: "open_to_meet",
-        looking_for: %w[woman man],
         meetup_note: "Hi from the spec"
       }
     }

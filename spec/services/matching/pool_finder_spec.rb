@@ -4,14 +4,10 @@ RSpec.describe Matching::PoolFinder do
   let(:meetup) { create(:meetup) }
 
   # Helper: build a participant (approved profile + RSVP + declaration) for a meetup.
-  def declared_user(identity:, intent:, looking_for: nil, on: meetup)
+  def declared_user(identity:, intent:, on: meetup, **_unused)
     profile = create(:matching_profile, :approved, identity_type: identity)
     create(:meetup_rsvp, meetup: on, user: profile.user, status: "going")
-    create(:meetup_matching_declaration,
-           meetup: on,
-           matching_profile: profile,
-           intent_level: intent,
-           looking_for: looking_for || %w[woman man couple non_binary])
+    create(:meetup_matching_declaration, meetup: on, matching_profile: profile, intent_level: intent)
     profile
   end
 
