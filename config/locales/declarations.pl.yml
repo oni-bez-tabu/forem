@@ -1,0 +1,62 @@
+pl:
+  meetups:
+    rsvp:
+      prompt_for_declaration: "Zapisano. Teraz zadeklaruj intencję na to wydarzenie."
+  matching:
+    section:
+      heading: "Matching na tym wydarzeniu"
+      no_profile_intro: "Stwórz profil Matching, żeby brać udział w deklaracjach intencji na tym wydarzeniu."
+      create_profile: "Stwórz profil Matching"
+      profile_not_visible: "Twój profil Matching nie jest aktywny lub czeka na akceptację."
+      need_rsvp_first: "Zapisz się na wydarzenie żeby zadeklarować intencję."
+      no_declaration_intro: "Zadeklaruj intencję żeby zobaczyć kto pasuje."
+      declare_now: "Zadeklaruj intencję"
+      not_looking_explanation: "Zadeklarowałeś brak zainteresowania — nie widzisz listy. Możesz zmienić deklarację."
+      change_declaration: "Zmień deklarację"
+    declarations:
+      saved: "Deklaracja zapisana."
+      deleted: "Deklaracja usunięta."
+      profile_required: "Stwórz najpierw profil Matching."
+      rsvp_required: "Najpierw zapisz się na to wydarzenie."
+      form_title: "Deklaracja intencji — %{meetup}"
+      form_heading: "Twoja deklaracja"
+      form_subtitle: "Tylko na to wydarzenie. Możesz zmienić w dowolnej chwili."
+      context_label: "Wydarzenie"
+      submit: "Zapisz deklarację"
+      cancel: "Anuluj"
+      delete: "Usuń deklarację"
+      confirm_delete: "Usunąć deklarację z tego wydarzenia?"
+      fields:
+        intent_level: "Twoja intencja"
+        intent_help: "Określa kogo zobaczysz i kto zobaczy ciebie na tym wydarzeniu."
+        looking_for: "Kogo szukasz"
+        looking_for_help: 'Multi-select. Zostaw puste przy „just vibe” żeby zobaczyć wszystkich aktywnych.'
+        meetup_note: "Notatka do tego wydarzenia"
+        meetup_note_help: "Maksymalnie %{max} znaków. Widoczna na twoim profilu Matching w kontekście tego wydarzenia."
+      intents:
+        not_looking:
+          label: "Nie szukam"
+          help: "Jestem zapisany ale nie chcę nikogo poznawać. Nie widzę listy, nikt mnie nie widzi."
+        just_vibe:
+          label: "Tylko vibe"
+          help: 'Otwarty na rozmowę, ale nie szukam aktywnie. Pokazuję się z markerem „nie szuka aktywnie”.'
+        open_to_meet:
+          label: "Otwarty na poznanie"
+          help: "Aktywnie szukam kogoś do rozmowy lub spotkania."
+    matches:
+      count:
+        zero: "Brak dopasowań"
+        one: "1 dopasowanie"
+        few: "%{count} dopasowania"
+        many: "%{count} dopasowań"
+        other: "%{count} dopasowań"
+      your_intent: "Twoja intencja"
+      empty_state: "Na razie nikt pasujący się nie zadeklarował. Wróć później."
+      same_intent_heading: "Pasują do twojej intencji"
+      other_intent_heading: "Inni którzy też się zadeklarowali"
+      blurred_teaser: "Pełna lista odkryje się po zadeklarowaniu intencji."
+    event_scoped:
+      context_label: "Dopasowanie z"
+      meetup_note_label: "Notatka do tego wydarzenia"
+      send_welcome: "Wyślij powitalną wiadomość"
+      welcome_coming_soon: "Wysyłka powitalnych wiadomości będzie dostępna wkrótce."

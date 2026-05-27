@@ -31,5 +31,13 @@
   </div>
 
   <%= render "rsvp_section", meetup: @meetup, current_rsvp: @current_rsvp %>
+  <% if user_signed_in? %>
+    <%= render "matching_section",
+               meetup: @meetup,
+               current_rsvp: @current_rsvp,
+               current_profile: @current_profile,
+               current_declaration: @current_declaration,
+               pool: @pool %>
+  <% end %>
   <%= render "share_section", meetup: @meetup %>
 </div>

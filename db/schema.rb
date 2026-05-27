@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_05_26_200000) do
+ActiveRecord::Schema[7.0].define(version: 2026_05_26_210000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "ltree"
@@ -1005,6 +1005,20 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_26_200000) do
     t.string "output_url", null: false
     t.datetime "updated_at", null: false
     t.index ["original_url"], name: "index_media_stores_on_original_url", unique: true
+  end
+
+  create_table "meetup_matching_declarations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "intent_level", null: false
+    t.jsonb "looking_for", default: [], null: false
+    t.bigint "matching_profile_id", null: false
+    t.bigint "meetup_id", null: false
+    t.string "meetup_note"
+    t.datetime "updated_at", null: false
+    t.index ["matching_profile_id"], name: "index_meetup_matching_declarations_on_matching_profile_id"
+    t.index ["meetup_id", "intent_level"], name: "idx_declarations_on_meetup_and_intent"
+    t.index ["meetup_id", "matching_profile_id"], name: "idx_declarations_on_meetup_and_profile", unique: true
+    t.index ["meetup_id"], name: "index_meetup_matching_declarations_on_meetup_id"
   end
 
   create_table "meetup_rsvps", force: :cascade do |t|
@@ -2149,6 +2163,8 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_26_200000) do
   add_foreign_key "lead_submissions", "users", on_delete: :cascade
   add_foreign_key "matching_profiles", "cities"
   add_foreign_key "matching_profiles", "users", on_delete: :cascade
+  add_foreign_key "meetup_matching_declarations", "matching_profiles", on_delete: :cascade
+  add_foreign_key "meetup_matching_declarations", "meetups", on_delete: :cascade
   add_foreign_key "meetup_rsvps", "meetups", on_delete: :cascade
   add_foreign_key "meetup_rsvps", "users", on_delete: :cascade
   add_foreign_key "meetups", "articles", column: "description_internal_post_id"

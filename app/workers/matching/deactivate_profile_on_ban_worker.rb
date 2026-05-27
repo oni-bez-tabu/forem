@@ -11,9 +11,11 @@ module Matching
 
       profile = MatchingProfile.find_by(user_id: user.id)
       return unless profile
-      return unless profile.is_active?
 
-      profile.deactivate!
+      # Per session #1 decision: ban deactivates the profile AND wipes intents/
+      # declarations. Welcome conversations stay because they live in chat.
+      profile.matching_declarations.destroy_all
+      profile.deactivate! if profile.is_active?
     end
   end
 end

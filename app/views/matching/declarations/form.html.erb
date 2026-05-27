@@ -1,0 +1,81 @@
+<% title t("matching.declarations.form_title", meetup: @meetup.name) %>
+
+<div class="crayons-layout crayons-layout--limited-width">
+  <header class="mb-4">
+    <p class="fs-s color-base-60"><%= t("matching.declarations.context_label") %>: <%= link_to @meetup.name, meetup_path(@meetup), class: "c-link" %></p>
+    <h1 class="crayons-title">✨ <%= t("matching.declarations.form_heading") %></h1>
+    <p class="crayons-subtitle"><%= t("matching.declarations.form_subtitle") %></p>
+  </header>
+
+  <div class="crayons-card p-6">
+    <%= form_with model: @declaration,
+                  url: @declaration.persisted? ? meetup_declaration_path(@meetup.slug) : meetup_declaration_path(@meetup.slug),
+                  method: @declaration.persisted? ? :patch : :post,
+                  local: true do |form| %>
+      <% if @declaration.errors.any? %>
+        <div class="crayons-notice p-0 mb-4" aria-live="polite">
+          <strong><%= pluralize(@declaration.errors.count, "error") %>:</strong>
+          <ul class="list-disc list-inside mt-2">
+            <% @declaration.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <fieldset class="crayons-field">
+        <legend class="crayons-field__label"><%= t("matching.declarations.fields.intent_level") %></legend>
+        <p class="crayons-field__description"><%= t("matching.declarations.fields.intent_help") %></p>
+        <div class="flex flex-col gap-2 mt-2">
+          <% MeetupMatchingDeclaration::INTENT_LEVELS.each do |level| %>
+            <label class="crayons-field crayons-field--radio">
+              <%= form.radio_button :intent_level, level, class: "crayons-radio" %>
+              <span class="ml-2">
+                <strong><%= t("matching.declarations.intents.#{level}.label") %></strong>
+                <span class="fs-s color-base-60 block"><%= t("matching.declarations.intents.#{level}.help") %></span>
+              </span>
+            </label>
+          <% end %>
+        </div>
+      </fieldset>
+
+      <fieldset class="crayons-field mt-4">
+        <legend class="crayons-field__label"><%= t("matching.declarations.fields.looking_for") %></legend>
+        <p class="crayons-field__description"><%= t("matching.declarations.fields.looking_for_help") %></p>
+        <div class="flex flex-wrap gap-2 mt-2">
+          <% MatchingProfile::IDENTITY_TYPES.each do |identity| %>
+            <label class="crayons-field crayons-field--checkbox">
+              <%= check_box_tag "meetup_matching_declaration[looking_for][]",
+                                identity,
+                                Array(@declaration.looking_for).include?(identity),
+                                class: "crayons-checkbox",
+                                id: "looking_for_#{identity}" %>
+              <span class="ml-2"><%= t("matching.identity_types.#{identity}") %></span>
+            </label>
+          <% end %>
+        </div>
+      </fieldset>
+
+      <div class="crayons-field mt-4">
+        <%= form.label :meetup_note, t("matching.declarations.fields.meetup_note"), class: "crayons-field__label" %>
+        <p class="crayons-field__description"><%= t("matching.declarations.fields.meetup_note_help", max: MeetupMatchingDeclaration::NOTE_MAX_LENGTH) %></p>
+        <%= form.text_area :meetup_note,
+                            maxlength: MeetupMatchingDeclaration::NOTE_MAX_LENGTH,
+                            rows: 3,
+                            class: "crayons-textfield" %>
+      </div>
+
+      <div class="mt-4">
+        <%= form.submit t("matching.declarations.submit"), class: "crayons-btn" %>
+        <%= link_to t("matching.declarations.cancel"), meetup_path(@meetup), class: "crayons-btn crayons-btn--outlined" %>
+        <% if @declaration.persisted? %>
+          <%= button_to t("matching.declarations.delete"),
+                        meetup_declaration_path(@meetup.slug),
+                        method: :delete,
+                        class: "crayons-btn crayons-btn--danger",
+                        form: { class: "inline-block", data: { turbo_confirm: t("matching.declarations.confirm_delete") } } %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

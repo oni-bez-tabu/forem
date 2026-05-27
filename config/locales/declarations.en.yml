@@ -1,0 +1,60 @@
+en:
+  meetups:
+    rsvp:
+      prompt_for_declaration: "RSVP saved. Now declare your intent for this event."
+  matching:
+    section:
+      heading: "Matching on this event"
+      no_profile_intro: "Create a Matching profile to declare intent on this event."
+      create_profile: "Create Matching profile"
+      profile_not_visible: "Your Matching profile is not active or is awaiting approval."
+      need_rsvp_first: "RSVP first to declare intent."
+      no_declaration_intro: "Declare your intent to see who matches."
+      declare_now: "Declare intent"
+      not_looking_explanation: "You declared not looking — list is hidden. You can change your declaration."
+      change_declaration: "Change declaration"
+    declarations:
+      saved: "Declaration saved."
+      deleted: "Declaration removed."
+      profile_required: "Create a Matching profile first."
+      rsvp_required: "RSVP to this event first."
+      form_title: "Declare intent — %{meetup}"
+      form_heading: "Your declaration"
+      form_subtitle: "Only on this event. Editable any time."
+      context_label: "Event"
+      submit: "Save declaration"
+      cancel: "Cancel"
+      delete: "Remove declaration"
+      confirm_delete: "Remove your declaration from this event?"
+      fields:
+        intent_level: "Your intent"
+        intent_help: "Controls who you see and who can see you on this event."
+        looking_for: "Looking for"
+        looking_for_help: "Multi-select. Leave empty on \"just vibe\" to be open to everyone active."
+        meetup_note: "Note for this event"
+        meetup_note_help: "Up to %{max} characters. Visible on your Matching profile in this event's context."
+      intents:
+        not_looking:
+          label: "Not looking"
+          help: "I'm attending but not looking to meet anyone. I don't see the list, nobody sees me."
+        just_vibe:
+          label: "Just vibe"
+          help: "Open to chat but not actively searching. Shown with a \"not actively looking\" marker."
+        open_to_meet:
+          label: "Open to meet"
+          help: "Actively looking to chat or meet someone."
+    matches:
+      count:
+        zero: "No matches"
+        one: "1 match"
+        other: "%{count} matches"
+      your_intent: "Your intent"
+      empty_state: "Nobody compatible has declared yet. Check back later."
+      same_intent_heading: "Match your intent"
+      other_intent_heading: "Others who declared"
+      blurred_teaser: "Full list unlocks after you declare intent."
+    event_scoped:
+      context_label: "Match from"
+      meetup_note_label: "Note for this event"
+      send_welcome: "Send welcome message"
+      welcome_coming_soon: "Welcome message delivery is coming soon."

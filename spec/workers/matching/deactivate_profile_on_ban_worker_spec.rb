@@ -9,6 +9,18 @@ RSpec.describe Matching::DeactivateProfileOnBanWorker do
     expect(profile.reload.is_active).to be(false)
   end
 
+  it "destroys the suspended user's declarations (Q6)" do
+    meetup = create(:meetup)
+    profile = create(:matching_profile, :approved)
+    create(:meetup_rsvp, meetup: meetup, user: profile.user)
+    create(:meetup_matching_declaration, meetup: meetup, matching_profile: profile)
+
+    profile.user.add_role(:suspended)
+    expect {
+      described_class.new.perform(profile.user_id)
+    }.to change(MeetupMatchingDeclaration, :count).by(-1)
+  end
+
   it "noops when the user is not suspended" do
     profile = create(:matching_profile, :approved)
     described_class.new.perform(profile.user_id)

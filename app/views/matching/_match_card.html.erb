@@ -1,0 +1,21 @@
+<% profile = declaration.matching_profile %>
+<%= link_to event_scoped_profile_path(meetup.slug, profile.id), class: "crayons-card crayons-card--secondary p-3 block hover:shadow-md transition" do %>
+  <div class="flex gap-3">
+    <% if profile.photo.present? %>
+      <img src="<%= profile.photo.url %>" alt="" style="width: 80px; height: 100px; object-fit: cover; border-radius: 6px; flex-shrink: 0;">
+    <% end %>
+    <div class="flex-1">
+      <div class="flex flex-wrap gap-1 mb-1">
+        <span class="crayons-indicator crayons-indicator--accent fs-xs"><%= t("matching.identity_types.#{profile.identity_type}") %></span>
+        <span class="crayons-indicator fs-xs">📍 <%= profile.city.name %></span>
+      </div>
+      <p class="fs-s"><strong><%= t("matching.declarations.intents.#{declaration.intent_level}.label") %></strong></p>
+      <% if profile.bio.present? %>
+        <p class="fs-xs color-base-60 mt-1"><%= truncate(profile.bio, length: 80) %></p>
+      <% end %>
+      <% if declaration.meetup_note.present? %>
+        <p class="fs-xs mt-1" style="font-style: italic;">"<%= truncate(declaration.meetup_note, length: 100) %>"</p>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,60 @@
+fr:
+  meetups:
+    rsvp:
+      prompt_for_declaration: "RSVP enregistré. Déclarez maintenant votre intention pour cet événement."
+  matching:
+    section:
+      heading: "Matching sur cet événement"
+      no_profile_intro: "Créez un profil Matching pour déclarer une intention."
+      create_profile: "Créer un profil Matching"
+      profile_not_visible: "Votre profil Matching n'est pas actif ou attend une validation."
+      need_rsvp_first: "Confirmez votre présence pour déclarer une intention."
+      no_declaration_intro: "Déclarez votre intention pour voir qui correspond."
+      declare_now: "Déclarer une intention"
+      not_looking_explanation: "Vous avez déclaré ne pas chercher — la liste est masquée. Vous pouvez modifier."
+      change_declaration: "Modifier la déclaration"
+    declarations:
+      saved: "Déclaration enregistrée."
+      deleted: "Déclaration supprimée."
+      profile_required: "Créez d'abord un profil Matching."
+      rsvp_required: "Confirmez votre présence d'abord."
+      form_title: "Déclarer une intention — %{meetup}"
+      form_heading: "Votre déclaration"
+      form_subtitle: "Uniquement pour cet événement. Modifiable à tout moment."
+      context_label: "Événement"
+      submit: "Enregistrer"
+      cancel: "Annuler"
+      delete: "Supprimer la déclaration"
+      confirm_delete: "Supprimer votre déclaration de cet événement ?"
+      fields:
+        intent_level: "Votre intention"
+        intent_help: "Définit qui vous voyez et qui peut vous voir sur cet événement."
+        looking_for: "Vous cherchez"
+        looking_for_help: "Multi-sélection. Laissez vide en \"just vibe\" pour être ouvert à tout le monde."
+        meetup_note: "Note pour cet événement"
+        meetup_note_help: "Jusqu'à %{max} caractères. Visible sur votre profil Matching dans le contexte de cet événement."
+      intents:
+        not_looking:
+          label: "Pas en recherche"
+          help: "Je participe mais ne cherche personne. Je ne vois pas la liste, personne ne me voit."
+        just_vibe:
+          label: "Just vibe"
+          help: "Ouvert à discuter mais pas en recherche active. Affiché avec un marqueur \"pas activement\"."
+        open_to_meet:
+          label: "Ouvert·e à la rencontre"
+          help: "Activement à la recherche de quelqu'un à rencontrer."
+    matches:
+      count:
+        zero: "Aucune correspondance"
+        one: "1 correspondance"
+        other: "%{count} correspondances"
+      your_intent: "Votre intention"
+      empty_state: "Personne de compatible n'a encore déclaré. Revenez plus tard."
+      same_intent_heading: "Correspondent à votre intention"
+      other_intent_heading: "Autres qui ont déclaré"
+      blurred_teaser: "La liste complète s'affichera après votre déclaration."
+    event_scoped:
+      context_label: "Match depuis"
+      meetup_note_label: "Note pour cet événement"
+      send_welcome: "Envoyer un message de bienvenue"
+      welcome_coming_soon: "L'envoi de messages de bienvenue arrive bientôt."

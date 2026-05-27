@@ -301,7 +301,13 @@ Rails.application.routes.draw do
 
     resources :meetups, only: %i[index show], param: :slug do
       resource :rsvp, only: %i[create destroy], controller: "meetups/rsvps"
+      resource :declaration, only: %i[new create edit update destroy], controller: "matching/declarations"
     end
+
+    get "/m/:meetup_slug/:profile_id",
+        to: "matching/event_scoped_profiles#show",
+        as: :event_scoped_profile,
+        constraints: { profile_id: /\d+/ }
 
     get "/matching", to: "matching#show", as: :matching
     get "/matching/onboarding", to: "matching/profiles#new", as: :matching_onboarding

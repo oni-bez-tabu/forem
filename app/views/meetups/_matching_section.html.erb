@@ -1,0 +1,37 @@
+<section class="crayons-card p-6 mb-6">
+  <h2 class="crayons-subtitle mb-3">✨ <%= t("matching.section.heading") %></h2>
+
+  <% if current_profile.nil? %>
+    <p class="mb-3"><%= t("matching.section.no_profile_intro") %></p>
+    <%= link_to t("matching.section.create_profile"), matching_onboarding_path, class: "crayons-btn" %>
+
+  <% elsif !current_profile.visible_to_others? %>
+    <p class="fs-s color-base-60"><%= t("matching.section.profile_not_visible") %></p>
+    <p class="mt-1"><%= link_to t("matching.show.manage_profile"), "/settings/matching", class: "c-link" %></p>
+
+  <% elsif current_rsvp.nil? %>
+    <p class="fs-s color-base-60"><%= t("matching.section.need_rsvp_first") %></p>
+
+  <% elsif current_declaration.nil? %>
+    <p class="mb-3"><%= t("matching.section.no_declaration_intro") %></p>
+    <%= link_to t("matching.section.declare_now"),
+                new_meetup_declaration_path(meetup.slug),
+                class: "crayons-btn" %>
+
+    <% if current_rsvp.status == "interested" %>
+      <%= render "matching/matches_blurred_teaser", meetup: meetup %>
+    <% end %>
+
+  <% elsif current_declaration.not_looking? %>
+    <p class="fs-s color-base-60"><%= t("matching.section.not_looking_explanation") %></p>
+    <%= link_to t("matching.section.change_declaration"),
+                edit_meetup_declaration_path(meetup.slug),
+                class: "crayons-btn crayons-btn--outlined" %>
+
+  <% else %>
+    <%= render "matching/matches_list",
+               meetup: meetup,
+               current_declaration: current_declaration,
+               pool: pool %>
+  <% end %>
+</section>

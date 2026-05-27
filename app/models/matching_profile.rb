@@ -10,6 +10,8 @@ class MatchingProfile < ApplicationRecord
   belongs_to :user
   belongs_to :city
 
+  has_many :matching_declarations, class_name: "MeetupMatchingDeclaration", dependent: :destroy
+
   validates :photo, presence: true
   validates :identity_type, inclusion: { in: IDENTITY_TYPES }
   validates :moderation_state, inclusion: { in: MODERATION_STATES }

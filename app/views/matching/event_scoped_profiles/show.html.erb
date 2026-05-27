@@ -1,0 +1,40 @@
+<% title @profile.user.username %>
+
+<div class="crayons-layout crayons-layout--limited-width">
+  <header class="mb-4">
+    <p class="fs-s color-base-60"><%= t("matching.event_scoped.context_label") %>: <%= link_to @meetup.name, meetup_path(@meetup), class: "c-link" %> · <%= I18n.l(@meetup.start_at, format: :short) %></p>
+  </header>
+
+  <div class="crayons-card overflow-hidden">
+    <% if @profile.photo.present? %>
+      <img src="<%= @profile.photo.url %>" alt="@<%= @profile.user.username %>" style="width: 100%; max-height: 480px; object-fit: cover;">
+    <% end %>
+    <div class="p-6">
+      <div class="flex flex-wrap gap-2 items-center mb-3">
+        <span class="crayons-indicator crayons-indicator--accent"><%= t("matching.identity_types.#{@profile.identity_type}") %></span>
+        <span class="crayons-indicator">📍 <%= @profile.city.name %></span>
+        <span class="crayons-indicator"><%= t("matching.declarations.intents.#{@declaration.intent_level}.label") %></span>
+      </div>
+
+      <% if @profile.bio.present? %>
+        <p class="mt-2"><%= @profile.bio %></p>
+      <% end %>
+
+      <% if @declaration.meetup_note.present? %>
+        <div class="mt-4 p-3" style="background: var(--card-secondary-bg, #f5f5f5); border-radius: 6px;">
+          <p class="fs-xs color-base-60 mb-1"><%= t("matching.event_scoped.meetup_note_label") %></p>
+          <p style="font-style: italic;">"<%= @declaration.meetup_note %>"</p>
+        </div>
+      <% end %>
+
+      <% if current_user && current_user.id != @profile.user_id %>
+        <div class="mt-6">
+          <button type="button" class="crayons-btn" disabled title="<%= t('matching.event_scoped.welcome_coming_soon') %>">
+            <%= t("matching.event_scoped.send_welcome") %>
+          </button>
+          <p class="fs-xs color-base-60 mt-1"><%= t("matching.event_scoped.welcome_coming_soon") %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
