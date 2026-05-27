@@ -268,7 +268,7 @@ Post-review fixes po pierwszym wglądzie w wyrenderowany widget:
 ## Etap 5 — Timeline E8 + powiadomienia
 
 - **Status:** ✅ done
-- **Commit:** `<TBD>`
+- **Commit:** `3a13eeb46`
 - **Data:** 2026-05-27
 
 ### Zaimplementowane
