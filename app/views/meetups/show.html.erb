@@ -29,7 +29,7 @@
   </div>
 
   <%# Meta row: organizer avatar + description CTA %>
-  <div class="flex between gap-4 flex-wrap items-center mb-4">
+  <div class="flex gap-4 flex-wrap items-center mb-4" style="justify-content: space-between;">
     <div class="flex gap-3 items-center">
       <% organizer = @meetup.organizer %>
       <% if organizer.respond_to?(:profile_image_url) && organizer.profile_image_url.present? %>
