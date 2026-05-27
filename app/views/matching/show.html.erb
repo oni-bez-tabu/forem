@@ -38,11 +38,6 @@
           <div class="flex gap-2 flex-wrap mb-2">
             <span class="crayons-indicator crayons-indicator--accent"><%= t("matching.identity_types.#{@profile.identity_type}") %></span>
             <span class="crayons-indicator">📍 <%= @profile.city.name %></span>
-            <% if @new_matches_count.to_i.positive? %>
-              <span class="crayons-indicator" style="background: var(--accent-brand-lighter, #ede9fe); color: var(--accent-brand, #6366f1); font-weight: 600; padding: 4px 12px; border-radius: 100px; display: inline-flex; align-items: center;">
-                <%= t("matching.show.matches_count", count: @new_matches_count) %>
-              </span>
-            <% end %>
           </div>
           <% if @profile.bio.present? %>
             <p class="fs-base color-base-80 mb-1" style="font-style: italic;">"<%= @profile.bio %>"</p>
