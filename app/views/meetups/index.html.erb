@@ -6,12 +6,47 @@
     <p class="fs-base color-base-70" style="max-width: 580px;"><%= t("meetups.subtitle") %></p>
   </header>
 
+  <%# Matching banner — only on the first page so it doesn't keep nagging
+      after the user has scrolled past it. %>
+  <% if @page_offset.zero? && current_user %>
+    <% if @current_profile.nil? || !@current_profile.visible_to_others? %>
+      <%# P1 — no matching profile (or not yet approved) → CTA banner %>
+      <%= link_to matching_onboarding_path, class: "block mb-6", style: "text-decoration: none; color: inherit;" do %>
+        <div class="crayons-card" style="display: flex; gap: 16px; align-items: center; padding: 20px; background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(169,31,105,0.06)); border-color: rgba(99,102,241,0.2);">
+          <div style="flex: 0 0 48px; height: 48px; border-radius: 12px; background: rgba(99,102,241,0.12); display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">✨</div>
+          <div style="flex: 1 1 auto;">
+            <div class="fs-l" style="font-weight: 700;"><%= t("meetups.banner.cta_title") %></div>
+            <div class="fs-s color-base-70" style="margin-top: 2px;"><%= t("meetups.banner.cta_body") %></div>
+          </div>
+          <span style="<%= pill_style(:brand) %> padding: 8px 16px; font-size: 13px;">
+            <%= t("meetups.banner.cta_button") %> →
+          </span>
+        </div>
+      <% end %>
+    <% else %>
+      <%# P2/P3 — active matching profile → Active banner with link to /matching %>
+      <%= link_to matching_path, class: "block mb-6", style: "text-decoration: none; color: inherit;" do %>
+        <div class="crayons-card" style="display: flex; gap: 16px; align-items: center; padding: 20px; background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(169,31,105,0.06)); border-color: rgba(99,102,241,0.2);">
+          <div style="flex: 0 0 48px; height: 48px; border-radius: 12px; background: rgba(99,102,241,0.12); display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">✨</div>
+          <div style="flex: 1 1 auto;">
+            <div class="fs-l" style="font-weight: 700;"><%= t("meetups.banner.active_title") %></div>
+            <div class="fs-s color-base-70" style="margin-top: 2px;"><%= t("meetups.banner.active_body") %></div>
+          </div>
+          <span style="<%= pill_style(:brand) %> padding: 8px 16px; font-size: 13px;">
+            <%= t("meetups.banner.active_button") %> →
+          </span>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <% if @meetups.empty? %>
     <div class="crayons-card p-6 text-center">
       <p><%= t("meetups.empty_state") %></p>
     </div>
   <% else %>
-    <% @meetups.group_by { |m| m.start_at.to_date }.each do |day, day_meetups| %>
+    <% grouped = @meetups.group_by { |m| m.start_at.to_date } %>
+    <% grouped.each_with_index do |(day, day_meetups), day_idx| %>
       <section class="mb-6">
         <%# Day header: large day number, weekday + month, rule, count %>
         <div class="flex items-baseline gap-4 mb-3" style="padding-bottom: 8px;">
@@ -34,6 +69,8 @@
 
         <ul class="flex flex-col gap-2" style="list-style: none; padding: 0; margin: 0;">
           <% day_meetups.each do |meetup| %>
+            <% rsvp_status = @rsvp_status_by_meetup[meetup.id] %>
+            <% pool = @match_pool_by_meetup[meetup.id].to_i %>
             <li>
               <%= link_to meetup_path(meetup), class: "crayons-card block hover:shadow-md transition", style: "display: grid; grid-template-columns: 88px 1fr 156px; gap: 20px; padding: 16px; align-items: stretch; text-decoration: none; color: inherit;" do %>
                 <%# Time column with right border %>
@@ -46,7 +83,7 @@
                   </div>
                 </div>
 
-                <%# Center: title + venue + counts %>
+                <%# Center: title + venue + counts + match-pool flag %>
                 <div style="display: flex; flex-direction: column; justify-content: center; gap: 4px; min-width: 0;">
                   <h3 class="fs-l" style="margin: 0; font-weight: 700; letter-spacing: -0.01em; overflow: hidden; text-overflow: ellipsis;">
                     <%= meetup.name %>
@@ -54,7 +91,7 @@
                   <div class="fs-s color-base-70">
                     <%= meetup.venue_name %> · <span class="color-base-60"><%= meetup.venue_city.name %></span>
                   </div>
-                  <div class="fs-s color-base-60 flex gap-2 flex-wrap items-center">
+                  <div class="fs-s color-base-60 flex gap-3 flex-wrap items-center">
                     <% total = meetup.going_count + meetup.interested_count %>
                     <% if total <= 2 %>
                       <em style="color: rgb(169,31,105); font-weight: 700; font-style: normal;">
@@ -67,10 +104,15 @@
                         <strong style="color: var(--base-90, #171717);"><%= meetup.interested_count %></strong> <%= t("meetups.show.interested_short") %>
                       </span>
                     <% end %>
+                    <% if pool.positive? %>
+                      <span style="color: var(--accent-brand, #6366f1); font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                        ✨ <%= t("meetups.match_pool", count: pool) %>
+                      </span>
+                    <% end %>
                   </div>
                 </div>
 
-                <%# Right: 16:9 banner thumbnail %>
+                <%# Right: 16:9 banner thumbnail with optional RSVP overlay %>
                 <div style="position: relative; border-radius: 6px; overflow: hidden;">
                   <% if meetup.banner.present? %>
                     <img src="<%= meetup.banner.url %>" alt="" style="display: block; width: 100%; height: 90px; object-fit: cover;">
@@ -78,12 +120,40 @@
                     <% gradient = MeetupsHelper::BANNER_GRADIENTS[meetup.banner_gradient] || MeetupsHelper::BANNER_GRADIENTS.fetch("dusk") %>
                     <div style="width: 100%; height: 90px; background: <%= gradient %>;"></div>
                   <% end %>
+                  <% if rsvp_status %>
+                    <span style="position: absolute; top: 8px; left: 8px; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; backdrop-filter: blur(4px); <%= rsvp_status == 'going' ? 'background: rgb(5,150,105); color: #fff;' : 'background: rgba(255,255,255,0.95); color: var(--base-90, #171717);' %>">
+                      <% if rsvp_status == "going" %>✓ <%= t("meetups.rsvp_flag.going") %>
+                      <% else %>★ <%= t("meetups.rsvp_flag.interested") %>
+                      <% end %>
+                    </span>
+                  <% end %>
                 </div>
               <% end %>
             </li>
           <% end %>
         </ul>
       </section>
+
+      <%# Submit-event banner injected after the 2nd day group %>
+      <% if day_idx == 1 %>
+        <div class="crayons-card flex items-center gap-4 mb-6" style="padding: 16px 20px;">
+          <div style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 8px; background: #fff; border: 1px solid var(--card-border, #e5e5e5); display: inline-flex; align-items: center; justify-content: center; font-size: 20px; color: var(--base-70, #555);">+</div>
+          <div style="flex: 1 1 auto;">
+            <div class="fs-base" style="font-weight: 700;"><%= t("meetups.submit_event.title") %></div>
+            <div class="fs-xs color-base-60" style="margin-top: 2px;"><%= t("meetups.submit_event.body") %></div>
+          </div>
+          <% contact = (Settings::Community.respond_to?(:email_address) && Settings::Community.email_address.presence) || "kontakt@nietabu.pl" %>
+          <%= link_to t("meetups.submit_event.button") + " →", "mailto:#{contact}", class: "c-btn c-btn--secondary c-btn--s" %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if @has_more %>
+      <div class="flex justify-center mt-6">
+        <%= link_to t("meetups.load_more"),
+                    meetups_path(offset: @next_offset),
+                    class: "c-btn c-btn--secondary c-btn--l" %>
+      </div>
     <% end %>
   <% end %>
 </div>

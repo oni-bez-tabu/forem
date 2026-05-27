@@ -11,6 +11,24 @@ fr:
       one: "1 événement"
       other: "%{count} événements"
     be_first_pill: "Soyez le premier de nietabu"
+    match_pool:
+      one: "1 cherche à rencontrer"
+      other: "%{count} cherchent à rencontrer"
+    load_more: "Voir plus d'événements"
+    rsvp_flag:
+      going: "Vous y allez"
+      interested: "Vous êtes intéressé"
+    banner:
+      cta_title: "Vous voulez rencontrer quelqu'un ici ?"
+      cta_body: "Créez un profil Matching — séparé de votre compte principal, visible uniquement par les personnes qui cherchent aussi."
+      cta_button: "Créer un profil Matching"
+      active_title: "Votre profil Matching est actif"
+      active_body: "Voyez les matchs et qui attend une intention — flux complet dans le panneau Matching."
+      active_button: "Mon Matching"
+    submit_event:
+      title: "Vous voulez que votre événement apparaisse ici ?"
+      body: "Écrivez-nous — nous l'ajouterons manuellement."
+      button: "Nous contacter"
     show:
       organizer: "Organisateur"
       venue: "Lieu"

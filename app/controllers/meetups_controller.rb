@@ -1,8 +1,33 @@
 class MeetupsController < ApplicationController
+  PAGE_SIZE = 20
+
   def index
-    @meetups = Meetup.visible_in_lists
+    base = Meetup.visible_in_lists
       .upcoming_first
       .includes(:venue_city, :organizer_user, :organizer_organization)
+
+    @page_offset = params[:offset].to_i.clamp(0, 10_000)
+    @meetups = base.limit(PAGE_SIZE).offset(@page_offset)
+    @next_offset = @page_offset + @meetups.length
+    @has_more = base.limit(1).offset(@next_offset).any?
+
+    if current_user
+      @current_profile = MatchingProfile.find_by(user_id: current_user.id)
+      @rsvp_status_by_meetup = MeetupRsvp
+        .where(user_id: current_user.id, meetup_id: @meetups.map(&:id))
+        .pluck(:meetup_id, :status)
+        .to_h
+    else
+      @rsvp_status_by_meetup = {}
+    end
+
+    @match_pool_by_meetup = MeetupMatchingDeclaration
+      .where(meetup_id: @meetups.map(&:id))
+      .where(intent_level: MeetupMatchingDeclaration::ACTIVE_INTENTS)
+      .joins(:matching_profile)
+      .where(matching_profile: { is_active: true, moderation_state: "approved" })
+      .group(:meetup_id)
+      .count
   end
 
   def show
