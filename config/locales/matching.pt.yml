@@ -76,6 +76,23 @@ pt:
       title: "Crie seu perfil Matching"
       subtitle: "Quatro campos, alguns segundos. O perfil vai para revisão do administrador."
       submit: "Enviar para revisão"
+      intro:
+        title: "Conheça alguém em um evento"
+        headline: "Conheça alguém em um evento"
+        tagline: "Matching é um perfil separado que permite você dizer quem quer conhecer em um evento específico — e quem quer conhecer você."
+        benefits:
+          privacy:
+            title: "Privacidade total"
+            body: "Seu perfil Matching é separado da sua conta principal nietabu. Ninguém saberá que é você."
+          per_event:
+            title: "Por evento"
+            body: "Cada evento = sua própria declaração. Você pode ser uma pessoa diferente em festas diferentes."
+          no_pressure:
+            title: "Sem pressão"
+            body: "Sua foto só é vista por pessoas que também procuram alguém como você."
+        privacy_html: "<strong>Sua foto Matching só aparece para pessoas que estão procurando alguém como você.</strong> Mais ninguém a vê — nem mesmo nas listas. E ninguém pode ligar seu perfil Matching à sua conta principal nietabu."
+        cta_primary: "Criar perfil Matching"
+        cta_skip: "Talvez mais tarde"
     profiles:
       created: "Perfil criado. Aguardando revisão."
       updated: "Perfil atualizado."

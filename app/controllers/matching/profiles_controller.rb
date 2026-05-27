@@ -1,9 +1,15 @@
 module Matching
   class ProfilesController < ApplicationController
     before_action :authenticate_user!
-    before_action :block_suspended_users, only: %i[new create]
-    before_action :redirect_if_profile_exists, only: %i[new create]
+    before_action :block_suspended_users, only: %i[intro new create]
+    before_action :redirect_if_profile_exists, only: %i[intro new create]
     before_action :set_profile, only: %i[edit update deactivate reactivate destroy]
+
+    def intro
+      # E5 from the mockup — pre-form intro card with privacy & "per
+      # event" pitches. Renders before the form (E6) to mirror the
+      # onboarding flow.
+    end
 
     def new
       @profile = MatchingProfile.new(user: current_user)

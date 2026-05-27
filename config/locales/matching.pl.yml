@@ -82,6 +82,23 @@ pl:
       title: "Stwórz profil Matching"
       subtitle: "Cztery pola, kilka sekund. Profil trafia do akceptacji administratora."
       submit: "Wyślij do akceptacji"
+      intro:
+        title: "Poznaj kogoś na wydarzeniu"
+        headline: "Poznaj kogoś na wydarzeniu"
+        tagline: "Matching to osobny profil, który pozwala ci określić kogo chcesz spotkać na konkretnym wydarzeniu — i kto chce spotkać ciebie."
+        benefits:
+          privacy:
+            title: "Pełna prywatność"
+            body: "Twój profil Matching jest oddzielony od twojego głównego konta nietabu. Nikt nie zobaczy, że to ty."
+          per_event:
+            title: "Per wydarzenie"
+            body: "Każdy event = osobna deklaracja. Możesz być inną osobą na różnych imprezach."
+          no_pressure:
+            title: "Bez nacisku"
+            body: "Zdjęcie zobaczy tylko osoba, która sama szuka kogoś takiego jak ty."
+        privacy_html: "<strong>Twoje zdjęcie z profilu Matching pojawia się TYLKO przed osobami, które same szukają kogoś takiego jak ty.</strong> Inni go nie zobaczą — nawet w listach. Nikt też nie ma jak skojarzyć profilu Matching z twoim głównym kontem na nietabu."
+        cta_primary: "Załóż profil Matching"
+        cta_skip: "Może później"
     profiles:
       created: "Profil utworzony. Czeka na akceptację administratora."
       updated: "Profil zaktualizowany."

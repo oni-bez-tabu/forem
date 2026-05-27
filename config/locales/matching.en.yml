@@ -76,6 +76,23 @@ en:
       title: "Create your Matching profile"
       subtitle: "Four fields, a few seconds. Profile goes to admin review."
       submit: "Submit for review"
+      intro:
+        title: "Meet someone at an event"
+        headline: "Meet someone at an event"
+        tagline: "Matching is a separate profile that lets you say who you want to meet at a specific event — and who wants to meet you."
+        benefits:
+          privacy:
+            title: "Full privacy"
+            body: "Your Matching profile is separate from your main nietabu account. Nobody will know it's you."
+          per_event:
+            title: "Per event"
+            body: "Each event = its own declaration. You can be a different person at different parties."
+          no_pressure:
+            title: "No pressure"
+            body: "Your photo is only seen by people who themselves are looking for someone like you."
+        privacy_html: "<strong>Your Matching photo only appears for people who are themselves looking for someone like you.</strong> No one else sees it — not even in lists. And no one can connect your Matching profile to your main nietabu account."
+        cta_primary: "Create Matching profile"
+        cta_skip: "Maybe later"
     profiles:
       created: "Profile created. Awaiting admin review."
       updated: "Profile updated."
