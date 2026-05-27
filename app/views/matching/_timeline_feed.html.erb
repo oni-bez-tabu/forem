@@ -1,30 +1,35 @@
 <%# events: Array of event hashes from Matching::TimelineFeed.
-    recommendations: Meetup records from Matching::MeetupRecommendations.
-    UX: insert one recommendation card every 5 events (max 3 rec slots).
-%>
+    recommendations: Array of Matching::MeetupRecommendations::Recommendation structs.
+    UX (mockup E8): dot timeline; one recommendation card every 5 events,
+    tail spillover for the remainder. %>
 
 <% if events.empty? && recommendations.empty? %>
   <div class="crayons-card p-6 text-center">
     <p class="color-base-60"><%= t("matching.timeline.empty_state") %></p>
   </div>
 <% else %>
-  <ol class="crayons-card p-0" style="list-style: none; margin: 0;">
+  <ol class="ltag__timeline" style="list-style: none; padding: 0; margin: 0; position: relative;">
     <% rec_queue = recommendations.dup %>
     <% events.each_with_index do |event, idx| %>
-      <li style="border-bottom: 1px solid var(--card-border, #e5e5e5);">
+      <li class="ltag__timeline-item" style="position: relative; padding: 0 0 16px 28px;">
+        <span class="ltag__timeline-dot ltag__timeline-dot--<%= dot_color_for(event[:type]) %>" style="position: absolute; left: 8px; top: 18px; width: 10px; height: 10px; border-radius: 50%; background: <%= dot_hex_for(event[:type]) %>; box-shadow: 0 0 0 3px var(--card-bg, #fff);"></span>
+        <span style="position: absolute; left: 12px; top: 28px; bottom: -4px; width: 2px; background: var(--card-border, #e5e5e5);"></span>
         <%= render "timeline_event", event: event %>
       </li>
       <% if (idx + 1) % 5 == 0 && rec_queue.any? %>
-        <li style="border-bottom: 1px solid var(--card-border, #e5e5e5); background: var(--card-secondary-bg, #f9f9f9);">
-          <%= render "timeline_recommendation", meetup: rec_queue.shift %>
+        <li class="ltag__timeline-item" style="position: relative; padding: 0 0 16px 28px;">
+          <span class="ltag__timeline-dot" style="position: absolute; left: 8px; top: 18px; width: 10px; height: 10px; border-radius: 50%; background: var(--base-30, #d1d5db); box-shadow: 0 0 0 3px var(--card-bg, #fff);"></span>
+          <span style="position: absolute; left: 12px; top: 28px; bottom: -4px; width: 2px; background: var(--card-border, #e5e5e5);"></span>
+          <%= render "timeline_recommendation", recommendation: rec_queue.shift %>
         </li>
       <% end %>
     <% end %>
 
-    <%# Spill remaining recommendations at the tail (when timeline is short). %>
-    <% rec_queue.each do |meetup| %>
-      <li style="border-bottom: 1px solid var(--card-border, #e5e5e5); background: var(--card-secondary-bg, #f9f9f9);">
-        <%= render "timeline_recommendation", meetup: meetup %>
+    <% rec_queue.each do |rec| %>
+      <li class="ltag__timeline-item" style="position: relative; padding: 0 0 16px 28px;">
+        <span class="ltag__timeline-dot" style="position: absolute; left: 8px; top: 18px; width: 10px; height: 10px; border-radius: 50%; background: var(--base-30, #d1d5db); box-shadow: 0 0 0 3px var(--card-bg, #fff);"></span>
+        <span style="position: absolute; left: 12px; top: 28px; bottom: -4px; width: 2px; background: var(--card-border, #e5e5e5);"></span>
+        <%= render "timeline_recommendation", recommendation: rec %>
       </li>
     <% end %>
   </ol>

@@ -61,7 +61,7 @@ RSpec.describe Matching::TimelineFeed do
       expect(wr[:payload][:other_profile_id]).to eq(sender.id)
     end
 
-    it "derives match_found from declarations created after the viewer's own" do
+    it "aggregates match_found per meetup with count + joiner profile records" do
       profile
       meetup = create(:meetup)
       create(:meetup_rsvp, meetup: meetup, user: user, status: "going")
@@ -69,22 +69,26 @@ RSpec.describe Matching::TimelineFeed do
                           meetup: meetup,
                           matching_profile: profile,
                           intent_level: "open_to_meet")
-      viewer_dec.update_columns(created_at: 2.days.ago)
+      viewer_dec.update_columns(created_at: 5.days.ago)
 
-      joiner = create(:matching_profile, :approved)
-      create(:meetup_rsvp, meetup: meetup, user: joiner.user, status: "going")
-      joiner_dec = create(:meetup_matching_declaration,
-                          meetup: meetup,
-                          matching_profile: joiner,
-                          intent_level: "open_to_meet")
-      joiner_dec.update_columns(created_at: 1.hour.ago)
+      joiners = create_list(:matching_profile, 4, :approved)
+      joiners.each_with_index do |jp, i|
+        create(:meetup_rsvp, meetup: meetup, user: jp.user, status: "going")
+        d = create(:meetup_matching_declaration,
+                   meetup: meetup,
+                   matching_profile: jp,
+                   intent_level: "open_to_meet")
+        d.update_columns(created_at: (4 - i).hours.ago)
+      end
 
       events = described_class.new(user: user).call
-      mf = events.find { |e| e[:type] == :match_found }
-      expect(mf).to be_present
-      expect(mf[:meetup]).to eq(meetup)
-      expect(mf[:payload][:new_profile_id]).to eq(joiner.id)
-      expect(mf[:payload][:new_username]).to eq(joiner.user.username)
+      mfs = events.select { |e| e[:type] == :match_found }
+      expect(mfs.length).to eq(1)
+      expect(mfs.first[:meetup]).to eq(meetup)
+      expect(mfs.first[:payload][:count]).to eq(4)
+      preview = mfs.first[:payload][:joiners]
+      expect(preview.length).to eq(Matching::TimelineFeed::JOINERS_PREVIEW)
+      expect(preview.first).to be_a(MatchingProfile)
     end
 
     it "skips match_found rows for declarations older than the viewer's" do
@@ -165,6 +169,36 @@ RSpec.describe Matching::TimelineFeed do
       create(:meetup_rsvp, meetup: meetup, user: user, status: "interested")
       events = described_class.new(user: user).call
       expect(events.map { |e| e[:type] }).to eq([:rsvp_created])
+    end
+
+    it "emits :needs_intent for RSVPs without a declaration when profile is active" do
+      profile
+      meetup = create(:meetup)
+      create(:meetup_rsvp, meetup: meetup, user: user, status: "going")
+
+      events = described_class.new(user: user).call
+      needs = events.find { |e| e[:type] == :needs_intent }
+      expect(needs).to be_present
+      expect(needs[:meetup]).to eq(meetup)
+      expect(needs[:payload][:status]).to eq("going")
+    end
+
+    it "does not emit :needs_intent when a declaration already exists" do
+      profile
+      meetup = create(:meetup)
+      create(:meetup_rsvp, meetup: meetup, user: user, status: "going")
+      create(:meetup_matching_declaration, meetup: meetup, matching_profile: profile, intent_level: "open_to_meet")
+
+      events = described_class.new(user: user).call
+      expect(events.map { |e| e[:type] }).not_to include(:needs_intent)
+    end
+
+    it "does not emit :needs_intent for users without a matching profile" do
+      meetup = create(:meetup)
+      create(:meetup_rsvp, meetup: meetup, user: user, status: "going")
+
+      events = described_class.new(user: user).call
+      expect(events.map { |e| e[:type] }).not_to include(:needs_intent)
     end
   end
 end

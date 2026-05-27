@@ -20,20 +20,56 @@ en:
       pending_explanation: "Your profile is awaiting admin review. We'll email you as soon as it's approved."
       rejected_explanation: "Profile was not approved. Check the reason and edit in settings."
       rejection_reason: "Reason"
+      profile_title: "Your Matching profile"
+      matches_count:
+        one: "1 new match"
+        other: "%{count} new matches"
+      privacy_hint: "Your photo is only visible to people who are themselves looking to meet someone like you."
     timeline:
-      heading: "Your activity"
+      heading: "Recent activity"
+      subheading: "Matches, declarations, RSVPs — in the order they happened"
       empty_state: "Nothing in Matching yet. RSVP and declare intent on an event to see entries here."
-      ago: "ago"
+      match_found_caption:
+        one: "1 person declared intent after you"
+        other: "%{count} people declared intent after you"
+      see_all:
+        one: "See all (1)"
+        other: "See all (%{count})"
+      needs_intent_caption: "Add your intent so you appear in matches."
+      declare_intent_button: "Add intent"
+      kind_labels:
+        rsvp_created: "RSVP'd"
+        declaration_created: "Intent declared"
+        declaration_updated: "Intent updated"
+        welcome_sent: "Welcome sent"
+        welcome_received: "Welcome received"
+        match_found: "New match"
+        needs_intent: "Needs intent"
       events:
+        rsvp_going_pill: "Going"
+        rsvp_interested_pill: "Interested"
         rsvp_going: "You RSVP'd as „going”"
         rsvp_interested: "You marked „interested”"
         declaration_created: "You declared intent: %{intent}"
         declaration_updated: "You updated intent: %{intent}"
-        welcome_sent: "You sent a welcome to %{username}"
-        welcome_received: "You received a welcome from %{username}"
-        match_found: "Someone new joined the matching pool"
+        welcome_sent: "You sent a welcome to @%{username}"
+        welcome_received: "You received a welcome from @%{username}"
     recommendations:
-      label: "Recommended event"
+      label: "Recommended for you"
+      reason_lead: "Because"
+      reason_pool_count:
+        one: "1 person declared intent on this event"
+        other: "%{count} people declared intent on this event"
+      open_to_meet_count:
+        one: "1 wants to meet"
+        other: "%{count} want to meet"
+      view_meetup: "View event"
+      declare_intent: "Declare intent"
+    identity_types_plural:
+      woman: "women"
+      man: "men"
+      couple: "couples"
+      non_binary: "non-binary"
     onboarding:
       title: "Create your Matching profile"
       subtitle: "Four fields, a few seconds. Profile goes to admin review."

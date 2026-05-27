@@ -9,8 +9,24 @@ pt:
     show:
       organizer: "Organizador"
       venue: "Local"
-      view_full_description: "Ver descrição completa"
-      rsvp_heading: "Seu RSVP"
+      view_full_description: "Ver descrição completa no nietabu"
+      rsvp_heading: "Escolha sua participação"
+      back_to_list: "Todos os eventos"
+      counts_caveat: "Os números refletem apenas as declarações da plataforma"
+      going_short: "vão"
+      interested_short: "interessados"
+      going_confirmation: "Salvamos que você vai."
+      going_confirmation_tail: "Divirta-se 🌙"
+      relative:
+        today: "hoje"
+        tomorrow: "amanhã"
+        yesterday: "ontem"
+        in_days:
+          one: "em 1 dia"
+          other: "em %{count} dias"
+        days_ago:
+          one: "1 dia atrás"
+          other: "%{count} dias atrás"
     rsvp:
       going: "Vou"
       interested: "Interessado"

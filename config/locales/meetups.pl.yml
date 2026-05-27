@@ -9,8 +9,28 @@ pl:
     show:
       organizer: "Organizator"
       venue: "Miejsce"
-      view_full_description: "Zobacz pełen opis"
-      rsvp_heading: "Twoje uczestnictwo"
+      view_full_description: "Zobacz pełen opis na nietabu"
+      rsvp_heading: "Wybierz swój udział"
+      back_to_list: "Wszystkie wydarzenia"
+      counts_caveat: "Liczby dotyczą tylko deklaracji z platformy"
+      going_short: "idzie"
+      interested_short: "zainteresowanych"
+      going_confirmation: "Zapisaliśmy że idziesz."
+      going_confirmation_tail: "Powodzenia 🌙"
+      relative:
+        today: "dziś"
+        tomorrow: "jutro"
+        yesterday: "wczoraj"
+        in_days:
+          one: "za 1 dzień"
+          few: "za %{count} dni"
+          many: "za %{count} dni"
+          other: "za %{count} dni"
+        days_ago:
+          one: "1 dzień temu"
+          few: "%{count} dni temu"
+          many: "%{count} dni temu"
+          other: "%{count} dni temu"
     rsvp:
       going: "Idę"
       interested: "Interesuje mnie"

@@ -8,8 +8,16 @@ module Matching
   # produktowa "zestawiamy wszystkie płcie"), więc heurystyka jest
   # uproszczona do city + activity count. Jeśli kiedyś wraca filtrowanie
   # identity, wejdź tu i dodaj join + filter.
+  #
+  # Result shape: array of Recommendation structs
+  #   - meetup: Meetup record
+  #   - active_count: Integer (declarations with intent != not_looking)
+  #   - identity_breakdown: Hash {String => Integer}, e.g. { "woman" => 7, "couple" => 4 }
+  #   - open_to_meet_count: Integer (subset of active_count with open_to_meet)
   class MeetupRecommendations
     DEFAULT_LIMIT = 3
+
+    Recommendation = Struct.new(:meetup, :active_count, :identity_breakdown, :open_to_meet_count, keyword_init: true)
 
     def initialize(user:, limit: DEFAULT_LIMIT)
       @user = user
@@ -18,7 +26,7 @@ module Matching
     end
 
     def call
-      return Meetup.none unless @profile&.visible_to_others?
+      return [] unless @profile&.visible_to_others?
 
       city = @profile.city
       base = Meetup
@@ -28,18 +36,25 @@ module Matching
       base = scope_by_city(base, city)
       base = base.where.not(id: user_rsvped_meetup_ids)
 
-      # Subquery counts only active-intent declarations per meetup. Plain
-      # left_join + GROUP BY hit an ambiguous-`id` interpretation in PG that
-      # silently dropped meetups without declarations.
-      active_counts = MeetupMatchingDeclaration
-        .where(intent_level: MeetupMatchingDeclaration::ACTIVE_INTENTS)
-        .group(:meetup_id)
-        .count
-
       candidates = base.to_a
-      candidates
-        .sort_by { |m| [-(active_counts[m.id] || 0), m.start_at] }
+      return [] if candidates.empty?
+
+      counts_by_meetup = active_counts_for(candidates.map(&:id))
+      breakdowns = breakdowns_for(candidates.map(&:id))
+      open_to_meet = open_to_meet_counts_for(candidates.map(&:id))
+
+      ranked = candidates
+        .sort_by { |m| [-(counts_by_meetup[m.id] || 0), m.start_at] }
         .first(@limit)
+
+      ranked.map do |m|
+        Recommendation.new(
+          meetup: m,
+          active_count: counts_by_meetup[m.id] || 0,
+          identity_breakdown: breakdowns[m.id] || {},
+          open_to_meet_count: open_to_meet[m.id] || 0,
+        )
+      end
     end
 
     private
@@ -54,6 +69,34 @@ module Matching
 
     def user_rsvped_meetup_ids
       MeetupRsvp.where(user_id: @user.id).pluck(:meetup_id)
+    end
+
+    def active_counts_for(meetup_ids)
+      MeetupMatchingDeclaration
+        .where(meetup_id: meetup_ids)
+        .where(intent_level: MeetupMatchingDeclaration::ACTIVE_INTENTS)
+        .group(:meetup_id)
+        .count
+    end
+
+    def open_to_meet_counts_for(meetup_ids)
+      MeetupMatchingDeclaration
+        .where(meetup_id: meetup_ids, intent_level: "open_to_meet")
+        .group(:meetup_id)
+        .count
+    end
+
+    def breakdowns_for(meetup_ids)
+      rows = MeetupMatchingDeclaration
+        .joins(:matching_profile)
+        .where(meetup_id: meetup_ids)
+        .where(intent_level: MeetupMatchingDeclaration::ACTIVE_INTENTS)
+        .group(:meetup_id, "matching_profiles.identity_type")
+        .count
+
+      rows.each_with_object(Hash.new { |h, k| h[k] = {} }) do |((mid, identity), cnt), acc|
+        acc[mid][identity] = cnt
+      end
     end
   end
 end

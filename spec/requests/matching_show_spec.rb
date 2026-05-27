@@ -45,7 +45,9 @@ RSpec.describe "GET /matching" do
       meetup = create(:meetup, name: "Demo Meetup")
       create(:meetup_rsvp, meetup: meetup, user: user, status: "going")
       get matching_path
-      expect(response.body).to include(I18n.t("matching.timeline.events.rsvp_going"))
+      # New layout uses kind label + RSVP pill, not the old full sentence.
+      expect(response.body).to include(I18n.t("matching.timeline.kind_labels.rsvp_created"))
+      expect(response.body).to include(I18n.t("matching.timeline.events.rsvp_going_pill"))
       expect(response.body).to include("Demo Meetup")
     end
 

@@ -20,20 +20,56 @@ pt:
       pending_explanation: "Seu perfil aguarda revisão do administrador. Enviaremos um e-mail assim que for aprovado."
       rejected_explanation: "O perfil não foi aprovado. Veja o motivo e edite nas configurações."
       rejection_reason: "Motivo"
+      profile_title: "Seu perfil Matching"
+      matches_count:
+        one: "1 novo match"
+        other: "%{count} novos matches"
+      privacy_hint: "Sua foto só é visível para pessoas que estão procurando conhecer alguém como você."
     timeline:
-      heading: "Sua atividade"
+      heading: "Atividade recente"
+      subheading: "Matches, declarações, RSVPs — na ordem em que aconteceram"
       empty_state: "Ainda nada no Matching. Faça RSVP e declare sua intenção em um evento para ver entradas aqui."
-      ago: "atrás"
+      match_found_caption:
+        one: "1 pessoa declarou intenção depois de você"
+        other: "%{count} pessoas declararam intenção depois de você"
+      see_all:
+        one: "Ver todos (1)"
+        other: "Ver todos (%{count})"
+      needs_intent_caption: "Declare sua intenção para aparecer nas combinações."
+      declare_intent_button: "Adicionar intenção"
+      kind_labels:
+        rsvp_created: "RSVP feito"
+        declaration_created: "Intenção declarada"
+        declaration_updated: "Intenção atualizada"
+        welcome_sent: "Boas-vindas enviada"
+        welcome_received: "Boas-vindas recebida"
+        match_found: "Novo match"
+        needs_intent: "Falta intenção"
       events:
+        rsvp_going_pill: "Vou"
+        rsvp_interested_pill: "Interessado"
         rsvp_going: "Você confirmou „vou”"
         rsvp_interested: "Você marcou „interessado”"
         declaration_created: "Você declarou sua intenção: %{intent}"
         declaration_updated: "Você atualizou sua intenção: %{intent}"
-        welcome_sent: "Você enviou uma mensagem de boas-vindas para %{username}"
-        welcome_received: "Você recebeu uma mensagem de boas-vindas de %{username}"
-        match_found: "Alguém novo entrou no pool de matching"
+        welcome_sent: "Você enviou uma mensagem de boas-vindas para @%{username}"
+        welcome_received: "Você recebeu uma mensagem de boas-vindas de @%{username}"
     recommendations:
-      label: "Evento recomendado"
+      label: "Recomendado para você"
+      reason_lead: "Porque"
+      reason_pool_count:
+        one: "1 pessoa declarou intenção neste evento"
+        other: "%{count} pessoas declararam intenção neste evento"
+      open_to_meet_count:
+        one: "1 quer conhecer"
+        other: "%{count} querem conhecer"
+      view_meetup: "Ver evento"
+      declare_intent: "Declarar intenção"
+    identity_types_plural:
+      woman: "mulheres"
+      man: "homens"
+      couple: "casais"
+      non_binary: "não-binárias"
     onboarding:
       title: "Crie seu perfil Matching"
       subtitle: "Quatro campos, alguns segundos. O perfil vai para revisão do administrador."

@@ -5,14 +5,18 @@ module Matching
   #
   # Event hash shape: { type:, at:, meetup:, payload: }
   # - type: :rsvp_created | :declaration_created | :declaration_updated
-  #         | :welcome_sent | :welcome_received | :match_found
+  #         | :welcome_sent | :welcome_received | :match_found | :needs_intent
   # - at:   ActiveSupport::TimeWithZone (sort key)
   # - meetup: Meetup record (always present in this POC — every event is tied
   #           to a meetup)
-  # - payload: type-specific hash (e.g., status for RSVP, intent for declaration,
-  #            other_profile for welcome/match)
+  # - payload: type-specific hash; e.g.
+  #   :match_found    → { count, joiners: [MatchingProfile records, top 3] }
+  #     (aggregated per meetup so the timeline shows one row per meetup rather
+  #     than one row per joiner — matches hifi mockup E8 "3 nowe dopasowania")
+  #   :needs_intent   → {} (user has RSVP but no declaration yet)
   class TimelineFeed
     DEFAULT_LIMIT = 30
+    JOINERS_PREVIEW = 3
     LIFECYCLE_CUTOFF = Meetup::LIST_LIFECYCLE_GRACE
 
     def initialize(user:, limit: DEFAULT_LIMIT)
@@ -23,7 +27,7 @@ module Matching
 
     def call
       events = rsvp_events + declaration_events + welcome_sent_events +
-               welcome_received_events + match_found_events
+               welcome_received_events + match_found_events + needs_intent_events
       events
         .reject { |e| meetup_expired?(e[:meetup]) }
         .sort_by { |e| e[:at] }
@@ -106,10 +110,11 @@ module Matching
         end
     end
 
-    # "Match found" = someone joined a pool I'm in, *after* I declared.
-    # Computed on demand from the declarations themselves — no parallel
-    # event-store. For each of the viewer's active declarations, find every
-    # other active declaration on the same meetup with a later `created_at`.
+    # Aggregated "match found" — one event per meetup, payload carries the
+    # count + top-N joiner profiles. Joiners are matching declarations on
+    # meetups where the viewer also has an active declaration, with a later
+    # created_at than the viewer's own declaration (i.e., "joined my pool
+    # after me"). The `at` of the event is the most recent joiner's time.
     def match_found_events
       return [] unless profile
 
@@ -123,27 +128,60 @@ module Matching
       meetup_ids = meetup_to_viewer_decl_at.keys
 
       joiner_decs = MeetupMatchingDeclaration
-        .includes(:meetup, matching_profile: :user)
+        .includes(:meetup, matching_profile: %i[user city])
         .where(meetup_id: meetup_ids)
         .where.not(intent_level: "not_looking")
         .where.not(matching_profile_id: profile.id)
         .joins(:matching_profile)
         .where(matching_profile: { is_active: true, moderation_state: "approved" })
 
-      joiner_decs.filter_map do |jd|
-        viewer_at = meetup_to_viewer_decl_at[jd.meetup_id]
-        next unless viewer_at && jd.created_at > viewer_at
+      # Group by meetup so the timeline shows one aggregated row per meetup,
+      # not one row per joiner (mockup E8 — "3 nowe dopasowania").
+      grouped = joiner_decs.group_by(&:meetup_id)
+      grouped.filter_map do |meetup_id, decs|
+        viewer_at = meetup_to_viewer_decl_at[meetup_id]
+        recent = decs.select { |d| d.created_at > viewer_at }
+        next if recent.empty?
 
+        latest = recent.max_by(&:created_at)
+        preview = recent.sort_by(&:created_at).reverse.first(JOINERS_PREVIEW).map(&:matching_profile)
         {
           type: :match_found,
-          at: jd.created_at,
-          meetup: jd.meetup,
+          at: latest.created_at,
+          meetup: latest.meetup,
           payload: {
-            new_profile_id: jd.matching_profile_id,
-            new_username: jd.matching_profile.user.username,
+            count: recent.length,
+            joiners: preview,
           },
         }
       end
+    end
+
+    # "Needs intent" — viewer has an RSVP (going/interested) on an upcoming
+    # meetup but no MatchingMatching declaration yet, and they have an active
+    # matching profile. Mockup E8 surfaces this as a magenta dashed prompt
+    # card right in the timeline so users don't forget to declare.
+    def needs_intent_events
+      return [] unless profile&.visible_to_others?
+
+      viewer_decl_meetup_ids = MeetupMatchingDeclaration
+        .where(matching_profile_id: profile.id)
+        .pluck(:meetup_id)
+        .to_set
+
+      MeetupRsvp
+        .includes(meetup: :venue_city)
+        .where(user_id: user.id)
+        .filter_map do |rsvp|
+          next if viewer_decl_meetup_ids.include?(rsvp.meetup_id)
+
+          {
+            type: :needs_intent,
+            at: rsvp.created_at,
+            meetup: rsvp.meetup,
+            payload: { status: rsvp.status },
+          }
+        end
     end
   end
 end

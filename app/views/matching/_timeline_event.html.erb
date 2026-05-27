@@ -1,25 +1,108 @@
-<% icon, label = case event[:type]
-                 when :rsvp_created
-                   ["📅", t("matching.timeline.events.rsvp_#{event[:payload][:status]}")]
-                 when :declaration_created
-                   ["✨", t("matching.timeline.events.declaration_created", intent: t("matching.declarations.intents.#{event[:payload][:intent]}.label"))]
-                 when :declaration_updated
-                   ["✏️", t("matching.timeline.events.declaration_updated", intent: t("matching.declarations.intents.#{event[:payload][:intent]}.label"))]
-                 when :welcome_sent
-                   ["💌", t("matching.timeline.events.welcome_sent", username: event[:payload][:other_username])]
-                 when :welcome_received
-                   ["💌", t("matching.timeline.events.welcome_received", username: event[:payload][:other_username])]
-                 when :match_found
-                   ["✨", t("matching.timeline.events.match_found")]
-                 end %>
+<%# Per-event card mirroring mockup E8 (screens.jsx:823-980).
+    Layout: header row (kind label pill + relative time on the right), then
+    meetup name/meta, then type-specific body (mini-cards for match_found,
+    intent CTA for needs_intent, simple meta for declarations/rsvp/welcomes).
+%>
+<% kind_label = t("matching.timeline.kind_labels.#{event[:type]}", default: event[:type].to_s.humanize) %>
+<% kind_color_class = case event[:type]
+                     when :match_found then "color-base-90"
+                     when :declaration_created, :declaration_updated then "color-accent-brand"
+                     when :welcome_sent, :welcome_received then "color-accent-brand"
+                     when :needs_intent then "color-accent-warning"
+                     else "color-base-60"
+                     end %>
+<% needs_intent_style = event[:type] == :needs_intent ? "border-style: dashed; border-color: var(--accent-warning, #d97706); background: rgba(217,119,6,0.04);" : "" %>
 
-<div class="flex gap-3 items-start p-3">
-  <span style="font-size: 20px; flex: 0 0 24px;"><%= icon %></span>
-  <div class="flex-1 min-w-0">
-    <div class="fs-s"><%= label %></div>
-    <% if event[:meetup] %>
-      <%= link_to event[:meetup].name, meetup_path(event[:meetup]), class: "c-link fs-s color-base-70" %>
-    <% end %>
-    <div class="fs-xs color-base-50 mt-1"><%= time_ago_in_words(event[:at], scope: :"datetime.distance_in_words_ago") %></div>
+<div class="crayons-card" style="padding: 16px; <%= needs_intent_style %>">
+  <div class="flex between items-baseline gap-2 flex-wrap">
+    <span class="fs-xs <%= kind_color_class %>" style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+      <%= kind_label %>
+    </span>
+    <span class="fs-xs color-base-60"><%= time_ago_in_words(event[:at], scope: :"datetime.distance_in_words_ago") %></span>
   </div>
+
+  <% if event[:meetup] %>
+    <div class="flex between items-baseline gap-2 flex-wrap mt-1">
+      <h3 class="fs-l" style="margin: 0; font-weight: 700;">
+        <%= link_to event[:meetup].name, meetup_path(event[:meetup]), class: "c-link", style: "color: inherit; text-decoration: none;" %>
+      </h3>
+      <% case event[:type]
+         when :rsvp_created %>
+        <span class="crayons-indicator <%= event[:payload][:status] == 'going' ? 'crayons-indicator--success' : '' %>">
+          ✓ <%= t("matching.timeline.events.rsvp_#{event[:payload][:status]}_pill", default: event[:payload][:status]) %>
+        </span>
+      <% when :declaration_created, :declaration_updated %>
+        <span class="crayons-indicator crayons-indicator--accent">
+          <%= t("matching.declarations.intents.#{event[:payload][:intent]}.label") %>
+        </span>
+      <% end %>
+    </div>
+    <p class="fs-s color-base-70" style="margin: 2px 0 0;">
+      📅 <%= I18n.l(event[:meetup].start_at, format: :short) %>
+      <% if event[:meetup].venue_city %> · 📍 <%= event[:meetup].venue_city.name %><% end %>
+    </p>
+  <% end %>
+
+  <% case event[:type]
+     when :match_found %>
+    <% joiners = Array(event[:payload][:joiners]) %>
+    <p class="fs-s color-base-70 mt-2">
+      <%= t("matching.timeline.match_found_caption", count: event[:payload][:count]) %>
+    </p>
+    <% if joiners.any? %>
+      <div style="display: grid; grid-template-columns: repeat(<%= joiners.length %>, minmax(0, 1fr)); gap: 10px; margin-top: 12px;">
+        <% joiners.each do |jp| %>
+          <%= link_to event_scoped_profile_path(event[:meetup].slug, jp.id), class: "c-link", style: "display: block; text-decoration: none; color: inherit;" do %>
+            <div class="crayons-card" style="overflow: hidden; border: 1px solid var(--card-border, #e5e5e5);">
+              <% if jp.photo.present? %>
+                <img src="<%= jp.photo.url %>" alt="@<%= jp.user.username %>" style="width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block;">
+              <% else %>
+                <div style="width: 100%; aspect-ratio: 1/1; background: var(--base-20, #e5e7eb);"></div>
+              <% end %>
+              <div style="padding: 8px 10px;">
+                <p class="fs-xs" style="margin: 0; font-weight: 600;">
+                  <%= t("matching.identity_types.#{jp.identity_type}") %>
+                </p>
+                <p class="fs-xs color-base-60" style="margin: 2px 0 0;">📍 <%= jp.city.name %></p>
+                <% if jp.bio.present? %>
+                  <p class="fs-xs color-base-70" style="margin: 4px 0 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                    <%= jp.bio %>
+                  </p>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if event[:payload][:count].to_i > joiners.length %>
+      <div class="flex justify-end mt-2">
+        <%= link_to meetup_path(event[:meetup]), class: "c-btn c-btn--secondary c-btn--s" do %>
+          <%= t("matching.timeline.see_all", count: event[:payload][:count]) %> →
+        <% end %>
+      </div>
+    <% end %>
+
+  <% when :welcome_sent %>
+    <p class="fs-s color-base-70 mt-1">
+      💌 <%= t("matching.timeline.events.welcome_sent", username: event[:payload][:other_username]) %>
+    </p>
+
+  <% when :welcome_received %>
+    <p class="fs-s color-base-70 mt-1">
+      💌 <%= t("matching.timeline.events.welcome_received", username: event[:payload][:other_username]) %>
+    </p>
+
+  <% when :needs_intent %>
+    <div class="flex between items-center gap-3 flex-wrap mt-2">
+      <p class="fs-s color-base-70" style="margin: 0; flex: 1 1 auto; min-width: 200px;">
+        <%= t("matching.timeline.needs_intent_caption") %>
+      </p>
+      <% if event[:meetup] %>
+        <%= link_to t("matching.timeline.declare_intent_button"),
+                    new_meetup_declaration_path(event[:meetup]),
+                    class: "c-btn c-btn--primary c-btn--s" %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

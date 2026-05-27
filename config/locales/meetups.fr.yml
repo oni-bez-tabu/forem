@@ -9,8 +9,24 @@ fr:
     show:
       organizer: "Organisateur"
       venue: "Lieu"
-      view_full_description: "Voir la description complète"
-      rsvp_heading: "Votre RSVP"
+      view_full_description: "Voir la description complète sur nietabu"
+      rsvp_heading: "Choisissez votre participation"
+      back_to_list: "Tous les événements"
+      counts_caveat: "Les chiffres ne reflètent que les déclarations de la plateforme"
+      going_short: "y vont"
+      interested_short: "intéressés"
+      going_confirmation: "Nous vous avons enregistré comme participant."
+      going_confirmation_tail: "Bonne chance 🌙"
+      relative:
+        today: "aujourd'hui"
+        tomorrow: "demain"
+        yesterday: "hier"
+        in_days:
+          one: "dans 1 jour"
+          other: "dans %{count} jours"
+        days_ago:
+          one: "il y a 1 jour"
+          other: "il y a %{count} jours"
     rsvp:
       going: "J'y vais"
       interested: "Intéressé·e"

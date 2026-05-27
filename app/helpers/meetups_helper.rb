@@ -28,4 +28,23 @@ module MeetupsHelper
   def meetup_day_header(meetup)
     I18n.l(meetup.start_at.to_date, format: :long)
   end
+
+  # Hero "eyebrow" line shown above the title — e.g. "Sobota · za 12 dni"
+  # or "Wczoraj" for events that have already passed but still render.
+  def meetup_hero_eyebrow(meetup)
+    weekday = I18n.l(meetup.start_at, format: "%A")
+    delta = (meetup.start_at.to_date - Date.current).to_i
+    relative = if delta.zero?
+                 I18n.t("meetups.show.relative.today")
+               elsif delta == 1
+                 I18n.t("meetups.show.relative.tomorrow")
+               elsif delta == -1
+                 I18n.t("meetups.show.relative.yesterday")
+               elsif delta.positive?
+                 I18n.t("meetups.show.relative.in_days", count: delta)
+               else
+                 I18n.t("meetups.show.relative.days_ago", count: delta.abs)
+               end
+    "#{weekday.capitalize} · #{relative}"
+  end
 end

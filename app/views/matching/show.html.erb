@@ -18,24 +18,36 @@
     </div>
 
   <% else %>
-    <%# Compact header — small portrait + identity/city + manage link %>
-    <div class="crayons-card p-4 mb-4">
-      <div class="flex gap-3 items-center">
+    <%# Hifi-style header card: large portrait, h1 + status pill, identity/city/match-count chips, italic bio quote, edit btn %>
+    <div class="crayons-card mb-6" style="padding: 24px;">
+      <div class="flex gap-4 items-start flex-wrap">
         <% if @profile.photo.present? %>
-          <img src="<%= @profile.photo.url %>" alt="<%= current_user.username %>" style="width: 64px; height: 64px; object-fit: cover; border-radius: 50%; flex: 0 0 64px;">
+          <img src="<%= @profile.photo.url %>" alt="<%= current_user.username %>" style="width: 96px; height: 120px; object-fit: cover; border-radius: 8px; flex: 0 0 96px;">
         <% end %>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="crayons-indicator crayons-indicator--accent"><%= t("matching.identity_types.#{@profile.identity_type}") %></span>
-            <span class="crayons-indicator">📍 <%= @profile.city.name %></span>
+        <div class="flex-1" style="min-width: 240px;">
+          <div class="flex items-baseline gap-2 flex-wrap mb-1">
+            <h2 class="crayons-title fs-l" style="margin: 0;"><%= t("matching.show.profile_title") %></h2>
             <%= render "matching/moderation_badge", profile: @profile %>
             <% unless @profile.is_active? %>
               <span class="crayons-indicator crayons-indicator--warning"><%= t("matching.show.deactivated") %></span>
             <% end %>
           </div>
-          <% if @profile.moderation_reason.present? %>
-            <p class="fs-s color-base-60 mt-1"><%= t("matching.show.rejection_reason") %>: <%= @profile.moderation_reason %></p>
+          <div class="flex gap-2 flex-wrap mb-2">
+            <span class="crayons-indicator crayons-indicator--accent"><%= t("matching.identity_types.#{@profile.identity_type}") %></span>
+            <span class="crayons-indicator">📍 <%= @profile.city.name %></span>
+            <% if @new_matches_count.to_i.positive? %>
+              <span class="crayons-indicator" style="background: var(--accent-brand-lighter, #ede9fe); color: var(--accent-brand, #6366f1); font-weight: 600;">
+                ✨ <%= t("matching.show.matches_count", count: @new_matches_count) %>
+              </span>
+            <% end %>
+          </div>
+          <% if @profile.bio.present? %>
+            <p class="fs-s color-base-80 mb-1" style="font-style: italic;">"<%= @profile.bio %>"</p>
           <% end %>
+          <% if @profile.moderation_reason.present? %>
+            <p class="fs-s color-base-60 mb-1"><%= t("matching.show.rejection_reason") %>: <%= @profile.moderation_reason %></p>
+          <% end %>
+          <p class="fs-xs color-base-60 mt-1">🔒 <%= t("matching.show.privacy_hint") %></p>
         </div>
         <div>
           <%= link_to t("matching.show.manage_profile"), "/settings/matching", class: "crayons-btn crayons-btn--outlined crayons-btn--s" %>
@@ -44,7 +56,10 @@
     </div>
 
     <% if @profile.visible_to_others? %>
-      <h2 class="crayons-subtitle-1 mb-3"><%= t("matching.timeline.heading") %></h2>
+      <div class="flex between items-baseline flex-wrap mb-3">
+        <h2 class="crayons-subtitle-1" style="margin: 0;"><%= t("matching.timeline.heading") %></h2>
+        <span class="fs-s color-base-60"><%= t("matching.timeline.subheading") %></span>
+      </div>
       <%= render "timeline_feed", events: @timeline, recommendations: @recommendations %>
     <% else %>
       <div class="crayons-card p-6 text-center">

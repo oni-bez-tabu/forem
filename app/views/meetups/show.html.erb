@@ -1,43 +1,80 @@
 <% title @meetup.name %>
 
 <div class="crayons-layout crayons-layout--limited-width">
-  <div class="crayons-card overflow-hidden mb-6">
-    <div class="h-64" style="<%= meetup_banner_style(@meetup) %> background-size: cover; background-position: center;"></div>
-    <div class="p-6">
-      <h1 class="crayons-title fs-xl mb-2"><%= @meetup.name %></h1>
-      <p class="fs-base color-base-70 mb-4">
-        <strong><%= I18n.l(@meetup.start_at, format: :long) %></strong>
-        — <%= I18n.l(@meetup.end_at, format: :short) %>
-      </p>
-      <dl class="grid grid-cols-1 md:grid-cols-2 gap-3 fs-s">
-        <div>
-          <dt class="color-base-60"><%= t("meetups.show.organizer") %></dt>
-          <dd><%= meetup_organizer_label(@meetup) %></dd>
-        </div>
-        <div>
-          <dt class="color-base-60"><%= t("meetups.show.venue") %></dt>
-          <dd><%= @meetup.venue_name %><br><span class="color-base-60"><%= @meetup.venue_city.name %><%= ", #{@meetup.venue_address}" if @meetup.venue_address.present? %></span></dd>
-        </div>
-      </dl>
+  <%# Back-to-list link %>
+  <div class="mb-3">
+    <%= link_to meetups_path, class: "c-link fs-s color-base-60", style: "display: inline-flex; align-items: center; gap: 6px;" do %>
+      ← <%= t("meetups.show.back_to_list") %>
+    <% end %>
+  </div>
 
-      <div class="mt-4">
-        <% if @meetup.description_link_type == "internal" && @meetup.description_internal_post %>
-          <%= link_to t("meetups.show.view_full_description"), "/#{@meetup.description_internal_post.user.username}/#{@meetup.description_internal_post.slug}", class: "c-btn c-btn--secondary" %>
-        <% elsif @meetup.description_link_type == "external" && @meetup.description_external_url.present? %>
-          <%= link_to t("meetups.show.view_full_description"), @meetup.description_external_url, class: "c-btn c-btn--secondary", target: "_blank", rel: "noopener noreferrer" %>
-        <% end %>
+  <%# Hero 380px — banner stretches under text overlay %>
+  <div class="crayons-card overflow-hidden mb-4" style="position: relative; height: 380px;">
+    <div style="position: absolute; inset: 0; <%= meetup_banner_style(@meetup) %> background-size: cover; background-position: center;"></div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.55) 100%);"></div>
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 28px 32px; color: #fff;">
+      <div class="fs-xs" style="text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; opacity: 0.85; margin-bottom: 6px;">
+        📅 <%= meetup_hero_eyebrow(@meetup) %>
+      </div>
+      <h1 class="crayons-title" style="color: #fff; margin: 0 0 8px; font-size: 32px; line-height: 1.15;"><%= @meetup.name %></h1>
+      <div class="fs-base" style="opacity: 0.95;">
+        <%= I18n.l(@meetup.start_at, format: :long) %>
+        <span style="opacity: 0.7; margin: 0 6px;">·</span>
+        <%= I18n.l(@meetup.start_at, format: "%H:%M") %> – <%= I18n.l(@meetup.end_at, format: "%H:%M") %>
+      </div>
+      <div class="fs-s" style="opacity: 0.9; margin-top: 4px;">
+        <%= @meetup.venue_name %><% if @meetup.venue_city %> · <%= @meetup.venue_city.name %><% end %>
       </div>
     </div>
   </div>
 
+  <%# Meta row: organizer avatar + description CTA %>
+  <div class="flex between gap-4 flex-wrap items-center mb-4">
+    <div class="flex gap-3 items-center">
+      <% organizer = @meetup.organizer %>
+      <% if organizer.respond_to?(:profile_image_url) && organizer.profile_image_url.present? %>
+        <img src="<%= organizer.profile_image_url %>" alt="" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;">
+      <% else %>
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--base-30, #d1d5db); display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff;">
+          <%= meetup_organizer_label(@meetup).first.upcase %>
+        </div>
+      <% end %>
+      <div>
+        <div class="fs-xs color-base-60" style="text-transform: uppercase; letter-spacing: 0.05em;">
+          <%= t("meetups.show.organizer") %>
+        </div>
+        <div class="fs-base" style="font-weight: 700;"><%= meetup_organizer_label(@meetup) %></div>
+      </div>
+    </div>
+    <% if @meetup.description_link_type == "internal" && @meetup.description_internal_post %>
+      <%= link_to "#{t('meetups.show.view_full_description')} →",
+                  "/#{@meetup.description_internal_post.user.username}/#{@meetup.description_internal_post.slug}",
+                  class: "c-btn c-btn--primary" %>
+    <% elsif @meetup.description_link_type == "external" && @meetup.description_external_url.present? %>
+      <%= link_to "#{t('meetups.show.view_full_description')} →",
+                  @meetup.description_external_url,
+                  class: "c-btn c-btn--primary",
+                  target: "_blank",
+                  rel: "noopener noreferrer" %>
+    <% end %>
+  </div>
+
+  <hr style="border: 0; border-top: 1px solid var(--card-border, #e5e5e5); margin: 24px 0;">
+
   <%= render "rsvp_section", meetup: @meetup, current_rsvp: @current_rsvp %>
   <% if user_signed_in? %>
+    <hr style="border: 0; border-top: 1px solid var(--card-border, #e5e5e5); margin: 24px 0;">
     <%= render "matching_section",
                meetup: @meetup,
                current_rsvp: @current_rsvp,
                current_profile: @current_profile,
                current_declaration: @current_declaration,
                pool: @pool %>
+  <% else %>
+    <hr style="border: 0; border-top: 1px solid var(--card-border, #e5e5e5); margin: 24px 0;">
+    <%# P1 (signed-in but no matching profile) gets a teaser card; signed-out gets nothing extra %>
   <% end %>
+
+  <hr style="border: 0; border-top: 1px solid var(--card-border, #e5e5e5); margin: 24px 0;">
   <%= render "share_section", meetup: @meetup %>
 </div>
