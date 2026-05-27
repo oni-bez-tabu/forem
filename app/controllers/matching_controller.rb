@@ -6,8 +6,8 @@ class MatchingController < ApplicationController
 
   def show
     @profile = MatchingProfile.find_by(user_id: current_user.id)
-
-    return unless @profile&.visible_to_others?
+    return redirect_to matching_onboarding_path if @profile.nil?
+    return unless @profile.visible_to_others?
 
     @timeline = Matching::TimelineFeed.new(user: current_user, limit: TIMELINE_LIMIT).call
     @recommendations = Matching::MeetupRecommendations

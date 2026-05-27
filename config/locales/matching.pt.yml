@@ -10,8 +10,6 @@ pt:
     show:
       title: "Seu Matching"
       subtitle: "Seu perfil e status no módulo Matching."
-      no_profile_title: "Você ainda não tem perfil Matching"
-      no_profile_body: "Crie um para declarar intenções em eventos e enviar mensagens de boas-vindas."
       create_profile: "Criar perfil Matching"
       edit_profile: "Editar perfil"
       manage_profile: "Gerenciar perfil"

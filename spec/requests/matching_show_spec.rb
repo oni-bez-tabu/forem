@@ -10,12 +10,12 @@ RSpec.describe "GET /matching" do
 
   context "as a signed-in user without a profile" do
     let(:user) { create(:user) }
+
     before { sign_in user }
 
-    it "renders the create-profile CTA" do
+    it "redirects straight to the onboarding intro" do
       get matching_path
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include(I18n.t("matching.show.create_profile"))
+      expect(response).to redirect_to(matching_onboarding_path)
     end
   end
 

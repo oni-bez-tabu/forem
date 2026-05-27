@@ -10,8 +10,6 @@ en:
     show:
       title: "Your Matching"
       subtitle: "Your profile and status in the Matching module."
-      no_profile_title: "You don't have a Matching profile yet"
-      no_profile_body: "Create one to declare intent on events and send welcome messages."
       create_profile: "Create Matching profile"
       edit_profile: "Edit profile"
       manage_profile: "Manage profile"

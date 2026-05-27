@@ -10,8 +10,6 @@ pl:
     show:
       title: "Twój Matching"
       subtitle: "Twój profil i status w module Matching."
-      no_profile_title: "Nie masz jeszcze profilu Matching"
-      no_profile_body: "Stwórz profil, żeby uczestniczyć w deklaracjach intencji na wydarzeniach i wymieniać się powitalnymi wiadomościami."
       create_profile: "Stwórz profil Matching"
       edit_profile: "Edytuj profil"
       manage_profile: "Zarządzaj profilem"

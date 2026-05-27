@@ -1,18 +1,7 @@
 <% title t("matching.show.title") %>
 
 <div class="crayons-layout crayons-layout--limited-width">
-  <% if @profile.nil? %>
-    <div class="crayons-card p-6 text-center">
-      <h2 class="crayons-subtitle mb-3"><%= t("matching.show.no_profile_title") %></h2>
-      <p class="mb-4"><%= t("matching.show.no_profile_body") %></p>
-      <% if current_user.suspended? %>
-        <p class="color-base-60 fs-s"><%= t("matching.profiles.suspended_blocked") %></p>
-      <% else %>
-        <%= link_to t("matching.show.create_profile"), matching_onboarding_path, class: "crayons-btn" %>
-      <% end %>
-    </div>
-
-  <% else %>
+  <%# Users without a profile are redirected to /matching/onboarding by MatchingController#show. %>
     <%# Hifi-style header card: large portrait, h1 + status pill, identity/city/match-count chips, italic bio quote, edit btn %>
     <div class="crayons-card mb-6" style="padding: 28px;">
       <div class="flex gap-5 items-start flex-wrap">
@@ -65,5 +54,4 @@
         <% end %>
       </div>
     <% end %>
-  <% end %>
 </div>
