@@ -61,14 +61,12 @@ module Matching
         .includes(matching_profile: :city)
     end
 
-    # R1 — bidirectional filter match between viewer (A) and candidate (B):
-    #   B.identity_type ∈ A.effective_looking_for
-    #   A.identity_type ∈ B.effective_looking_for
-    def compatible_with_viewer?(dec)
-      a_looking = viewer_declaration.effective_looking_for
-      b_looking = dec.effective_looking_for
-
-      a_looking.include?(dec.identity_type) && b_looking.include?(@viewer.identity_type)
+    # Product decision (session #2): identity filtering disabled — anyone with
+    # an active declaration sees anyone else with an active declaration on the
+    # same meetup. Compatibility now boils down to "both have active intents",
+    # which is already enforced by `base_pool`'s `active_intents` scope.
+    def compatible_with_viewer?(_dec)
+      true
     end
   end
 end

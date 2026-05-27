@@ -39,23 +39,6 @@
         </div>
       </fieldset>
 
-      <fieldset class="crayons-field mt-4">
-        <legend class="crayons-field__label"><%= t("matching.declarations.fields.looking_for") %></legend>
-        <p class="crayons-field__description"><%= t("matching.declarations.fields.looking_for_help") %></p>
-        <div class="flex flex-wrap gap-2 mt-2">
-          <% MatchingProfile::IDENTITY_TYPES.each do |identity| %>
-            <label class="crayons-field crayons-field--checkbox">
-              <%= check_box_tag "meetup_matching_declaration[looking_for][]",
-                                identity,
-                                Array(@declaration.looking_for).include?(identity),
-                                class: "crayons-checkbox",
-                                id: "looking_for_#{identity}" %>
-              <span class="ml-2"><%= t("matching.identity_types.#{identity}") %></span>
-            </label>
-          <% end %>
-        </div>
-      </fieldset>
-
       <div class="crayons-field mt-4">
         <%= form.label :meetup_note, t("matching.declarations.fields.meetup_note"), class: "crayons-field__label" %>
         <p class="crayons-field__description"><%= t("matching.declarations.fields.meetup_note_help", max: MeetupMatchingDeclaration::NOTE_MAX_LENGTH) %></p>

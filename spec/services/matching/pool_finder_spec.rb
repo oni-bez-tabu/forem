@@ -36,15 +36,14 @@ RSpec.describe Matching::PoolFinder do
   end
 
   describe "compatible_declarations" do
-    it "applies bidirectional looking_for filter (R1)" do
-      viewer = declared_user(identity: "woman", intent: "open_to_meet", looking_for: %w[man])
-      match = declared_user(identity: "man", intent: "open_to_meet", looking_for: %w[woman])
-      mismatch = declared_user(identity: "couple", intent: "open_to_meet", looking_for: %w[woman])
+    it "ignores identity filters — all active declarations are compatible (session #2 decision)" do
+      viewer = declared_user(identity: "woman", intent: "open_to_meet")
+      match_man = declared_user(identity: "man", intent: "open_to_meet")
+      match_couple = declared_user(identity: "couple", intent: "open_to_meet")
 
       finder = described_class.new(viewer_profile: viewer, meetup: meetup)
       profiles = finder.compatible_declarations.map(&:matching_profile)
-      expect(profiles).to include(match)
-      expect(profiles).not_to include(mismatch)
+      expect(profiles).to contain_exactly(match_man, match_couple)
     end
 
     it "excludes not_looking peers (R4)" do
@@ -54,8 +53,8 @@ RSpec.describe Matching::PoolFinder do
       expect(finder.compatible_declarations).to be_empty
     end
 
-    it "includes just_vibe peers with empty looking_for treated as everyone (R3)" do
-      viewer = declared_user(identity: "woman", intent: "open_to_meet", looking_for: %w[man])
+    it "includes just_vibe peers regardless of looking_for value" do
+      viewer = declared_user(identity: "woman", intent: "open_to_meet")
       vibe_match = declared_user(identity: "man", intent: "just_vibe", looking_for: [])
 
       finder = described_class.new(viewer_profile: viewer, meetup: meetup)
