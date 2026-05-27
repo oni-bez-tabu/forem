@@ -38,6 +38,11 @@ pt:
       counts_caveat: "Os números refletem apenas as declarações da plataforma"
       going_short: "vão"
       interested_short: "interessados"
+      going_verb: "vão"
+      going_from_nietabu:
+        one: "1 do nietabu"
+        other: "%{count} do nietabu"
+      other_channels_hint: "Outros participantes podem vir de fora da plataforma."
       going_confirmation: "Salvamos que você vai."
       going_confirmation_tail: "Divirta-se 🌙"
       relative:

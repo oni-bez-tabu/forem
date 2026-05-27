@@ -40,6 +40,11 @@ pl:
       counts_caveat: "Liczby dotyczą tylko deklaracji z platformy"
       going_short: "idzie"
       interested_short: "zainteresowanych"
+      going_verb: "idzie"
+      going_from_nietabu:
+        one: "1 z nietabu"
+        other: "%{count} z nietabu"
+      other_channels_hint: "Na evencie mogą być też osoby z innych kanałów."
       going_confirmation: "Zapisaliśmy że idziesz."
       going_confirmation_tail: "Powodzenia 🌙"
       relative:

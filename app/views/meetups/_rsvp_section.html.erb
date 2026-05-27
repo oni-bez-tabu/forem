@@ -18,11 +18,16 @@
                     class: "c-btn c-btn--l #{current_rsvp&.status == 'interested' ? 'c-btn--primary' : 'c-btn--secondary'}" do %>
         <%= current_rsvp&.status == "interested" ? "✓ #{t('meetups.rsvp.interested')}" : t("meetups.rsvp.interested") %>
       <% end %>
-      <div style="margin-left: auto;">
+      <div class="flex flex-col" style="margin-left: auto; align-items: flex-end;">
         <div class="fs-base">
-          <strong><%= meetup.going_count %></strong> <%= t("meetups.show.going_short") %>
+          <strong><%= t("meetups.show.going_from_nietabu", count: meetup.going_count) %></strong>
+          <%= t("meetups.show.going_verb") %>
           <span class="color-base-40" style="margin: 0 6px;">·</span>
-          <strong><%= meetup.interested_count %></strong> <%= t("meetups.show.interested_short") %>
+          <strong><%= meetup.interested_count %></strong>
+          <%= t("meetups.show.interested_short") %>
+        </div>
+        <div class="fs-xs color-base-60" style="margin-top: 2px;">
+          <%= t("meetups.show.other_channels_hint") %>
         </div>
       </div>
     </div>
