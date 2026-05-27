@@ -31,7 +31,7 @@ en:
         declaration_updated: "You updated intent: %{intent}"
         welcome_sent: "You sent a welcome to %{username}"
         welcome_received: "You received a welcome from %{username}"
-        match_found: "Someone new joined your pool"
+        match_found: "Someone new joined the matching pool"
     recommendations:
       label: "Recommended event"
     onboarding:

@@ -31,7 +31,7 @@ pl:
         declaration_updated: "Zmieniłeś intencję: %{intent}"
         welcome_sent: "Wysłałeś powitalną wiadomość do %{username}"
         welcome_received: "Dostałeś powitalną wiadomość od %{username}"
-        match_found: "Nowa osoba dołączyła do twojej grupy"
+        match_found: "Nowa osoba dołączyła do puli dopasowań"
     recommendations:
       label: "Polecane wydarzenie"
     onboarding:

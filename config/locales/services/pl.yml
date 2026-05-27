@@ -62,7 +62,7 @@ pl:
       matching:
         new_pool_member:
           title: "Nowe dopasowanie na %{meetup}"
-          body: "Ktoś dołączył do grupy. Zobacz kto."
+          body: "Ktoś dołączył do puli. Zobacz kto."
       meetups:
         new_city_meetup:
           title: "Nowe wydarzenie w %{city}"

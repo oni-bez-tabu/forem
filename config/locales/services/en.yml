@@ -58,8 +58,8 @@ en:
     notifications:
       matching:
         new_pool_member:
-          title: "Nowe dopasowanie na %{meetup}"
-          body: "Ktoś dołączył do grupy. Zobacz kto."
+          title: "New match at %{meetup}"
+          body: "Someone joined the pool. See who."
       meetups:
         new_city_meetup:
           title: "Nowe wydarzenie w %{city}"

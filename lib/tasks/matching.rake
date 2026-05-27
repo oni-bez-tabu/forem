@@ -25,5 +25,6 @@ namespace :matching do
     puts "  welcomes sent       : #{result.welcomes_sent}"
     puts "  welcomes received   : #{result.welcomes_received}"
     puts "  match notifications : #{result.match_notifications}"
+    puts "  extra meetups       : #{result.extra_meetups}"
   end
 end

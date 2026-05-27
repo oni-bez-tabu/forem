@@ -31,7 +31,7 @@ fr:
         declaration_updated: "Vous avez modifié votre intention : %{intent}"
         welcome_sent: "Vous avez envoyé un message de bienvenue à %{username}"
         welcome_received: "Vous avez reçu un message de bienvenue de %{username}"
-        match_found: "Quelqu'un de nouveau a rejoint votre groupe"
+        match_found: "Quelqu'un de nouveau a rejoint le pool de matching"
     recommendations:
       label: "Événement recommandé"
     onboarding:

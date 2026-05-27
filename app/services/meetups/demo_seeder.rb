@@ -148,7 +148,8 @@ module Meetups
     # ------------------------------------------------------------------
     TimelineResult = Struct.new(
       :rsvps_created, :declarations_created,
-      :welcomes_sent, :welcomes_received, :match_notifications,
+      :welcomes_sent, :welcomes_received,
+      :match_notifications, :extra_meetups,
       keyword_init: true,
     )
 
@@ -168,7 +169,17 @@ module Meetups
       ].compact
       raise "No demo meetups found — run matching:seed_demo_data first" if meetups.empty?
 
-      counters = { rsvps: 0, declarations: 0, welcomes_sent: 0, welcomes_received: 0, match_notifications: 0 }
+      counters = {
+        rsvps: 0, declarations: 0,
+        welcomes_sent: 0, welcomes_received: 0,
+        match_notifications: 0, extra_meetups: 0
+      }
+
+      # Seed 5 extra upcoming meetups so the recommendations panel has
+      # content even after the user RSVPs on the two demo meetups. Spread
+      # across 1–6 weeks out, in the user's city, with sample declarations
+      # from demo profiles so the activity-based sort ordering is meaningful.
+      counters[:extra_meetups] = seed_extra_upcoming_meetups(in_city: profile.city)
 
       meetups.each_with_index do |meetup, idx|
         rsvp = MeetupRsvp.find_or_initialize_by(meetup: meetup, user: user)
@@ -261,7 +272,63 @@ module Meetups
         welcomes_sent: counters[:welcomes_sent],
         welcomes_received: counters[:welcomes_received],
         match_notifications: counters[:match_notifications],
+        extra_meetups: counters[:extra_meetups],
       )
+    end
+
+    EXTRA_UPCOMING = [
+      ["Wieczór planszówek",   9, "Klub Hybrydy"],
+      ["Karaoke nietabu",     14, "Pawilony"],
+      ["Speed friends",       21, "Kawiarnia Lokal"],
+      ["Sauna i poznawanie",  28, "Banya"],
+      ["Niedzielne śniadanie", 35, "Café Próżna"]
+    ].freeze
+
+    def seed_extra_upcoming_meetups(in_city:)
+      # Special "everywhere" city profiles still need a concrete city for
+      # the meetup venue — fall back to Warszawa, the most likely default.
+      target_city = in_city.is_special? ? (City.find_by(slug: "warszawa") || in_city) : in_city
+      organizer = User.find_by(username: "bartek_demo") || User.first
+
+      created = 0
+      EXTRA_UPCOMING.each do |name, days_ahead, venue|
+        slug = "#{ActiveSupport::Inflector.parameterize(name)}-#{days_ahead.days.from_now.to_date.iso8601}"
+        next if Meetup.exists?(slug: slug)
+
+        start_at = days_ahead.days.from_now.change(hour: 19, min: 0)
+        Meetup.create!(
+          name: name,
+          venue_name: venue,
+          venue_city: target_city,
+          start_at: start_at,
+          end_at: start_at + 3.hours,
+          banner_gradient: Meetup::BANNER_GRADIENTS.sample,
+          description_link_type: "external",
+          description_external_url: "https://example.com/event/#{slug}",
+          is_published: true,
+          created_by: organizer,
+          organizer_user: organizer,
+        )
+        created += 1
+
+        # Add 2–4 sample declarations so the activity-count sort has signal.
+        meetup = Meetup.find_by!(slug: slug)
+        candidates = MatchingProfile
+          .visible_to_others
+          .joins(:city)
+          .where("cities.id = ? OR cities.is_special = ?", target_city.id, true)
+          .order(Arel.sql("RANDOM()"))
+          .limit(rand(2..4))
+        candidates.each do |p|
+          MeetupRsvp.find_or_create_by!(meetup: meetup, user: p.user) { |r| r.status = "going" }
+          MeetupMatchingDeclaration.find_or_create_by!(meetup: meetup, matching_profile: p) do |d|
+            d.intent_level = %w[open_to_meet just_vibe].sample
+            d.meetup_note = note_for(d.intent_level, meetup)
+          end
+        end
+      end
+
+      created
     end
 
     def candidate_receivers(viewer_profile, meetup, count:)

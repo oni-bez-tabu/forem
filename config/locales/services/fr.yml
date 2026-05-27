@@ -59,7 +59,7 @@ fr:
       matching:
         new_pool_member:
           title: "Nouveau match sur %{meetup}"
-          body: "Quelqu'un a rejoint le groupe. Découvrez qui."
+          body: "Quelqu'un a rejoint le pool. Découvrez qui."
       meetups:
         new_city_meetup:
           title: "Nouvel événement à %{city}"

@@ -7,6 +7,9 @@ pt:
         og:
           title: Notificações - %{community}
       heading: Notificações
+      matching:
+        new_pool_member_html: "Alguém novo entrou no grupo em %{meetup}"
+        new_city_meetup_html: "Novo evento na sua cidade: %{meetup}"
       article:
         published_html: "%{user} publicou %{title}"
         mod_greeting: "Olá %{user} 👋"
