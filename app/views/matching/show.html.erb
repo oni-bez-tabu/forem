@@ -59,10 +59,7 @@
     </div>
 
     <% if @profile.visible_to_others? %>
-      <div class="flex between items-baseline flex-wrap mb-3">
-        <h2 class="crayons-subtitle-1" style="margin: 0;"><%= t("matching.timeline.heading") %></h2>
-        <span class="fs-s color-base-60"><%= t("matching.timeline.subheading") %></span>
-      </div>
+      <h2 class="crayons-subtitle-1 mb-3" style="margin: 0 0 12px;"><%= t("matching.timeline.heading") %></h2>
       <%= render "timeline_feed", events: @timeline, recommendations: @recommendations %>
     <% else %>
       <div class="crayons-card p-6 text-center">
