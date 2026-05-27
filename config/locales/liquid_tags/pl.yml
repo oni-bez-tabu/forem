@@ -63,6 +63,9 @@ pl:
       invalid_url: Nieprawidłowy URL udostępniania Next Tech
     null_tag:
       liquid_tag_is_disabled: Tag Liquid#%{tag_name} jest wyłączony
+    meetup_tag:
+      invalid_slug: Nieprawidłowy slug wydarzenia
+      not_found: Nie znaleziono wydarzenia
     organization_tag:
       invalid_slug: Nieprawidłowy slug organizacji
       invalid_url: Nieprawidłowy URL organizacji

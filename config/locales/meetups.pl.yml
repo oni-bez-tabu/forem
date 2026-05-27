@@ -22,6 +22,24 @@ pl:
       heading: "Udostępnij"
       copy_link: "Skopiuj link"
       copied: "Skopiowano!"
+      share_to_nietabu: "Udostępnij na nietabu"
+    boost:
+      heading: "Udostępnij na nietabu"
+      placeholder: "Napisz coś o tym wydarzeniu..."
+      submit: "Opublikuj"
+      cancel: "Anuluj"
+      published: "Opublikowano. Zobacz na swoim profilu →"
+      preview_label: "Widget wydarzenia (dodany automatycznie)"
+      sign_in_required: "Zaloguj się, żeby udostępnić wydarzenie."
+    widget:
+      state:
+        upcoming: "Nadchodzące wydarzenie"
+        active: "Trwa teraz"
+        expired: "Zakończone"
+      author_rsvp:
+        going: "✓ Autor idzie"
+        interested: "✓ Autor jest zainteresowany"
+      cta: "Zobacz wydarzenie"
 
   admin:
     meetups:

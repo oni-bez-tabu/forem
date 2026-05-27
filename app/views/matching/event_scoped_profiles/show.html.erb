@@ -29,12 +29,30 @@
 
       <% if current_user && current_user.id != @profile.user_id %>
         <div class="mt-6">
-          <button type="button" class="crayons-btn" disabled title="<%= t('matching.event_scoped.welcome_coming_soon') %>">
-            <%= t("matching.event_scoped.send_welcome") %>
-          </button>
-          <p class="fs-xs color-base-60 mt-1"><%= t("matching.event_scoped.welcome_coming_soon") %></p>
+          <% if @welcome_already_sent %>
+            <button type="button" class="c-btn" disabled>
+              <%= t("matching.welcomes.already_sent_button") %>
+            </button>
+            <p class="fs-xs color-base-60 mt-1"><%= t("matching.welcomes.already_sent_hint") %></p>
+          <% elsif @welcome_eligible %>
+            <button type="button" class="c-btn c-btn--primary" data-welcome-open data-target="#welcome-modal-<%= @profile.id %>">
+              <%= t("matching.welcomes.send_button") %>
+            </button>
+          <% else %>
+            <button type="button" class="c-btn" disabled>
+              <%= t("matching.welcomes.send_button") %>
+            </button>
+            <p class="fs-xs color-base-60 mt-1"><%= t("matching.welcomes.not_eligible_hint") %></p>
+          <% end %>
         </div>
       <% end %>
     </div>
   </div>
+
+  <% if current_user && @welcome_eligible && !@welcome_already_sent %>
+    <%= render "welcome_modal",
+               meetup: @meetup,
+               receiver_profile: @profile,
+               welcome_body: MatchingWelcome.render_body(sender_profile: @viewer_profile, meetup: @meetup, host: request.host) %>
+  <% end %>
 </div>

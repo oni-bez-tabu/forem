@@ -15,6 +15,7 @@ class Meetup < ApplicationRecord
   has_many :going_rsvps, -> { where(status: "going") }, class_name: "MeetupRsvp"
   has_many :interested_rsvps, -> { where(status: "interested") }, class_name: "MeetupRsvp"
   has_many :matching_declarations, class_name: "MeetupMatchingDeclaration", dependent: :destroy
+  has_many :matching_welcomes, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 200 }
   validates :slug, presence: true, uniqueness: true, format: { with: /\A[a-z0-9-]+\z/ }

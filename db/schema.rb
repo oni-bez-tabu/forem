@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_05_26_210000) do
+ActiveRecord::Schema[7.0].define(version: 2026_05_27_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "ltree"
@@ -996,6 +996,20 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_26_210000) do
     t.index ["is_active"], name: "index_matching_profiles_on_is_active"
     t.index ["moderation_state"], name: "index_matching_profiles_on_moderation_state"
     t.index ["user_id"], name: "index_matching_profiles_on_user_id", unique: true
+  end
+
+  create_table "matching_welcomes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "meetup_id", null: false
+    t.bigint "receiver_profile_id", null: false
+    t.bigint "sender_profile_id", null: false
+    t.datetime "sent_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meetup_id", "receiver_profile_id"], name: "idx_welcomes_on_meetup_and_receiver"
+    t.index ["meetup_id"], name: "index_matching_welcomes_on_meetup_id"
+    t.index ["receiver_profile_id"], name: "index_matching_welcomes_on_receiver_profile_id"
+    t.index ["sender_profile_id", "receiver_profile_id"], name: "idx_welcomes_on_sender_and_receiver", unique: true
+    t.index ["sender_profile_id"], name: "index_matching_welcomes_on_sender_profile_id"
   end
 
   create_table "media_stores", force: :cascade do |t|
@@ -2162,6 +2176,9 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_26_210000) do
   add_foreign_key "lead_submissions", "users", on_delete: :cascade
   add_foreign_key "matching_profiles", "cities"
   add_foreign_key "matching_profiles", "users", on_delete: :cascade
+  add_foreign_key "matching_welcomes", "matching_profiles", column: "receiver_profile_id", on_delete: :cascade
+  add_foreign_key "matching_welcomes", "matching_profiles", column: "sender_profile_id", on_delete: :cascade
+  add_foreign_key "matching_welcomes", "meetups", on_delete: :cascade
   add_foreign_key "meetup_matching_declarations", "matching_profiles", on_delete: :cascade
   add_foreign_key "meetup_matching_declarations", "meetups", on_delete: :cascade
   add_foreign_key "meetup_rsvps", "meetups", on_delete: :cascade

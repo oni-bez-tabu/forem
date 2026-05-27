@@ -73,6 +73,9 @@ en:
       invalid_url: Invalid Next Tech share URL
     null_tag:
       liquid_tag_is_disabled: Liquid#%{tag_name} tag is disabled
+    meetup_tag:
+      invalid_slug: Invalid meetup slug
+      not_found: Meetup not found
     organization_tag:
       invalid_slug: Invalid organization slug
       invalid_url: Invalid Organization URL

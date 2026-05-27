@@ -302,6 +302,7 @@ Rails.application.routes.draw do
     resources :meetups, only: %i[index show], param: :slug do
       resource :rsvp, only: %i[create destroy], controller: "meetups/rsvps"
       resource :declaration, only: %i[new create edit update destroy], controller: "matching/declarations"
+      post :boost, on: :member, controller: "meetups/boosts", action: :create, as: :boost
     end
 
     get "/m/:meetup_slug/:profile_id",
@@ -318,6 +319,7 @@ Rails.application.routes.draw do
     delete "/matching/profile", to: "matching/profiles#destroy"
     post "/matching/profile/deactivate", to: "matching/profiles#deactivate", as: :deactivate_matching_profile
     post "/matching/profile/reactivate", to: "matching/profiles#reactivate", as: :reactivate_matching_profile
+    post "/matching/welcomes", to: "matching/welcomes#create", as: :matching_welcomes
     get "/notifications/:filter", to: "notifications#index", as: :notifications_filter
     get "/notifications/:filter/:org_id", to: "notifications#index", as: :notifications_filter_org
     get "/notification_subscriptions/:notifiable_type/:notifiable_id", to: "notification_subscriptions#show"

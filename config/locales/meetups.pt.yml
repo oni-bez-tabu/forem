@@ -22,6 +22,24 @@ pt:
       heading: "Compartilhar"
       copy_link: "Copiar link"
       copied: "Copiado!"
+      share_to_nietabu: "Compartilhar no nietabu"
+    boost:
+      heading: "Compartilhar no nietabu"
+      placeholder: "Escreva algo sobre este evento..."
+      submit: "Publicar"
+      cancel: "Cancelar"
+      published: "Publicado. Veja no seu perfil →"
+      preview_label: "Widget do evento (adicionado automaticamente)"
+      sign_in_required: "Entre para compartilhar este evento."
+    widget:
+      state:
+        upcoming: "Próximo evento"
+        active: "Acontecendo agora"
+        expired: "Encerrado"
+      author_rsvp:
+        going: "✓ Autor vai participar"
+        interested: "✓ Autor está interessado"
+      cta: "Ver evento"
 
   admin:
     meetups:

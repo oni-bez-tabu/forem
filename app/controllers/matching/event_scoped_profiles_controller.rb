@@ -18,9 +18,25 @@ module Matching
       @declaration = MeetupMatchingDeclaration.find_by(meetup: @meetup, matching_profile: @profile)
       raise ActiveRecord::RecordNotFound unless @declaration
       raise ActiveRecord::RecordNotFound if @declaration.not_looking?
+
+      @viewer_profile = MatchingProfile.find_by(user_id: current_user.id)
+      @welcome_already_sent =
+        @viewer_profile.present? && MatchingWelcome.exists_between?(@viewer_profile, @profile)
+      @welcome_eligible =
+        @viewer_profile&.visible_to_others? &&
+        current_user.id != @profile.user_id &&
+        viewer_declaration_active? &&
+        !@declaration.not_looking?
     end
 
     private
+
+    def viewer_declaration_active?
+      return false unless @viewer_profile
+
+      dec = MeetupMatchingDeclaration.find_by(meetup_id: @meetup.id, matching_profile_id: @viewer_profile.id)
+      dec.present? && !dec.not_looking?
+    end
 
     def expired?
       @meetup.end_at <= EVENT_SCOPED_LIFETIME.ago

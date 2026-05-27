@@ -180,15 +180,82 @@
 
 ---
 
+## Etap 4 — Welcome + Boost + Widget meetupu
+
+- **Status:** ✅ done
+- **Commit:** _(do dodania)_
+- **Data:** 2026-05-27
+
+### Zaimplementowane
+
+**Welcome:**
+- Migracja `matching_welcomes` (sender_profile_id FK, receiver_profile_id FK, meetup_id FK, sent_at) z unique index na (sender_profile_id, receiver_profile_id) → "raz na osobę nigdy więcej" niezależnie od meetupu
+- Model `MatchingWelcome` z walidacjami (unique pair, brak self-welcome), helperami `exists_between?(a, b)` i `render_body(sender_profile:, meetup:, host:)`, stałą `TEMPLATE` z treścią uniwersalną
+- Relacje: `MatchingProfile has_many :welcomes_sent / :welcomes_received` (dependent: :destroy), `Meetup has_many :matching_welcomes`
+- Service-seam `Matching::DeliverWelcomeViaCloudFunction.call(welcome:, body:)` — POSTuje JSON do `ApplicationConfig["MATCHING_WELCOME_CLOUD_FUNCTION_URL"]`, gdy URL nieustawiony → log warn + return `{status: :stubbed}` (POC; CF dorobi się osobno poza Forem repo)
+- Controller `Matching::WelcomesController#create` (POST /matching/welcomes) z walidacjami: zalogowany + active+approved sender, lifecycle 48h, distinct receiver, visible receiver, obie deklaracje aktywne (intent != not_looking, R4), unique pair → 409
+- View `app/views/matching/event_scoped_profiles/_welcome_modal.html.erb` — E18 modal 3-state (compose → sending → success + state error), inline vanilla JS z `fetch` do POST /matching/welcomes, niedytowalny preview treści, sekcja "co się stanie", warning "raz na osobę"
+- `EventScopedProfilesController#show` rozszerzony o `@viewer_profile`, `@welcome_already_sent`, `@welcome_eligible` — widok renderuje 3 stany buttona (eligible / already_sent / not_eligible)
+
+**Liquid tag meetupu:**
+- `app/liquid_tags/meetup_tag.rb` (dziedziczy z `LiquidTagBase`, parsuje slug, raise `StandardError` z i18n na nieznany/invalid)
+- Partial `app/views/meetups/_liquid.html.erb` — 3 stany renderowania: `:upcoming` (start_at > now), `:active` (między start_at a end_at + 24h), `:expired` (po end_at + 24h, R-Lifecycle.1). Author RSVP status (going/interested) pokazany inline gdy widget renderuje się w poście autora
+- Rejestracja `Liquid::Template.register_tag("meetup", MeetupTag)` na końcu pliku
+- i18n: `liquid_tags.meetup_tag.{invalid_slug,not_found}` + `meetups.widget.state.{upcoming,active,expired}`, `meetups.widget.author_rsvp.{going,interested}`, `meetups.widget.cta` (4 locales)
+
+**Boost:**
+- Controller `Meetups::BoostsController#create` (POST /meetups/:slug/boost) woła `Articles::Creator.call` z `type_of: "full_post"`, `body_markdown: "#{user_text}\n\n{% meetup #{slug} %}"`, tytuł derive'owany z pierwszej linii body (truncate do 120 znaków, fallback = nazwa meetupu)
+- View `app/views/meetups/_boost_modal.html.erb` — modal w meetup hub: textarea bez prefill (placeholder "Napisz coś o tym wydarzeniu..."), preview widgetu pod polem (render partial `meetups/_liquid` z stanem `:upcoming`), Opublikuj/Anuluj. Inline vanilla JS: fetch POST → redirect do `article.path`
+- Update `_share_section.html.erb`: button "Udostępnij na nietabu" (tylko signed-in) otwiera boost modal
+- Lifecycle: boost dla `Meetup.visible_in_lists` (24h window) — wygasłe meetupy → 404 (nie da się boostować zakończonego eventu)
+- i18n: `meetups.boost.{heading,placeholder,submit,cancel,published,preview_label,sign_in_required}`, `meetups.share.share_to_nietabu` (4 locales)
+
+**Testy:**
+- Model `MatchingWelcome` (11): validations, exists_between?, render_body, cascade destroys
+- Service `DeliverWelcomeViaCloudFunction` (4): stub gdy brak URL, sukces 2xx, błąd non-2xx, exception handling
+- Request `Matching::Welcomes` (12): create + delivery, body template, dup 409, dup across meetups 409, lifecycle 404, brak deklaracji 422, not_looking 422 (sender i receiver), receiver inactive 404, sender inactive 403, self-welcome 422, unauthenticated redirect
+- Request `Matching::EventScopedProfiles` (9): pełne pokrycie + 4 nowe stany welcome modala (eligible button widoczny / already_sent / not_eligible / not_eligible przy inactive viewer profile)
+- Liquid tag `MeetupTag` (6): render name + link, 3 stany (upcoming/active/expired), nieznany slug raise, invalid slug syntax raise
+- Request `Meetups::Boosts` (5): create full_post + widget tag, empty body 422, unknown meetup 404, expired meetup 404, unauthenticated 401
+
+Pełny Matching POC suite: **185/185 ✓** (74 Etap 0–1, +37 Etap 2, +36 Etap 3, +38 Etap 4)
+
+### Uwagi / odstępstwa / długi techniczne
+
+- **🔴 Chat nietabu to Firebase, nie Rails.** Najważniejsze znalezisko researchu: w obecnym kodzie nie ma już modeli `Message`/`ChatChannel` — chat siedzi w Firestore. Rails tylko generuje token Firebase dla klienta i odbiera webhooki "ktoś wysłał wiadomość". W konsekwencji `POST /matching/welcomes` tworzy tylko rekord w `matching_welcomes` i woła `DeliverWelcomeViaCloudFunction`, który (a) wysyła JSON do CF jeśli `MATCHING_WELCOME_CLOUD_FUNCTION_URL` jest ustawione, (b) loguje warning i zwraca `:stubbed` jeśli env nieustawione. **Cloud Function (poza Forem repo) jest TODO osobnego sprintu** — w POC welcome rekord powstaje, ale wiadomość do Firestore nie trafi dopóki CF nie jest deployowana. PROGRESS Etap 3 już to anonsował ("endpoint i Cloud Function jeszcze nie istnieją"); endpoint mamy, CF zostaje.
+- **R1 compatibility filter pominięty w welcome (decyzja sesji #2 z Etapu 3).** SPEC.md §7.3 mówił o walidacji R1 (bidirectional identity check). Skoro `looking_for` zostało zdropowane z deklaracji w Etapie 3, welcome ma teraz tylko: unique pair + obie deklaracje aktywne (intent != not_looking, R4) + lifecycle 48h + visible receiver. Jeśli kiedyś wracamy do filtra identity → przywróć `looking_for` w Etapie 3 (patrz PROGRESS Etap 3) i dodaj bidirectional check w `require_both_declarations_active`.
+- **Boost używa `type_of: "full_post"`, nie "status".** Pierwotnie celowałem w status type (Forem ma nawet `self.title = "[Boost]" if title.blank? && type_of == "status"`), ale status wymusza `body_markdown` puste lub tylko embed tag z URL w tytule. Liquid tag `{% meetup ... %}` w body nie pasuje. Wybór: full_post z tytułem derive'owanym z pierwszej linii body (truncate 120 znaków). SPEC §8.5 mówi "zwykły post nietabu z treścią + osadzonym widgetem" — full_post pasuje semantycznie.
+- **Boost modal nie wstawia widgetu w sam tekst** — widget jest osadzany automatycznie pod treścią (zachowanie zgodne z SPEC §8.5 "widget jest jedynym automatycznym elementem"). User nie widzi `{% meetup ... %}` syntaxu, tylko preview wyrenderowany.
+- **E18 modal to vanilla JS w ERB**, jak boost modal i share section z Etapu 1. Spójność konwencji POC, ale w produkcji warto wszystkie 3 popupy przenieść do Preact packa (np. `matchingPopups`). Polish dług.
+- **Welcome template hardcoded w Ruby** (`MatchingWelcome::TEMPLATE`), nie i18n. Powód: SPEC.md §7.4 podaje konkretną treść po polsku i mówi "treść uniwersalna" (kobieta/mężczyzna/para/non_binary) — jedna treść dla wszystkich. Jeśli kiedyś wielojęzyczność CF nadawcy → przenieść do `config/locales`.
+- **`Matching::WelcomesController` używa `EventScopedProfilesController::EVENT_SCOPED_LIFETIME`** jako źródła prawdy dla okna 48h. Dwa miejsca odwołują się do tej samej stałej — jeśli kiedyś zmieniamy lifecycle, zmieniamy w jednym miejscu.
+- **Pre-existing tech debt naprawiony przy okazji:** spec `event_scoped_profiles_spec.rb:32` używał `update_columns(..., looking_for: [])` po zdropowaniu kolumny w Etapie 3 — test był failed, naprawione (sama kolumna intent_level wystarczy do testu R4).
+- **Widget meetupu w stylu inline** — kolory i layout w `_liquid.html.erb` są wpisane jako inline styles. To celowo (POC, nie chcę dotykać assetu CSS pipeline dla niskim ryzykiem regresji). Polish dług: przenieść do crayons / tokenów.
+- **Routes:** `post :boost, on: :member` używa parametru `:slug` (member action na resource z `param: :slug`), nie `:meetup_slug` jak nested resources. Kontroler obsługuje oba dla bezpieczeństwa (`params[:slug] || params[:meetup_slug]`).
+- **FR/PT tłumaczenia "machinalne"**, ten sam dług co w Etapach 1–3.
+- **RuboCop:** 4 minor offenses w `deliver_welcome_via_cloud_function_spec.rb` (`RSpec/MessageExpectation`, `RSpec/MessageSpies` — preferują `allow` + `have_received` zamiast `expect ... to receive`). Stylistyka, nie błąd; do akceptacji albo refaktoru przy CI failure.
+
+### Acceptance check (SPEC.md §11 + §7.3 + §8.5)
+
+- ✅ User wysyła welcome z linkiem do event-scoped profilu (`POST /matching/welcomes` + `MatchingWelcome.render_body` z URL `/m/{slug}/{id}`)
+- ✅ Link do welcome działa do 48h po `end_at` (`EventScopedProfilesController` lifecycle 48h, weryfikowane w request spec)
+- ✅ Po 48h `POST /matching/welcomes` zwraca 404 (`require_within_lifecycle` w kontrollerze)
+- ✅ "Raz na osobę nigdy więcej" — unique index na (sender_profile_id, receiver_profile_id), kontroler zwraca 409 (test pokrywa duplicate w tym samym meetupie i across meetups)
+- ✅ R4 lockout: not_looking nie może wysłać ani otrzymać welcome (422)
+- ✅ Widget meetupu w 3 stanach: upcoming / active / expired po 24h (R-Lifecycle.1)
+- ✅ Klik widgetu w stanie expired → standardowy 404 (link wraca do `/wydarzenia/{slug}`, hub serwuje 404 dla expired)
+- ✅ Boost flow: pusty textarea, widget meetupu osadzony pod polem (preview + `{% meetup %}` tag w body), bez prefilla
+- ✅ Boost tworzy zwykły post nietabu (`Article` type_of full_post), redirect do `article.path`
+- ⚠️ **Dostarczenie welcome do chatu Firebase: stubbed w POC** — service tworzy rekord i woła CF, ale sama CF nie jest jeszcze deployowana. Wymaga osobnego sprintu na Firebase side. Endpoint Rails gotowy.
+
+---
+
 ## Następny etap
 
-**Etap 4 — Welcome + Boost + Widget meetupu** (SPEC.md §11)
+**Etap 5 — Timeline E8 + powiadomienia** (SPEC.md §11)
 
 Zakres:
-- Migracja `matching_welcomes` (sender_profile_id, receiver_profile_id, meetup_id, sent_at) z unique constraint na (sender, receiver) — "raz na osobę nigdy więcej"
-- API `POST /matching/welcomes` z walidacją R1 + R7 (48h lockout post-meetup)
-- Frontend E18 modal: compose → sending (loader) → success
-- Welcome integration interface (stub w POC — Firebase Cloud Function dorobi się w Etapie 6)
-- Widget meetupu jako Forem LiquidTag (`{% meetup {slug} %}`) — szablon w 3 stanach (active, upcoming, expired po 24h)
-- Boost popup: tworzy Article z osadzonym `{% meetup %}` tagiem, pole tekstowe bez prefill
-- Acceptance: user wysyła welcome z linkiem do event-scoped profilu, druga strona widzi w chacie, link działa do 48h, po → 404; user boost'uje RSVP z osadzonym widgetem
+- Backend: event source dla E8 timeline (z lifecycle filter — wpisy znikają po 24h dla wygasłych meetupów)
+- Frontend: pełen E8 (header profilu + chronologiczny timeline aktywności + wplecione rekomendacje meetupów)
+- Push notifications: 2 kategorie (matching / nowe meetupy w mieście) z toggle ON by default w settings tab "✨ Matching"
+- Acceptance: timeline pokazuje historię (RSVP, deklaracje, match found, welcome sent/received), push działa, toggles persistują

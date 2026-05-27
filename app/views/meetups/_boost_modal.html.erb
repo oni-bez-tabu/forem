@@ -1,0 +1,92 @@
+<div
+  id="meetup-boost-modal-<%= meetup.id %>"
+  class="meetup-boost-modal"
+  data-meetup-boost-modal
+  data-meetup-slug="<%= meetup.slug %>"
+  data-boost-url="<%= meetup_boost_path(meetup) %>"
+  style="display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.55); align-items: center; justify-content: center;"
+>
+  <div class="crayons-card p-6" style="max-width: 560px; width: calc(100% - 32px); max-height: 90vh; overflow-y: auto;">
+    <h2 class="crayons-subtitle mb-3"><%= t("meetups.boost.heading") %></h2>
+
+    <form data-boost-form>
+      <textarea
+        name="body"
+        class="crayons-textfield"
+        rows="4"
+        placeholder="<%= t('meetups.boost.placeholder') %>"
+        data-boost-body
+        required
+      ></textarea>
+
+      <div class="mt-4">
+        <p class="fs-xs color-base-60 mb-1"><%= t("meetups.boost.preview_label") %></p>
+        <div style="border: 1px dashed var(--card-border, #ddd); border-radius: 8px; padding: 8px;">
+          <%= render "meetups/liquid", meetup: meetup, widget_state: :upcoming, author_rsvp_status: nil %>
+        </div>
+      </div>
+
+      <div class="flex gap-2 mt-4 justify-end">
+        <button type="button" class="c-btn" data-meetup-boost-close>
+          <%= t("meetups.boost.cancel") %>
+        </button>
+        <button type="submit" class="c-btn c-btn--primary" data-boost-submit>
+          <%= t("meetups.boost.submit") %>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var modal = document.getElementById("meetup-boost-modal-<%= meetup.id %>");
+    if (!modal) return;
+    var token = document.querySelector("meta[name='csrf-token']");
+    var csrf = token ? token.getAttribute("content") : "";
+
+    function open() { modal.style.display = "flex"; }
+    function close() { modal.style.display = "none"; }
+
+    document.querySelectorAll('[data-meetup-boost-open][data-target="#meetup-boost-modal-<%= meetup.id %>"]').forEach(function(btn) {
+      btn.addEventListener("click", open);
+    });
+    modal.querySelectorAll("[data-meetup-boost-close]").forEach(function(btn) {
+      btn.addEventListener("click", close);
+    });
+    modal.addEventListener("click", function(e) {
+      if (e.target === modal) close();
+    });
+
+    var form = modal.querySelector("[data-boost-form]");
+    if (!form) return;
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      var body = (modal.querySelector("[data-boost-body]") || {}).value || "";
+      var submitBtn = modal.querySelector("[data-boost-submit]");
+      if (submitBtn) { submitBtn.disabled = true; }
+      fetch(modal.dataset.boostUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "X-CSRF-Token": csrf
+        },
+        credentials: "same-origin",
+        body: JSON.stringify({ body: body })
+      }).then(function(r) {
+        return r.json().then(function(json) { return { status: r.status, json: json }; });
+      }).then(function(result) {
+        if (result.status === 201 && result.json.path) {
+          window.location.href = result.json.path;
+        } else {
+          if (submitBtn) { submitBtn.disabled = false; }
+          alert(result.json.error || "Error");
+        }
+      }).catch(function() {
+        if (submitBtn) { submitBtn.disabled = false; }
+        alert("Network error");
+      });
+    });
+  })();
+</script>

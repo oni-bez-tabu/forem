@@ -22,6 +22,24 @@ fr:
       heading: "Partager"
       copy_link: "Copier le lien"
       copied: "Copié !"
+      share_to_nietabu: "Partager sur nietabu"
+    boost:
+      heading: "Partager sur nietabu"
+      placeholder: "Écrivez quelque chose sur cet événement..."
+      submit: "Publier"
+      cancel: "Annuler"
+      published: "Publié. Voir sur votre profil →"
+      preview_label: "Widget événement (ajouté automatiquement)"
+      sign_in_required: "Connectez-vous pour partager cet événement."
+    widget:
+      state:
+        upcoming: "Événement à venir"
+        active: "En cours"
+        expired: "Terminé"
+      author_rsvp:
+        going: "✓ L'auteur participe"
+        interested: "✓ L'auteur est intéressé"
+      cta: "Voir l'événement"
 
   admin:
     meetups:

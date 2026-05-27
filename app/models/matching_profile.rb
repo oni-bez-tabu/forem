@@ -11,6 +11,16 @@ class MatchingProfile < ApplicationRecord
   belongs_to :city
 
   has_many :matching_declarations, class_name: "MeetupMatchingDeclaration", dependent: :destroy
+  has_many :welcomes_sent,
+           class_name: "MatchingWelcome",
+           foreign_key: :sender_profile_id,
+           dependent: :destroy,
+           inverse_of: :sender_profile
+  has_many :welcomes_received,
+           class_name: "MatchingWelcome",
+           foreign_key: :receiver_profile_id,
+           dependent: :destroy,
+           inverse_of: :receiver_profile
 
   validates :photo, presence: true
   validates :identity_type, inclusion: { in: IDENTITY_TYPES }

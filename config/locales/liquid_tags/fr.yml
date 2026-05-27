@@ -71,6 +71,9 @@ fr:
       invalid_url: URL du partage Next Tech non valide
     null_tag:
       liquid_tag_is_disabled: Le tag Liquid#%{tag_name} est désactivé
+    meetup_tag:
+      invalid_slug: Slug de l'événement non valide
+      not_found: Événement introuvable
     organization_tag:
       invalid_slug: Le nom de l'organisation n'est pas valide
       invalid_url: URL de l'organisation non valide

@@ -1,6 +1,6 @@
 <section class="crayons-card p-6">
   <h2 class="crayons-subtitle mb-3"><%= t("meetups.share.heading") %></h2>
-  <div class="flex gap-2 items-center">
+  <div class="flex gap-2 items-center mb-3">
     <input
       type="text"
       readonly
@@ -19,7 +19,22 @@
       <%= t("meetups.share.copy_link") %>
     </button>
   </div>
+
+  <% if user_signed_in? %>
+    <button
+      type="button"
+      class="c-btn c-btn--primary"
+      data-meetup-boost-open
+      data-target="#meetup-boost-modal-<%= meetup.id %>"
+    >
+      <%= t("meetups.share.share_to_nietabu") %>
+    </button>
+  <% end %>
 </section>
+
+<% if user_signed_in? %>
+  <%= render "boost_modal", meetup: meetup %>
+<% end %>
 
 <script>
   (function() {
