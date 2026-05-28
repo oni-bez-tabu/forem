@@ -1,10 +1,11 @@
 class MatchingController < ApplicationController
   before_action :authenticate_user!
 
-  # SPA shell. Users without a profile get redirected to the onboarding
-  # intro; everyone else hits the Preact app which fetches
-  # /api/matching/dashboard for its data.
+  # SSR shell — profile header renderuje się od razu (instant, bez spinnera).
+  # Listę aktywności + recommendations dociąga Preact z /api/matching/dashboard
+  # i renderuje pod headerem (loading state = skeleton, nie spinner).
   def show
-    return redirect_to matching_onboarding_path unless MatchingProfile.exists?(user_id: current_user.id)
+    @profile = MatchingProfile.find_by(user_id: current_user.id)
+    return redirect_to matching_onboarding_path if @profile.nil?
   end
 end

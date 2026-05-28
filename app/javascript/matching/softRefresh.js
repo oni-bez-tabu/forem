@@ -1,5 +1,3 @@
-import { invalidateDashboardCache } from './dashboardCache';
-
 // Soft-refresh the current page by re-fetching its HTML and swapping the
 // [data-soft-refresh-root] container's innerHTML. Preserves scroll position
 // and any DOM outside the root (e.g. Preact modal mount points on <body>,
@@ -7,10 +5,8 @@ import { invalidateDashboardCache } from './dashboardCache';
 //
 // After the swap we dispatch `matching:dom-refreshed` so Preact packs that
 // mount inside the swapped region (RsvpButtons, Dashboard, …) know to
-// re-mount themselves into the fresh DOM nodes. Also invalidates the
-// dashboard cache — state may have changed.
+// re-mount themselves into the fresh DOM nodes.
 export async function softRefreshCurrentPage() {
-  invalidateDashboardCache();
   const currentRoot = document.querySelector('[data-soft-refresh-root]');
   if (!currentRoot) return;
   try {

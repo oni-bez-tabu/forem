@@ -1,0 +1,55 @@
+<%# SSR profile header — instant render, brak fetcha. Mirror Preact
+    ProfileHeader.jsx z Fazy 3 ale w ERB, żeby user nie czekał na
+    JS init przy każdym wejściu na /matching. %>
+<div class="crayons-card mb-6" style="padding: 28px;">
+  <div class="flex gap-5 items-start flex-wrap">
+    <% if profile.photo.present? %>
+      <img src="<%= profile.photo.url %>"
+           alt="<%= current_user.username %>"
+           style="width: 120px; height: 150px; object-fit: cover; border-radius: 8px; flex: 0 0 120px;">
+    <% end %>
+    <div class="flex-1" style="min-width: 240px;">
+      <div class="flex items-baseline gap-3 flex-wrap" style="margin-bottom: 8px;">
+        <h1 class="crayons-title" style="margin: 0; font-size: 24px;">
+          <%= t("matching.show.profile_title") %>
+        </h1>
+        <% if profile.visible_to_others? %>
+          <span style="<%= pill_style(:brand) %>"><%= t("matching.show.profile_active_pill") %></span>
+        <% elsif profile.pending? %>
+          <span style="<%= pill_style(:warning) %>"><%= t("matching.moderation.pending") %></span>
+        <% elsif profile.rejected? %>
+          <span style="<%= pill_style(:danger) %>"><%= t("matching.moderation.rejected") %></span>
+        <% elsif !profile.is_active? %>
+          <span style="<%= pill_style(:outline) %>"><%= t("matching.show.deactivated") %></span>
+        <% end %>
+      </div>
+
+      <div class="flex gap-2 flex-wrap" style="margin-bottom: 8px;">
+        <span style="<%= pill_style(:solid) %>">
+          <%= t("matching.identity_types.#{profile.identity_type}") %>
+        </span>
+        <% if profile.city %>
+          <span style="<%= pill_style(:outline) %>">📍 <%= profile.city.name %></span>
+        <% end %>
+      </div>
+
+      <% if profile.bio.present? %>
+        <p class="fs-base" style="margin-top: 8px; font-style: italic; color: rgb(var(--grey-800, 31 41 55));">
+          "<%= profile.bio %>"
+        </p>
+      <% end %>
+
+      <% if profile.moderation_reason.present? %>
+        <p class="fs-s color-base-60" style="margin-top: 8px;">
+          <strong><%= t("matching.show.rejection_reason") %>:</strong>
+          <%= profile.moderation_reason %>
+        </p>
+      <% end %>
+
+      <p class="fs-xs color-base-60" style="margin-top: 8px;">
+        👁 <%= t("matching.show.privacy_hint") %>
+      </p>
+    </div>
+    <%= link_to "✎ Edytuj", "/settings/matching", class: "c-btn c-btn--secondary c-btn--s" %>
+  </div>
+</div>

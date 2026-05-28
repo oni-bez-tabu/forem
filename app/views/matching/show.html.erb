@@ -1,16 +1,31 @@
 <% title t("matching.show.title") %>
 
-<%# Pełny Preact SPA — `/matching` to prywatny dashboard, więc brak
-    server-side rendered content (SEO nie potrzebne). Preact bierze
-    #matching-app, fetchuje /api/matching/dashboard, renderuje.
-    Brak profilu → server redirektuje na /matching/onboarding (gate w
-    MatchingController#show); ten widok serwuje się tylko dla zalogowa-
-    nych userów którzy profil mają. %>
-<div class="crayons-layout crayons-layout--limited-width">
-  <div id="matching-app"
-       data-onboarding-url="<%= matching_onboarding_path %>"
-       data-settings-url="/settings/matching">
-  </div>
+<%# Hybrid: profile header SSR (instant), activity feed (timeline + recs)
+    Preact app na /api/matching/dashboard z skeleton loaderem. %>
+<div class="crayons-layout crayons-layout--limited-width" data-soft-refresh-root>
+  <%= render "matching/profile_header", profile: @profile %>
+
+  <% if @profile.moderation_state == "pending" %>
+    <div class="crayons-notice crayons-notice--info" style="margin-bottom: 16px;" role="alert">
+      <p><%= t("matching.show.pending_explanation") %></p>
+    </div>
+  <% elsif @profile.moderation_state == "rejected" %>
+    <div class="crayons-notice crayons-notice--danger" style="margin-bottom: 16px;" role="alert">
+      <p><%= t("matching.show.rejected_explanation") %></p>
+    </div>
+  <% elsif !@profile.is_active? %>
+    <div class="crayons-notice crayons-notice--warning" style="margin-bottom: 16px;" role="alert">
+      <p><%= t("matching.show.deactivated_explanation") %></p>
+    </div>
+  <% end %>
+
+  <%# Mount point dla Preact Dashboard (tylko activity feed). %>
+  <% if @profile.visible_to_others? %>
+    <div id="matching-app"
+         data-onboarding-url="<%= matching_onboarding_path %>"
+         data-settings-url="/settings/matching">
+    </div>
+  <% end %>
 </div>
 
 <%= javascript_include_tag "matchingDashboard",
