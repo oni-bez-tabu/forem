@@ -79,6 +79,29 @@
       return meta ? meta.getAttribute("content") : null;
     }
 
+    // SPA-style: after the modal saves, fetch the current page and swap the
+    // [data-soft-refresh-root] container's HTML. Preserves scroll position
+    // and the modal host. If the container can't be found in either DOM
+    // (e.g. the page changed away while we were saving) — silently no-op.
+    function softRefreshCurrentPage() {
+      var currentRoot = document.querySelector("[data-soft-refresh-root]");
+      if (!currentRoot) return Promise.resolve();
+      return fetch(window.location.href, {
+        credentials: "same-origin",
+        headers: { "X-Requested-With": "XMLHttpRequest", "Accept": "text/html" },
+      })
+      .then(function(resp) { return resp.ok ? resp.text() : null; })
+      .then(function(html) {
+        if (!html) return;
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var newRoot = doc.querySelector("[data-soft-refresh-root]");
+        if (!newRoot) return;
+        var stillThere = document.querySelector("[data-soft-refresh-root]");
+        if (stillThere) stillThere.innerHTML = newRoot.innerHTML;
+      })
+      .catch(function() { /* network error — keep stale UI, toast already shown */ });
+    }
+
     function submitModalForm(form) {
       var backdrop = getBackdrop();
       var data = new FormData(form);
@@ -113,6 +136,7 @@
         if (result.ok) {
           closeModal();
           showToast(result.json.flash || "OK", "success");
+          softRefreshCurrentPage();
         } else {
           var errors = (result.json && result.json.errors) || ["Wystąpił błąd"];
           renderModalErrors(backdrop, errors);
