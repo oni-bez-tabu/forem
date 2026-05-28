@@ -112,6 +112,10 @@ Rails.application.routes.draw do
 
           resources :welcomes, only: %i[create]
           resource :dashboard, only: %i[show], controller: "dashboard"
+          resource :profile, only: %i[show create update destroy], controller: "profiles" do
+            post :deactivate, on: :collection
+            post :reactivate, on: :collection
+          end
         end
 
         # Meetup-level actions (not matching-specific): RSVP + boost.

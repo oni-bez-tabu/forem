@@ -53,11 +53,12 @@ RSpec.describe "Matching::Profiles" do
   describe "GET /matching/onboarding/form" do
     before { sign_in user }
 
-    it "renders the E6 form with the Krok 2 z 3 overline and submit label" do
+    it "renders the E6 shell with overline + Preact mount point" do
       get matching_onboarding_form_path
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(I18n.t("matching.onboarding.form_overline"))
-      expect(response.body).to include(I18n.t("matching.onboarding.submit"))
+      expect(response.body).to include('id="matching-profile-form-mount"')
+      expect(response.body).to include("matchingProfileForm")
     end
   end
 

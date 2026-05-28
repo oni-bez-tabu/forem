@@ -1,7 +1,8 @@
 <% title t("matching.onboarding.form_title") %>
 
-<%# E6 onboarding form 1:1 with hifi mockup (`screens.jsx:661`).
-    Overline "Krok 2 z 3" → h1 "Twój profil Matching" → 17px tagline → form. %>
+<%# E6 onboarding form — Preact widget. Server renderuje shell + overline,
+    Preact (#matching-profile-form-mount) renderuje cały formularz z photo
+    upload / identity chips / city autocomplete / bio counter. %>
 <div class="crayons-layout crayons-layout--limited-width" style="max-width: 580px;">
   <div style="margin: 20px auto 60px;">
     <div style="margin-bottom: 8px;">
@@ -16,8 +17,12 @@
       <%= t("matching.onboarding.form_tagline") %>
     </p>
 
-    <div style="margin-top: 32px;">
-      <%= render "matching/profiles/form", profile: @profile, submit_label: t("matching.onboarding.submit") %>
+    <div id="matching-profile-form-mount"
+         data-mode="create"
+         data-success-url="<%= matching_onboarding_success_path %>"
+         style="margin-top: 32px;">
     </div>
   </div>
 </div>
+
+<%= javascript_include_tag "matchingProfileForm", defer: true %>
