@@ -64,6 +64,20 @@ RSpec.describe "Matching::Declarations" do
       expect(response).to redirect_to(meetup_path(meetup))
     end
 
+    it "strips ?declare=1 from the referer redirect so the modal doesn't reopen" do
+      post meetup_declaration_path(meetup.slug),
+           params: valid_params,
+           headers: { "HTTP_REFERER" => "http://www.example.com/meetups/#{meetup.slug}?declare=1" }
+      expect(response).to redirect_to("http://www.example.com/meetups/#{meetup.slug}")
+    end
+
+    it "honors a non-modal referer (e.g. /matching) when present" do
+      post meetup_declaration_path(meetup.slug),
+           params: valid_params,
+           headers: { "HTTP_REFERER" => "http://www.example.com/matching" }
+      expect(response).to redirect_to("http://www.example.com/matching")
+    end
+
     it "rejects an invalid intent" do
       bad = valid_params.deep_dup
       bad[:meetup_matching_declaration][:intent_level] = "bogus"

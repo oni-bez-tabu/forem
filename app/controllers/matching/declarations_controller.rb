@@ -36,8 +36,7 @@ module Matching
                                                      matching_profile: @current_profile,
                                                    ))
       if @declaration.save
-        redirect_back fallback_location: meetup_path(@meetup),
-                      notice: I18n.t("matching.declarations.saved")
+        redirect_to post_save_redirect_target, notice: I18n.t("matching.declarations.saved")
       else
         render :form, status: :unprocessable_entity
       end
@@ -49,8 +48,7 @@ module Matching
 
     def update
       if @declaration.update(declaration_params)
-        redirect_back fallback_location: meetup_path(@meetup),
-                      notice: I18n.t("matching.declarations.saved")
+        redirect_to post_save_redirect_target, notice: I18n.t("matching.declarations.saved")
       else
         render :form, status: :unprocessable_entity
       end
@@ -92,6 +90,26 @@ module Matching
 
     def declaration_params
       params.require(:meetup_matching_declaration).permit(:intent_level, :meetup_note)
+    end
+
+    # After save/update, return to the page the user came from — but strip
+    # `?declare=1` so we don't loop straight back into the modal. Fall back
+    # to the meetup hub when referer is missing or external.
+    def post_save_redirect_target
+      ref = request.referer.to_s
+      return meetup_path(@meetup) if ref.blank?
+
+      begin
+        uri = URI.parse(ref)
+      rescue URI::InvalidURIError
+        return meetup_path(@meetup)
+      end
+      return meetup_path(@meetup) if uri.host.present? && uri.host != request.host
+
+      query = Rack::Utils.parse_query(uri.query.to_s)
+      query.delete("declare")
+      uri.query = query.any? ? Rack::Utils.build_query(query) : nil
+      uri.to_s.presence || meetup_path(@meetup)
     end
   end
 end

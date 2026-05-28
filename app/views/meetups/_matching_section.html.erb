@@ -9,7 +9,7 @@
       <%= link_to "✏ #{t('matching.section.change_declaration')}",
                   meetup_path(meetup, declare: 1),
                   class: "c-btn c-btn--secondary c-btn--s",
-                  data: { declaration_modal_trigger: true, meetup_slug: meetup.slug } %>
+                  data: { declaration_modal_trigger: true, meetup_slug: meetup.slug, no_instant: true } %>
     <% end %>
   </div>
 
@@ -63,7 +63,7 @@
           <%= link_to "#{t('matching.section.p2.cta')} →",
                       meetup_path(meetup, declare: 1),
                       class: "c-btn c-btn--primary c-btn--l",
-                      data: { declaration_modal_trigger: true, meetup_slug: meetup.slug } %>
+                      data: { declaration_modal_trigger: true, meetup_slug: meetup.slug, no_instant: true } %>
         <% else %>
           <span class="c-btn c-btn--secondary c-btn--l" style="opacity: 0.5; cursor: not-allowed;">
             <%= t("matching.section.p2.cta") %> →
@@ -89,7 +89,7 @@
       <%= link_to t("matching.section.change_declaration"),
                   meetup_path(meetup, declare: 1),
                   class: "c-btn c-btn--secondary",
-                  data: { declaration_modal_trigger: true, meetup_slug: meetup.slug } %>
+                  data: { declaration_modal_trigger: true, meetup_slug: meetup.slug, no_instant: true } %>
     </div>
 
   <% else %>

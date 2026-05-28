@@ -136,7 +136,7 @@
         <%= link_to t("matching.timeline.declare_intent_button"),
                     meetup_path(event[:meetup], declare: 1),
                     class: "c-btn c-btn--primary c-btn--s",
-                    data: { declaration_modal_trigger: true, meetup_slug: event[:meetup].slug } %>
+                    data: { declaration_modal_trigger: true, meetup_slug: event[:meetup].slug, no_instant: true } %>
       <% end %>
     </div>
   <% end %>
