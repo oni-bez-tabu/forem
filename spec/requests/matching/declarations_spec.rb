@@ -78,6 +78,29 @@ RSpec.describe "Matching::Declarations" do
       expect(response).to redirect_to("http://www.example.com/matching")
     end
 
+    it "responds with JSON when the AJAX modal submits it" do
+      post meetup_declaration_path(meetup.slug),
+           params: valid_params,
+           headers: { "Accept" => "application/json", "X-Requested-With" => "XMLHttpRequest" }
+      expect(response).to have_http_status(:ok)
+      body = JSON.parse(response.body)
+      expect(body).to include("ok" => true)
+      expect(body.dig("declaration", "intent_level")).to eq("open_to_meet")
+      expect(body["flash"]).to eq(I18n.t("matching.declarations.saved"))
+    end
+
+    it "returns JSON errors on invalid AJAX submit" do
+      bad = valid_params.deep_dup
+      bad[:meetup_matching_declaration][:intent_level] = "bogus"
+      post meetup_declaration_path(meetup.slug),
+           params: bad,
+           headers: { "Accept" => "application/json", "X-Requested-With" => "XMLHttpRequest" }
+      expect(response).to have_http_status(:unprocessable_entity)
+      body = JSON.parse(response.body)
+      expect(body["ok"]).to eq(false)
+      expect(body["errors"]).to be_an(Array).and(be_present)
+    end
+
     it "rejects an invalid intent" do
       bad = valid_params.deep_dup
       bad[:meetup_matching_declaration][:intent_level] = "bogus"

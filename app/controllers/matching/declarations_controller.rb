@@ -36,9 +36,9 @@ module Matching
                                                      matching_profile: @current_profile,
                                                    ))
       if @declaration.save
-        redirect_to post_save_redirect_target, notice: I18n.t("matching.declarations.saved")
+        respond_with_save_success
       else
-        render :form, status: :unprocessable_entity
+        respond_with_save_failure(status: :unprocessable_entity)
       end
     end
 
@@ -48,9 +48,9 @@ module Matching
 
     def update
       if @declaration.update(declaration_params)
-        redirect_to post_save_redirect_target, notice: I18n.t("matching.declarations.saved")
+        respond_with_save_success
       else
-        render :form, status: :unprocessable_entity
+        respond_with_save_failure(status: :unprocessable_entity)
       end
     end
 
@@ -90,6 +90,37 @@ module Matching
 
     def declaration_params
       params.require(:meetup_matching_declaration).permit(:intent_level, :meetup_note)
+    end
+
+    # AJAX (fetch from the modal loader) → JSON. Non-AJAX → standard HTML
+    # redirect to the referer (with the modal-trigger query stripped). The
+    # JSON contract is intentionally minimal — the client just needs to
+    # know "saved, close the modal" or render error messages.
+    def respond_with_save_success
+      respond_to do |format|
+        format.json do
+          render json: {
+            ok: true,
+            declaration: {
+              intent_level: @declaration.intent_level,
+              meetup_note: @declaration.meetup_note,
+            },
+            flash: I18n.t("matching.declarations.saved"),
+          }
+        end
+        format.html do
+          redirect_to post_save_redirect_target, notice: I18n.t("matching.declarations.saved")
+        end
+      end
+    end
+
+    def respond_with_save_failure(status:)
+      respond_to do |format|
+        format.json do
+          render json: { ok: false, errors: @declaration.errors.full_messages }, status: status
+        end
+        format.html { render :form, status: status }
+      end
     end
 
     # After save/update, return to the page the user came from — but strip

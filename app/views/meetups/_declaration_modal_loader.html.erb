@@ -40,6 +40,116 @@
       document.removeEventListener("keydown", onKeydown);
     }
 
+    // Lightweight toast for success/error feedback after AJAX submit.
+    function showToast(message, variant) {
+      var existing = document.getElementById("matching-toast");
+      if (existing) existing.remove();
+      var bg = variant === "error"
+        ? "rgb(220,38,38)"
+        : "rgb(5,150,105)";
+      var toast = document.createElement("div");
+      toast.id = "matching-toast";
+      toast.textContent = message;
+      toast.style.cssText = [
+        "position: fixed",
+        "left: 50%",
+        "top: 24px",
+        "transform: translateX(-50%)",
+        "background: " + bg,
+        "color: #fff",
+        "padding: 12px 20px",
+        "border-radius: 999px",
+        "font-size: 14px",
+        "font-weight: 600",
+        "box-shadow: 0 10px 30px rgba(0,0,0,0.18)",
+        "z-index: 2000",
+        "opacity: 0",
+        "transition: opacity 180ms ease",
+      ].join("; ");
+      document.body.appendChild(toast);
+      window.requestAnimationFrame(function() { toast.style.opacity = "1"; });
+      setTimeout(function() {
+        toast.style.opacity = "0";
+        setTimeout(function() { toast.remove(); }, 220);
+      }, 2400);
+    }
+
+    function csrfToken() {
+      var meta = document.querySelector('meta[name="csrf-token"]');
+      return meta ? meta.getAttribute("content") : null;
+    }
+
+    function submitModalForm(form) {
+      var backdrop = getBackdrop();
+      var data = new FormData(form);
+      var submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+      var submitOrig = submitBtn ? submitBtn.value || submitBtn.textContent : null;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        if ("value" in submitBtn) submitBtn.value = "…";
+      }
+
+      fetch(form.action, {
+        method: "POST", // _method=patch hidden field handles update routing
+        body: data,
+        credentials: "same-origin",
+        headers: {
+          "Accept": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "X-CSRF-Token": csrfToken() || "",
+        },
+      })
+      .then(function(resp) {
+        return resp.json().then(function(json) { return { ok: resp.ok, json: json }; });
+      })
+      .then(function(result) {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          if (submitOrig != null) {
+            if ("value" in submitBtn) submitBtn.value = submitOrig;
+            else submitBtn.textContent = submitOrig;
+          }
+        }
+        if (result.ok) {
+          closeModal();
+          showToast(result.json.flash || "OK", "success");
+        } else {
+          var errors = (result.json && result.json.errors) || ["Wystąpił błąd"];
+          renderModalErrors(backdrop, errors);
+        }
+      })
+      .catch(function() {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          if (submitOrig != null) {
+            if ("value" in submitBtn) submitBtn.value = submitOrig;
+            else submitBtn.textContent = submitOrig;
+          }
+        }
+        showToast("Błąd sieci", "error");
+      });
+    }
+
+    function renderModalErrors(backdrop, errors) {
+      if (!backdrop) return;
+      var existing = backdrop.querySelector(".js-declaration-modal-errors");
+      if (existing) existing.remove();
+      var box = document.createElement("div");
+      box.className = "js-declaration-modal-errors crayons-notice crayons-notice--danger";
+      box.style.cssText = "padding: 12px 16px; margin: 0 28px 16px;";
+      box.setAttribute("role", "alert");
+      var ul = document.createElement("ul");
+      ul.style.cssText = "margin: 0; padding-left: 18px;";
+      errors.forEach(function(msg) {
+        var li = document.createElement("li");
+        li.textContent = msg;
+        ul.appendChild(li);
+      });
+      box.appendChild(ul);
+      var form = backdrop.querySelector("form");
+      if (form) form.parentNode.insertBefore(box, form);
+    }
+
     function onKeydown(e) {
       if (e.key === "Escape") {
         e.preventDefault();
@@ -148,6 +258,18 @@
         e.preventDefault();
         closeModal();
       }
+    });
+
+    // Form submit delegation: AJAX the declaration modal's form so the
+    // page never reloads. Server returns JSON; on success modal closes
+    // and a toast confirms.
+    document.addEventListener("submit", function(e) {
+      var form = e.target;
+      if (!form || form.nodeName !== "FORM") return;
+      var backdrop = getBackdrop();
+      if (!backdrop || !backdrop.contains(form)) return;
+      e.preventDefault();
+      submitModalForm(form);
     });
 
     // If the page was server-rendered with an open modal (?declare=1), wire
