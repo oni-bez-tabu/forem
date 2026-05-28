@@ -8,7 +8,7 @@ RSpec.describe "Api::V1::Meetups::Rsvps" do
   let(:user) { api_secret.user }
   let(:auth_header) { v1_headers.merge({ "api-key" => api_secret.secret }) }
   let(:meetup) { create(:meetup) }
-  let(:path) { api_meetup_rsvp_path(slug: meetup.slug) }
+  let(:path) { api_meetup_rsvp_path(meetup_slug: meetup.slug) }
 
   describe "POST" do
     it "creates a 'going' RSVP" do
@@ -54,7 +54,7 @@ RSpec.describe "Api::V1::Meetups::Rsvps" do
 
     it "404s for an expired meetup" do
       expired = create(:meetup, :expired_for_lists)
-      post api_meetup_rsvp_path(slug: expired.slug),
+      post api_meetup_rsvp_path(meetup_slug: expired.slug),
            params: { status: "going" }.to_json,
            headers: auth_header
       expect(response).to have_http_status(:not_found)

@@ -116,12 +116,18 @@ Rails.application.routes.draw do
             post :deactivate, on: :collection
             post :reactivate, on: :collection
           end
+          resource :notification_settings, only: %i[show update], controller: "notification_settings"
+          get "m/:meetup_slug/:profile_id",
+              to: "event_scoped_profiles#show",
+              as: :event_scoped_profile,
+              constraints: { profile_id: /\d+/ }
         end
 
-        # Meetup-level actions (not matching-specific): RSVP + boost.
-        scope "meetups/:slug" do
-          resource :rsvp, only: %i[create destroy], controller: "meetups/rsvps", as: :meetup_rsvp
-          resource :boost, only: %i[create], controller: "meetups/boosts", as: :meetup_boost
+        # Meetup-level actions and reads.
+        resources :meetups, only: %i[index show], param: :slug, controller: "meetups" do
+          resource :rsvp, only: %i[create destroy], controller: "meetups/rsvps"
+          resource :boost, only: %i[create], controller: "meetups/boosts"
+          get :matches, on: :member, to: "meetups/matches#index"
         end
 
         get "cities/search", to: "cities#search", as: :cities_search

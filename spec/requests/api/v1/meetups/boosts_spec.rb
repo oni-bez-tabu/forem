@@ -8,7 +8,7 @@ RSpec.describe "Api::V1::Meetups::Boosts" do
   let(:user) { api_secret.user }
   let(:auth_header) { v1_headers.merge({ "api-key" => api_secret.secret }) }
   let(:meetup) { create(:meetup) }
-  let(:path) { api_meetup_boost_path(slug: meetup.slug) }
+  let(:path) { api_meetup_boost_path(meetup_slug: meetup.slug) }
 
   it "creates a full_post article with the meetup embed and returns its path" do
     expect do
@@ -38,7 +38,7 @@ RSpec.describe "Api::V1::Meetups::Boosts" do
 
   it "404s for an expired meetup" do
     expired = create(:meetup, :expired_for_lists)
-    post api_meetup_boost_path(slug: expired.slug),
+    post api_meetup_boost_path(meetup_slug: expired.slug),
          params: { body: "hi" }.to_json,
          headers: auth_header
     expect(response).to have_http_status(:not_found)

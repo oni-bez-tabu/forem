@@ -50,15 +50,16 @@ RSpec.describe "GET /m/:meetup_slug/:profile_id" do
 
     it "shows the active send-welcome button when viewer is eligible" do
       get event_scoped_profile_path(meetup.slug, target_profile.id)
-      expect(response.body).to include(I18n.t("matching.welcomes.send_button"))
-      expect(response.body).to include("data-welcome-open")
+      # Preact pack handles the modal; the button has data-matching-welcome-trigger now.
+      expect(response.body).to include("data-matching-welcome-trigger")
+      expect(response.body).to include("matchingWelcome")
     end
 
     it "shows the already-sent state when a welcome between this pair already exists" do
       create(:matching_welcome, sender_profile: viewer_profile, receiver_profile: target_profile, meetup: meetup)
       get event_scoped_profile_path(meetup.slug, target_profile.id)
       expect(response.body).to include(I18n.t("matching.welcomes.already_sent_button"))
-      expect(response.body).not_to include("data-welcome-open")
+      expect(response.body).not_to include("data-matching-welcome-trigger")
     end
 
     it "shows the not-eligible hint when viewer has no declaration on this meetup" do

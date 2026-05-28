@@ -36,7 +36,8 @@ module Api
         private
 
         def set_meetup
-          @meetup = Meetup.visible_in_lists.find_by(slug: params[:slug])
+          slug = params[:meetup_slug] || params[:slug]
+          @meetup = Meetup.visible_in_lists.find_by(slug: slug)
           error_not_found unless @meetup
         end
 
