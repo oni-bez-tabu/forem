@@ -135,22 +135,26 @@ module Matching
         .joins(:matching_profile)
         .where(matching_profile: { is_active: true, moderation_state: "approved" })
 
-      # Group by meetup so the timeline shows one aggregated row per meetup,
-      # not one row per joiner (mockup E8 — "3 nowe dopasowania").
+      # One aggregated row per meetup ("X osób z nietabu w twoim poolu").
+      # Pokazujemy wszystkich aktywnych pool-memberów na meetupie — timeline
+      # surfacuje "kto jest dostępny", nie tylko "kto dołączył po Tobie".
       grouped = joiner_decs.group_by(&:meetup_id)
       grouped.filter_map do |meetup_id, decs|
-        viewer_at = meetup_to_viewer_decl_at[meetup_id]
-        recent = decs.select { |d| d.created_at > viewer_at }
-        next if recent.empty?
+        next if decs.empty?
 
-        latest = recent.max_by(&:created_at)
-        sorted = recent.sort_by(&:created_at).reverse.first(JOINERS_PREVIEW)
+        viewer_at = meetup_to_viewer_decl_at[meetup_id]
+        latest = decs.max_by(&:created_at)
+        # `at` = max(twoja deklaracja, najświeższy joiner) — gdy ktoś nowy
+        # dołącza, event podskakuje na górę feedu; gdy nic się nie zmienia,
+        # event lokuje się przy Twojej deklaracji (świeżej dla nowych userów).
+        event_at = [latest.created_at, viewer_at].max
+        sorted = decs.sort_by(&:created_at).reverse.first(JOINERS_PREVIEW)
         {
           type: :match_found,
-          at: latest.created_at,
+          at: event_at,
           meetup: latest.meetup,
           payload: {
-            count: recent.length,
+            count: decs.length,
             joiners: sorted.map(&:matching_profile),
             declarations: sorted,
           },

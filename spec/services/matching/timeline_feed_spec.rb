@@ -91,7 +91,10 @@ RSpec.describe Matching::TimelineFeed do
       expect(preview.first).to be_a(MatchingProfile)
     end
 
-    it "skips match_found rows for declarations older than the viewer's" do
+    it "includes pool members even when their declaration is older than the viewer's" do
+      # Pool-as-presence semantic: timeline pokazuje wszystkich aktywnych
+      # pool-memberów, nie tylko tych "po Tobie". Czas eventu = max(twoja
+      # deklaracja, najświeższy joiner), żeby user zawsze widział, kto jest.
       profile
       meetup = create(:meetup)
       create(:meetup_rsvp, meetup: meetup, user: user, status: "going")
@@ -110,7 +113,10 @@ RSpec.describe Matching::TimelineFeed do
       older_dec.update_columns(created_at: 2.days.ago)
 
       events = described_class.new(user: user).call
-      expect(events.map { |e| e[:type] }).not_to include(:match_found)
+      match_event = events.find { |e| e[:type] == :match_found }
+      expect(match_event).not_to be_nil
+      expect(match_event[:payload][:count]).to eq(1)
+      expect(match_event[:payload][:joiners]).to include(older)
     end
 
     it "skips match_found from not_looking joiners" do
