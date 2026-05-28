@@ -29,3 +29,8 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+
+// Soft-refresh swaps the page's [data-soft-refresh-root] innerHTML, which
+// drops Preact's hold on the old RSVP mount node and inserts a fresh one.
+// Re-init mounts whatever's now in the DOM.
+document.addEventListener('matching:dom-refreshed', init);

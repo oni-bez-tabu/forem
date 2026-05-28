@@ -1,8 +1,11 @@
 // Soft-refresh the current page by re-fetching its HTML and swapping the
 // [data-soft-refresh-root] container's innerHTML. Preserves scroll position
-// and any DOM outside the root (e.g. modal mount points, fixed-position
-// toasts). No-op if the container isn't present in either the current DOM
-// or the freshly-fetched HTML.
+// and any DOM outside the root (e.g. Preact modal mount points on <body>,
+// fixed-position toasts).
+//
+// After the swap we dispatch `matching:dom-refreshed` so Preact packs that
+// mount inside the swapped region (RsvpButtons today, others tomorrow)
+// know to re-mount themselves into the fresh DOM nodes.
 export async function softRefreshCurrentPage() {
   const currentRoot = document.querySelector('[data-soft-refresh-root]');
   if (!currentRoot) return;
@@ -17,7 +20,9 @@ export async function softRefreshCurrentPage() {
     const newRoot = doc.querySelector('[data-soft-refresh-root]');
     if (!newRoot) return;
     const stillThere = document.querySelector('[data-soft-refresh-root]');
-    if (stillThere) stillThere.innerHTML = newRoot.innerHTML;
+    if (!stillThere) return;
+    stillThere.innerHTML = newRoot.innerHTML;
+    document.dispatchEvent(new CustomEvent('matching:dom-refreshed'));
   } catch (_e) {
     // Stale UI stays; toast already confirmed the save.
   }
