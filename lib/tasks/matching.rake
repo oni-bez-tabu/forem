@@ -11,17 +11,23 @@ namespace :matching do
     puts "  declarations     : #{result.declarations_created}"
   end
 
-  desc "Wipe matching + meetup state, create 2 demo meetups, reseed demo profiles. Dev/test only."
+  desc "Wipe matching + meetup state, create 2 demo meetups, reseed demo profiles. Dev/test only. PRESERVE=user1,user2 keeps named users' profiles intact."
   task reset_demo: :environment do
     abort "Refusing to run in production." if Rails.env.production?
 
+    preserved_usernames = (ENV["PRESERVE"] || "on_bez_tabu").split(",").map(&:strip).reject(&:blank?)
+    preserved_user_ids = User.where(username: preserved_usernames).pluck(:id)
+    preserved_profile_ids = MatchingProfile.where(user_id: preserved_user_ids).pluck(:id)
+    puts "Preserving profiles for: #{preserved_usernames.join(', ').presence || '(none)'}" if preserved_user_ids.any?
+
     puts "Wiping matching + meetup state…"
-    MatchingWelcome.delete_all
+    MatchingWelcome.where("sender_profile_id NOT IN (?) AND receiver_profile_id NOT IN (?)",
+                          preserved_profile_ids + [0], preserved_profile_ids + [0]).delete_all
     MatchingRecommendationImpression.delete_all
-    MeetupMatchingDeclaration.delete_all
-    MatchingProfile.destroy_all
-    MeetupRsvp.delete_all
-    Meetup.delete_all
+    MeetupMatchingDeclaration.where.not(matching_profile_id: preserved_profile_ids).delete_all
+    MatchingProfile.where.not(id: preserved_profile_ids).destroy_all
+    MeetupRsvp.where.not(user_id: preserved_user_ids).delete_all
+    Meetup.delete_all # also cascade-destroys remaining RSVPs/declarations on those meetups
     puts "  wiped."
 
     organizer = User.find_by(username: "on_bez_tabu") || User.order(:id).first
