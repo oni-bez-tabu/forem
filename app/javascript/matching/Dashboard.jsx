@@ -6,6 +6,7 @@ import { h, Fragment } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import PropTypes from 'prop-types';
 import { dashboardApi } from './dashboardApi';
+import { getCachedDashboard, setCachedDashboard } from './dashboardCache';
 import { ProfileHeader } from './ProfileHeader';
 import { TimelineEvent } from './TimelineEvent';
 import { TimelineItem } from './TimelineItem';
@@ -36,30 +37,30 @@ function interleave(events, recommendations) {
 const STATE = { LOADING: 'loading', READY: 'ready', ERROR: 'error' };
 
 export const Dashboard = ({ onboardingUrl, settingsUrl }) => {
-  const [stage, setStage] = useState(STATE.LOADING);
-  const [data, setData] = useState(null);
+  // Try cache synchronously on first render — when user wraca na /matching
+  // przez InstantClick i cache jest świeży, omijamy spinner całkowicie.
+  const cached = getCachedDashboard();
+  const [stage, setStage] = useState(cached ? STATE.READY : STATE.LOADING);
+  const [data, setData] = useState(cached);
 
-  const fetchData = () => {
-    setStage(STATE.LOADING);
+  useEffect(() => {
+    // Tylko gdy nie mamy cache'a, fetch w tle. Visibility change / focus
+    // celowo nie wywołują refetchu — user nie chce widzieć spinnera za
+    // każdym powrotem do karty. Cache invaliduje się przy AJAX akcji
+    // (softRefresh wywołuje invalidateDashboardCache).
+    if (cached) return undefined;
+    let cancelled = false;
     dashboardApi.show().then(({ ok, payload }) => {
+      if (cancelled) return;
       if (!ok || !payload) {
         setStage(STATE.ERROR);
         return;
       }
+      setCachedDashboard(payload);
       setData(payload);
       setStage(STATE.READY);
     });
-  };
-
-  useEffect(() => {
-    fetchData();
-    // Refetch when the page becomes visible again (e.g. user comes back
-    // from /meetups/:slug after RSVPing) — keeps the timeline fresh.
-    const handleVisible = () => {
-      if (document.visibilityState === 'visible') fetchData();
-    };
-    document.addEventListener('visibilitychange', handleVisible);
-    return () => document.removeEventListener('visibilitychange', handleVisible);
+    return () => { cancelled = true; };
   }, []);
 
   if (stage === STATE.LOADING) {
