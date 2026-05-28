@@ -106,7 +106,13 @@
                 ✓ <%= t("matching.event_scoped.write_button") %>
               </span>
             <% elsif @welcome_eligible %>
-              <button type="button" class="c-btn c-btn--primary c-btn--l" data-welcome-open data-target="#welcome-modal-<%= @profile.id %>">
+              <button type="button"
+                      class="c-btn c-btn--primary c-btn--l"
+                      data-matching-welcome-trigger
+                      data-receiver-id="<%= @profile.id %>"
+                      data-meetup-id="<%= @meetup.id %>"
+                      data-preview-body="<%= MatchingWelcome.render_body(sender_profile: @viewer_profile, meetup: @meetup, host: request.host) %>"
+                      data-no-instant>
                 ✉ <%= t("matching.event_scoped.write_button") %>
               </button>
             <% else %>
@@ -120,10 +126,8 @@
     </div>
   </div>
 
-  <% if current_user && @welcome_eligible && !@welcome_already_sent %>
-    <%= render "welcome_modal",
-               meetup: @meetup,
-               receiver_profile: @profile,
-               welcome_body: MatchingWelcome.render_body(sender_profile: @viewer_profile, meetup: @meetup, host: request.host) %>
-  <% end %>
 </div>
+
+<% if current_user && @welcome_eligible && !@welcome_already_sent %>
+  <%= javascript_include_tag "matchingWelcome", defer: true %>
+<% end %>
