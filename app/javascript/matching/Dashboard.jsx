@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { dashboardApi } from './dashboardApi';
 import { ProfileHeader } from './ProfileHeader';
 import { TimelineEvent } from './TimelineEvent';
+import { TimelineItem } from './TimelineItem';
 import { RecommendationCard } from './RecommendationCard';
 
 const RECOMMENDATION_EVERY = 3;
@@ -140,15 +141,35 @@ export const Dashboard = ({ onboardingUrl, settingsUrl }) => {
           </div>
         </div>
       ) : (
-        <div class="flex flex-col" style={{ gap: '12px' }}>
-          {items.map((entry) =>
-            entry.kind === 'event' ? (
-              <TimelineEvent key={entry.key} event={entry.item} />
-            ) : (
-              <RecommendationCard key={entry.key} recommendation={entry.item} />
-            ),
-          )}
-        </div>
+        <Fragment>
+          <div
+            class="flex items-baseline flex-wrap"
+            style={{ justifyContent: 'space-between', marginBottom: '12px' }}
+          >
+            <h2 class="crayons-subtitle-1" style={{ margin: 0 }}>
+              Ostatnia aktywność
+            </h2>
+            <span class="fs-xs color-base-60">
+              Dopasowania, deklaracje i zapisy — w kolejności jak się działy
+            </span>
+          </div>
+          <ol style={{ listStyle: 'none', padding: 0, margin: 0, position: 'relative' }}>
+            {items.map((entry, idx) => {
+              const isLast = idx === items.length - 1;
+              const dotType =
+                entry.kind === 'event' ? entry.item.type : 'recommendation';
+              return (
+                <TimelineItem key={entry.key} dotType={dotType} isLast={isLast}>
+                  {entry.kind === 'event' ? (
+                    <TimelineEvent event={entry.item} />
+                  ) : (
+                    <RecommendationCard recommendation={entry.item} />
+                  )}
+                </TimelineItem>
+              );
+            })}
+          </ol>
+        </Fragment>
       )}
     </Fragment>
   );

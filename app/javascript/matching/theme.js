@@ -52,3 +52,33 @@ export const INTENT_LABELS = {
 export function intentLabel(level) {
   return INTENT_LABELS[level] || level;
 }
+
+// Banner gradient palette — mirror MeetupsHelper::BANNER_GRADIENTS Ruby.
+export const BANNER_GRADIENTS = {
+  dusk: 'linear-gradient(135deg, #4a0e4e 0%, #81267d 100%)',
+  velvet: 'linear-gradient(135deg, #6b0f1a 0%, #d4351c 100%)',
+  ember: 'linear-gradient(135deg, #c2410c 0%, #f59e0b 100%)',
+  night: 'linear-gradient(135deg, #0c1e3a 0%, #1e3a8a 100%)',
+  olive: 'linear-gradient(135deg, #365314 0%, #84cc16 100%)',
+  sunrise: 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
+};
+
+export function bannerGradient(name) {
+  return BANNER_GRADIENTS[name] || BANNER_GRADIENTS.dusk;
+}
+
+// Dot timeline colors (matching MatchingHelper#dot_hex_for in Ruby).
+export const DOT_HEX = {
+  match_found: '#171717',
+  declaration_created: '#a91f69',
+  declaration_updated: '#a91f69',
+  welcome_sent: '#6366f1',
+  welcome_received: '#6366f1',
+  needs_intent: '#d97706',
+  rsvp_created: '#9ca3af',
+  recommendation: '#d1d5db',
+};
+
+export function dotHex(type) {
+  return DOT_HEX[type] || '#9ca3af';
+}
