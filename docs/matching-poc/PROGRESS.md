@@ -629,9 +629,40 @@ External sprint (poza Forem repo):
 
 ### Status faz
 
-- ⏳ Faza 0 — Settings/matching ERB conformity (planowane)
-- ⏳ Faza 1 — API + Preact DeclarationModal
-- ⏳ Faza 2 — Meetup hub action widgets
-- ⏳ Faza 3 — /matching jako pełny SPA
-- ⏳ Faza 4 — Onboarding profile widgets
-- ⏳ Faza 5 — Mobile read API
+- ✅ Faza 0 — Settings/matching ERB conformity (commit `2dd9f465a`)
+- ✅ Faza 1 — API + Preact DeclarationModal (commit `5d743da04`)
+- ✅ Faza 2 — Meetup hub action widgets (5 commits, ostatni `8a32d2f10`)
+- ✅ Faza 3 — /matching jako pełny SPA (commit `b3ed8f87f`)
+- ✅ Faza 4 — Onboarding profile widgets (commit `ec61ce5c5`)
+- ✅ Faza 5 — Mobile read API (commit ostatni Fazy 5)
+
+### Co dostaliśmy
+
+**Backend API (`/api/...`, Forem ApiConstraints v1):**
+- `GET /api/meetups` — lista z filtrami (city_id, before, after, page, per_page)
+- `GET /api/meetups/:slug` — single meetup z RSVP status / match pool count
+- `GET /api/meetups/:slug/matches` — pool list (P3 gated)
+- `POST/DELETE /api/meetups/:slug/rsvp` — RSVP upsert z needs_declaration_prompt hint
+- `POST /api/meetups/:slug/boost` — tworzy boost article z embedded meetup
+- `GET/POST/PATCH/DELETE /api/matching/meetups/:slug/declaration` — declaration CRUD (upsert)
+- `POST /api/matching/welcomes` — wysłanie welcome
+- `GET /api/matching/m/:meetup_slug/:profile_id` — event-scoped profile
+- `GET /api/matching/dashboard` — combined snapshot (profile + timeline + recs)
+- `GET/POST/PATCH/DELETE /api/matching/profile` + `/deactivate` + `/reactivate`
+- `GET/PATCH /api/matching/notification_settings`
+- `GET /api/cities/search?q=`
+
+Auth: `authenticate_with_api_key_or_current_user!` — web używa sesji, mobile dorzuca `api-key` header.
+
+**Web frontend Preact widgety:**
+- `/matching` — pełny SPA na `Dashboard` Preact app (TimelineEvent + RecommendationCard + ProfileHeader)
+- `/meetups/:slug` SSR z mounted widgets:
+  - `RsvpButtons` (Preact replace server-rendered button_to)
+  - `BoostModal` (click on "Udostępnij na nietabu", preview HTML server-side)
+  - `DeclarationModal` (click on "Dodaj intencję" / "Zmień deklarację")
+  - copy-link button (mały inline JS one-liner — clipboard write)
+- `/m/:slug/:profile_id` SSR z `WelcomeModal` Preact widget
+- `/matching/onboarding/form` (E6) z `ProfileForm` Preact widget (PhotoUploader + IdentityChips + CityAutocomplete + BioField)
+- `/settings/matching` — zostaje ERB (Faza 0 decision)
+
+**Pełny POC suite:** 323/323 ✓ (modele 71 + serwisy + workers + requestowe specs + 51 nowych API testów z Faz 1–5)
