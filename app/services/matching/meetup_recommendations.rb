@@ -169,8 +169,21 @@ module Matching
     def record_impressions!(meetup_ids)
       return if meetup_ids.empty?
 
+      # Dedupe per day per (user, meetup) — kolejne odświeżenia dashboardu w
+      # ciągu dnia nie kapują meetupu (cap = 2 dni w 7-dniowym oknie, nie
+      # 2 page-loady). Bez tego user widzący /matching 2 razy traci wszystkie
+      # rekomendacje na tydzień.
+      today_start = Time.current.beginning_of_day
+      already_today = MatchingRecommendationImpression
+        .where(user_id: @user.id, meetup_id: meetup_ids)
+        .where("shown_at >= ?", today_start)
+        .pluck(:meetup_id)
+        .to_set
+      new_ids = meetup_ids - already_today.to_a
+      return if new_ids.empty?
+
       now = Time.current
-      rows = meetup_ids.map do |mid|
+      rows = new_ids.map do |mid|
         { user_id: @user.id, meetup_id: mid, shown_at: now, created_at: now, updated_at: now }
       end
       MatchingRecommendationImpression.insert_all(rows)

@@ -169,6 +169,15 @@ RSpec.describe Matching::MeetupRecommendations do
           described_class.new(user: user).call
         end.not_to change(MatchingRecommendationImpression, :count)
       end
+
+      it "dedupes impressions per day per (user, meetup)" do
+        create(:meetup, venue_city: warsaw, start_at: 2.days.from_now, end_at: 2.days.from_now + 2.hours)
+        described_class.new(user: user, record_impressions: true).call
+        # Second render the same day → no extra row.
+        expect do
+          described_class.new(user: user, record_impressions: true).call
+        end.not_to change(MatchingRecommendationImpression, :count)
+      end
     end
   end
 
