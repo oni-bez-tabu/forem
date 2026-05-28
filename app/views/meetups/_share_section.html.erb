@@ -1,3 +1,8 @@
+<%# Share + Boost section. Copy-link button uses tiny inline JS (one-liner
+    clipboard write); the boost modal is a Preact widget mounted by
+    app/javascript/packs/matchingBoost.jsx. The preview HTML below is
+    rendered once server-side and picked up by the modal via
+    `[data-meetup-boost-preview]`. %>
 <section class="crayons-card p-6">
   <h2 class="crayons-subtitle mb-3"><%= t("meetups.share.heading") %></h2>
   <div class="flex gap-2 items-center mb-3">
@@ -7,7 +12,6 @@
       value="<%= meetup_url(meetup) %>"
       class="crayons-textfield flex-1"
       id="meetup-share-url-<%= meetup.id %>"
-      data-meetup-share-url
     >
     <button
       type="button"
@@ -24,16 +28,20 @@
     <button
       type="button"
       class="c-btn c-btn--primary"
-      data-meetup-boost-open
-      data-target="#meetup-boost-modal-<%= meetup.id %>"
+      data-meetup-boost-trigger
+      data-meetup-slug="<%= meetup.slug %>"
+      data-no-instant
     >
       <%= t("meetups.share.share_to_nietabu") %>
     </button>
   <% end %>
 </section>
 
+<%# Hidden preview HTML for the Preact boost modal. %>
 <% if user_signed_in? %>
-  <%= render "boost_modal", meetup: meetup %>
+  <div data-meetup-boost-preview="<%= meetup.slug %>" hidden>
+    <%= render "meetups/liquid", meetup: meetup, widget_state: :upcoming %>
+  </div>
 <% end %>
 
 <script>
@@ -43,11 +51,8 @@
         var input = document.querySelector(btn.dataset.target);
         if (!input) return;
         input.select();
-        try {
-          navigator.clipboard.writeText(input.value);
-        } catch (_) {
-          document.execCommand("copy");
-        }
+        try { navigator.clipboard.writeText(input.value); }
+        catch (_) { document.execCommand("copy"); }
         var original = btn.textContent;
         btn.textContent = btn.dataset.copiedLabel;
         setTimeout(function() { btn.textContent = original; }, 1500);
