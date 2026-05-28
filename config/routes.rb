@@ -102,6 +102,15 @@ Rails.application.routes.draw do
           end
         end
 
+        namespace :matching do
+          # Declarations are nested under a meetup slug — mirrors the web URL
+          # `/meetups/:slug/declaration` and gives mobile a clean hierarchy.
+          scope "meetups/:meetup_slug" do
+            resource :declaration, only: %i[show create update destroy],
+                                   controller: "declarations"
+          end
+        end
+
         draw :api
       end
 
@@ -302,10 +311,6 @@ Rails.application.routes.draw do
     resources :meetups, only: %i[index show], param: :slug do
       resource :rsvp, only: %i[create destroy], controller: "meetups/rsvps"
       resource :declaration, only: %i[new create edit update destroy], controller: "matching/declarations"
-      get "/declaration/modal",
-          to: "matching/declarations#modal",
-          on: :member,
-          as: :declaration_modal
       post :boost, on: :member, controller: "meetups/boosts", action: :create, as: :boost
     end
 

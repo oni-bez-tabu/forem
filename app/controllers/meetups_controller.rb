@@ -40,16 +40,5 @@ class MeetupsController < ApplicationController
                              MeetupMatchingDeclaration.find_by(meetup: @meetup, matching_profile: @current_profile)
                            end
     @pool = Matching::PoolFinder.new(viewer_profile: @current_profile, meetup: @meetup) if @current_profile
-
-    # E10 declaration popup (modal over the hub). Triggered by `?declare=1` —
-    # populated after RSVP redirects here or when P3 clicks "Zmień deklarację".
-    @show_declaration_modal = params[:declare] == "1" && @current_profile&.visible_to_others?
-    if @show_declaration_modal
-      @declaration_for_modal = @current_declaration || MeetupMatchingDeclaration.new(
-        meetup: @meetup,
-        matching_profile: @current_profile,
-        intent_level: "open_to_meet",
-      )
-    end
   end
 end

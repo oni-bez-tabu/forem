@@ -134,43 +134,4 @@ RSpec.describe "Matching::Declarations" do
     end
   end
 
-  describe "GET /meetups/:slug/declaration/modal" do
-    context "with an active profile and an RSVP" do
-      before do
-        profile
-        sign_in user
-      end
-
-      it "returns the modal partial without the page layout" do
-        get declaration_modal_meetup_path(meetup.slug)
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include(%(id="declaration-modal-backdrop"))
-        expect(response.body).to include(I18n.t("matching.declarations.modal.title"))
-        # No-layout response: no top nav, no full HTML head
-        expect(response.body).not_to include("<html")
-      end
-    end
-
-    context "without a visible profile" do
-      before { sign_in user }
-
-      it "redirects to /matching" do
-        get declaration_modal_meetup_path(meetup.slug)
-        expect(response).to redirect_to(matching_path)
-      end
-    end
-
-    context "without an RSVP" do
-      before do
-        profile
-        rsvp.destroy
-        sign_in user
-      end
-
-      it "redirects back to the meetup hub" do
-        get declaration_modal_meetup_path(meetup.slug)
-        expect(response).to redirect_to(meetup_path(meetup))
-      end
-    end
-  end
 end

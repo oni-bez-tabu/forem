@@ -16,20 +16,6 @@ module Matching
       render :form
     end
 
-    # Renders just the modal partial (no layout). Used by inline JS on
-    # /matching and /meetups/:slug to inject the E10 popup without
-    # navigating away from the current page.
-    def modal
-      declaration = MeetupMatchingDeclaration.find_or_initialize_by(
-        meetup: @meetup,
-        matching_profile: @current_profile,
-      )
-      declaration.intent_level ||= "open_to_meet"
-      render partial: "meetups/declaration_modal",
-             locals: { meetup: @meetup, declaration: declaration, open: true },
-             layout: false
-    end
-
     def create
       @declaration = MeetupMatchingDeclaration.new(declaration_params.merge(
                                                      meetup: @meetup,
