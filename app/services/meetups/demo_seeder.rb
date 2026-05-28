@@ -31,7 +31,27 @@ module Meetups
       ["sam_demo",    "non_binary", "warszawa", "Lubię ciszę i głośne koncerty na zmianę.",                                                 "just_vibe",    :both,     :approved],
 
       ["zofia_demo",  "woman",      "warszawa", "Świeżo na nietabu, czekam na akceptację.",                                                 "open_to_meet", :czerwony, :pending],
-      ["rafal_demo",  "man",        "warszawa", "Hej. Brak bio.",                                                                            "open_to_meet", nil,       :rejected]
+      ["rafal_demo",  "man",        "warszawa", "Hej. Brak bio.",                                                                            "open_to_meet", nil,       :rejected],
+
+      # ── Druga fala: więcej osób gotowych na poznanie na obu wydarzeniach ──
+      ["natalia_demo", "woman",      "warszawa", "Lubię cisze i sjestę, ale na evencie się rozkręcam.",                                       "open_to_meet", :both,     :approved],
+      ["zuzia_demo",   "woman",      "warszawa", "Tańczę, czytam, gotuję — nieoczywiste połączenie.",                                          "open_to_meet", :czerwony, :approved],
+      ["ada_demo",     "woman",      "krakow",   "Wracam do siebie. Patrzę na ludzi z ciekawością.",                                           "just_vibe",    :both,     :approved],
+      ["iza_demo",     "woman",      "warszawa", "Nauczyłam się mówić nie. Łatwiej mi teraz mówić tak.",                                       "open_to_meet", :noc,      :approved],
+      ["wiktoria_demo","woman",      "wroclaw",  "Otwarta na rozmowy bez tematów do końca przewidywalnych.",                                   "open_to_meet", :czerwony, :approved],
+
+      ["adam_demo",    "man",        "warszawa", "Lubię ludzi którzy nie biorą siebie zbyt poważnie.",                                         "open_to_meet", :both,     :approved],
+      ["michal_demo",  "man",        "krakow",   "Były kucharz, obecnie projektant. Lubię opowiadać historie.",                                "open_to_meet", :czerwony, :approved],
+      ["filip_demo",   "man",        "warszawa", "Trening, książki, długie spacery. Wieczorem rzadziej, ale na evencie chętnie.",              "open_to_meet", :both,     :approved],
+      ["lukasz_demo",  "man",        "gdansk",   "Daleko mi do Warszawy, ale na ten event jadę specjalnie.",                                   "just_vibe",    :czerwony, :approved],
+      ["jan_demo",     "man",        "warszawa", "Pierwszy raz na nietabu. Chętnie kogoś poznam.",                                              "open_to_meet", :noc,      :approved],
+
+      ["para_d_demo",  "couple",     "krakow",   "Pięć lat razem. Lubimy zaczynać znajomości od muzyki.",                                       "open_to_meet", :both,     :approved],
+      ["para_e_demo",  "couple",     "warszawa", "Dwa lata razem, otwarci na nową energię.",                                                    "open_to_meet", :noc,      :approved],
+
+      ["jules_demo",   "non_binary", "warszawa", "Ciekawość ponad wszystko. Spotkajmy się przy barze.",                                         "open_to_meet", :both,     :approved],
+      ["robi_demo",    "non_binary", "krakow",   "Lubię cisze, dobre rozmowy, krótkie tańce.",                                                  "just_vibe",    :czerwony, :approved],
+      ["lev_demo",     "non_binary", "everywhere","Mieszkam pomiędzy miastami. Łatwo znajdziesz mnie po kapeluszu.",                            "open_to_meet", :noc,      :approved]
     ].freeze
 
     Result = Struct.new(:users_created, :profiles_created, :rsvps_created, :declarations_created, keyword_init: true)
