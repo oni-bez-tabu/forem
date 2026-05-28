@@ -1,97 +1,128 @@
 <% profile = MatchingProfile.find_by(user_id: current_user.id) %>
 
-<h2 class="crayons-subtitle-1 mb-3">✨ <%= t("matching.settings.title") %></h2>
-<p class="mb-4 color-base-70"><%= t("matching.settings.intro") %></p>
-
 <% if profile.nil? %>
-  <div class="crayons-card p-6">
-    <p class="mb-3"><%= t("matching.settings.no_profile_intro") %></p>
+  <%# Empty state — same shape as other Forem settings empty states %>
+  <div class="crayons-card crayons-card--content-rows">
+    <h2 class="crayons-subtitle-1"><%= t("matching.settings.title") %></h2>
+    <p><%= t("matching.settings.intro") %></p>
+    <p><%= t("matching.settings.no_profile_intro") %></p>
     <% if current_user.suspended? %>
-      <p class="color-base-60 fs-s"><%= t("matching.profiles.suspended_blocked") %></p>
+      <div class="crayons-notice crayons-notice--warning" role="alert">
+        <p><%= t("matching.profiles.suspended_blocked") %></p>
+      </div>
     <% else %>
-      <%= link_to t("matching.show.create_profile"), matching_onboarding_path, class: "crayons-btn" %>
+      <div>
+        <%= link_to t("matching.show.create_profile"),
+                    matching_onboarding_path,
+                    class: "crayons-btn" %>
+      </div>
     <% end %>
   </div>
 
 <% else %>
-  <div class="crayons-card p-6 mb-4">
-    <div class="flex items-center gap-2 flex-wrap mb-3">
+  <%# Profile state — moderation badge + deactivation marker + rejection reason %>
+  <div class="crayons-card crayons-card--content-rows">
+    <h2 class="crayons-subtitle-1"><%= t("matching.settings.title") %></h2>
+    <p><%= t("matching.settings.intro") %></p>
+
+    <div class="flex items-center gap-2 flex-wrap">
       <%= render "matching/moderation_badge", profile: profile %>
       <% unless profile.is_active? %>
-        <span class="crayons-indicator crayons-indicator--warning"><%= t("matching.show.deactivated") %></span>
+        <span class="crayons-indicator crayons-indicator--warning">
+          <%= t("matching.show.deactivated") %>
+        </span>
       <% end %>
     </div>
+
     <% if profile.moderation_reason.present? %>
-      <p class="fs-s color-base-60 mb-3"><strong><%= t("matching.show.rejection_reason") %>:</strong> <%= profile.moderation_reason %></p>
-    <% end %>
-
-    <p class="fs-s color-base-60 mb-4"><%= t("matching.settings.edit_help") %></p>
-
-    <%= render "matching/profiles/form", profile: (@profile || profile), submit_label: t("matching.profiles.update") %>
-  </div>
-
-  <div class="crayons-card p-6">
-    <h3 class="crayons-subtitle-2 mb-3"><%= t("matching.settings.danger_zone") %></h3>
-
-    <% if profile.is_active? %>
-      <div class="flex items-start justify-between gap-4 mb-3 flex-wrap">
-        <div class="flex-1">
-          <strong><%= t("matching.settings.deactivate_heading") %></strong>
-          <p class="fs-s color-base-60"><%= t("matching.settings.deactivate_help") %></p>
-        </div>
-        <%= button_to t("matching.settings.deactivate_button"),
-                      deactivate_matching_profile_path,
-                      method: :post,
-                      class: "crayons-btn crayons-btn--outlined",
-                      form: { class: "inline-block", data: { turbo_confirm: t("matching.settings.confirm_deactivate") } } %>
-      </div>
-    <% else %>
-      <div class="flex items-start justify-between gap-4 mb-3 flex-wrap">
-        <div class="flex-1">
-          <strong><%= t("matching.settings.reactivate_heading") %></strong>
-          <p class="fs-s color-base-60"><%= t("matching.settings.reactivate_help") %></p>
-        </div>
-        <%= button_to t("matching.settings.reactivate_button"),
-                      reactivate_matching_profile_path,
-                      method: :post,
-                      class: "crayons-btn",
-                      form: { class: "inline-block" } %>
+      <div class="crayons-notice crayons-notice--info" role="alert">
+        <p>
+          <strong><%= t("matching.show.rejection_reason") %>:</strong>
+          <%= profile.moderation_reason %>
+        </p>
       </div>
     <% end %>
-
-    <hr class="my-3 color-base-30">
-
-    <div class="flex items-start justify-between gap-4 flex-wrap">
-      <div class="flex-1">
-        <strong><%= t("matching.settings.destroy_heading") %></strong>
-        <p class="fs-s color-base-60"><%= t("matching.settings.destroy_help") %></p>
-      </div>
-      <%= button_to t("matching.settings.destroy_button"),
-                    matching_profile_path,
-                    method: :delete,
-                    class: "crayons-btn crayons-btn--danger",
-                    form: { class: "inline-block", data: { turbo_confirm: t("matching.settings.confirm_destroy") } } %>
-    </div>
   </div>
 
-  <%= form_for @users_notification_setting, url: users_notification_settings_path, html: { class: "mt-4" } do |f| %>
+  <%# Profile fields — content edit form %>
+  <div class="crayons-card crayons-card--content-rows">
+    <h2 class="crayons-subtitle-1"><%= t("matching.settings.edit_heading") %></h2>
+    <p><%= t("matching.settings.edit_help") %></p>
+
+    <%= render "matching/profiles/form",
+               profile: (@profile || profile),
+               submit_label: t("matching.profiles.update") %>
+  </div>
+
+  <%# Notifications — push toggles per matching category %>
+  <%= form_for @users_notification_setting, url: users_notification_settings_path do |f| %>
     <%= hidden_field_tag :return_to, "matching" %>
     <div class="crayons-card crayons-card--content-rows">
-      <header>
-        <h2 class="crayons-subtitle-1"><%= t("matching.settings.notifications_heading") %></h2>
-        <p class="color-base-70"><%= t("matching.settings.notifications_intro") %></p>
-      </header>
+      <h2 class="crayons-subtitle-1"><%= t("matching.settings.notifications_heading") %></h2>
+      <p><%= t("matching.settings.notifications_intro") %></p>
+
       <div class="crayons-field crayons-field--checkbox">
         <%= f.check_box :notify_on_new_matches, class: "crayons-checkbox" %>
-        <%= f.label :notify_on_new_matches, t("helpers.label.users_notification_setting.notify_on_new_matches"), class: "crayons-field__label" %>
+        <%= f.label :notify_on_new_matches,
+                    t("helpers.label.users_notification_setting.notify_on_new_matches"),
+                    class: "crayons-field__label" %>
       </div>
       <div class="crayons-field crayons-field--checkbox">
         <%= f.check_box :notify_on_new_city_meetups, class: "crayons-checkbox" %>
-        <%= f.label :notify_on_new_city_meetups, t("helpers.label.users_notification_setting.notify_on_new_city_meetups"), class: "crayons-field__label" %>
+        <%= f.label :notify_on_new_city_meetups,
+                    t("helpers.label.users_notification_setting.notify_on_new_city_meetups"),
+                    class: "crayons-field__label" %>
       </div>
-      <div class="crayons-field">
+      <div>
         <%= f.submit t("matching.settings.notifications_save"), class: "crayons-btn" %>
       </div>
     </div>
   <% end %>
+
+  <%# Danger zone — deactivate/reactivate + destroy %>
+  <div class="crayons-card crayons-card--content-rows">
+    <h2 class="crayons-subtitle-1 color-accent-danger">
+      <%= t("matching.settings.danger_zone") %>
+    </h2>
+
+    <% if profile.is_active? %>
+      <div class="grid gap-2">
+        <h3 class="crayons-subtitle-2"><%= t("matching.settings.deactivate_heading") %></h3>
+        <p><%= t("matching.settings.deactivate_help") %></p>
+        <div>
+          <%= button_to t("matching.settings.deactivate_button"),
+                        deactivate_matching_profile_path,
+                        method: :post,
+                        class: "crayons-btn crayons-btn--secondary",
+                        form: { class: "inline-block",
+                                data: { turbo_confirm: t("matching.settings.confirm_deactivate") } } %>
+        </div>
+      </div>
+    <% else %>
+      <div class="grid gap-2">
+        <h3 class="crayons-subtitle-2"><%= t("matching.settings.reactivate_heading") %></h3>
+        <p><%= t("matching.settings.reactivate_help") %></p>
+        <div>
+          <%= button_to t("matching.settings.reactivate_button"),
+                        reactivate_matching_profile_path,
+                        method: :post,
+                        class: "crayons-btn",
+                        form: { class: "inline-block" } %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="grid gap-2">
+      <h3 class="crayons-subtitle-2"><%= t("matching.settings.destroy_heading") %></h3>
+      <p><%= t("matching.settings.destroy_help") %></p>
+      <div>
+        <%= button_to t("matching.settings.destroy_button"),
+                      matching_profile_path,
+                      method: :delete,
+                      class: "crayons-btn crayons-btn--danger",
+                      form: { class: "inline-block",
+                              data: { turbo_confirm: t("matching.settings.confirm_destroy") } } %>
+      </div>
+    </div>
+  </div>
 <% end %>

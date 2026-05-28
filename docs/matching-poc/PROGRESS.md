@@ -565,3 +565,73 @@ Polish/techdebt (poza SPEC scope, opcjonalne na produkcję):
 
 External sprint (poza Forem repo):
 - **Cloud Function dla welcome message → chat Firebase** (Etap 4 dług) — Rails service `Matching::DeliverWelcomeViaCloudFunction` POST'uje do `ENV["MATCHING_WELCOME_CLOUD_FUNCTION_URL"]` ale CF nie deployowane. Bez CF: welcome rekord powstaje + UI pokazuje "wysłano", ale wiadomość do Firestore nie trafia.
+
+---
+
+## Etap 7 — Refactor pod Forem Preact-first + API dla mobile
+
+> Decyzja sesji 2026-05-28: POC został zbudowany na inline JS w ERB. Forem-wide
+> standard to Preact-first (AGENTS.md). Mobile native app będzie konsumować
+> ten sam backend. Refactor dzieli się na 5 faz, każda osobny commit.
+
+**Architektura docelowa:**
+
+- **SSR (Rails ERB, indeksowane przez Google):**
+  - `/meetups` (lista), `/meetups/:slug` (szczegóły meetupu z `name`/`date`/`venue`/`organizer`)
+  - `/settings/matching` (settings tab, jak każdy inny)
+  - `/matching/onboarding/*` (intro/form/success — shell SSR + Preact widgety w formie)
+
+- **SPA (Preact + API, prywatne, bez SEO):**
+  - `/matching` dashboard — pełny Preact app czytający z `/api/v1/matching/dashboard`
+  - Wszystkie akcje na SSR stronach (RSVP, declaration, boost, welcome, share, photo upload, city autocomplete, identity chip) — Preact widgety mounted na SSR DOM
+
+- **API namespace `/api/v1/matching/*` i `/api/v1/meetups/*`:**
+  - Wzorzec Forem: `Api::V1::ApiController` < ApplicationController, `respond_to :api_v1`
+  - Auth: `authenticate_with_api_key_or_current_user!` (web używa sesji, mobile dorzuca `api-key` header)
+  - CSRF skipped, errors w jednolitym formacie (`{ error, status }`)
+
+**Fazy:**
+
+- **Faza 0 — Settings/matching ERB conformity (~30min):**
+  Restructure `_matching.html.erb` do konwencji Forem (`crayons-card crayons-card--content-rows`, `crayons-subtitle-1`). API bez zmian — settings używa istniejących route'ów `POST/PATCH /matching/profile`.
+
+- **Faza 1 — API + Preact DeclarationModal (~2-3h, proof of pattern):**
+  - `Api::V1::Matching::DeclarationsController` z full CRUD (`GET/POST/PATCH/DELETE`)
+  - `app/javascript/matching/api.js` (fetch wrapper z CSRF/api-key)
+  - `app/javascript/matching/DeclarationModal.jsx` (Preact, state + intent + note + counter + errors)
+  - `app/javascript/packs/matchingDeclarationModal.jsx` (pack entry, event delegation)
+  - Wywalam inline JS z `_declaration_modal_loader` + endpoint `/meetups/:slug/declaration/modal`
+  - Działa: `/matching` lub `/meetups/:slug` → klik "Dodaj intencję" → Preact modal → API → toast → soft refresh
+
+- **Faza 2 — Meetup hub action widgets (~3-4h):**
+  - API: RSVPs, Boosts, Welcomes, Cities (przeniesienie z `/cities/search` do `/api/v1/cities/search`)
+  - Preact widgety mounted na SSR: RsvpButtons, BoostModal, WelcomeModal, SharePopup, CityAutocomplete (reusable)
+  - Wywalam wszystkie inline JS popups z meetup hub i event-scoped profile
+
+- **Faza 3 — /matching jako pełny SPA (~3-4h):**
+  - API: `GET /api/v1/matching/dashboard` (combined endpoint: profile header + timeline + recommendations + counts)
+  - `app/javascript/matching/Dashboard.jsx` + sub-komponenty (TimelineFeed, RecommendationCard, ProfileHeader)
+  - Routes hub: `/matching` shellowany SSR (auth gate), Preact mountuje się na `<div id="matching-app">`
+
+- **Faza 4 — Onboarding profile widgets (~2h):**
+  - API: `Api::V1::Matching::ProfilesController` (CRUD + deactivate/reactivate)
+  - Preact: PhotoUploader, IdentityChips, BioField (z counterem), CityAutocomplete (reuse z fazy 2)
+  - Onboarding SSR shells (E5/E6/E7) hostują widgety przez `<div data-matching-onboarding-form>` mount point
+  - Settings tab korzysta z tych samych widgetów albo zostaje na czystym Crayons input (zależnie od scope — patrz Faza 0)
+
+- **Faza 5 — Mobile read API (~2-3h):**
+  - `GET /api/v1/meetups` (lista z filtrami: city, date_range, organizer)
+  - `GET /api/v1/meetups/:slug` (full meetup z RSVP/match counts)
+  - `GET /api/v1/meetups/:slug/matches` (pool list, gated po user_profile)
+  - `GET /api/v1/m/:meetup_slug/:profile_id` (event-scoped profile)
+  - `GET /api/v1/matching/notification_settings` (mobile osobny screen settings)
+  - Web zostaje SSR (read endpointy nie zmieniają flow web)
+
+### Status faz
+
+- ⏳ Faza 0 — Settings/matching ERB conformity (planowane)
+- ⏳ Faza 1 — API + Preact DeclarationModal
+- ⏳ Faza 2 — Meetup hub action widgets
+- ⏳ Faza 3 — /matching jako pełny SPA
+- ⏳ Faza 4 — Onboarding profile widgets
+- ⏳ Faza 5 — Mobile read API

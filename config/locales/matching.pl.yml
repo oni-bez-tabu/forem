@@ -151,6 +151,7 @@ pl:
       intro: "Sub-profil do deklaracji intencji na wydarzeniach. Edytuj swój profil tutaj — każda zmiana treści cofa profil do akceptacji administratora."
       open_dashboard: "Otwórz panel Matching"
       no_profile_intro: "Nie masz jeszcze profilu Matching. Stwórz go, żeby uczestniczyć w module."
+      edit_heading: "Edycja profilu"
       edit_help: "Pola profilu. Po edycji zdjęcia, identyfikacji, miasta lub bio profil wraca do akceptacji."
       danger_zone: "Strefa niebezpieczna"
       deactivate_heading: "Dezaktywuj profil"

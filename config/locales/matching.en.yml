@@ -145,6 +145,7 @@ en:
       intro: "Sub-profile for declaring intent on events. Edit your profile here — content changes send it back to admin review."
       open_dashboard: "Open Matching panel"
       no_profile_intro: "You don't have a Matching profile yet. Create one to participate."
+      edit_heading: "Profile fields"
       edit_help: "Profile fields. Changing photo, identity, city, or bio sends the profile back to admin review."
       danger_zone: "Danger zone"
       deactivate_heading: "Deactivate profile"

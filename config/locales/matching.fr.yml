@@ -145,6 +145,7 @@ fr:
       intro: "Sous-profil pour déclarer une intention sur les événements. Modifiez votre profil ici — les changements de contenu repassent par la modération."
       open_dashboard: "Ouvrir le panneau Matching"
       no_profile_intro: "Vous n'avez pas encore de profil Matching. Créez-en un pour participer."
+      edit_heading: "Champs du profil"
       edit_help: "Champs du profil. Modifier photo, identité, ville ou bio renvoie le profil en modération."
       danger_zone: "Zone sensible"
       deactivate_heading: "Désactiver le profil"

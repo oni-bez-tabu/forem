@@ -145,6 +145,7 @@ pt:
       intro: "Subperfil para declarar intenção em eventos. Edite seu perfil aqui — alterações de conteúdo voltam para revisão."
       open_dashboard: "Abrir painel Matching"
       no_profile_intro: "Você ainda não tem perfil Matching. Crie um para participar."
+      edit_heading: "Campos do perfil"
       edit_help: "Campos do perfil. Alterar foto, identidade, cidade ou bio envia o perfil de volta para revisão."
       danger_zone: "Zona sensível"
       deactivate_heading: "Desativar perfil"
