@@ -11,6 +11,72 @@ namespace :matching do
     puts "  declarations     : #{result.declarations_created}"
   end
 
+  desc "Wipe matching + meetup state, create 2 demo meetups, reseed demo profiles. Dev/test only."
+  task reset_demo: :environment do
+    abort "Refusing to run in production." if Rails.env.production?
+
+    puts "Wiping matching + meetup state…"
+    MatchingWelcome.delete_all
+    MatchingRecommendationImpression.delete_all
+    MeetupMatchingDeclaration.delete_all
+    MatchingProfile.destroy_all
+    MeetupRsvp.delete_all
+    Meetup.delete_all
+    puts "  wiped."
+
+    organizer = User.find_by(username: "on_bez_tabu") || User.order(:id).first
+    abort "No user found to use as meetup organizer." unless organizer
+
+    warsaw = City.find_by(name: "Warszawa") || raise("City 'Warszawa' missing — run cities:seed first")
+    krakow = City.find_by(name: "Kraków") || warsaw
+
+    puts "Creating demo meetups (organizer: @#{organizer.username})…"
+    czerwony = Meetup.create!(
+      name: "Czerwony Wieczór · BDSM Beginners",
+      slug: "czerwony-wieczor-2026-06-14",
+      venue_name: "Czerwona Kotwica",
+      venue_city: warsaw,
+      start_at: Time.zone.local(2026, 6, 14, 22, 0),
+      end_at: Time.zone.local(2026, 6, 15, 2, 0),
+      banner_gradient: "ember",
+      description_link_type: "external",
+      description_external_url: "https://example.com/czerwony-wieczor",
+      is_published: true,
+      organizer_user: organizer,
+      created_by: organizer,
+    )
+    noc = Meetup.create!(
+      name: "Noc nie!tabu · Kraków edition",
+      slug: "noc-tabu-2026-06-20",
+      venue_name: "Klub Kazimierz",
+      venue_city: krakow,
+      start_at: Time.zone.local(2026, 6, 20, 21, 0),
+      end_at: Time.zone.local(2026, 6, 21, 3, 0),
+      banner_gradient: "velvet",
+      description_link_type: "external",
+      description_external_url: "https://example.com/noc-tabu",
+      is_published: true,
+      organizer_user: organizer,
+      created_by: organizer,
+    )
+    puts "  #{czerwony.slug}"
+    puts "  #{noc.slug}"
+
+    puts "Seeding demo profiles + RSVPs + declarations…"
+    result = Meetups::DemoSeeder.call
+    puts "  users:        #{result.users_created}"
+    puts "  profiles:     #{result.profiles_created}"
+    puts "  rsvps:        #{result.rsvps_created}"
+    puts "  declarations: #{result.declarations_created}"
+
+    puts ""
+    puts "Done. Twoja kolej:"
+    puts "  - /wydarzenia → publiczna lista (2 meetupy)"
+    puts "  - Zaloguj się jako @#{organizer.username} — bez profilu /matching kieruje na onboarding,"
+    puts "    stwórz profil żeby zobaczyć SPA dashboard z timeline + recommendations."
+    puts "  - Demo users (anna_demo, kasia_demo, tomek_demo, …) hasło 'password'."
+  end
+
   desc "Seed timeline activity (RSVPs/declarations/welcomes/match notifications) for USER=<username>. Idempotent."
   task seed_timeline_for_user: :environment do
     abort "Refusing to run in production." if Rails.env.production?
