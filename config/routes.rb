@@ -111,6 +111,7 @@ Rails.application.routes.draw do
           end
 
           resources :welcomes, only: %i[create]
+          resource :dashboard, only: %i[show], controller: "dashboard"
         end
 
         # Meetup-level actions (not matching-specific): RSVP + boost.
