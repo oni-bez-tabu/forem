@@ -1,28 +1,36 @@
-// Module-level cache dla dashboard payload. Trzyma się przez całe życie
-// karty przeglądarki — Preact root re-mountuje się po nawigacji InstantClick
-// albo softRefresh, ale cache zostaje, więc kolejne otwarcia /matching nie
-// pokazują spinnera "Ładuję twój matching…".
+// Cache dla dashboard payload. InstantClick przy nawigacji wstecz na
+// /matching reexekwuje <script> tagi z layoutu, więc module-level `let`
+// resetuje się przy każdym powrocie. Trzymamy bufor na `window` żeby
+// przeżył InstantClick swap (cała karta to jeden window context).
 //
-// Cache jest invalidowany przez akcje zmieniające stan (RSVP / deklaracja /
-// welcome) — po softRefresh wyczyszczamy bufor, następny mount pobiera świeże
-// dane. TTL na wszelki wypadek (gdyby user trzymał kartę otwartą godzinami).
+// Inval po akcjach (RSVP / deklaracja / welcome) jest wywoływany przez
+// softRefresh.js. TTL 5min jako bezpiecznik.
+const KEY = '__matchingDashboardCache';
 const TTL_MS = 5 * 60 * 1000;
 
-let cache = null;
+function read() {
+  return typeof window !== 'undefined' ? window[KEY] : null;
+}
+
+function write(value) {
+  if (typeof window === 'undefined') return;
+  window[KEY] = value;
+}
 
 export function getCachedDashboard() {
+  const cache = read();
   if (!cache) return null;
   if (Date.now() - cache.fetchedAt > TTL_MS) {
-    cache = null;
+    write(null);
     return null;
   }
   return cache.payload;
 }
 
 export function setCachedDashboard(payload) {
-  cache = { payload, fetchedAt: Date.now() };
+  write({ payload, fetchedAt: Date.now() });
 }
 
 export function invalidateDashboardCache() {
-  cache = null;
+  write(null);
 }
