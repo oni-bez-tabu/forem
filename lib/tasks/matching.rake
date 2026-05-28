@@ -75,6 +75,21 @@ namespace :matching do
     puts "  rsvps:        #{result.rsvps_created}"
     puts "  declarations: #{result.declarations_created}"
 
+    # TimelineFeed#match_found_events shows joiners whose declaration is newer
+    # than viewer's. Backdate preserved users' declarations so demo joiners
+    # appear as fresh matches in the timeline. No-op if preserved user has
+    # no declarations yet.
+    if preserved_user_ids.any?
+      preserved_decls = MeetupMatchingDeclaration
+        .joins(:matching_profile)
+        .where(matching_profile: { user_id: preserved_user_ids })
+      if preserved_decls.exists?
+        backdate_to = 2.days.ago
+        preserved_decls.update_all(created_at: backdate_to, updated_at: backdate_to)
+        puts "Backdated #{preserved_decls.count} preserved declaration(s) by 2 days so demo joiners surface as match_found events."
+      end
+    end
+
     puts ""
     puts "Done. Twoja kolej:"
     puts "  - /wydarzenia → publiczna lista (2 meetupy)"
