@@ -14,37 +14,6 @@
     window.__declarationModalLoaderInit = true;
 
     var NOTE_MAX = <%= MeetupMatchingDeclaration::NOTE_MAX_LENGTH %>;
-    var SCROLL_KEY = "matchingDeclarationScroll";
-
-    // Restore scroll across the full-page reload that happens after
-    // submitting the modal (POST → server redirect). We persist
-    // {pathname, y} in sessionStorage on submit and restore on load
-    // only when the user lands on the same path they started from.
-    try {
-      var stash = sessionStorage.getItem(SCROLL_KEY);
-      if (stash) {
-        sessionStorage.removeItem(SCROLL_KEY);
-        var parsed = JSON.parse(stash);
-        if (parsed && parsed.path === window.location.pathname) {
-          window.requestAnimationFrame(function() {
-            window.scrollTo(0, parsed.y || 0);
-          });
-        }
-      }
-    } catch (_e) { /* no-op */ }
-
-    document.addEventListener("submit", function(e) {
-      var form = e.target;
-      if (!form || form.nodeName !== "FORM") return;
-      var backdrop = getBackdrop();
-      if (!backdrop || !backdrop.contains(form)) return;
-      try {
-        sessionStorage.setItem(SCROLL_KEY, JSON.stringify({
-          y: window.scrollY || window.pageYOffset || 0,
-          path: window.location.pathname,
-        }));
-      } catch (_e) { /* no-op */ }
-    });
     var SELECTED_BG = "rgba(99,102,241,0.06)";
     var BRAND_BORDER = "var(--accent-brand, #6366f1)";
     var BASE_BORDER = "var(--card-border, #e5e5e5)";
