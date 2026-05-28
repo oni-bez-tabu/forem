@@ -10,7 +10,7 @@ import { ProfileHeader } from './ProfileHeader';
 import { TimelineEvent } from './TimelineEvent';
 import { RecommendationCard } from './RecommendationCard';
 
-const RECOMMENDATION_EVERY = 5;
+const RECOMMENDATION_EVERY = 3;
 
 function interleave(events, recommendations) {
   const result = [];
