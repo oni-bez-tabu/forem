@@ -109,7 +109,17 @@ Rails.application.routes.draw do
             resource :declaration, only: %i[show create update destroy],
                                    controller: "declarations"
           end
+
+          resources :welcomes, only: %i[create]
         end
+
+        # Meetup-level actions (not matching-specific): RSVP + boost.
+        scope "meetups/:slug" do
+          resource :rsvp, only: %i[create destroy], controller: "meetups/rsvps", as: :meetup_rsvp
+          resource :boost, only: %i[create], controller: "meetups/boosts", as: :meetup_boost
+        end
+
+        get "cities/search", to: "cities#search", as: :cities_search
 
         draw :api
       end
