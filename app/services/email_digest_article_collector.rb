@@ -152,9 +152,12 @@ class EmailDigestArticleCollector
       @subforem_ids = []
       @skip_subforem_filtering = true
     else
-      # User doesn't follow any subforems and has no custom onboarding - use default subforem
+      # User doesn't follow any subforems and has no custom onboarding - use default subforem.
+      # Forems that don't use subforems have no default id to filter on, and their articles all
+      # carry a NULL subforem_id, which `where(subforem_id: ...)` never matches - filtering there
+      # would collect zero articles and silently skip the digest, so skip it instead.
       @subforem_ids = default_subforem_id ? [default_subforem_id] : []
-      @skip_subforem_filtering = false
+      @skip_subforem_filtering = default_subforem_id.nil?
     end
   end
 

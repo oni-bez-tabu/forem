@@ -173,6 +173,40 @@ RSpec.describe EmailDigestArticleCollector, type: :service do
       end
     end
 
+    context "when the Forem has no subforems at all" do
+      before do
+        RequestStore.store[:default_subforem_id] = nil
+        allow(Subforem).to receive(:cached_default_id).and_return(nil)
+      end
+
+      it "collects articles that have no subforem_id" do
+        create_list(:article, 3, public_reactions_count: 40, featured: true, score: 40, subforem: nil)
+        articles = described_class.new(user).articles_to_send
+        expect(articles.length).to eq(3)
+        expect(articles.all? { |a| a.subforem_id.nil? }).to be true
+      end
+
+      it "collects articles for a user following tags" do
+        author = create(:user)
+        user.follow(author)
+        create_list(:article, 3, public_reactions_count: 40, score: 40, tag_list: "ruby", user: author, subforem: nil)
+        user.follow(create(:tag, name: "ruby"))
+        user.reload
+
+        articles = described_class.new(user).articles_to_send
+        expect(articles.length).to eq(3)
+      end
+
+      it "collects articles through the fallback query" do
+        create_list(:article, 3, public_reactions_count: 40, score: 40, subforem: nil)
+        user.follow(create(:tag, name: "unusedtag"))
+        user.reload
+
+        articles = described_class.new(user).articles_to_send
+        expect(articles.length).to eq(3)
+      end
+    end
+
     context "when it's been less than the set number of digest email days" do
       before do
         author = create(:user)
