@@ -197,6 +197,21 @@ RSpec.describe Emails::SendUserDigestWorker, type: :worker do
         end
       end
 
+      context "when the AI summary client is unavailable" do
+        before do
+          allow(Ai::Base).to receive(:new).and_raise(ArgumentError, "API key cannot be nil")
+        end
+
+        it "still delivers the digest, without a summary" do
+          user.update_column(:last_presence_at, 1.day.ago)
+          create_list(:article, 3, user_id: author.id, public_reactions_count: 20, score: 20, tag_list: [tag.name])
+
+          worker.perform(user.id)
+
+          expect(DigestMailer).to have_received(:with).with(hash_including(smart_summary: nil))
+        end
+      end
+
       context "with force_send: true" do
         it "sends email even if user has email_digest_periodic disabled" do
           create_list(:article, 3, user_id: author.id, public_reactions_count: 20, score: 20, tag_list: [tag.name])

@@ -3,7 +3,7 @@ module Ai
     VERSION = "1.0"
     def initialize(articles, ai_client: nil)
       @articles = articles
-      @ai_client = ai_client || Ai::Base.new(wrapper: self)
+      @ai_client = ai_client
     end
 
     MAX_RETRIES = 1
@@ -21,13 +21,20 @@ module Ai
 
     private
 
+    # Built lazily so that a missing or misconfigured API key raises inside `generate`,
+    # where it is rescued into a nil summary. Raising from the constructor instead
+    # escaped to the caller and took the whole digest email down with it.
+    def ai_client
+      @ai_client ||= Ai::Base.new(wrapper: self)
+    end
+
     def generate_with_retry
       attempts = 0
       current_prompt = prompt
 
       loop do
         attempts += 1
-        output = @ai_client.call(current_prompt)
+        output = ai_client.call(current_prompt)
 
         if valid_markdown?(output)
           return output

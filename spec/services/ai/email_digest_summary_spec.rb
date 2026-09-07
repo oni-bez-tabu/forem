@@ -142,5 +142,14 @@ RSpec.describe Ai::EmailDigestSummary, type: :service do
         end
       end
     end
+
+    context "when the AI client cannot be built" do
+      it "returns nil instead of raising at construction time" do
+        allow(Ai::Base).to receive(:new).and_raise(ArgumentError, "API key cannot be nil")
+
+        expect { described_class.new(articles) }.not_to raise_error
+        expect(described_class.new(articles).generate).to be_nil
+      end
+    end
   end
 end
