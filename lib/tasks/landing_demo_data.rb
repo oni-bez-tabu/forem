@@ -8,7 +8,11 @@ def plural(n, one, few, many)
   "#{n} #{many}"
 end
 
-articles = Article.published.featured.order(published_at: :desc).limit(10)
+# Tylko posty, ktore maja co pokazac: okladke albo wideo. Bierzemy oba rodzaje,
+# zeby karuzela miala i miniatury, i materialy z ikona odtwarzania.
+z_wideo   = Article.published.featured.where.not(video: [nil, ""]).order(published_at: :desc).limit(4)
+z_okladka = Article.published.featured.where.not(main_image: [nil, ""]).order(published_at: :desc).limit(10)
+articles  = (z_wideo.to_a + z_okladka.to_a).uniq(&:id).sort_by { |a| -a.published_at.to_i }.first(10)
 
 posts = articles.map do |a|
   tags = a.cached_tag_list.to_s.split(",").map(&:strip).reject(&:empty?)
@@ -17,8 +21,8 @@ posts = articles.map do |a|
     "author" => a.user&.name.presence || a.user&.username,
     "kind" => (tags.first || "post").upcase,
     "title" => a.title,
-    # Bez okladki karta jest tekstowa, z malym awatarem autora -- tak jak w projekcie.
-    "image" => cover,
+    # Wideo ma wlasna miniature i czas trwania; pozostale posty pokazuja okladke.
+    "image" => a.video.present? ? (a.video_thumbnail_url.presence || cover) : cover,
     "video" => a.video.present?,
     "duration" => (a.video_duration_in_minutes.to_s.presence if a.video.present?),
     "url" => a.path,
@@ -26,7 +30,7 @@ posts = articles.map do |a|
     "tags" => tags.first(2).map { |t| "##{t}" }.join("  "),
     "meta" => [plural(a.public_reactions_count.to_i, "reakcja", "reakcje", "reakcji"),
                plural(a.comments_count.to_i, "komentarz", "komentarze", "komentarzy")].join(" · "),
-    "avatar" => cover ? nil : a.user&.profile_image_url
+    "avatar" => nil
   }.compact
 end
 
