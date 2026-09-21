@@ -121,6 +121,25 @@ class ApplicationController < ActionController::Base
     redirect_to sign_up_path
   end
 
+  # How long the edge may serve the landing page before revalidating.
+  LANDING_EDGE_MAX_AGE = 12.hours.to_i
+  private_constant :LANDING_EDGE_MAX_AGE
+
+  # Devise screens that make up the sign-in / sign-up flow.
+  AUTH_SCREEN_CONTROLLERS = %w[registrations sessions passwords confirmations].freeze
+  private_constant :AUTH_SCREEN_CONTROLLERS
+
+  # Sign-in and sign-up render dark in a browser, and stay light inside the mobile app - the
+  # app draws its own light chrome around the web view, so a dark form looks broken in it.
+  # The app identifies itself with the ForemWebView suffix on its user agent.
+  def dark_auth_screen?
+    return false if user_signed_in?
+    return false if request.user_agent.to_s.include?("ForemWebView")
+
+    AUTH_SCREEN_CONTROLLERS.include?(controller_name)
+  end
+  helper_method :dark_auth_screen?
+
   # Whether an anonymous visitor may browse beyond the pages a private Forem keeps open
   # (posts, profiles, static pages). Drives both the feed gate and the navigation UI.
   def open_to_anonymous_browsing?
@@ -129,13 +148,32 @@ class ApplicationController < ActionController::Base
   helper_method :open_to_anonymous_browsing?
 
   # The locked screen an anonymous visitor sees in place of the home feed.
+  #
+  # An administrator can still override it with a Page marked as the landing page; otherwise we
+  # render the designed landing, which is the front door of a private Forem.
   def render_landing_page
     if (@page = Page.landing_page)
       render template: "pages/show"
     else
-      @user ||= User.new
-      render template: "devise/registrations/new"
+      @landing_title = "#{community_name} — miejsce na rozmowy bez tabu"
+      @landing_description = "Społeczność, w której rozmawia się otwarcie o relacjach, bliskości " \
+                             "i seksualności. Prawdziwi autorzy, materiały wideo i poradniki."
+      set_landing_cache_headers
+      render template: "pages/landing", layout: "landing"
     end
+  end
+
+  # The landing is byte-identical for every anonymous visitor and holds nothing user-specific,
+  # so it is the one response a private Forem can safely hand to the edge. The shared
+  # `set_cache_control_headers` bails out whenever the Forem is private, hence the explicit set.
+  def set_landing_cache_headers
+    set_surrogate_key_header "landing_page"
+    RequestStore.store[:edge_caching_in_place] = true
+    response.headers["Cache-Control"] = "public, no-cache" # Fastly only; browsers revalidate.
+    response.headers["X-Accel-Expires"] = LANDING_EDGE_MAX_AGE.to_s
+    response.headers["Surrogate-Control"] = build_surrogate_control(
+      LANDING_EDGE_MAX_AGE, stale_while_revalidate: 3600, stale_if_error: 86_400
+    )
   end
 
   # When called, raise ActiveRecord::RecordNotFound.

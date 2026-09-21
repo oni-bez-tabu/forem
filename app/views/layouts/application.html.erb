@@ -58,7 +58,7 @@
   </head>
   <% unless internal_navigation? %>
     <body
-      class="<%= Settings::UserExperience.default_font.tr("_", "-") %>-article-body default-header"
+      class="<%= Settings::UserExperience.default_font.tr("_", "-") %>-article-body default-header<%= " dark-theme" if dark_auth_screen? %>"
       data-user-status="<%= j(user_logged_in_status) %>"
       data-is-root-subforem="<%= j(is_root_subforem?) %>"
       <% if RequestStore.store[:subforem_id].present? %>
