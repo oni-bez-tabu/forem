@@ -33,6 +33,18 @@ RSpec.describe "Landing page" do
       expect(response.body).to include("/t/relacje")
     end
 
+    it "renders the full topic grid, including the faded teasers" do
+      get root_path
+
+      # 8 klikalnych + 4 wyblakle zajawki. Przy brakujacych kafelkach karta zaproszenia
+      # wychodzi poza swoj kontener i nachodzi na sekcje wydarzen.
+      expect(response.body.scan(/class="topic-card/).size).to eq(12)
+      expect(response.body.scan(/<a class="topic-card/).size).to eq(8)
+      expect(response.body.scan(/<div class="topic-card topic-faded/).size).to eq(4)
+      expect(response.body).to include("topics-veil")
+      expect(response.body).to include("topics-invite")
+    end
+
     it "carries SEO metadata" do
       get root_path
 
