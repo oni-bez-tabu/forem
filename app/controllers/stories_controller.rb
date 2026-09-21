@@ -147,6 +147,10 @@ class StoriesController < ApplicationController
   end
 
   def handle_base_index
+    # The home feed is the one part of this controller that stays behind the login on a
+    # private Forem - posts and profiles remain reachable, the feed itself does not.
+    return render_landing_page unless open_to_anonymous_browsing?
+
     @home_page = true
     assign_feed_stories unless user_signed_in? # Feed fetched async for signed-in users
     assign_hero_banner

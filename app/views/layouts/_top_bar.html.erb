@@ -20,6 +20,7 @@
     </span>
     <%= render "layouts/logo" %>
 
+    <% if open_to_anonymous_browsing? %>
     <div class="crayons-header--search js-search-form" id="header-search">
       <form accept-charset="UTF-8" method="get" action="<%= search_path %>" role="search">
         <div class="crayons-fields crayons-fields--horizontal">
@@ -39,6 +40,7 @@
         </div>
       </form>
     </div>
+    <% end %>
 
     <div class="flex items-center h-100 ml-auto">
       <% if user_signed_in? %>

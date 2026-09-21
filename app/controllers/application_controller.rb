@@ -55,11 +55,22 @@ class ApplicationController < ActionController::Base
                           instances
                           invitations
                           omniauth_callbacks
+                          pages
                           passwords
                           registrations
                           service_worker
+                          sitemaps
+                          stories
                           video_states].freeze
   private_constant :PUBLIC_CONTROLLERS
+
+  # Individual actions that stay reachable on a private Forem, where opening the whole
+  # controller would expose more than intended. Keyed by controller_name.
+  PUBLIC_CONTROLLER_ACTIONS = {
+    "articles" => %w[feed].freeze, # RSS
+    "comments" => %w[index].freeze # comment permalinks under a public post
+  }.freeze
+  private_constant :PUBLIC_CONTROLLER_ACTIONS
 
   CONTENT_CHANGE_PATHS = [
     "/onboarding/tags", # Needs to change when suggested_tags is edited.
@@ -90,12 +101,36 @@ class ApplicationController < ActionController::Base
 
   def verify_private_forem
     return if controller_name.in?(PUBLIC_CONTROLLERS)
+    return if PUBLIC_CONTROLLER_ACTIONS[controller_name]&.include?(action_name)
     return if self.class.module_parent.to_s == "Admin"
     return if user_signed_in? || Settings::UserExperience.public
 
     if api_action?
       authenticate!
-    elsif (@page = Page.landing_page)
+    else
+      redirect_to_sign_up_from(request.url)
+    end
+  end
+
+  # Send an anonymous visitor to sign up, remembering where they were headed so that
+  # `after_sign_in_path_for` can drop them back there once they have an account.
+  #
+  # @param destination [String] the url to return to after signing in
+  def redirect_to_sign_up_from(destination)
+    store_location_for(:user, destination) if request.get? && !request.xhr?
+    redirect_to sign_up_path
+  end
+
+  # Whether an anonymous visitor may browse beyond the pages a private Forem keeps open
+  # (posts, profiles, static pages). Drives both the feed gate and the navigation UI.
+  def open_to_anonymous_browsing?
+    user_signed_in? || Settings::UserExperience.public
+  end
+  helper_method :open_to_anonymous_browsing?
+
+  # The locked screen an anonymous visitor sees in place of the home feed.
+  def render_landing_page
+    if (@page = Page.landing_page)
       render template: "pages/show"
     else
       @user ||= User.new
