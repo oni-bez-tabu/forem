@@ -1,0 +1,81 @@
+# Buduje pokazowa strone "landing-data" z realnych tresci z bazy.
+# Uruchamiane przez rails runner.
+
+def plural(n, one, few, many)
+  return "#{n} #{one}" if n == 1
+  return "#{n} #{few}" if [2, 3, 4].include?(n % 10) && !(12..14).cover?(n % 100)
+
+  "#{n} #{many}"
+end
+
+articles = Article.published.featured.order(published_at: :desc).limit(10)
+
+posts = articles.map do |a|
+  tags = a.cached_tag_list.to_s.split(",").map(&:strip).reject(&:empty?)
+  cover = a.main_image.presence
+  {
+    "author" => a.user&.name.presence || a.user&.username,
+    "kind" => (tags.first || "post").upcase,
+    "title" => a.title,
+    # Bez okladki karta jest tekstowa, z malym awatarem autora -- tak jak w projekcie.
+    "image" => cover,
+    "video" => a.video.present?,
+    "duration" => (a.video_duration_in_minutes.to_s.presence if a.video.present?),
+    "url" => a.path,
+    "note" => "Zobacz post",
+    "tags" => tags.first(2).map { |t| "##{t}" }.join("  "),
+    "meta" => [plural(a.public_reactions_count.to_i, "reakcja", "reakcje", "reakcji"),
+               plural(a.comments_count.to_i, "komentarz", "komentarze", "komentarzy")].join(" · "),
+    "avatar" => cover ? nil : a.user&.profile_image_url
+  }.compact
+end
+
+profiles = User.where.not(profile_image: [nil, ""])
+  .order(articles_count: :desc).limit(4).map do |u|
+  {
+    "name" => u.name.presence || u.username,
+    "handle" => u.username,
+    "description" => u.profile&.summary.presence || "Autor w nie!tabu.",
+    "src" => u.profile_image_url
+  }
+end
+
+OPISY = {
+  "relacje" => "Rozmowy o relacjach i komunikacji.",
+  "zwiazek" => "Codzienność, bliskość i bycie razem.",
+  "bdsm" => "Praktyki, granice i świadoma zgoda.",
+  "poradnik" => "Konkretna wiedza od praktyków.",
+  "przyjemnosc" => "Odkrywanie tego, co sprawia przyjemność.",
+  "kobieta" => "O kobietach, dla kobiet i nie tylko.",
+  "lgbt" => "Tożsamość, akceptacja i widoczność.",
+  "masturbacja" => "Poznawanie własnego ciała."
+}.freeze
+
+wybrane = %w[relacje zwiazek bdsm poradnik przyjemnosc kobieta lgbt masturbacja]
+topics = Tag.where(name: wybrane).map do |t|
+  {
+    "css_class" => t.name.length > 12 ? "topic-card topic-long" : "topic-card",
+    "slug" => t.name,
+    "label" => t.name,
+    "description" => t.short_summary.presence || OPISY[t.name] || "Rozmowy o #{t.name}.",
+    "faded" => false
+  }
+end.sort_by { |t| wybrane.index(t["slug"]) }
+
+# Cztery wyblakle zajawki domykaja siatke do trzech rzedow, tak jak w projekcie.
+zajawki = JSON.parse(Rails.root.join("config/landing_data.json").read)["topics"].select { |t| t["faded"] }
+
+page = Page.find_or_initialize_by(slug: "landing-data")
+page.assign_attributes(
+  title: "Dane strony startowej",
+  description: "Posty, profile i tematy pokazywane na stronie startowej dla niezalogowanych.",
+  template: "json",
+  body_json: { "posts" => posts, "profiles" => profiles, "topics" => topics + zajawki }
+)
+page.save!
+
+puts "### zapisano page id=#{page.id} slug=#{page.slug}"
+puts "### postow=#{posts.size} (z okladka: #{posts.count { |p| p['image'].to_s.include?('/') }})"
+puts "### profili=#{profiles.size} -> #{profiles.map { |p| p['handle'] }.join(', ')}"
+puts "### tematow=#{topics.size} klikalnych + #{zajawki.size} zajawek"
+puts "### brakujace tagi: #{(wybrane - topics.map { |t| t['slug'] }).join(', ')}"
