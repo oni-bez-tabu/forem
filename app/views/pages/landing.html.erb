@@ -18,13 +18,13 @@
 <% landing_posts.each do |p| %>
   <article class="card <%= p["video"] ? "video" : "text" %>">
     <% if p["image"].present? %>
-      <div class="thumb">
+      <div class="thumb<%= " thumb--natural" if landing_remote.call(p["image"]) %>">
         <%# Grafiki z projektu maja recznie dobrane procenty kadru. Okladki i miniatury wideo
             z bazy maja rozne proporcje (okladka Foremu to 1000x420, ramka 440x246), wiec
             zamiast procentow kadrujemy je do srodka przez object-fit. %>
         <% style = "width:#{p["width"] || "100%"};left:#{p["offset"] || "0"}" %>
         <% if landing_remote.call(p["image"]) %>
-          <img alt="Kadr materiału: <%= p["title"] %>" draggable="false" loading="lazy" decoding="async" src="<%= p["image"] %>" style="inset:0;width:100%;height:100%;object-fit:cover">
+          <img alt="Kadr materiału: <%= p["title"] %>" draggable="false" loading="lazy" decoding="async" src="<%= p["image"] %>">
         <% else %>
           <picture><source srcset="<%= image_path("#{p["image"]}.webp") %>" type="image/webp">
           <img alt="Kadr materiału: <%= p["title"] %>" draggable="false" loading="lazy" decoding="async" src="<%= image_path("#{p["image"]}.png") %>" style="<%= style %>"></picture>

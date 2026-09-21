@@ -305,6 +305,13 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
 .hero-art.layers .note-top{font-size:16px}
 }
 
+/* Ramka miniatury ma z projektu proporcje 440x246 (1.789), dobrana pod konkretne grafiki.
+   Tresci z bazy maja inne: okladka Foremu to 1000x420 (2.381), a miniatura wideo 1760x956
+   (1.841). Kadrowanie do ramki scinalo okladkom okolo cwierci szerokosci razem z tekstem
+   wtopionym w grafike, wiec dla nich ramka przyjmuje naturalna wysokosc obrazka. */
+.thumb--natural { aspect-ratio: auto; }
+.thumb--natural img { position: static; inset: auto; width: 100%; height: auto; display: block; max-width: 100%; }
+
 /* W projekcie stopke karty dociskal do dolu .meta (margin-top:auto). Gdy karta nie ma
    licznika reakcji, te role przejmuje sam odnosnik -- inaczej zwisalby tuz pod tagami. */
 .card .content:not(:has(.meta)) .read { margin-top: auto; }
