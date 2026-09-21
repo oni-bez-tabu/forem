@@ -190,14 +190,15 @@ RSpec.describe "StoriesIndex" do
       expect(response.body).to include(billboard.processed_html)
     end
 
-    it "does not set cache-related headers if private" do
+    it "edge-caches the landing page even though the Forem is private" do
+      # Landing jest identyczny dla kazdego anonima i nie zawiera nic prywatnego, wiec jako
+      # jedyna strona prywatnego Foremu jedzie z brzegu. Reszta dalej nie jest cache'owana.
       allow(Settings::UserExperience).to receive(:public).and_return(false)
       get "/"
       expect(response).to have_http_status(:ok)
 
-      expect(response.headers["X-Accel-Expires"]).to be_nil
-      expect(response.headers["Cache-Control"]).not_to eq("public, no-cache")
-      expect(response.headers["Surrogate-Key"]).to be_nil
+      expect(response.headers["Surrogate-Key"]).to eq("landing_page")
+      expect(response.headers["X-Accel-Expires"]).to eq(12.hours.to_i.to_s)
     end
 
     it "renders social media handles if set" do

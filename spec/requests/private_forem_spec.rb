@@ -68,9 +68,8 @@ RSpec.describe "Private Forem with public posts" do
     end
 
     it "does not serve a tag sitemap" do
-      get "/sitemap-tags.xml"
-
-      expect(response).to have_http_status(:not_found)
+      # Poza testami `not_found` renderuje 404; tutaj wyjatek propaguje sie do testu.
+      expect { get "/sitemap-tags.xml" }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 

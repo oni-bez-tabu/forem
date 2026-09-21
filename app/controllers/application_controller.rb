@@ -155,9 +155,11 @@ class ApplicationController < ActionController::Base
     if (@page = Page.landing_page)
       render template: "pages/show"
     else
-      @landing_title = "#{community_name} — miejsce na rozmowy bez tabu"
-      @landing_description = "Społeczność, w której rozmawia się otwarcie o relacjach, bliskości " \
-                             "i seksualności. Prawdziwi autorzy, materiały wideo i poradniki."
+      # Te same zrodla, z ktorych korzysta zwykla strona glowna (articles/index.html.erb),
+      # zeby tytul i opis landingu zmienialy sie razem z ustawieniami spolecznosci.
+      @landing_title = Settings::Community.community_name
+      @landing_description = Settings::Community.community_description.presence ||
+        Settings::Community.tagline
       set_landing_cache_headers
       render template: "pages/landing", layout: "landing"
     end
