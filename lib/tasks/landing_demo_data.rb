@@ -19,7 +19,6 @@ posts = articles.map do |a|
   cover = a.main_image.presence
   {
     "author" => a.user&.name.presence || a.user&.username,
-    "kind" => (tags.first || "post").upcase,
     "title" => a.title,
     # Wideo ma wlasna miniature i czas trwania; pozostale posty pokazuja okladke.
     "image" => a.video.present? ? (a.video_thumbnail_url.presence || cover) : cover,
@@ -28,8 +27,6 @@ posts = articles.map do |a|
     "url" => a.path,
     "note" => "Zobacz post",
     "tags" => tags.first(2).map { |t| "##{t}" }.join("  "),
-    "meta" => [plural(a.public_reactions_count.to_i, "reakcja", "reakcje", "reakcji"),
-               plural(a.comments_count.to_i, "komentarz", "komentarze", "komentarzy")].join(" · "),
     "avatar" => nil
   }.compact
 end

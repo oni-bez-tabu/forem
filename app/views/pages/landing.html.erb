@@ -43,9 +43,10 @@
         <% end %>
         <span><%= p["author"] %></span>
       </div>
-      <p class="kind"><%= p["kind"] %></p>
+      <% if p["kind"].present? %><p class="kind"><%= p["kind"] %></p><% end %>
       <h2><%= p["title"] %></h2>
-      <% if p["tags"].present? %><div class="tags"><%= p["tags"] %></div><p class="meta"><%= p["meta"] %></p><% end %>
+      <% if p["tags"].present? %><div class="tags"><%= p["tags"] %></div><% end %>
+      <% if p["meta"].present? %><p class="meta"><%= p["meta"] %></p><% end %>
       <a class="read" href="<%= p["url"] %>"><%= p["note"] %><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-ArrowUpRight"></use></svg></a>
     </div>
   </article>

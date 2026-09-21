@@ -305,6 +305,10 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
 .hero-art.layers .note-top{font-size:16px}
 }
 
+/* W projekcie stopke karty dociskal do dolu .meta (margin-top:auto). Gdy karta nie ma
+   licznika reakcji, te role przejmuje sam odnosnik -- inaczej zwisalby tuz pod tagami. */
+.card .content:not(:has(.meta)) .read { margin-top: auto; }
+
 /* CTA byly <button>; jako <a> traca kolor tekstu, podkreslenie i model blokowy przycisku */
 a.plain, a.primary, a.secondary, a.store-badge {
   color: inherit;
