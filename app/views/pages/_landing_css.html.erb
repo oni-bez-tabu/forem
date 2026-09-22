@@ -305,6 +305,13 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
 .hero-art.layers .note-top{font-size:16px}
 }
 
+@media (max-width: 600px) {
+  /* Ponizej 600px .closing-inner przechodzi na jedna kolumne i makieta telefonu spada
+     pod tekst. W tej pozycji nie ilustruje juz niczego obok tresci, tylko wydluza
+     sekcje i laduje przycieta przy dolnej krawedzi. */
+  .closing-phone { display: none; }
+}
+
 @media (max-width: 900px) {
   /* Karta zaproszenia ma nachodzic na siatke -- to swiadomy efekt projektu. Problem byl
      w zasiegu: projekt wciagal ja o 120-142px, dobrane pod uklad czterokolumnowy. Rzad
