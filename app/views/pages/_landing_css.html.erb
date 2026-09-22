@@ -305,6 +305,23 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
 .hero-art.layers .note-top{font-size:16px}
 }
 
+@media (max-width: 400px) {
+  /* Naglowek ma white-space:nowrap, wiec "spolecznosci." nie moze sie zlamac. Na bardzo
+     waskich ekranach potrzebuje wiecej miejsca, niz jest dostepne, a overflow:hidden na
+     sekcji go ucina. Lamanie w awaryjnych sytuacjach; <br> w tresci i tak trzyma
+     zaprojektowany podzial wierszy. */
+  .hero-copy h1 { white-space: normal; }
+}
+
+@media (max-width: 760px) {
+  /* Na telefonie nawigacja i hero powtarzaly te same dwie akcje -- cztery przyciski na
+     jednym ekranie. Zostaje podzial zgodny z konwencja: logowanie w gornym rogu dla
+     wracajacych, rejestracja jako glowny przycisk w tresci dla nowych. */
+  .hero-nav .primary.small { display: none; }
+  .hero-actions .secondary { display: none; }
+  .hero-actions .primary { flex: 1; max-width: none; }
+}
+
 @media (max-width: 600px) {
   /* Po skroceniu hero haslo siedzi tuz pod przyciskami. Wiecej powietrza nad nim sprawia,
      ze trzeba delikatnie przewinac, zanim wejdzie na ekran. */
