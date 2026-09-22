@@ -25,7 +25,7 @@ let profileDrag=false,profileStart=0,profileScroll=0,profileMoved=false;profileT
  const preference=matchMedia('(prefers-reduced-motion: reduce)');
  if(preference.matches||!('IntersectionObserver' in window))return;
  const entries=new Set();
- const observer=new IntersectionObserver(changes=>{for(const item of changes){if(item.isIntersecting){item.target.classList.remove('motion-pending');item.target.classList.add('motion-visible');observer.unobserve(item.target);}}},{threshold:.08,rootMargin:'0px 0px -24px 0px'});
+ const observer=new IntersectionObserver(changes=>{for(const item of changes){if(item.isIntersecting){item.target.classList.remove('motion-pending');item.target.classList.add('motion-visible');observer.unobserve(item.target);}}},{threshold:.08,rootMargin:(innerWidth<=600?'0px 0px -190px 0px':'0px 0px -24px 0px')});
  function reveal(el,delay=0){if(!el||entries.has(el))return;entries.add(el);el.classList.add('motion-entry','motion-pending');el.style.setProperty('--entry-delay',delay+'ms');observer.observe(el);}
  // Keep semantic headings intact; wrap existing text and explicit line breaks.
  document.querySelectorAll('.hero-copy h1,.closing-copy h2').forEach(heading=>{

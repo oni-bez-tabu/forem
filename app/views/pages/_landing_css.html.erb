@@ -306,6 +306,12 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
 }
 
 @media (max-width: 600px) {
+  /* Po skroceniu hero haslo siedzi tuz pod przyciskami. Wiecej powietrza nad nim sprawia,
+     ze trzeba delikatnie przewinac, zanim wejdzie na ekran. */
+  .mission-section { padding-top: 120px; }
+}
+
+@media (max-width: 600px) {
   /* Ponizej 600px .closing-inner przechodzi na jedna kolumne i makieta telefonu spada
      pod tekst. W tej pozycji nie ilustruje juz niczego obok tresci, tylko wydluza
      sekcje i laduje przycieta przy dolnej krawedzi. */
@@ -343,13 +349,15 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
 .card .content:not(:has(.meta)) .read { margin-top: auto; }
 
 /* CTA byly <button>; jako <a> traca kolor tekstu, podkreslenie i model blokowy przycisku */
+/* Swiadomie bez display: projekt sam ustawia go tam, gdzie trzeba (np.
+   .closing-actions a to inline-flex z min-height i centrowaniem). Nadpisanie
+   spychalo tekst do gornej krawedzi przycisku. */
 a.plain, a.primary, a.secondary, a.store-badge {
   color: inherit;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
 }
-a.plain, a.primary, a.secondary { display: inline-block; }
 
 /* tla ustawiane wczesniej przez JS z data-URI -- teraz statycznie, z asset pipeline */
 .store-crop, .portrait, .article-art {
