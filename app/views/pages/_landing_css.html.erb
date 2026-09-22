@@ -314,6 +314,19 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
 }
 
 @media (max-width: 760px) {
+  /* Kolejnosc na telefonie: tytul, Toby, pole pytania. Tytul i formularz siedza w tym
+     samym kontenerze, a Toby w osobnym, wiec zdejmujemy kontener z ukladu (display:
+     contents) i ustawiamy kolejnosc jego dzieci razem z grafika. */
+  .toby-final-copy { display: contents; }
+  .toby-final-copy h2 { order: 1; }
+  .toby-final-copy h3 { order: 2; }
+  .toby-final-copy > p { order: 3; }
+  .toby-final-visual { order: 4; }
+  .final-toby .toby-composer { order: 5; }
+  .final-toby .question-starters { order: 6; }
+}
+
+@media (max-width: 760px) {
   /* Na telefonie nawigacja i hero powtarzaly te same dwie akcje -- cztery przyciski na
      jednym ekranie. Zostaje podzial zgodny z konwencja: logowanie w gornym rogu dla
      wracajacych, rejestracja jako glowny przycisk w tresci dla nowych. */
