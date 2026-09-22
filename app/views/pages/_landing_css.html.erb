@@ -329,6 +329,13 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
 }
 
 @media (max-width: 600px) {
+  /* Na telefonie stopka ma byc tylko lista linkow -- logo jest tuz nad nia w sekcji
+     koncowej i drugi raz niczego nie wnosi. Ukrywamy caly odnosnik, zeby nie zostal
+     pusty obszar klikalny. */
+  .site-footer-inner > a:has(.footer-brand) { display: none; }
+}
+
+@media (max-width: 600px) {
   /* Ponizej 600px .closing-inner przechodzi na jedna kolumne i makieta telefonu spada
      pod tekst. W tej pozycji nie ilustruje juz niczego obok tresci, tylko wydluza
      sekcje i laduje przycieta przy dolnej krawedzi. */
