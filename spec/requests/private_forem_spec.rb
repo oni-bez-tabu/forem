@@ -73,6 +73,42 @@ RSpec.describe "Private Forem with public posts" do
     end
   end
 
+  describe "sciezki wolane z zewnatrz albo z linkow w mailach" do
+    # Kazda ma wlasne zabezpieczenie (token w adresie, sekret, podpis webhooka), wiec
+    # bramka logowania tylko by je psula. Sprawdzamy, ze nie sa przekierowywane --
+    # kod odpowiedzi pochodzi juz z samego kontrolera.
+    it "keeps the unsubscribe link working" do
+      # Przy nieistniejacym tokenie kontroler sam woła not_found -- co dowodzi, ze
+      # zadanie w ogole do niego dotarlo, zamiast odbic sie od bramki logowania.
+      expect { get "/email_subscriptions/unsubscribe", params: { ut: "nieistniejacy", id: 1 } }
+        .to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "keeps passwordless sign in reachable" do
+      get "/magic_links/new"
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "keeps the Mailchimp unsubscribe webhook reachable" do
+      get "/incoming_webhooks/mailchimp/sekret/unsubscribe"
+
+      expect(response).not_to redirect_to(sign_up_path)
+    end
+
+    it "keeps the Stripe webhook reachable" do
+      post "/incoming_webhooks/stripe_events"
+
+      expect(response).not_to redirect_to(sign_up_path)
+    end
+
+    it "keeps the chat webhook reachable" do
+      post "/messages/webhooks/notifications"
+
+      expect(response).not_to redirect_to(sign_up_path)
+    end
+  end
+
   describe "what an anonymous visitor is kept out of" do
     it "shows the landing page instead of the home feed" do
       create(:page, title: "This is a landing page!", landing_page: true)

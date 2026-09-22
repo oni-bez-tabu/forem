@@ -47,6 +47,15 @@ class ApplicationController < ActionController::Base
 
   around_action :handle_argument_error
 
+  # Kontrolery dostepne bez logowania takze na prywatnym Foremie. Poza oczywistymi
+  # (rejestracja, logowanie spolecznosciowe) sa tu sciezki wolane z zewnatrz albo z
+  # linkow w mailach -- kazda ma wlasne zabezpieczenie (token w adresie, sekret,
+  # podpis webhooka), wiec bramka logowania tylko by je psula:
+  #   email_subscriptions     -- wypisanie sie z powiadomien linkiem z maila
+  #   magic_links             -- logowanie linkiem bez hasla
+  #   mailchimp_unsubscribes  -- webhook wypisania z Mailchimpa
+  #   stripe_events           -- webhook platnosci Stripe
+  #   webhooks                -- przychodzace webhooki czatu (wlasny bearer token)
   PUBLIC_CONTROLLERS = %w[async_info
                           confirmations
                           deep_links
@@ -54,14 +63,19 @@ class ApplicationController < ActionController::Base
                           health_checks
                           instances
                           invitations
+                          magic_links
+                          mailchimp_unsubscribes
                           omniauth_callbacks
                           pages
                           passwords
                           registrations
+                          email_subscriptions
                           service_worker
                           sitemaps
+                          stripe_events
                           stories
-                          video_states].freeze
+                          video_states
+                          webhooks].freeze
   private_constant :PUBLIC_CONTROLLERS
 
   # Individual actions that stay reachable on a private Forem, where opening the whole
