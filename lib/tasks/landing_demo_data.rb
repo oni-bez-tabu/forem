@@ -49,10 +49,17 @@ OPISY = {
   "przyjemnosc" => "Odkrywanie tego, co sprawia przyjemność.",
   "kobieta" => "O kobietach, dla kobiet i nie tylko.",
   "lgbt" => "Tożsamość, akceptacja i widoczność.",
-  "masturbacja" => "Poznawanie własnego ciała."
+  "masturbacja" => "Poznawanie własnego ciała.",
+  "edukacjaseksualna" => "Wiedza, która pomaga lepiej rozumieć.",
+  "kamasutra" => "Pozycje, technika i praktyka.",
+  "swingerskistylzycia" => "Swingowanie w każdej odsłonie.",
+  "seks" => "Rozmowy o seksie bez owijania."
 }.freeze
 
-wybrane = %w[relacje zwiazek bdsm poradnik przyjemnosc kobieta lgbt masturbacja]
+# Osiem najczesciej uzywanych tagow, dobranych tak, by nie kolidowaly z czterema
+# wyblaklymi zajawkami z projektu (kobieta, mezczyzna, przyjemnosc, challenge) --
+# razem daje to 12 kafelkow, czyli pelne rzedy w ukladzie 4- i 2-kolumnowym.
+wybrane = %w[seks kamasutra relacje swingerskistylzycia bdsm zwiazek edukacjaseksualna poliamoria]
 topics = Tag.where(name: wybrane).map do |t|
   {
     "css_class" => t.name.length > 12 ? "topic-card topic-long" : "topic-card",
@@ -64,7 +71,13 @@ topics = Tag.where(name: wybrane).map do |t|
 end.sort_by { |t| wybrane.index(t["slug"]) }
 
 # Cztery wyblakle zajawki domykaja siatke do trzech rzedow, tak jak w projekcie.
-zajawki = JSON.parse(Rails.root.join("config/landing_data.json").read)["topics"].select { |t| t["faded"] }
+# Zajawki domykaja siatke do pelnych rzedow, ale nie moga powtarzac tagow, ktore
+# juz sa wyzej jako klikalne -- ten sam hashtag dwa razy wyglada jak blad.
+# Zajawki nie sa linkami, wiec nie maja sluga -- porownujemy po widocznej etykiecie.
+uzyte = topics.map { |t| t["label"].to_s.downcase }
+zajawki = JSON.parse(Rails.root.join("config/landing_data.json").read)["topics"]
+  .select { |t| t["faded"] }
+  .reject { |t| uzyte.include?(t["label"].to_s.downcase) }
 
 page = Page.find_or_initialize_by(slug: "landing-data")
 page.assign_attributes(

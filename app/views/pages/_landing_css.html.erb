@@ -305,6 +305,16 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
 .hero-art.layers .note-top{font-size:16px}
 }
 
+@media (max-width: 900px) {
+  /* Karta zaproszenia jest wciagana na siatke ujemnym marginesem, co przy czterech
+     kolumnach zaslania dokladnie ostatni rzad wyblaklych zajawek. Ponizej 900px siatka
+     ma dwie kolumny, wiec rzedow jest dwa razy wiecej i karta laduje na prawdziwych
+     tagach. W tym zakresie nie nachodzi juz na siatke. */
+  .topics-invite { margin-top: 18px; margin-bottom: 0; }
+  .topics-veil { height: 180px; }
+  .topics-directory { padding-bottom: 0; }
+}
+
 @media (max-width: 760px) {
   /* Ponizej 760px grafika hero jest swiadomie ukryta (.hero-art.layers{display:none}),
      ale sekcja dalej rezerwowala pelna wysokosc ekranu (min-height:100svh). Zostawala
