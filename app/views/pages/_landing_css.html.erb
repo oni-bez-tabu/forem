@@ -341,6 +341,32 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
   .mission-section { padding-top: 120px; }
 }
 
+/* Ikony sociali w stopce. Partial przychodzi z klasami Crayons, ktorych landing nie
+   laduje, wiec rozmiar i kolor ustawiamy tutaj. */
+.footer-socials {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.footer-socials a {
+  display: inline-flex;
+  color: #c2b2d0;
+  padding: 6px 0;
+  transition: color .2s ease;
+}
+.footer-socials a:hover { color: #fff; }
+.footer-socials svg {
+  width: 22px;
+  height: 22px;
+}
+/* Czesc ikon ma kolor zaszyty w atrybucie fill na sciezce (bluesky.svg to #0085ff),
+   co przebija fill ustawiony na samym <svg>. Wymuszamy na elementach wewnetrznych,
+   zeby caly zestaw byl jednolicie szary. */
+.footer-socials svg,
+.footer-socials svg * {
+  fill: currentColor;
+}
+
 @media (max-width: 600px) {
   /* Na telefonie stopka ma byc tylko lista linkow -- logo jest tuz nad nia w sekcji
      koncowej i drugi raz niczego nie wnosi. Ukrywamy caly odnosnik, zeby nie zostal
