@@ -305,6 +305,15 @@ html{scroll-behavior:smooth}.hero{position:relative;min-height:850px;min-height:
 .hero-art.layers .note-top{font-size:16px}
 }
 
+@media (max-width: 760px) {
+  /* Ponizej 760px grafika hero jest swiadomie ukryta (.hero-art.layers{display:none}),
+     ale sekcja dalej rezerwowala pelna wysokosc ekranu (min-height:100svh). Zostawala
+     przez to martwa przestrzen po nieistniejacej grafice, a nastepna sekcja zaczynala
+     sie dopiero poza ekranem. */
+  .hero { min-height: 0; }
+  .hero-copy { padding-top: 14px; padding-bottom: 8px; }
+}
+
 /* Ramka miniatury ma z projektu proporcje 440x246 (1.789), dobrana pod konkretne grafiki.
    Tresci z bazy maja inne: okladka Foremu to 1000x420 (2.381), a miniatura wideo 1760x956
    (1.841). Kadrowanie do ramki scinalo okladkom okolo cwierci szerokosci razem z tekstem
