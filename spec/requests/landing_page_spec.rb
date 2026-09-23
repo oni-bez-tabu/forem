@@ -62,6 +62,14 @@ RSpec.describe "Landing page" do
       expect(response.headers["Cache-Control"]).to eq("public, no-cache")
     end
 
+    it "loads the cookie banner, same as the rest of the site" do
+      # Landing ma wlasny layout, wiec nie dziedziczy skryptu z layoutu aplikacji.
+      get root_path
+
+      expect(response.body).to include("data-cookieyes-api-key")
+      expect(response.body).to include("cookieyes")
+    end
+
     it "ships no base64 images" do
       get root_path
 
