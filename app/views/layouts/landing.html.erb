@@ -57,8 +57,11 @@
       }.to_json) %>
     </script>
   </head>
-  <body>
+  <%# Baner cookies dziala tak samo jak w layoucie aplikacji: pack czyta klucz z data-atrybutu
+      i sam pomija sie w aplikacji mobilnej (ForemWebView). %>
+  <body data-cookieyes-api-key="<%= j(ApplicationConfig["COOKIEYES_API_KEY"]) %>">
     <%= yield %>
+    <%= javascript_include_tag "cookieyes", defer: true %>
     <%= render "pages/landing_scripts" %>
   </body>
 </html>

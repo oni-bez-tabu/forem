@@ -49,6 +49,23 @@ RSpec.describe "Private Forem with public posts" do
       expect(response).not_to have_http_status(:ok)
     end
 
+    it "serves the endpoint that loads more posts while scrolling a profile" do
+      # Profil doladowuje kolejne posty przez /search/feed_content. Gdy bramka je
+      # odbijala, przewijanie stawalo na spinnerze bez zadnego bledu.
+      get "/search/feed_content", params: {
+        page: 1, class_name: "Article", sort_by: "published_at",
+        sort_direction: "desc", per_page: 5
+      }
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "keeps the search page itself behind the login" do
+      get "/search"
+
+      expect(response).to redirect_to(sign_up_path)
+    end
+
     it "serves billboards placed on a public post" do
       create(:billboard, published: true, approved: true, placement_area: "post_sidebar")
 

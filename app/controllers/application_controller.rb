@@ -89,7 +89,12 @@ class ApplicationController < ActionController::Base
     "reactions" => %w[index].freeze,
     # Reklamy i promocje na publicznych stronach postow. Tak jak reactions#index --
     # dla anonima cache'owane, a user_signed_in? decyduje, ktory billboard wybrac.
-    "billboards" => %w[show].freeze
+    "billboards" => %w[show].freeze,
+    # Doladowywanie kolejnych postow przy przewijaniu profilu. Sama akcja feed_content,
+    # ktora jako jedyna w tym kontrolerze nie wymaga logowania z wlasnego projektu.
+    # Nie otwiera to wyszukiwarki tylnymi drzwiami: przy skonfigurowanej Algolii
+    # zapytanie z fraza zwraca pusta liste, przechodzi tylko listowanie bez szukania.
+    "search" => %w[feed_content].freeze
   }.freeze
   private_constant :PUBLIC_CONTROLLER_ACTIONS
 

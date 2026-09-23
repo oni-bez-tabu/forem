@@ -8,7 +8,9 @@
   #page-content-inner {
     display: flex;
     flex: 1;
-    background: white;
+    /* Podaza za motywem zamiast byc zaszyte na bialo -- inaczej ciemny ekran
+       rejestracji dostawal bialy prostokat pod cala trescia formularza. */
+    background: var(--body-bg);
   }
 </style>
 <main id="main-content" class="flex flex-1 justify-center flex-col crayons-layout crayons-layout--limited-xs">
