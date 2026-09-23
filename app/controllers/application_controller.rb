@@ -59,6 +59,7 @@ class ApplicationController < ActionController::Base
   PUBLIC_CONTROLLERS = %w[async_info
                           confirmations
                           deep_links
+                          email_subscriptions
                           ga_events
                           health_checks
                           instances
@@ -69,11 +70,10 @@ class ApplicationController < ActionController::Base
                           pages
                           passwords
                           registrations
-                          email_subscriptions
                           service_worker
                           sitemaps
-                          stripe_events
                           stories
+                          stripe_events
                           video_states
                           webhooks].freeze
   private_constant :PUBLIC_CONTROLLERS
