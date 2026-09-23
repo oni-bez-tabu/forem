@@ -1,0 +1,201 @@
+{
+  "posts": [
+    {
+      "author": "On Bez Tabu",
+      "kind": "RELACJA WIDEO",
+      "title": "Erochain 2025, jak wygląda – nasze pierwsze wrażenia.",
+      "image": "landing/post-1",
+      "video": true,
+      "duration": "04:55",
+      "url": "https://nietabu.pl/oni_bez_tabu",
+      "note": "Zobacz profil autora",
+      "ratio": "440 / 246",
+      "offset": "-3.4%",
+      "width": "107%"
+    },
+    {
+      "author": "nefretette",
+      "kind": "PORADNIK",
+      "title": "Walentynki dla małej, samotnej BDSM-iary – poradnik przetrwania",
+      "image": "landing/post-2",
+      "video": false,
+      "tags": "#bdsm  #walentynki",
+      "meta": "4 reakcje · 15 komentarzy",
+      "url": "https://nietabu.pl/nefretette/walentynki-dla-malej-samotnej-bdsm-iary-poradnik-przetrwania-3keg",
+      "note": "Zobacz post",
+      "avatar": true,
+      "avatar_style": "width:713px;left:-52px;top:-37px"
+    },
+    {
+      "author": "Magdalena Smaś-Myszczyszyn",
+      "kind": "WIDEO",
+      "title": "Dotyk się kończy, ale ciało dalej pamięta…",
+      "image": "landing/post-3",
+      "video": true,
+      "duration": "",
+      "url": "https://nietabu.pl/magdalena_smas",
+      "note": "Zobacz profil autorki",
+      "ratio": "440 / 246",
+      "offset": "-2.4%",
+      "width": "104.7%"
+    },
+    {
+      "author": "Ona Bez Tabu",
+      "kind": "DOŚWIADCZENIA",
+      "title": "Dlaczego swingujemy?",
+      "image": "landing/post-4",
+      "video": false,
+      "tags": "#swingerskistylżycia  #historia",
+      "meta": "13 reakcji · 2 min czytania",
+      "url": "https://nietabu.pl/oni_bez_tabu/dlaczego-swingujemy-hjc",
+      "note": "Zobacz post",
+      "avatar": true,
+      "avatar_style": "width:685px;left:-41px;top:-35px"
+    },
+    {
+      "author": "Kasia_od_seksperci.pl",
+      "kind": "PORADNIK WIDEO",
+      "title": "Agent 007 – masturbator dla mężczyzn",
+      "image": "landing/post-5",
+      "video": true,
+      "duration": "01:30",
+      "url": "https://nietabu.pl/seksuologiczna",
+      "note": "Zobacz profil autorki",
+      "ratio": "440 / 247",
+      "offset": "-3.6%",
+      "width": "109.5%"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "Oni Bez Tabu",
+      "handle": "oni_bez_tabu",
+      "description": "Relacje, doświadczenia i rozmowy bez tabu.",
+      "src": "landing/profile-oni-bez-tabu",
+      "W": 469,
+      "H": 371,
+      "x": 183,
+      "y": 16,
+      "crop": 113
+    },
+    {
+      "name": "Magdalena Smaś",
+      "handle": "magdalena_smas",
+      "description": "Seksualność, ciało i bliskość.",
+      "src": "landing/profile-magdalena-smas",
+      "W": 458,
+      "H": 364,
+      "x": 151,
+      "y": 38,
+      "crop": 94
+    },
+    {
+      "name": "nefretette",
+      "handle": "nefretette",
+      "description": "Osobiste historie i poradniki.",
+      "src": "landing/profile-nefretette",
+      "W": 704,
+      "H": 248,
+      "x": 50,
+      "y": 35,
+      "crop": 34
+    },
+    {
+      "name": "Kasia",
+      "handle": "seksuologiczna",
+      "description": "Poradniki o seksualności.",
+      "src": "landing/profile-seksuologiczna",
+      "W": 491,
+      "H": 347,
+      "x": 193,
+      "y": 70,
+      "crop": 100
+    }
+  ],
+  "topics": [
+    {
+      "css_class": "topic-card",
+      "slug": "relacje",
+      "label": "relacje",
+      "description": "Rozmowy o relacjach i komunikacji.",
+      "faded": false
+    },
+    {
+      "css_class": "topic-card",
+      "slug": "zwiazek",
+      "label": "zwiazek",
+      "description": "Codzienność, bliskość i bycie razem.",
+      "faded": false
+    },
+    {
+      "css_class": "topic-card",
+      "slug": "seksualnosc",
+      "label": "seksualnosc",
+      "description": "Poznawanie siebie i swoich potrzeb.",
+      "faded": false
+    },
+    {
+      "css_class": "topic-card topic-long",
+      "slug": "edukacjaseksualna",
+      "label": "edukacjaseksualna",
+      "description": "Wiedza, która pomaga lepiej rozumieć.",
+      "faded": false
+    },
+    {
+      "css_class": "topic-card",
+      "slug": "bdsm",
+      "label": "bdsm",
+      "description": "Praktyki, granice i świadoma zgoda.",
+      "faded": false
+    },
+    {
+      "css_class": "topic-card",
+      "slug": "swingclub",
+      "label": "swingclub",
+      "description": "Kluby dla swingersów i doświadczenia.",
+      "faded": false
+    },
+    {
+      "css_class": "topic-card",
+      "slug": "poliamoria",
+      "label": "poliamoria",
+      "description": "Relacje romantyczne z więcej niż jedną osobą.",
+      "faded": false
+    },
+    {
+      "css_class": "topic-card",
+      "slug": "intymnosc",
+      "label": "intymnosc",
+      "description": "Bliskość, zaufanie i prywatność.",
+      "faded": false
+    },
+    {
+      "css_class": "topic-card topic-faded",
+      "slug": "",
+      "label": "kobieta",
+      "description": "O kobietach, dla kobiet i nie tylko.",
+      "faded": true
+    },
+    {
+      "css_class": "topic-card topic-faded",
+      "slug": "",
+      "label": "mezczyzna",
+      "description": "O mężczyznach i ich doświadczeniach.",
+      "faded": true
+    },
+    {
+      "css_class": "topic-card topic-faded",
+      "slug": "",
+      "label": "przyjemnosc",
+      "description": "Odkrywanie tego, co sprawia przyjemność.",
+      "faded": true
+    },
+    {
+      "css_class": "topic-card topic-faded",
+      "slug": "",
+      "label": "challenge",
+      "description": "Wspólne wyzwania społeczności.",
+      "faded": true
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b090f">
+
+    <title><%= @landing_title %></title>
+    <meta name="description" content="<%= @landing_description %>">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <%= meta_keywords_default %>
+    <link rel="canonical" href="<%= app_url("/") %>">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="<%= community_name %>">
+    <meta property="og:locale" content="pl_PL">
+    <meta property="og:url" content="<%= app_url("/") %>">
+    <meta property="og:title" content="<%= @landing_title %>">
+    <meta property="og:description" content="<%= @landing_description %>">
+    <meta property="og:image" content="<%= Settings::General.main_social_image %>">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= @landing_title %>">
+    <meta name="twitter:description" content="<%= @landing_description %>">
+    <meta name="twitter:image" content="<%= Settings::General.main_social_image %>">
+
+    <link rel="icon" href="<%= Settings::General.favicon_url %>">
+
+    <%# Obie grafiki sa nad zagieciem - pobieramy je rownolegle z HTML-em. %>
+    <link rel="preload" as="image" href="<%= image_path("landing/logo.webp") %>" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="<%= image_path("landing/toby-hero.webp") %>" type="image/webp" fetchpriority="high">
+
+    <%= render "pages/landing_css" %>
+
+    <script type="application/ld+json">
+      <%= raw({
+        "@context" => "https://schema.org",
+        "@graph" => [
+          {
+            "@type" => "Organization",
+            "@id" => "#{app_url('/')}#organization",
+            "name" => community_name,
+            "url" => app_url("/"),
+            "logo" => Settings::General.logo_png,
+            "description" => @landing_description,
+            "sameAs" => ["https://www.instagram.com/nietabu.pl/", "https://apps.apple.com/pl/app/nie-tabu/id6756076077"]
+          },
+          {
+            "@type" => "WebSite",
+            "@id" => "#{app_url('/')}#website",
+            "url" => app_url("/"),
+            "name" => community_name,
+            "inLanguage" => "pl-PL",
+            "publisher" => { "@id" => "#{app_url('/')}#organization" }
+          }
+        ]
+      }.to_json) %>
+    </script>
+  </head>
+  <body>
+    <%= yield %>
+    <%= render "pages/landing_scripts" %>
+  </body>
+</html>

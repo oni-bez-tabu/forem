@@ -85,7 +85,8 @@ RSpec.describe "StoriesIndex" do
     end
 
     it "Does not render article with [Boost] as the title" do
-      boost_article = create(:article, title: "[Boost]", score: 1000, featured: true, type_of: "status", body_markdown: "", main_image: "")
+      boost_article = create(:article, title: "[Boost]", score: 1000, featured: true, type_of: "status",
+                                       body_markdown: "", main_image: "")
       non_boost_article = create(:article, title: "Not a boost article", score: 1000, featured: true)
 
       get "/"
@@ -116,13 +117,12 @@ RSpec.describe "StoriesIndex" do
       expect(response.body).to include("data-ga4-tracking-id=\"#{Settings::General.ga_analytics_4_id}\"")
     end
 
-    it "renders registration page if the Forem instance is private" do
+    it "renders the landing page if the Forem instance is private" do
       allow(Settings::UserExperience).to receive(:public).and_return(false)
-      allow(Authentication::Providers).to receive(:enabled).and_return(%i[github twitter])
 
       get root_path
-      expect(response.body).to include("Continue with GitHub")
-      expect(response.body).to include("Continue with Twitter")
+      expect(response.body).to include("Miejsce dla")
+      expect(response.body).to include(sign_up_path)
     end
 
     it "renders a landing page if one is active and if the site config is set to private" do
@@ -190,14 +190,15 @@ RSpec.describe "StoriesIndex" do
       expect(response.body).to include(billboard.processed_html)
     end
 
-    it "does not set cache-related headers if private" do
+    it "edge-caches the landing page even though the Forem is private" do
+      # Landing jest identyczny dla kazdego anonima i nie zawiera nic prywatnego, wiec jako
+      # jedyna strona prywatnego Foremu jedzie z brzegu. Reszta dalej nie jest cache'owana.
       allow(Settings::UserExperience).to receive(:public).and_return(false)
       get "/"
       expect(response).to have_http_status(:ok)
 
-      expect(response.headers["X-Accel-Expires"]).to be_nil
-      expect(response.headers["Cache-Control"]).not_to eq("public, no-cache")
-      expect(response.headers["Surrogate-Key"]).to be_nil
+      expect(response.headers["Surrogate-Key"]).to eq("landing_page")
+      expect(response.headers["X-Accel-Expires"]).to eq(12.hours.to_i.to_s)
     end
 
     it "renders social media handles if set" do
@@ -395,7 +396,7 @@ RSpec.describe "StoriesIndex" do
 
         # "Set-Cookie" won't exist if the middleware has deleted it
         # or you might see a blank or partial string. Let's just confirm it's not present:
-        expect(response.headers["Set-Cookie"].to_s).not_to include(ENV["SESSION_KEY"])
+        expect(response.headers["Set-Cookie"].to_s).not_to include(ENV.fetch("SESSION_KEY", nil))
         expect(response.headers["Set-Cookie"].to_s).not_to include("remember_user_token")
       end
     end
@@ -421,8 +422,8 @@ RSpec.describe "StoriesIndex" do
     context "when organization has a readme page and org_readme flag is enabled" do
       before do
         create(:page, organization: organization, body_markdown: "**Welcome to our org!**",
-               title: organization.name, description: "desc", slug: "#{organization.slug}-page",
-               template: "full_within_layout")
+                      title: organization.name, description: "desc", slug: "#{organization.slug}-page",
+                      template: "full_within_layout")
         FeatureFlag.add(:org_readme)
         FeatureFlag.enable(:org_readme, FeatureFlag::Actor[organization])
       end
@@ -440,8 +441,8 @@ RSpec.describe "StoriesIndex" do
     context "when organization has a readme page but org_readme flag is disabled" do
       before do
         create(:page, organization: organization, body_markdown: "**Welcome to our org!**",
-               title: organization.name, description: "desc", slug: "#{organization.slug}-page",
-               template: "full_within_layout")
+                      title: organization.name, description: "desc", slug: "#{organization.slug}-page",
+                      template: "full_within_layout")
         FeatureFlag.add(:org_readme)
       end
 

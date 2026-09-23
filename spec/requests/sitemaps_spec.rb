@@ -47,7 +47,8 @@ RSpec.describe "Sitemaps" do
         expect(response.body).to include("<sitemapindex xmlns=")
         expect(response.body).to include("sitemap-posts.xml")
         expect(response.body).to include("sitemap-users.xml")
-        expect(response.body).to include("sitemap-tags.xml")
+        # Tagi wymagaja logowania, wiec ich sitemapy nie reklamujemy.
+        expect(response.body).not_to include("sitemap-tags.xml")
       end
 
       it "renders multiple posts pages if enough posts", :aggregate_failures do
@@ -108,29 +109,9 @@ RSpec.describe "Sitemaps" do
         end
       end
 
-      it "renders hottest tags if /sitemap-tags", :aggregate_failures do
-        get "/sitemap-tags.xml"
-        expect(response.body).to include(Tag.order("hotness_score DESC").first.name)
-        expect(response.body).not_to include(Tag.order("hotness_score DESC").last.name)
-      end
-
-      it "renders second page if /sitemap-tags-1", :aggregate_failures do
-        get "/sitemap-tags-1.xml"
-        expect(response.body).not_to include(Tag.order("hotness_score DESC").first.name)
-        expect(response.body).to include(Tag.order("hotness_score DESC").last.name)
-      end
-
-      it "renders first page if /sitemap-tags-randomn0tnumber", :aggregate_failures do
-        get "/sitemap-tags-randomn0tnumber.xml"
-        expect(response.body).to include(Tag.order("hotness_score DESC").first.name)
-        expect(response.body).not_to include(Tag.order("hotness_score DESC").last.name)
-      end
-
-      it "renders empty if /sitemap-tags-2", :aggregate_failures do
-        # no posts this far down.
-        get "/sitemap-tags-2.xml"
-        expect(response.body).not_to include(Tag.order("hotness_score DESC").first.name)
-        expect(response.body).not_to include(Tag.order("hotness_score DESC").last.name)
+      it "does not serve a tag sitemap, because tag pages require signing in" do
+        # Poza testami not_found renderuje 404; tutaj wyjatek propaguje sie do przykladu.
+        expect { get "/sitemap-tags.xml" }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 

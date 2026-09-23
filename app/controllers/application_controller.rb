@@ -47,19 +47,51 @@ class ApplicationController < ActionController::Base
 
   around_action :handle_argument_error
 
+  # Kontrolery dostepne bez logowania takze na prywatnym Foremie. Poza oczywistymi
+  # (rejestracja, logowanie spolecznosciowe) sa tu sciezki wolane z zewnatrz albo z
+  # linkow w mailach -- kazda ma wlasne zabezpieczenie (token w adresie, sekret,
+  # podpis webhooka), wiec bramka logowania tylko by je psula:
+  #   email_subscriptions     -- wypisanie sie z powiadomien linkiem z maila
+  #   magic_links             -- logowanie linkiem bez hasla
+  #   mailchimp_unsubscribes  -- webhook wypisania z Mailchimpa
+  #   stripe_events           -- webhook platnosci Stripe
+  #   webhooks                -- przychodzace webhooki czatu (wlasny bearer token)
   PUBLIC_CONTROLLERS = %w[async_info
                           confirmations
                           deep_links
+                          email_subscriptions
                           ga_events
                           health_checks
                           instances
                           invitations
+                          magic_links
+                          mailchimp_unsubscribes
                           omniauth_callbacks
+                          pages
                           passwords
                           registrations
                           service_worker
-                          video_states].freeze
+                          sitemaps
+                          stories
+                          stripe_events
+                          video_states
+                          webhooks].freeze
   private_constant :PUBLIC_CONTROLLERS
+
+  # Individual actions that stay reachable on a private Forem, where opening the whole
+  # controller would expose more than intended. Keyed by controller_name.
+  PUBLIC_CONTROLLER_ACTIONS = {
+    "articles" => %w[feed].freeze, # RSS
+    "comments" => %w[index].freeze, # comment permalinks under a public post
+    # Liczniki reakcji pod publicznym postem. Sama akcja index, bo create musi zostac
+    # za logowaniem. Dla anonima zwraca wylacznie sumy (osobiste reakcje to Reaction.none)
+    # i jest cache'owana na dwa tygodnie -- wprost zaprojektowana pod niezalogowanych.
+    "reactions" => %w[index].freeze,
+    # Reklamy i promocje na publicznych stronach postow. Tak jak reactions#index --
+    # dla anonima cache'owane, a user_signed_in? decyduje, ktory billboard wybrac.
+    "billboards" => %w[show].freeze
+  }.freeze
+  private_constant :PUBLIC_CONTROLLER_ACTIONS
 
   CONTENT_CHANGE_PATHS = [
     "/onboarding/tags", # Needs to change when suggested_tags is edited.
@@ -90,17 +122,81 @@ class ApplicationController < ActionController::Base
 
   def verify_private_forem
     return if controller_name.in?(PUBLIC_CONTROLLERS)
+    return if PUBLIC_CONTROLLER_ACTIONS[controller_name]&.include?(action_name)
     return if self.class.module_parent.to_s == "Admin"
     return if user_signed_in? || Settings::UserExperience.public
 
     if api_action?
       authenticate!
-    elsif (@page = Page.landing_page)
+    else
+      redirect_to_sign_up_from(request.url)
+    end
+  end
+
+  # Send an anonymous visitor to sign up, remembering where they were headed so that
+  # `after_sign_in_path_for` can drop them back there once they have an account.
+  #
+  # @param destination [String] the url to return to after signing in
+  def redirect_to_sign_up_from(destination)
+    store_location_for(:user, destination) if request.get? && !request.xhr?
+    redirect_to sign_up_path
+  end
+
+  # How long the edge may serve the landing page before revalidating.
+  LANDING_EDGE_MAX_AGE = 12.hours.to_i
+  private_constant :LANDING_EDGE_MAX_AGE
+
+  # Devise screens that make up the sign-in / sign-up flow.
+  AUTH_SCREEN_CONTROLLERS = %w[registrations sessions passwords confirmations].freeze
+  private_constant :AUTH_SCREEN_CONTROLLERS
+
+  # Sign-in and sign-up render dark in a browser, and stay light inside the mobile app - the
+  # app draws its own light chrome around the web view, so a dark form looks broken in it.
+  # The app identifies itself with the ForemWebView suffix on its user agent.
+  def dark_auth_screen?
+    return false if user_signed_in?
+    return false if request.user_agent.to_s.include?("ForemWebView")
+
+    AUTH_SCREEN_CONTROLLERS.include?(controller_name)
+  end
+  helper_method :dark_auth_screen?
+
+  # Whether an anonymous visitor may browse beyond the pages a private Forem keeps open
+  # (posts, profiles, static pages). Drives both the feed gate and the navigation UI.
+  def open_to_anonymous_browsing?
+    user_signed_in? || Settings::UserExperience.public
+  end
+  helper_method :open_to_anonymous_browsing?
+
+  # The locked screen an anonymous visitor sees in place of the home feed.
+  #
+  # An administrator can still override it with a Page marked as the landing page; otherwise we
+  # render the designed landing, which is the front door of a private Forem.
+  def render_landing_page
+    if (@page = Page.landing_page)
       render template: "pages/show"
     else
-      @user ||= User.new
-      render template: "devise/registrations/new"
+      # Te same zrodla, z ktorych korzysta zwykla strona glowna (articles/index.html.erb),
+      # zeby tytul i opis landingu zmienialy sie razem z ustawieniami spolecznosci.
+      @landing_title = Settings::Community.community_name
+      @landing_description = Settings::Community.community_description.presence ||
+        Settings::Community.tagline
+      set_landing_cache_headers
+      render template: "pages/landing", layout: "landing"
     end
+  end
+
+  # The landing is byte-identical for every anonymous visitor and holds nothing user-specific,
+  # so it is the one response a private Forem can safely hand to the edge. The shared
+  # `set_cache_control_headers` bails out whenever the Forem is private, hence the explicit set.
+  def set_landing_cache_headers
+    set_surrogate_key_header "landing_page"
+    RequestStore.store[:edge_caching_in_place] = true
+    response.headers["Cache-Control"] = "public, no-cache" # Fastly only; browsers revalidate.
+    response.headers["X-Accel-Expires"] = LANDING_EDGE_MAX_AGE.to_s
+    response.headers["Surrogate-Control"] = build_surrogate_control(
+      LANDING_EDGE_MAX_AGE, stale_while_revalidate: 3600, stale_if_error: 86_400
+    )
   end
 
   # When called, raise ActiveRecord::RecordNotFound.

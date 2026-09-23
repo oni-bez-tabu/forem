@@ -42,10 +42,6 @@ class SitemapsController < ApplicationController
       @articles = Article.published.from_subforem.order("published_at DESC")
         .where("score >= ?", Settings::UserExperience.index_minimum_score)
         .limit(RESULTS_LIMIT).offset(offset).pluck(:path, :last_comment_at)
-    when "tags" # tags
-      @tags = Tag.order("hotness_score DESC")
-        .where(supported: true)
-        .limit(RESULTS_LIMIT).offset(offset).pluck(:name, :updated_at)
     end
     set_surrogate_controls(Time.current)
     @view_template = resource
@@ -80,8 +76,11 @@ class SitemapsController < ApplicationController
     end
   end
 
+  # Tag pages sit behind the login on a private Forem, so they are deliberately absent
+  # here - advertising URLs that redirect anonymous crawlers only earns Search Console
+  # warnings and the entries get dropped from the index anyway.
   def valid_resource_sitemap?
-    %w[posts users tags].include?(resource_string)
+    %w[posts users].include?(resource_string)
   end
 
   def resource_string

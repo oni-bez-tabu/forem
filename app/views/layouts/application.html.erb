@@ -47,7 +47,7 @@
       <link rel="manifest" href="<%= URL.url("manifest.json") %>" />
       <meta name="apple-mobile-web-app-title" content="<%= community_name %>">
       <meta name="application-name" content="<%= community_name %>">
-      <meta name="theme-color" content="#ffffff">
+      <meta name="theme-color" content="<%= dark_auth_screen? ? "#171717" : "#ffffff" %>">
       <link rel="search" href="<%= URL.url("open-search.xml") %>" type="application/opensearchdescription+xml" title="<%= community_name %>" />
 
       <meta property="forem:name" content="<%= community_name %>" />
@@ -58,7 +58,7 @@
   </head>
   <% unless internal_navigation? %>
     <body
-      class="<%= Settings::UserExperience.default_font.tr("_", "-") %>-article-body default-header"
+      class="<%= Settings::UserExperience.default_font.tr("_", "-") %>-article-body default-header<%= " dark-theme" if dark_auth_screen? %>"
       data-user-status="<%= j(user_logged_in_status) %>"
       data-is-root-subforem="<%= j(is_root_subforem?) %>"
       <% if RequestStore.store[:subforem_id].present? %>
@@ -164,6 +164,18 @@
             --accent-brand-darker-rgb: <%= Color::CompareHex.new([Settings::UserExperience.primary_brand_color_hex]).brightness(0.8, only_values: true) %>;
           }
         </style>
+        <%# Zalogowanym ciemny motyw wstrzykuje JS z _user_config na podstawie ich ustawien.
+            Anonim na ekranach logowania/rejestracji nie przechodzi ta sciezka, wiec arkusz
+            podajemy serwerowo -- bez mignięcia jasnym tlem przed zadzialaniem skryptu. %>
+        <% if dark_auth_screen? %>
+          <style><%= Rails.application.assets["themes/dark.css"].to_s.squish.html_safe %></style>
+          <style>
+            <%# Dwa miejsca na ekranie rejestracji maja jasne tlo wpisane na sztywno i nie %>
+            <%# reaguja na motyw: samo <body> oraz etykieta "LUB" w separatorze. %>
+            body { background: var(--body-bg); color: var(--body-color); }
+            .registration__hr-label { background: var(--body-bg); color: var(--base-70); }
+          </style>
+        <% end %>
       </div>
       <% if user_signed_in? %>
         <%= render "layouts/user_config" %>
