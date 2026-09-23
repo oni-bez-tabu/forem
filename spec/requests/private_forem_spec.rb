@@ -34,6 +34,29 @@ RSpec.describe "Private Forem with public posts" do
       expect(response.body).to include(comment.processed_html)
     end
 
+    it "serves reaction counts, so they render under a public post" do
+      # Licznikami maluje ten sam skrypt, ktory najpierw czeka na ta odpowiedz -- gdy
+      # sie odbijala, puste zostawaly takze liczby komentarzy i zapisan.
+      get "/reactions", params: { article_id: article.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body).to have_key("article_reaction_counts")
+    end
+
+    it "does not let an anonymous visitor create a reaction" do
+      post "/reactions", params: { reactable_id: article.id, reactable_type: "Article", category: "like" }
+
+      expect(response).not_to have_http_status(:ok)
+    end
+
+    it "serves billboards placed on a public post" do
+      create(:billboard, published: true, approved: true, placement_area: "post_sidebar")
+
+      get "#{article.path}/bb/post_sidebar"
+
+      expect(response).to have_http_status(:ok)
+    end
+
     it "serves a static page such as the terms" do
       page = create(:page, title: "Regulamin", slug: "regulamin", is_top_level_path: true)
 

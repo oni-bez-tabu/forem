@@ -82,7 +82,14 @@ class ApplicationController < ActionController::Base
   # controller would expose more than intended. Keyed by controller_name.
   PUBLIC_CONTROLLER_ACTIONS = {
     "articles" => %w[feed].freeze, # RSS
-    "comments" => %w[index].freeze # comment permalinks under a public post
+    "comments" => %w[index].freeze, # comment permalinks under a public post
+    # Liczniki reakcji pod publicznym postem. Sama akcja index, bo create musi zostac
+    # za logowaniem. Dla anonima zwraca wylacznie sumy (osobiste reakcje to Reaction.none)
+    # i jest cache'owana na dwa tygodnie -- wprost zaprojektowana pod niezalogowanych.
+    "reactions" => %w[index].freeze,
+    # Reklamy i promocje na publicznych stronach postow. Tak jak reactions#index --
+    # dla anonima cache'owane, a user_signed_in? decyduje, ktory billboard wybrac.
+    "billboards" => %w[show].freeze
   }.freeze
   private_constant :PUBLIC_CONTROLLER_ACTIONS
 
