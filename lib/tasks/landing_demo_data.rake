@@ -32,7 +32,13 @@ namespace :landing do
         "author" => a.user&.name.presence || a.user&.username,
         "title" => a.title,
         # Wideo ma wlasna miniature i czas trwania; pozostale posty pokazuja okladke.
-        "image" => a.video.present? ? (a.video_thumbnail_url.presence || cover) : cover,
+        # Adresy ida przez Images::Optimizer, czyli przez Cloudflare -- inaczej landing
+        # ciagnalby oryginaly wprost z S3 (miniatura 1,5 MB zamiast 27 kB).
+        # 880px to dwukrotnosc ramki 440x246, pod ekrany o duzej gestosci.
+        "image" => Images::Optimizer.call(
+          (a.video.present? ? (a.video_thumbnail_url.presence || cover) : cover).to_s,
+          width: 880, quality: 80
+        ).presence,
         "video" => a.video.present?,
         "duration" => (a.video_duration_in_minutes.to_s.presence if a.video.present?),
         "url" => a.path,
@@ -48,7 +54,8 @@ namespace :landing do
         "name" => u.name.presence || u.username,
         "handle" => u.username,
         "description" => u.profile&.summary.presence || "Autor w nie!tabu.",
-        "src" => u.profile_image_url
+        # Kwadratowy kadr, tak jak Images::Profile w reszcie serwisu.
+        "src" => Images::Optimizer.call(u.profile_image_url.to_s, width: 200, height: 200, crop: "crop")
       }
     end
 
