@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_04_26_102219) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_27_100100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "ltree"
@@ -923,6 +923,19 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_26_102219) do
     t.bigint "user_id"
     t.index ["provider", "uid"], name: "index_identities_on_provider_and_uid", unique: true
     t.index ["provider", "user_id"], name: "index_identities_on_provider_and_user_id", unique: true
+  end
+
+  create_table "integration_notifications", force: :cascade do |t|
+    t.text "body"
+    t.string "category", default: "inne", null: false
+    t.datetime "created_at", null: false
+    t.string "dedup_key"
+    t.string "scope", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.string "url"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_integration_notifications_on_user_id"
   end
 
   create_table "labels", force: :cascade do |t|
@@ -1958,6 +1971,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_26_102219) do
     t.boolean "email_unread_notifications", default: true, null: false
     t.boolean "mobile_chat_notifications", default: true, null: false
     t.boolean "mobile_comment_notifications", default: true, null: false
+    t.boolean "mobile_integration_notifications", default: true, null: false
     t.boolean "mobile_mention_notifications", default: true, null: false
     t.boolean "mod_roundrobin_notifications", default: true, null: false
     t.boolean "reaction_notifications", default: true, null: false
@@ -2070,6 +2084,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_26_102219) do
   add_foreign_key "github_repos", "users", on_delete: :cascade
   add_foreign_key "html_variants", "users", on_delete: :cascade
   add_foreign_key "identities", "users", on_delete: :cascade
+  add_foreign_key "integration_notifications", "users", on_delete: :cascade
   add_foreign_key "lead_submissions", "organization_lead_forms", on_delete: :cascade
   add_foreign_key "lead_submissions", "users", on_delete: :cascade
   add_foreign_key "mentions", "users", on_delete: :cascade

@@ -67,6 +67,7 @@ pt:
           me mencionar
         mobile_comment_notifications: Envie-me uma notificação push quando alguém
           responder a mim em um thread de comentário
+        mobile_integration_notifications: "Envie-me notificações de jogos e aplicativos (ex.: Strefa Pary)"
         welcome_notifications: Envie-me dicas ocasionais sobre como melhorar minha
           experiência no %{community}
         email_community_broadcast: Envie-me e-mails de transmissão da comunidade

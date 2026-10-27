@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  include StandalonePageRenderable
   # No authorization required for entirely public controller
   before_action :set_cache_control_headers, only: %i[show badge bounty faq robots]
 
@@ -21,6 +22,8 @@ class PagesController < ApplicationController
 
 
     case @page.template
+    when "standalone"
+      render_standalone_page
     when "txt"
       render plain: @page.processed_html, content_type: "text/plain"
     when "json"

@@ -2,6 +2,8 @@
 pt:
   views:
     notifications:
+      integration:
+        open: Abrir
       meta:
         description: Caixa de entrada de notificações para %{community}
         og:

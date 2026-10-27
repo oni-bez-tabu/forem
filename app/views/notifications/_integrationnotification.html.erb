@@ -1,0 +1,16 @@
+<% data = notification.json_data["integration"] || {} %>
+<div class="crayons-card p-4 notification" data-integration-scope="<%= data["scope"] %>">
+  <h3 class="fs-base fw-bold mb-1">
+    <% if data["url"].present? %>
+      <%= link_to data["title"], data["url"], class: "crayons-link" %>
+    <% else %>
+      <%= data["title"] %>
+    <% end %>
+  </h3>
+  <% if data["body"].present? %>
+    <p class="color-base-70"><%= data["body"] %></p>
+  <% end %>
+  <% if data["url"].present? %>
+    <%= link_to t("views.notifications.integration.open"), data["url"], class: "crayons-btn crayons-btn--secondary crayons-btn--s mt-2" %>
+  <% end %>
+</div>

@@ -68,6 +68,7 @@ fr:
           me mentionne
         mobile_comment_notifications: Envoyez-moi une notification push lorsque quelqu'un
           me répond dans un fil de commentaires
+        mobile_integration_notifications: "Envoyez-moi des notifications des jeux et applications (p. ex. Strefa Pary)"
         welcome_notifications: Envoyez-moi de temps en temps des conseils pour améliorer
           mon expérience sur %{community}
         email_community_broadcast: Envoyez-moi des e-mails de diffusion communautaire

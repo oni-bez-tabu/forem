@@ -17,6 +17,7 @@ module Users
                         email_unread_notifications
                         mobile_chat_notifications
                         mobile_comment_notifications
+                        mobile_integration_notifications
                         mobile_mention_notifications
                         mod_roundrobin_notifications
                         reaction_notifications

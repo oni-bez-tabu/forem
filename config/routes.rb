@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
   get "/r/mobile", to: "deep_links#mobile"
   get "/.well-known/apple-app-site-association", to: "deep_links#aasa"
+  get "/.well-known/jwks.json", to: "api/integrations#jwks", defaults: { format: "json" }
 
   # [@forem/delightful] - all routes are nested under this optional scope to
   # begin supporting i18n.
@@ -51,6 +52,11 @@ Rails.application.routes.draw do
     end
 
     namespace :api, defaults: { format: "json" } do
+      # Integrations (e.g. Strefa Pary): session token, JWKS and the notifications channel.
+      get "/integrations/token", to: "integrations#token"
+      get "/integrations/jwks", to: "integrations#jwks"
+      post "/integrations/notifications", to: "integrations#notifications"
+
       scope module: :v1, constraints: ApiConstraints.new(version: 1, default: false) do
         # V1 only endpoints
         put "/articles/:id/unpublish", to: "articles#unpublish", as: :article_unpublish

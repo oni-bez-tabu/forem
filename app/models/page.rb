@@ -1,7 +1,9 @@
 class Page < ApplicationRecord
   include LiquidEmbeddable
   extend UniqueAcrossModels
-  TEMPLATE_OPTIONS = %w[contained full_within_layout nav_bar_included json css txt].freeze
+  TEMPLATE_OPTIONS = %w[contained full_within_layout nav_bar_included json css txt standalone].freeze
+  # "standalone": body_html is served as the whole document (no Forem layout, header, footer or JS).
+  STANDALONE_TEMPLATE = "standalone".freeze
 
   TERMS_SLUG = "terms".freeze
   CODE_OF_CONDUCT_SLUG = "code-of-conduct".freeze
@@ -67,6 +69,10 @@ class Page < ApplicationRecord
 
   def path
     is_top_level_path ? "/#{slug}" : "/page/#{slug}"
+  end
+
+  def standalone?
+    template == STANDALONE_TEMPLATE
   end
 
   def feature_flag_name
