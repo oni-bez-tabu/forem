@@ -53,7 +53,8 @@ module Middlewares
         # Lokalnie (APP_PROTOCOL=http://) strona jest pod http, wiec "https://localhost:3001" blokowalo
         # wlasne iframe'y (np. /auth_pass/iframe). Produkcja: APP_PROTOCOL=https:// jak dotad.
         scheme = ApplicationConfig["APP_PROTOCOL"].presence || "https://"
-        csp_value = "frame-ancestors " + allowed_domains.map { |d| "#{scheme}#{d}" }.join(" ")
+        # 'self': wlasne iframe'y (/auth_pass/iframe) dzialaja tez pod innym hostem tej samej instancji (np. tunel ngrok).
+        csp_value = "frame-ancestors 'self' " + allowed_domains.map { |d| "#{scheme}#{d}" }.join(" ")
         headers["Content-Security-Policy"] = csp_value
 
       rescue PublicSuffix::DomainInvalid
