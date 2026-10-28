@@ -82,9 +82,9 @@ class ApplicationController < ActionController::Base
   # controller would expose more than intended. Keyed by controller_name.
   PUBLIC_CONTROLLER_ACTIONS = {
     "articles" => %w[feed].freeze, # RSS
-    # Integracje (Strefa Pary): jwks jest publiczny, notifications ma wlasny api-key,
-    # a token sam zwraca 401 JSON dla niezalogowanych zamiast przekierowania.
-    "integrations" => %w[token jwks notifications].freeze,
+    # Integracje (Strefa Pary): notifications ma wlasny api-key, a me rozpoznaje uzytkownika
+    # z tokenu (current_user_by_token) i samo zwraca 401 JSON zamiast przekierowania.
+    "integrations" => %w[me notifications].freeze,
     "comments" => %w[index].freeze, # comment permalinks under a public post
     # Liczniki reakcji pod publicznym postem. Sama akcja index, bo create musi zostac
     # za logowaniem. Dla anonima zwraca wylacznie sumy (osobiste reakcje to Reaction.none)

@@ -8,64 +8,40 @@ RSpec.describe "Api::Integrations" do
     allow(Rails).to receive(:cache).and_return(memory_cache)
     allow(ApplicationConfig).to receive(:[]).and_call_original
     allow(ApplicationConfig).to receive(:[]).with("INTEGRATIONS_API_KEYS").and_return("strefa-pary:sekret-testowy")
-    allow(ApplicationConfig).to receive(:[]).with("INTEGRATIONS_JWT_AUDIENCES").and_return("strefa-pary")
   end
 
-  describe "GET /api/integrations/token" do
-    it "returns 401 when logged out" do
-      get "/api/integrations/token", params: { aud: "strefa-pary" }
+  describe "GET /api/integrations/me" do
+    let(:token) { JWT.encode({ user_id: user.id, exp: 5.minutes.from_now.to_i }, Rails.application.secret_key_base) }
+
+    it "returns 401 without a token" do
+      get "/api/integrations/me"
       expect(response).to have_http_status(:unauthorized)
       expect(response.parsed_body["error"]).to eq("unauthorized")
     end
 
-    it "returns a valid RS256 JWT for the logged-in user" do
-      sign_in user
-      get "/api/integrations/token", params: { aud: "strefa-pary" }
+    it "returns 401 for a token with a bad signature" do
+      bad = JWT.encode({ user_id: user.id, exp: 5.minutes.from_now.to_i }, "inny-sekret")
+      get "/api/integrations/me", headers: { "Authorization" => "Bearer #{bad}" }
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it "returns 401 for an expired token" do
+      old = JWT.encode({ user_id: user.id, exp: 1.minute.ago.to_i }, Rails.application.secret_key_base)
+      get "/api/integrations/me", headers: { "Authorization" => "Bearer #{old}" }
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it "identifies the user from the Forem auth token (the one /auth_pass/iframe issues)" do
+      get "/api/integrations/me", headers: { "Authorization" => "Bearer #{token}" }
       expect(response).to have_http_status(:ok)
       expect(response.headers["Cache-Control"]).to include("no-store")
-
-      body = response.parsed_body
-      expect(body["exp"]).to be > Time.current.to_i
-
-      jwk = Integrations::JwtKeys.jwk
-      public_key = JWT::JWK.import(jwk.stringify_keys).public_key
-      payload, header = JWT.decode(body["token"], public_key, true,
-                                   algorithm: "RS256", aud: "strefa-pary", verify_aud: true)
-      expect(header["kid"]).to eq(Integrations::JwtKeys.kid)
-      expect(payload["sub"]).to eq(user.id.to_s)
-      expect(payload["username"]).to eq(user.username)
-      expect(payload["iss"]).to eq(Settings::General.app_domain)
-      expect(payload["exp"] - payload["iat"]).to eq(15.minutes.to_i)
+      expect(response.parsed_body).to eq("id" => user.id.to_s, "name" => user.name, "username" => user.username)
     end
 
-    it "returns 422 for an unknown aud" do
+    it "ignores the cookie session (token only)" do
       sign_in user
-      get "/api/integrations/token", params: { aud: "obca-aplikacja" }
-      expect(response).to have_http_status(:unprocessable_entity)
-    end
-
-    it "returns 422 when aud is missing" do
-      sign_in user
-      get "/api/integrations/token"
-      expect(response).to have_http_status(:unprocessable_entity)
-    end
-  end
-
-  describe "JWKS" do
-    it "publishes the public key at /.well-known/jwks.json" do
-      get "/.well-known/jwks.json"
-      expect(response).to have_http_status(:ok)
-      expect(response.headers["Cache-Control"]).to include("public")
-      key = response.parsed_body["keys"].first
-      expect(key).to include("kty" => "RSA", "alg" => "RS256", "use" => "sig", "kid" => Integrations::JwtKeys.kid)
-      expect(key["n"]).to be_present
-      expect(key["e"]).to be_present
-    end
-
-    it "serves the same keys at /api/integrations/jwks" do
-      get "/api/integrations/jwks"
-      expect(response).to have_http_status(:ok)
-      expect(response.parsed_body["keys"].first["kid"]).to eq(Integrations::JwtKeys.kid)
+      get "/api/integrations/me"
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 
