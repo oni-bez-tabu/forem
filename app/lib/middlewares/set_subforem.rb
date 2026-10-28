@@ -50,7 +50,10 @@ module Middlewares
         # Set Content-Security-Policy header to allow embedding in iframes for all subforems
         headers.delete("X-Frame-Options")
         allowed_domains = Subforem.cached_all_domains + [Settings::General.app_domain]
-        csp_value = "frame-ancestors " + allowed_domains.map { |d| "https://#{d}" }.join(" ")
+        # Lokalnie (APP_PROTOCOL=http://) strona jest pod http, wiec "https://localhost:3001" blokowalo
+        # wlasne iframe'y (np. /auth_pass/iframe). Produkcja: APP_PROTOCOL=https:// jak dotad.
+        scheme = ApplicationConfig["APP_PROTOCOL"].presence || "https://"
+        csp_value = "frame-ancestors " + allowed_domains.map { |d| "#{scheme}#{d}" }.join(" ")
         headers["Content-Security-Policy"] = csp_value
 
       rescue PublicSuffix::DomainInvalid
