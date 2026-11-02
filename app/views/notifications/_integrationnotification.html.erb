@@ -1,16 +1,37 @@
+<%# Integration notification (e.g. Strefa Pary): actor avatar with a scope badge, body with the actor's name in bold,
+    time; the whole card links to data["url"]. Without an actor the badge alone stands in for the avatar. %>
 <% data = notification.json_data["integration"] || {} %>
-<div class="crayons-card p-4 notification" data-integration-scope="<%= data["scope"] %>">
-  <h3 class="fs-base fw-bold mb-1">
-    <% if data["url"].present? %>
-      <%= link_to data["title"], data["url"], class: "crayons-link" %>
+<% actor = data["actor"] %>
+<% body = data["body"].presence || data["title"].to_s %>
+<% url = data["url"].presence %>
+<% created = data["created_at"].presence && Time.zone.parse(data["created_at"].to_s) %>
+<% badge = capture do %>
+  <svg viewBox="0 0 34 40" width="16" height="19" aria-hidden="true"><path d="M17 15 L11 3 M17 15 L17 1 M17 15 L23 3" stroke="#4E9E7E" stroke-width="3.4" stroke-linecap="round" fill="none"/><ellipse cx="17" cy="26" rx="10" ry="12" fill="#F6B73C"/><path d="M10 21 L24 31 M10 31 L24 21" stroke="#D98F1A" stroke-width="1.6" opacity=".7"/></svg>
+<% end %>
+<div class="crayons-card notification notification--middle relative" data-integration-scope="<%= data["scope"] %>">
+  <div class="relative self-start shrink-0">
+    <% if actor %>
+      <span class="crayons-avatar crayons-avatar--l m:crayons-avatar--xl">
+        <img src="<%= actor["profile_image_90"] %>" class="crayons-avatar__image" alt="" width="48" height="48" loading="lazy">
+      </span>
+      <span class="absolute -right-2 -bottom-2 flex items-center justify-center radius-full" style="width:26px;height:26px;background:#FBEFEA;box-shadow:0 0 0 2px var(--card-bg, #fff)"><%= badge %></span>
     <% else %>
-      <%= data["title"] %>
+      <span class="crayons-avatar crayons-avatar--l m:crayons-avatar--xl flex items-center justify-center" style="background:linear-gradient(155deg,#F6C7A2,#F0B4AC)"><%= badge %></span>
     <% end %>
-  </h3>
-  <% if data["body"].present? %>
-    <p class="color-base-70"><%= data["body"] %></p>
-  <% end %>
-  <% if data["url"].present? %>
-    <%= link_to t("views.notifications.integration.open"), data["url"], class: "crayons-btn crayons-btn--secondary crayons-btn--s mt-2" %>
+  </div>
+  <div class="notification__content">
+    <p class="fs-base">
+      <% if actor && body.start_with?(actor["name"].to_s) && actor["name"].present? %>
+        <b class="fw-bold"><%= actor["name"] %></b><%= body.delete_prefix(actor["name"].to_s) %>
+      <% else %>
+        <%= body %>
+      <% end %>
+    </p>
+    <p class="lh-tight"><small class="fs-s color-base-60">
+      <%= data["title"] %><% if created %> · <%= time_ago_in_words created, scope: :"datetime.distance_in_words_ago" %><% end %>
+    </small></p>
+  </div>
+  <% if url %>
+    <a href="<%= url %>" class="absolute inset-0" aria-label="<%= t("views.notifications.integration.open") %>: <%= body %>"></a>
   <% end %>
 </div>

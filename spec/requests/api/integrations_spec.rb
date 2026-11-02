@@ -60,6 +60,19 @@ RSpec.describe "Api::Integrations" do
 
     before { allow(PushNotifications::Send).to receive(:call) }
 
+    it "stores the actor (avatar) and renders it in the notifications list" do
+      actor = create(:user, name: "Ola")
+      post "/api/integrations/notifications", params: payload.merge(nadawca_id: actor.id, tresc: "Ola: zadanie zrobione").to_json, headers: headers
+      expect(response).to have_http_status(:accepted)
+      data = Notification.last.json_data["integration"]
+      expect(data["actor"]).to include("id" => actor.id, "name" => "Ola", "profile_image_90" => actor.profile_image_90)
+
+      sign_in user
+      get "/notifications"
+      expect(response.body).to include(actor.profile_image_90)
+      expect(response.body).to include("<b class=\"fw-bold\">Ola</b>: zadanie zrobione")
+    end
+
     it "returns 401 without a valid api key" do
       post "/api/integrations/notifications", params: payload.to_json, headers: headers.merge("api-key" => "zly")
       expect(response).to have_http_status(:unauthorized)

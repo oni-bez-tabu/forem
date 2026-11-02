@@ -23,7 +23,8 @@ module Integrations
     end
 
     # @param scope [String] integration scope from the api key (e.g. "strefa-pary")
-    def initialize(scope:, user_id:, title:, body: nil, category: nil, url: nil, dedup_key: nil)
+    # @param actor_id [String, nil] Forem user who caused the event (shown as the avatar), e.g. the partner
+    def initialize(scope:, user_id:, title:, body: nil, category: nil, url: nil, dedup_key: nil, actor_id: nil)
       @scope = scope.to_s
       @user_id = user_id
       @title = title.to_s.strip
@@ -31,6 +32,7 @@ module Integrations
       @category = category.to_s.strip.presence || "inne"
       @url = url.to_s.strip
       @dedup_key = dedup_key.to_s.strip
+      @actor_id = actor_id.to_s.strip.presence
     end
 
     def call
@@ -109,11 +111,20 @@ module Integrations
               title: @title,
               body: @body,
               url: @url,
+              actor: actor_data,
               created_at: Time.current
-            }
+            }.compact
           },
         )
       end
+    end
+
+    def actor_data
+      actor = @actor_id && User.find_by(id: @actor_id)
+      return unless actor
+
+      { id: actor.id, name: actor.name.presence || actor.username, username: actor.username,
+        path: actor.path, profile_image_90: actor.profile_image_90 }
     end
 
     def send_push(user)

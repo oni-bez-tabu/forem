@@ -27,6 +27,7 @@ module Api
         category: params[:kategoria],
         url: params[:url],
         dedup_key: params[:klucz_deduplikacji],
+        actor_id: params[:nadawca_id],
       )
 
       if result.accepted?
