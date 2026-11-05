@@ -3,9 +3,11 @@ module Integrations
   # creates a Notification visible in the bell (notifiable: IntegrationNotification)
   # and sends a push via PushNotifications::Send when the user allows it.
   #
-  # Deduplicated by dedup_key for 7 days and rate limited per user per day (Rails.cache).
+  # Deduplicated by dedup_key in the database, with no expiry: the unique partial index
+  # (user_id, scope, dedup_key) is the source of truth, so a key is accepted once per user and scope.
+  # Integrations put the event into the key (task, stage, contract hash, date for reminders), so a key
+  # that comes back is always a retry of the same event. Rate limited per user per day (Rails.cache).
   class NotificationSend
-    DEDUP_TTL = 7.days
     DAILY_LIMIT = 20
     TITLE_MAX = 120
     BODY_MAX = 500
@@ -41,11 +43,15 @@ module Integrations
 
       user = User.find_by(id: @user_id)
       return Result.new(status: :invalid, error: "user not found") unless user
-      return Result.new(status: :duplicate) if duplicate?
+      return Result.new(status: :duplicate) if duplicate?(user)
       return Result.new(status: :rate_limited, error: "daily limit reached") if rate_limited?
 
-      notification = create_notification(user)
-      mark_delivered
+      begin
+        notification = create_notification(user)
+      rescue ActiveRecord::RecordNotUnique
+        # two requests with the same key at once: the index lets only one in
+        return Result.new(status: :duplicate)
+      end
       send_push(user)
       Result.new(status: :accepted, notification: notification)
     end
@@ -58,27 +64,22 @@ module Integrations
       return "tytul is too long (max #{TITLE_MAX})" if @title.length > TITLE_MAX
       return "tresc is too long (max #{BODY_MAX})" if @body.length > BODY_MAX
       return "url is too long (max #{URL_MAX})" if @url.length > URL_MAX
-      return "url must be a path or an http(s) address" if @url.present? && !@url.match?(%r{\A(/|https?://)})
+      return "url must be a path or an http(s) address" if @url.present? && !valid_url?
 
       nil
     end
 
-    def dedup_cache_key
-      "integrations:notifications:dedup:#{@scope}:#{@user_id}:#{@dedup_key}"
+    # "/path" or http(s)://. Not "//host" or "/\host": browsers read both as a link to another host.
+    def valid_url?
+      @url.match?(%r{\A/(?![/\\])}) || @url.match?(%r{\Ahttps?://}i)
     end
 
     def rate_cache_key
       "integrations:notifications:rate:#{@scope}:#{@user_id}:#{Date.current}"
     end
 
-    def duplicate?
-      @dedup_key.present? && Rails.cache.exist?(dedup_cache_key)
-    end
-
-    def mark_delivered
-      return if @dedup_key.blank?
-
-      Rails.cache.write(dedup_cache_key, "1", expires_in: DEDUP_TTL)
+    def duplicate?(user)
+      @dedup_key.present? && IntegrationNotification.exists?(user: user, scope: @scope, dedup_key: @dedup_key)
     end
 
     def rate_limited?

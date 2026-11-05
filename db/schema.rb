@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_10_27_100100) do
+ActiveRecord::Schema[7.0].define(version: 2026_11_05_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "ltree"
@@ -935,6 +935,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_27_100100) do
     t.datetime "updated_at", null: false
     t.string "url"
     t.bigint "user_id", null: false
+    t.index ["user_id", "scope", "dedup_key"], name: "index_integration_notifications_on_dedup", unique: true, where: "(dedup_key IS NOT NULL)"
     t.index ["user_id"], name: "index_integration_notifications_on_user_id"
   end
 

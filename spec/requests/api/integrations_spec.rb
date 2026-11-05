@@ -62,7 +62,8 @@ RSpec.describe "Api::Integrations" do
 
     it "stores the actor (avatar) and renders it in the notifications list" do
       actor = create(:user, name: "Ola")
-      post "/api/integrations/notifications", params: payload.merge(nadawca_id: actor.id, tresc: "Ola: zadanie zrobione").to_json, headers: headers
+      post "/api/integrations/notifications",
+           params: payload.merge(nadawca_id: actor.id, tresc: "Ola: zadanie zrobione").to_json, headers: headers
       expect(response).to have_http_status(:accepted)
       data = Notification.last.json_data["integration"]
       expect(data["actor"]).to include("id" => actor.id, "name" => "Ola", "profile_image_90" => actor.profile_image_90)
@@ -101,15 +102,58 @@ RSpec.describe "Api::Integrations" do
       )
     end
 
-    it "deduplicates by klucz_deduplikacji" do
+    it "deduplicates by klucz_deduplikacji in the database, with no expiry" do
       post "/api/integrations/notifications", params: payload.to_json, headers: headers
       expect(response).to have_http_status(:accepted)
 
-      expect do
-        post "/api/integrations/notifications", params: payload.to_json, headers: headers
-      end.not_to change(Notification, :count)
+      memory_cache.clear # dedup does not depend on the cache
+      Timecop.travel(30.days.from_now) do
+        expect do
+          post "/api/integrations/notifications", params: payload.to_json, headers: headers
+        end.not_to change(Notification, :count)
+      end
       expect(response).to have_http_status(:ok)
       expect(response.parsed_body).to eq("ok" => true, "dedup" => true)
+    end
+
+    it "does not send a second push for a duplicate" do
+      2.times { post "/api/integrations/notifications", params: payload.to_json, headers: headers }
+      expect(PushNotifications::Send).to have_received(:call).once
+    end
+
+    it "treats a unique index conflict (two requests at once) as a duplicate without a push" do
+      allow(IntegrationNotification).to receive(:exists?).and_return(false)
+      post "/api/integrations/notifications", params: payload.to_json, headers: headers
+      post "/api/integrations/notifications", params: payload.to_json, headers: headers
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body).to eq("ok" => true, "dedup" => true)
+      expect(IntegrationNotification.count).to eq(1)
+      expect(Notification.count).to eq(1)
+      expect(PushNotifications::Send).to have_received(:call).once
+    end
+
+    it "keeps the same key separate per user" do
+      other = create(:user)
+      post "/api/integrations/notifications", params: payload.to_json, headers: headers
+      post "/api/integrations/notifications", params: payload.merge(user_id: other.id).to_json, headers: headers
+      expect(response).to have_http_status(:accepted)
+      expect(IntegrationNotification.count).to eq(2)
+    end
+
+    it "rejects a protocol-relative url (//host or /\\host)" do
+      ["//obca-strona.pl/x", "/\\obca-strona.pl/x"].each do |url|
+        post "/api/integrations/notifications", params: payload.merge(url: url).to_json, headers: headers
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+      expect(Notification.count).to eq(0)
+    end
+
+    it "accepts a path and an http(s) address" do
+      ["/strefa-pary", "https://nietabu.pl/strefa-pary"].each_with_index do |url, i|
+        body = payload.merge(url: url, klucz_deduplikacji: "url-#{i}").to_json
+        post "/api/integrations/notifications", params: body, headers: headers
+        expect(response).to have_http_status(:accepted)
+      end
     end
 
     it "skips the push when the user disabled integration notifications" do
@@ -143,12 +187,59 @@ RSpec.describe "Api::Integrations" do
       expect(response).to have_http_status(:too_many_requests)
     end
 
+    it "returns 401 when INTEGRATIONS_API_KEYS is empty" do
+      allow(ApplicationConfig).to receive(:[]).with("INTEGRATIONS_API_KEYS").and_return("")
+      post "/api/integrations/notifications", params: payload.to_json, headers: headers
+      expect(response).to have_http_status(:unauthorized)
+      expect(Notification.count).to eq(0)
+    end
+
     it "renders the notification in the notifications list" do
       post "/api/integrations/notifications", params: payload.to_json, headers: headers
       sign_in user
       get "/notifications"
       expect(response.body).to include(CGI.escapeHTML(payload[:tytul]))
       expect(response.body).to include('href="/strefa-pary"')
+    end
+  end
+
+  context "when the Forem is private (production)" do
+    let(:token) { JWT.encode({ user_id: user.id, exp: 5.minutes.from_now.to_i }, Rails.application.secret_key_base) }
+    let(:headers) { { "api-key" => "sekret-testowy", "Content-Type" => "application/json" } }
+    let(:payload) { { user_id: user.id, tytul: "Test", url: "/strefa-pary", klucz_deduplikacji: "prywatny" } }
+
+    before do
+      allow(Settings::UserExperience).to receive(:public).and_return(false)
+      allow(PushNotifications::Send).to receive(:call)
+    end
+
+    it "identifies the user from a valid token" do
+      get "/api/integrations/me", headers: { "Authorization" => "Bearer #{token}" }
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["id"]).to eq(user.id.to_s)
+    end
+
+    it "returns 401 JSON without a token, not a redirect to sign up" do
+      get "/api/integrations/me"
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.parsed_body["error"]).to eq("unauthorized")
+    end
+
+    it "accepts a notification with the api key" do
+      post "/api/integrations/notifications", params: payload.to_json, headers: headers
+      expect(response).to have_http_status(:accepted)
+    end
+
+    it "returns 401 JSON without the api key, not a redirect" do
+      post "/api/integrations/notifications", params: payload.to_json, headers: headers.except("api-key")
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.parsed_body["ok"]).to be(false)
+    end
+
+    it "returns 401 when INTEGRATIONS_API_KEYS is empty" do
+      allow(ApplicationConfig).to receive(:[]).with("INTEGRATIONS_API_KEYS").and_return("")
+      post "/api/integrations/notifications", params: payload.to_json, headers: headers
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end
