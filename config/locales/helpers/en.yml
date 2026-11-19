@@ -65,6 +65,7 @@ en:
           me
         mobile_comment_notifications: Send me a push notification when someone replies
           to me in a comment thread
+        mobile_integration_notifications: "Send me notifications from games and apps (e.g. Strefa Pary)"
         welcome_notifications: Send me occasional tips on how to enhance my %{community}
           experience
         email_community_broadcast: Send me community broadcast emails

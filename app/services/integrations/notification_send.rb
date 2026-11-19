@@ -1,0 +1,150 @@
+module Integrations
+  # Delivers a notification from an integration (e.g. Strefa Pary) to a Forem user:
+  # creates a Notification visible in the bell (notifiable: IntegrationNotification)
+  # and sends a push via PushNotifications::Send when the user allows it.
+  #
+  # Deduplicated by dedup_key in the database, with no expiry: the unique partial index
+  # (user_id, scope, dedup_key) is the source of truth, so a key is accepted once per user and scope.
+  # Integrations put the event into the key (task, stage, contract hash, date for reminders), so a key
+  # that comes back is always a retry of the same event. Rate limited per user per day (Rails.cache).
+  class NotificationSend
+    DAILY_LIMIT = 20
+    TITLE_MAX = 120
+    BODY_MAX = 500
+    URL_MAX = 500
+
+    Result = Struct.new(:status, :error, :notification, keyword_init: true) do
+      def accepted? = status == :accepted
+      def duplicate? = status == :duplicate
+      def rate_limited? = status == :rate_limited
+      def invalid? = status == :invalid
+    end
+
+    def self.call(**args)
+      new(**args).call
+    end
+
+    # @param scope [String] integration scope from the api key (e.g. "strefa-pary")
+    # @param actor_id [String, nil] Forem user who caused the event (shown as the avatar), e.g. the partner
+    def initialize(scope:, user_id:, title:, body: nil, category: nil, url: nil, dedup_key: nil, actor_id: nil)
+      @scope = scope.to_s
+      @user_id = user_id
+      @title = title.to_s.strip
+      @body = body.to_s.strip
+      @category = category.to_s.strip.presence || "inne"
+      @url = url.to_s.strip
+      @dedup_key = dedup_key.to_s.strip
+      @actor_id = actor_id.to_s.strip.presence
+    end
+
+    def call
+      error = validation_error
+      return Result.new(status: :invalid, error: error) if error
+
+      user = User.find_by(id: @user_id)
+      return Result.new(status: :invalid, error: "user not found") unless user
+      return Result.new(status: :duplicate) if duplicate?(user)
+      return Result.new(status: :rate_limited, error: "daily limit reached") if rate_limited?
+
+      begin
+        notification = create_notification(user)
+      rescue ActiveRecord::RecordNotUnique
+        # two requests with the same key at once: the index lets only one in
+        return Result.new(status: :duplicate)
+      end
+      send_push(user)
+      Result.new(status: :accepted, notification: notification)
+    end
+
+    private
+
+    def validation_error
+      return "user_id is required" if @user_id.blank?
+      return "tytul is required" if @title.blank?
+      return "tytul is too long (max #{TITLE_MAX})" if @title.length > TITLE_MAX
+      return "tresc is too long (max #{BODY_MAX})" if @body.length > BODY_MAX
+      return "url is too long (max #{URL_MAX})" if @url.length > URL_MAX
+      return "url must be a path or an http(s) address" if @url.present? && !valid_url?
+
+      nil
+    end
+
+    # "/path" or http(s)://. Not "//host" or "/\host": browsers read both as a link to another host.
+    def valid_url?
+      @url.match?(%r{\A/(?![/\\])}) || @url.match?(%r{\Ahttps?://}i)
+    end
+
+    def rate_cache_key
+      "integrations:notifications:rate:#{@scope}:#{@user_id}:#{Date.current}"
+    end
+
+    def duplicate?(user)
+      @dedup_key.present? && IntegrationNotification.exists?(user: user, scope: @scope, dedup_key: @dedup_key)
+    end
+
+    def rate_limited?
+      # Rails 7.0: increment on a missing key returns nil for MemoryStore, so seed the counter first
+      # (raw, so the Redis store can INCRBY it).
+      Rails.cache.write(rate_cache_key, 0, unless_exist: true, expires_in: 1.day, raw: true)
+      count = Rails.cache.increment(rate_cache_key, 1, expires_in: 1.day)
+      count.present? && count > DAILY_LIMIT
+    end
+
+    def create_notification(user)
+      ActiveRecord::Base.transaction do
+        record = IntegrationNotification.create!(
+          user: user,
+          scope: @scope,
+          category: @category,
+          title: @title,
+          body: @body.presence,
+          url: @url.presence,
+          dedup_key: @dedup_key.presence,
+        )
+        Notification.create!(
+          user_id: user.id,
+          notifiable: record,
+          action: nil,
+          json_data: {
+            integration: {
+              scope: @scope,
+              category: @category,
+              title: @title,
+              body: @body,
+              url: @url,
+              actor: actor_data,
+              created_at: Time.current
+            }.compact
+          },
+        )
+      end
+    end
+
+    def actor_data
+      actor = @actor_id && User.find_by(id: @actor_id)
+      return unless actor
+
+      { id: actor.id, name: actor.name.presence || actor.username, username: actor.username,
+        path: actor.path, profile_image_90: actor.profile_image_90 }
+    end
+
+    def send_push(user)
+      setting = user.notification_setting
+      return if setting && !setting.mobile_integration_notifications?
+
+      PushNotifications::Send.call(
+        user_ids: [user.id],
+        title: @title,
+        body: @body.presence || @title,
+        payload: { url: absolute_url, type: "integration", scope: @scope, category: @category },
+      )
+    end
+
+    def absolute_url
+      return if @url.blank?
+      return URL.url(@url) if @url.start_with?("/")
+
+      @url
+    end
+  end
+end

@@ -51,6 +51,10 @@ Rails.application.routes.draw do
     end
 
     namespace :api, defaults: { format: "json" } do
+      # Integrations (e.g. Strefa Pary): who owns a Forem auth token (/auth_pass/iframe) and the notifications channel.
+      get "/integrations/me", to: "integrations#me"
+      post "/integrations/notifications", to: "integrations#notifications"
+
       scope module: :v1, constraints: ApiConstraints.new(version: 1, default: false) do
         # V1 only endpoints
         put "/articles/:id/unpublish", to: "articles#unpublish", as: :article_unpublish

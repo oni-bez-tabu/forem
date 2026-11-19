@@ -62,6 +62,7 @@ pl:
         mobile_mention_notifications: Wyślij mi powiadomienie push, gdy ktoś mnie wspomni
         mobile_chat_notifications: Wyślij mi powiadomienie push, gdy ktoś wyśle mi wiadomość w czacie
         mobile_comment_notifications: Wyślij mi powiadomienie push, gdy ktoś odpowie mi w wątku komentarzy
+        mobile_integration_notifications: "Powiadomienia z gier i aplikacji (np. Strefa Pary)"
         welcome_notifications: Wyślij mi czasami wskazówki, jak ulepszyć swoje doświadczenie w %{community}
         reaction_notifications: Wyślij powiadomienia, gdy ktoś zareaguje na móją treść, taką jak komentarze lub posty
         mod_roundrobin_notifications: Wyślij mi powiadomienia o nowych aktywnościach członków

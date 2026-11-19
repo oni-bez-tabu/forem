@@ -102,7 +102,7 @@
         <div class="crayons-field">
           <%= form.label :template, class: "crayons-field__label" do %>
             Template
-            <p class="crayons-field__description">Determines the way page's body will be embedded in the layout</p>
+            <p class="crayons-field__description">Determines the way page's body will be embedded in the layout. <code>standalone</code> serves Body HTML as the whole document (no header, footer or Forem JS).</p>
           <% end %>
           <%= form.select :template, Page::TEMPLATE_OPTIONS, required: true %>
         </div>

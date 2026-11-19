@@ -2,6 +2,8 @@
 fr:
   views:
     notifications:
+      integration:
+        open: Ouvrir
       meta:
         description: Notifications inbox for %{community}
         og:

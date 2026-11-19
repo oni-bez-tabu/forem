@@ -1,4 +1,5 @@
 class StoriesController < ApplicationController
+  include StandalonePageRenderable
   helper ProfileHelper
 
   DEFAULT_HOME_FEED_ATTRIBUTES_FOR_SERIALIZATION = {
@@ -141,6 +142,8 @@ class StoriesController < ApplicationController
 
     if @page.template == "json"
       render json: @page.body_json
+    elsif @page.standalone?
+      render_standalone_page
     else
       render template: "pages/show"
     end
