@@ -29,6 +29,24 @@ module ApplicationHelper
     "#{controller_name}-#{controller.action_name}"
   end
 
+  # Standalone pages are full HTML documents with their own scripts, so InstantClick cannot swap
+  # them into the current page (the first click does nothing visible). Links to them must do a
+  # regular navigation instead (data-no-instant).
+  #
+  # @param url [String] a navigation link url, e.g. "/pic-for-pic" or "https://example.com/page/foo"
+  #
+  # @return [Boolean] true when the url points at a Page with the standalone template.
+  def standalone_page_url?(url)
+    path = URI.parse(url.to_s).path.to_s
+    slug = path.delete_prefix("/page/").delete_prefix("/")
+    return false if slug.blank? || slug.include?("/")
+
+    @standalone_page_slugs ||= Page.where(template: Page::STANDALONE_TEMPLATE).pluck(:slug)
+    @standalone_page_slugs.include?(slug)
+  rescue URI::InvalidURIError
+    false
+  end
+
   # Answers the simple question "Should we show this link?"
   #
   # @param link [NavigationLink]
