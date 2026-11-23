@@ -113,6 +113,20 @@ body[data-side-nav-visible='true'] {
   }
 }
 
+.sidebar-navigation-link__badge {
+  margin-left: var(--su-2);
+  align-self: center;
+  flex-shrink: 0;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #ff5d49;
+  color: #fff;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
 .sidebar-navigation-link--toby {
   position: relative;
   overflow: hidden;

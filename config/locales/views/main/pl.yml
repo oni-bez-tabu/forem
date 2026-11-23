@@ -37,6 +37,7 @@ pl:
         account: Konto
         coins_count: "Na Twoim koncie jest:"
         coins_name: educoinów
+      nav_badge_new: Nowość
       nav_name:
         About: O nas
         Code of Conduct: Kodeks postępowania
