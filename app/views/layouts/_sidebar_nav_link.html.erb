@@ -2,7 +2,7 @@
   <% is_toby = link.url.to_s.include?("/tobyai") %>
   <% is_new = link.url.to_s.include?("/pic-for-pic") %>
   <li>
-    <a href="<%= link.url %>" class="sidebar-navigation-link c-link c-link--block c-link--icon-left<%= " sidebar-navigation-link--toby" if is_toby %>"<%= " data-no-instant" if standalone_page_url?(link.url) %>>
+    <a href="<%= link.url %>" class="sidebar-navigation-link c-link c-link--block c-link--icon-left<%= " sidebar-navigation-link--toby" if is_toby %>">
       <span class="c-link__icon">
         <% if link.respond_to?(:image) && link.image.present? %>
           <%= optimized_image_tag(link.image.url, optimizer_options: { width: 24, height: 24, crop: "fill" }, image_options: { alt: "#{link.name} icon", style: "width: 24px; height: 24px;" }) %>

@@ -129,27 +129,6 @@ RSpec.describe ApplicationHelper do
     end
   end
 
-  describe "#standalone_page_url?" do
-    before do
-      create(:page, slug: "pic-for-pic", template: Page::STANDALONE_TEMPLATE, body_markdown: nil,
-                    body_html: "<!doctype html><html><body>app</body></html>")
-      create(:page, slug: "zwykla", template: "contained")
-    end
-
-    it "is true for a standalone page path, /page/ path and absolute url" do
-      expect(helper.standalone_page_url?("/pic-for-pic")).to be(true)
-      expect(helper.standalone_page_url?("/page/pic-for-pic")).to be(true)
-      expect(helper.standalone_page_url?("https://example.com/pic-for-pic")).to be(true)
-    end
-
-    it "is false for other pages, other paths and invalid urls" do
-      expect(helper.standalone_page_url?("/zwykla")).to be(false)
-      expect(helper.standalone_page_url?("/tobyai")).to be(false)
-      expect(helper.standalone_page_url?("/pic-for-pic/extra")).to be(false)
-      expect(helper.standalone_page_url?("http://[bad")).to be(false)
-    end
-  end
-
   describe "#navigation_link_is_for_an_enabled_feature?" do
     subject(:method_call) { helper.navigation_link_is_for_an_enabled_feature?(link: link) }
 

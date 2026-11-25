@@ -368,6 +368,11 @@ var instantClick
       if (found != $trackedAssets.length) {
         $mustRedirect = true // Assets have changed
       }
+      if (!body) {
+        // Page without #page-content (e.g. a standalone Page with its own
+        // layout) can't be swapped in, so fall back to a full page load.
+        $mustRedirect = true
+      }
     }
     else {
       $mustRedirect = true // Not an HTML document
